@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -8,82 +8,156 @@
     android:background="#242C3B"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/Barber_Line_Text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="40dp"
-        android:fontFamily="@font/poppins_bold"
-        android:text="@string/Barber_Line"
-        android:textColor="@color/white"
-        android:textSize="24sp" />
 
-    <ImageButton
-        android:id="@+id/profile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="20dp"
-        android:backgroundTint="#00FFFFFF"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/profile" />
-
+    <!-- Top Section -->
     <LinearLayout
+        android:id="@+id/top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginHorizontal="5dp"
-        android:layout_marginBottom="5dp"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:layout_marginHorizontal="10dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:id="@+id/Barber_Line_Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/poppins_bold"
+            android:text="@string/Barber_Line"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:id="@+id/profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:backgroundTint="#00FFFFFF"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/profile" />
+    </LinearLayout>
+
+    <!-- Search Bar Section -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/top">
+
+        <EditText
+            android:id="@+id/search_input"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/radius_10_dp"
+            android:hint="@string/names_of_barbershops"
+            android:padding="12dp"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#A0A4AC"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Align the Button to the Right -->
+        <Button
+            android:id="@+id/search_button"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:background="@drawable/button_gradient"
+            android:text="@string/search"
+            android:layout_gravity="end"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </FrameLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <!-- Home Button -->
         <ImageButton
             android:id="@+id/homeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toStartOf="@+id/bookButton"
             android:backgroundTint="#00FFFFFF"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/home" />
+            android:src="@drawable/home"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
+        <!-- Book Button -->
         <ImageButton
             android:id="@+id/bookButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toStartOf="@+id/hairstyleButton"
             android:backgroundTint="#00FFFFFF"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/book" />
+            android:src="@drawable/book"
+            app:layout_constraintStart_toEndOf="@id/homeButton"
+            app:layout_constraintEnd_toStartOf="@id/hairstyleButton"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="30dp"
+            app:layout_constraintHorizontal_bias="0.25" />
 
+        <!-- Hairstyle Button -->
         <ImageButton
             android:id="@+id/hairstyleButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toStartOf="@+id/barberButton"
+            android:layout_width="80dp"
+            android:layout_height="122dp"
             android:backgroundTint="#00FFFFFF"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/hairstyle" />
+            android:src="@drawable/hairstyle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/barberButton"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@id/bookButton"
+            app:layout_constraintTop_toTopOf="parent" />
 
+        <!-- Barber Button -->
         <ImageButton
             android:id="@+id/barberButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toStartOf="@+id/settingsButton"
             android:backgroundTint="#00FFFFFF"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/barber" />
+            android:src="@drawable/barber"
+            app:layout_constraintStart_toEndOf="@id/hairstyleButton"
+            app:layout_constraintEnd_toStartOf="@id/settingsButton"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginEnd="25dp"
+            app:layout_constraintHorizontal_bias="0.75" />
 
+        <!-- Settings Button -->
         <ImageButton
             android:id="@+id/settingsButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="#00FFFFFF"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/settings" />
-    </LinearLayout>
-</RelativeLayout>
+            android:src="@drawable/settings"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

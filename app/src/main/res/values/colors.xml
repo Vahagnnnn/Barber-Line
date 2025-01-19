@@ -2,4 +2,6 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="dark_blue">#242C3B</color>
+    <color name="search_button_bg">#4380EE</color>
 </resources>
