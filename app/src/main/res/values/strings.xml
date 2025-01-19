@@ -3,4 +3,9 @@
     <string name="Barber_Line">Barber Line</string>
     <string name="search">Search</string>
     <string name="names_of_barbershops">Names of barbershops</string>
+    <string name="_9_ghazar_parpetsi_st_8">9 Ghazar Parpetsi St, 8</string>
+    <string name="paragon">Paragon</string>
+    <string name="open_from_08_30_to_23_30">Open from 08:30 to 23:30</string>
+    <string name="see_more">See more</string>
+    <string name="top_barber_shops">Top Barber Shops</string>
 </resources>
