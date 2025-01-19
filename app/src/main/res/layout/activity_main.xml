@@ -207,7 +207,7 @@
             android:id="@+id/bookButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
+            android:layout_marginStart="55dp"
             android:backgroundTint="#00FFFFFF"
             android:contentDescription="@string/app_name"
             android:src="@drawable/book"
@@ -218,10 +218,12 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <!-- Hairstyle Button -->
+
+
         <ImageButton
             android:id="@+id/hairstyleButton"
-            android:layout_width="80dp"
-            android:layout_height="122dp"
+            android:layout_width="106dp"
+            android:layout_height="104dp"
             android:backgroundTint="#00FFFFFF"
             android:contentDescription="@string/app_name"
             android:src="@drawable/hairstyle"
@@ -229,14 +231,14 @@
             app:layout_constraintEnd_toStartOf="@id/barberButton"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@id/bookButton"
-            app:layout_constraintTop_toTopOf="parent" />
-
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
         <!-- Barber Button -->
+
         <ImageButton
             android:id="@+id/barberButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="25dp"
             android:backgroundTint="#00FFFFFF"
             android:contentDescription="@string/app_name"
             android:src="@drawable/barber"
@@ -256,6 +258,7 @@
             android:src="@drawable/settings"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/barberButton"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
