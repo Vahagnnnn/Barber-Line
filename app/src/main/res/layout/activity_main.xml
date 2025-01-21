@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#242C3B"
+    app:circularflow_radiusInDP="30dp"
     tools:context=".MainActivity">
 
 
@@ -90,9 +91,9 @@
 
     </FrameLayout>
 
-    <!-- Top Barber Shops Section -->
+    <!-- Top Barber Shops Text -->
     <LinearLayout
-        android:id="@+id/top_barber_shops"
+        android:id="@+id/top_barber_shops_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
@@ -116,7 +117,7 @@
             android:layout_weight="1" />
 
         <TextView
-            android:id="@+id/textSeeMore"
+            android:id="@+id/textSeeMoreBarberShops"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/see_more"
@@ -125,19 +126,68 @@
     </LinearLayout>
 
 
-    <!-- Paragon Section -->
+    <!-- Top Barber Shops -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/top_barber_shops_Recycler"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+        android:layout_width="0dp"
+        android:layout_height="224dp"
+        android:layout_marginStart="13dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
+        android:background="@drawable/radius_16_dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/top_barber_shops" />
+        app:layout_constraintTop_toBottomOf="@+id/top_barber_shops_text"
+        tools:listitem="@layout/top_barber_shops" />
 
+    <!-- Top Barbers Text -->
+    <LinearLayout
+        android:id="@+id/top_barbers_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/top_barber_shops_Recycler">
+
+        <TextView
+            android:id="@+id/textTopBarbers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/top_barbers"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/textSeeMoretextSeeMoreBarbers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/see_more"
+            android:textColor="@color/light_blue"
+            android:textSize="12sp" />
+    </LinearLayout>
+    <!-- Top Barbers -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/top_barbers_Recycler"
+        android:layout_width="0dp"
+        android:layout_height="175dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/radius_16_dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/top_barbers_text"
+        tools:listitem="@layout/top_barbers" />
 
     <!-- Bottom Navigation -->
     <FrameLayout

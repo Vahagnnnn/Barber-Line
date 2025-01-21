@@ -2,9 +2,7 @@ package com.vahagn.barber_line.model;
 
 public class TopBarberShops {
     private final int imageResId;
-    private final String title;
-    private final String address;
-    private final String time;
+    private final String title, address, time;
 
     public TopBarberShops(int imageResId, String title, String address, String time) {
         this.imageResId = imageResId;
