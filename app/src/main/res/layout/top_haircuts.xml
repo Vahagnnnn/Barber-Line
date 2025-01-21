@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/paragonLayout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="13dp"
+    android:background="@drawable/radius_16_dp"
+    android:orientation="vertical">
+
+
+    <FrameLayout
+        android:id="@+id/container_vertical_card9"
+        android:layout_width="165dp"
+        android:layout_height="165dp"
+        android:background="@drawable/frame_top_barbers">
+
+        <ImageView
+            android:id="@+id/haircut_image"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="center_horizontal"
+            android:contentDescription="@string/app_name"
+            android:scaleType="centerInside"
+            android:src="@drawable/img_haircut" />
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="21dp"
+            android:layout_marginTop="128dp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_vertical"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="@string/the_textured_crop"
+            android:textColor="#FF000000"
+            android:textSize="14sp" />
+    </FrameLayout>
+
+</LinearLayout>

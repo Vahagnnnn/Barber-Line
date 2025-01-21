@@ -124,8 +124,6 @@
             android:textColor="@color/light_blue"
             android:textSize="12sp" />
     </LinearLayout>
-
-
     <!-- Top Barber Shops -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/top_barber_shops_Recycler"
@@ -167,7 +165,7 @@
             android:layout_weight="1" />
 
         <TextView
-            android:id="@+id/textSeeMoretextSeeMoreBarbers"
+            android:id="@+id/textSeeMoreBarbers"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/see_more"
@@ -180,14 +178,64 @@
         android:layout_width="0dp"
         android:layout_height="175dp"
         android:layout_marginStart="13dp"
-        android:layout_marginEnd="10dp"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
         android:background="@drawable/radius_16_dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/top_barbers_text"
         tools:listitem="@layout/top_barbers" />
+
+    <!-- Top Haircuts Text -->
+    <LinearLayout
+        android:id="@+id/top_haircuts_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/top_barbers_Recycler">
+
+        <TextView
+            android:id="@+id/textTopHaircuts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/top_haircuts"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/textSeeMoreHaircuts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/see_more"
+            android:textColor="@color/light_blue"
+            android:textSize="12sp" />
+    </LinearLayout>
+    <!-- Top Haircuts -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/top_haircuts_Recycler"
+        android:layout_width="0dp"
+        android:layout_height="166dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/radius_16_dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/top_haircuts_text"
+        tools:listitem="@layout/top_haircuts" />
+
+
 
     <!-- Bottom Navigation -->
     <FrameLayout

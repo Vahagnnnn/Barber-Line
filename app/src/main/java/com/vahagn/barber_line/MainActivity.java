@@ -8,17 +8,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.vahagn.barber_line.adapter.TopBarberShopsAdapter;
 import com.vahagn.barber_line.adapter.TopBarbersAdapter;
+import com.vahagn.barber_line.adapter.TopHaircutsAdapter;
 import com.vahagn.barber_line.model.TopBarberShops;
 import com.vahagn.barber_line.model.TopBarbers;
+import com.vahagn.barber_line.model.TopHaircuts;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
-    RecyclerView topbarbershopsRecycler,topbarbersRecycler;
+    RecyclerView topbarbershopsRecycler,topbarbersRecycler,tophaircutsRecycler;
     TopBarberShopsAdapter topbarbershopsAdapter;
     TopBarbersAdapter topbarbersAdapter;
+    TopHaircutsAdapter tophaircutsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,18 +41,16 @@ public class MainActivity extends AppCompatActivity {
         TopBarbersList.add(new TopBarbers(R.drawable.img_barber, "Sargis", "077-77-77-77"));
         TopBarbersList.add(new TopBarbers(R.drawable.img_barber, "Sargis", "077-77-77-77"));
         TopBarbersList.add(new TopBarbers(R.drawable.img_barber, "Sargis", "077-77-77-77"));
+        TopBarbersList.add(new TopBarbers(R.drawable.img_barber, "Sargis", "077-77-77-77"));
 
         setTopBarbersRecycler(TopBarbersList);
-    }
 
-    private void setTopBarbersRecycler(List<TopBarbers> topBarbersList) {
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
-
-        topbarbersRecycler = findViewById(R.id.top_barbers_Recycler);
-        topbarbersRecycler.setLayoutManager(layoutManager);
-
-        topbarbersAdapter = new TopBarbersAdapter(this, topBarbersList);
-        topbarbersRecycler.setAdapter(topbarbersAdapter);
+        List<TopHaircuts> TopHaircutsList = new ArrayList<>();
+        TopHaircutsList.add(new TopHaircuts(R.drawable.img_haircut, "The Textured Crop"));
+        TopHaircutsList.add(new TopHaircuts(R.drawable.img_haircut, "The Textured Crop"));
+        TopHaircutsList.add(new TopHaircuts(R.drawable.img_haircut, "The Textured Crop"));
+        TopHaircutsList.add(new TopHaircuts(R.drawable.img_haircut, "The Textured Crop"));
+        setTopHaircutsRecycler(TopHaircutsList);
     }
 
     private void setTopBarberShopsRecycler(List<TopBarberShops> topBarberShopsList) {
@@ -60,5 +61,25 @@ public class MainActivity extends AppCompatActivity {
 
         topbarbershopsAdapter = new TopBarberShopsAdapter(this, topBarberShopsList);
         topbarbershopsRecycler.setAdapter(topbarbershopsAdapter);
+    }
+
+
+    private void setTopBarbersRecycler(List<TopBarbers> topBarbersList) {
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
+
+        topbarbersRecycler = findViewById(R.id.top_barbers_Recycler);
+        topbarbersRecycler.setLayoutManager(layoutManager);
+
+        topbarbersAdapter = new TopBarbersAdapter(this, topBarbersList);
+        topbarbersRecycler.setAdapter(topbarbersAdapter);
+    }
+    private void setTopHaircutsRecycler(List<TopHaircuts> topHaircutsList) {
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
+
+        tophaircutsRecycler = findViewById(R.id.top_haircuts_Recycler);
+        tophaircutsRecycler.setLayoutManager(layoutManager);
+
+        tophaircutsAdapter = new TopHaircutsAdapter(this, topHaircutsList);
+        tophaircutsRecycler.setAdapter(tophaircutsAdapter);
     }
 }
