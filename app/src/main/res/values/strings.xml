@@ -8,4 +8,8 @@
     <string name="open_from_08_30_to_23_30">Open from 08:30 to 23:30</string>
     <string name="see_more">See more</string>
     <string name="top_barber_shops">Top Barber Shops</string>
+    <string name="home">Home</string>
+    <string name="book">Book</string>
+    <string name="barbers">Barbers</string>
+    <string name="settings">Settings</string>
 </resources>
