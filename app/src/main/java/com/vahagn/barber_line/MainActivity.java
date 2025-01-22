@@ -1,6 +1,10 @@
 package com.vahagn.barber_line;
 
+
+import android.app.ActivityOptions;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,39 +22,40 @@ import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
-    RecyclerView topbarbershopsRecycler,topbarbersRecycler,tophaircutsRecycler;
+    RecyclerView topbarbershopsRecycler, topbarbersRecycler, tophaircutsRecycler;
     TopBarberShopsAdapter topbarbershopsAdapter;
     TopBarbersAdapter topbarbersAdapter;
     TopHaircutsAdapter tophaircutsAdapter;
+
+    List<TopBarberShops> TopBarberShopsList = new ArrayList<>();
+    List<TopBarbers> TopBarbersList = new ArrayList<>();
+    List<TopHaircuts> TopHaircutsList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        List<TopBarberShops> TopBarberShopsList = new ArrayList<>();
-        TopBarberShopsList.add(new TopBarberShops(R.drawable.paragon, "Paragon", "9 Ghazar Parpetsi St, 8", "Open from 08:30 to 23:30"));
-        TopBarberShopsList.add(new TopBarberShops(R.drawable.paragon, "Paragon", "9 Ghazar Parpetsi St, 8", "Open from 08:30 to 23:30"));
-        TopBarberShopsList.add(new TopBarberShops(R.drawable.paragon, "Paragon", "9 Ghazar Parpetsi St, 8", "Open from 08:30 to 23:30"));
-        TopBarberShopsList.add(new TopBarberShops(R.drawable.paragon, "Paragon", "9 Ghazar Parpetsi St, 8", "Open from 08:30 to 23:30"));
-
+        TopBarberShopsList.add(new TopBarberShops(R.drawable.img_paragon, "Paragon", "9 Ghazar Parpetsi St, 8", "Open from 08:30 to 23:30"));
+        TopBarberShopsList.add(new TopBarberShops(R.drawable.img_paragon, "Paragon", "9 Ghazar Parpetsi St, 8", "Open from 08:30 to 23:30"));
+        TopBarberShopsList.add(new TopBarberShops(R.drawable.img_paragon, "Paragon", "9 Ghazar Parpetsi St, 8", "Open from 08:30 to 23:30"));
+        TopBarberShopsList.add(new TopBarberShops(R.drawable.img_paragon, "Paragon", "9 Ghazar Parpetsi St, 8", "Open from 08:30 to 23:30"));
         setTopBarberShopsRecycler(TopBarberShopsList);
 
 
-        List<TopBarbers> TopBarbersList = new ArrayList<>();
         TopBarbersList.add(new TopBarbers(R.drawable.img_barber, "Sargis", "077-77-77-77"));
         TopBarbersList.add(new TopBarbers(R.drawable.img_barber, "Sargis", "077-77-77-77"));
         TopBarbersList.add(new TopBarbers(R.drawable.img_barber, "Sargis", "077-77-77-77"));
         TopBarbersList.add(new TopBarbers(R.drawable.img_barber, "Sargis", "077-77-77-77"));
-
         setTopBarbersRecycler(TopBarbersList);
 
-        List<TopHaircuts> TopHaircutsList = new ArrayList<>();
         TopHaircutsList.add(new TopHaircuts(R.drawable.img_haircut, "The Textured Crop"));
         TopHaircutsList.add(new TopHaircuts(R.drawable.img_haircut, "The Textured Crop"));
         TopHaircutsList.add(new TopHaircuts(R.drawable.img_haircut, "The Textured Crop"));
         TopHaircutsList.add(new TopHaircuts(R.drawable.img_haircut, "The Textured Crop"));
         setTopHaircutsRecycler(TopHaircutsList);
+
+
     }
 
     private void setTopBarberShopsRecycler(List<TopBarberShops> topBarberShopsList) {
@@ -73,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
         topbarbersAdapter = new TopBarbersAdapter(this, topBarbersList);
         topbarbersRecycler.setAdapter(topbarbersAdapter);
     }
+
     private void setTopHaircutsRecycler(List<TopHaircuts> topHaircutsList) {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
 
@@ -82,4 +88,23 @@ public class MainActivity extends AppCompatActivity {
         tophaircutsAdapter = new TopHaircutsAdapter(this, topHaircutsList);
         tophaircutsRecycler.setAdapter(tophaircutsAdapter);
     }
+
+
+    private void navigateTo(Class<?> targetActivity) {
+        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
+                this,
+                findViewById(R.id.bottom_navigation),
+                "sharedImageTransition");
+        Intent intent = new Intent(this, targetActivity);
+        startActivity(intent, options.toBundle());
+    }
+
+    public void ToBarbers(View view) {
+        navigateTo(BarbersActivity.class);
+    }
+
+    public void ToHome(View view) {
+        navigateTo(MainActivity.class);
+    }
+
 }
