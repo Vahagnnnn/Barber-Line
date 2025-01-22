@@ -238,21 +238,18 @@
 
 
     <!-- Bottom Navigation -->
-    <FrameLayout
-        android:id="@+id/container_bottom"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:layout_gravity="bottom"
-        app:layout_constraintBottom_toBottomOf="parent">
+        android:layout_height="match_parent">
 
-        <!-- Home_Fill -->
+        <!-- Home -->
         <FrameLayout
-            android:id="@+id/container_home2"
+            android:id="@+id/container_home_fill"
             android:layout_width="49dp"
             android:layout_height="57dp"
-            android:layout_gravity="start"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="14dp">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
             <ImageView
                 android:id="@+id/img_home_fill"
@@ -267,9 +264,8 @@
                 android:id="@+id/txt_home"
                 android:layout_width="match_parent"
                 android:layout_height="24dp"
-                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="33dp"
-                android:gravity="start"
+                android:gravity="center_horizontal"
                 android:includeFontPadding="false"
                 android:maxLines="1"
                 android:singleLine="true"
@@ -278,19 +274,31 @@
                 android:textSize="16sp" />
         </FrameLayout>
 
+        <!-- Hairstyle (Center Element) -->
+        <ImageView
+            android:id="@+id/img_hairstyle"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:contentDescription="@string/app_name"
+            android:scaleType="centerInside"
+            android:src="@drawable/img_hairstyle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <!-- Book -->
         <FrameLayout
             android:id="@+id/container_book"
-            android:layout_width="41dp"
+            android:layout_width="49dp"
             android:layout_height="57dp"
-            android:layout_marginStart="90dp"
-            android:layout_marginTop="14dp">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/img_hairstyle"
+            app:layout_constraintStart_toEndOf="@id/container_home_fill">
 
             <ImageView
                 android:id="@+id/img_event"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_gravity="top"
                 android:layout_marginStart="5dp"
                 android:contentDescription="@string/app_name"
                 android:scaleType="centerInside"
@@ -301,7 +309,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="24dp"
                 android:layout_marginTop="33dp"
-                android:gravity="start"
                 android:includeFontPadding="false"
                 android:maxLines="1"
                 android:singleLine="true"
@@ -310,32 +317,20 @@
                 android:textSize="16sp" />
         </FrameLayout>
 
-        <!-- Hairstyle -->
-        <ImageView
-            android:id="@+id/img_hairstyle"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_gravity="bottom|center"
-            android:contentDescription="@string/app_name"
-            android:scaleType="centerInside"
-            android:src="@drawable/img_hairstyle" />
-
         <!-- Location -->
         <FrameLayout
             android:id="@+id/container_barber"
-            android:layout_width="65dp"
-            android:layout_height="59dp"
-            android:layout_gravity="bottom|right"
-            android:layout_marginEnd="75dp"
-            tools:ignore="RtlHardcoded">
+            android:layout_width="49dp"
+            android:layout_height="57dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/img_hairstyle"
+            app:layout_constraintEnd_toStartOf="@id/container_settings">
 
             <ImageView
                 android:id="@+id/img_location"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_gravity="center_vertical|left"
-                android:layout_marginLeft="13dp"
-                android:layout_marginBottom="14.5dp"
+                android:layout_marginStart="5dp"
                 android:contentDescription="@string/app_name"
                 android:scaleType="centerInside"
                 android:src="@drawable/img_location" />
@@ -344,9 +339,8 @@
                 android:id="@+id/txt_barbers"
                 android:layout_width="match_parent"
                 android:layout_height="24dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="35dp"
-                android:gravity="left|center_vertical"
+                android:layout_marginTop="33dp"
+                android:gravity="center_horizontal"
                 android:includeFontPadding="false"
                 android:maxLines="1"
                 android:singleLine="true"
@@ -355,22 +349,18 @@
                 android:textSize="16sp" />
         </FrameLayout>
 
-        <!-- Ssetting -->
+        <!-- Settings -->
         <FrameLayout
             android:id="@+id/container_settings"
-            android:layout_width="68dp"
-            android:layout_height="59dp"
-            android:layout_gravity="end"
-            android:layout_marginTop="14dp">
+            android:layout_width="49dp"
+            android:layout_height="57dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
             <ImageView
                 android:id="@+id/img_setting"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="19dp"
-                android:layout_marginRight="19dp"
-                android:layout_marginBottom="14.5dp"
                 android:contentDescription="@string/app_name"
                 android:scaleType="centerInside"
                 android:src="@drawable/img_setting" />
@@ -379,8 +369,8 @@
                 android:id="@+id/txt_settings"
                 android:layout_width="match_parent"
                 android:layout_height="24dp"
-                android:layout_marginTop="35dp"
-                android:gravity="left|center_vertical"
+                android:layout_marginTop="33dp"
+                android:gravity="center_horizontal"
                 android:includeFontPadding="false"
                 android:maxLines="1"
                 android:singleLine="true"
@@ -388,8 +378,7 @@
                 android:textColor="#FFFFFFFF"
                 android:textSize="16sp" />
         </FrameLayout>
-    </FrameLayout>
-
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
