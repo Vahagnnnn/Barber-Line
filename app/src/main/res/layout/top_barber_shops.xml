@@ -30,27 +30,25 @@
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="22dp"
+           android:layout_marginTop="10dp"
+            android:fontFamily="@font/poppins"
             android:text="@string/paragon"
+            android:gravity="center"
             android:textColor="@android:color/black"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/address"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="22dp"
+            android:gravity="center"
+            android:fontFamily="@font/poppins"
             android:text="@string/_9_ghazar_parpetsi_st_8"
             android:textColor="@android:color/black"
-            android:textSize="14sp" />
+            android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/open_from_08_30_to_23_30"
-            android:textColor="@android:color/black"
-            android:textSize="14sp" />
     </LinearLayout>
 
 

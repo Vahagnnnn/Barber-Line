@@ -11,7 +11,8 @@
     <FrameLayout
         android:id="@+id/container_vertical_card5"
         android:layout_width="165dp"
-        android:layout_height="175dp"
+        android:paddingBottom="7dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/frame_top_barbers">
 
         <ImageView
@@ -30,13 +31,14 @@
             android:layout_height="21dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="128dp"
-            android:gravity="center_vertical"
+            android:fontFamily="@font/poppins"
+            android:gravity="center"
             android:includeFontPadding="false"
             android:maxLines="1"
             android:singleLine="true"
             android:text="@string/sargis"
             android:textColor="#FF000000"
-            android:textSize="14sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/phone"
@@ -44,12 +46,13 @@
             android:layout_height="21dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="149dp"
-            android:gravity="center_vertical"
+            android:fontFamily="@font/poppins"
+            android:gravity="center"
             android:includeFontPadding="false"
             android:maxLines="1"
             android:singleLine="true"
             android:text="@string/_077_77_77_77"
             android:textColor="#FF000000"
-            android:textSize="14sp" />
+            android:textSize="16sp" />
     </FrameLayout>
 </LinearLayout>

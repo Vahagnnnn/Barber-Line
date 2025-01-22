@@ -11,7 +11,8 @@
     <FrameLayout
         android:id="@+id/container_vertical_card9"
         android:layout_width="165dp"
-        android:layout_height="165dp"
+        android:layout_height="wrap_content"
+        android:paddingBottom="7dp"
         android:background="@drawable/frame_top_barbers">
 
         <ImageView
@@ -28,15 +29,16 @@
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="21dp"
-            android:layout_marginTop="128dp"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="128dp"
+            android:fontFamily="@font/poppins"
             android:gravity="center_vertical"
             android:includeFontPadding="false"
             android:maxLines="1"
             android:singleLine="true"
             android:text="@string/the_textured_crop"
             android:textColor="#FF000000"
-            android:textSize="14sp" />
+            android:textSize="16sp" />
     </FrameLayout>
 
 </LinearLayout>

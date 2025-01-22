@@ -36,10 +36,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TopBarberShopsList.add(new TopBarberShops(R.drawable.img_paragon, "Paragon", "9 Ghazar Parpetsi St, 8", "Open from 08:30 to 23:30"));
-        TopBarberShopsList.add(new TopBarberShops(R.drawable.img_paragon, "Paragon", "9 Ghazar Parpetsi St, 8", "Open from 08:30 to 23:30"));
-        TopBarberShopsList.add(new TopBarberShops(R.drawable.img_paragon, "Paragon", "9 Ghazar Parpetsi St, 8", "Open from 08:30 to 23:30"));
-        TopBarberShopsList.add(new TopBarberShops(R.drawable.img_paragon, "Paragon", "9 Ghazar Parpetsi St, 8", "Open from 08:30 to 23:30"));
+        TopBarberShopsList.add(new TopBarberShops(R.drawable.img_paragon, "Paragon", "9 Ghazar Parpetsi St, 8"));
+        TopBarberShopsList.add(new TopBarberShops(R.drawable.img_paragon, "Paragon", "9 Ghazar Parpetsi St, 8"));
+        TopBarberShopsList.add(new TopBarberShops(R.drawable.img_paragon, "Paragon", "9 Ghazar Parpetsi St, 8"));
+        TopBarberShopsList.add(new TopBarberShops(R.drawable.img_paragon, "Paragon", "9 Ghazar Parpetsi St, 8"));
         setTopBarberShopsRecycler(TopBarberShopsList);
 
 

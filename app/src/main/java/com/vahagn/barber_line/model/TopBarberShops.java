@@ -2,13 +2,12 @@ package com.vahagn.barber_line.model;
 
 public class TopBarberShops {
     private final int imageResId;
-    private final String title, address, time;
+    private final String title, address;
 
-    public TopBarberShops(int imageResId, String title, String address, String time) {
+    public TopBarberShops(int imageResId, String title, String address) {
         this.imageResId = imageResId;
         this.title = title;
         this.address = address;
-        this.time = time;
     }
 
     public int getImageResId() {
@@ -21,9 +20,5 @@ public class TopBarberShops {
 
     public String getAddress() {
         return address;
-    }
-
-    public String getTime() {
-        return time;
     }
 }

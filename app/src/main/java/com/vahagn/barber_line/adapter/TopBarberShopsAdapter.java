@@ -39,7 +39,6 @@ public class TopBarberShopsAdapter extends RecyclerView.Adapter<TopBarberShopsAd
         TopBarberShops item = topbarbershops.get(position);
         holder.title.setText(item.getTitle());
         holder.address.setText(item.getAddress());
-        holder.time.setText(item.getTime());
         holder.imageView.setImageResource(item.getImageResId());
     }
 
@@ -50,7 +49,7 @@ public class TopBarberShopsAdapter extends RecyclerView.Adapter<TopBarberShopsAd
 
     public static final class TopBarberShopsViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
-        TextView title, address, time;
+        TextView title, address;
 
         public TopBarberShopsViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -58,7 +57,6 @@ public class TopBarberShopsAdapter extends RecyclerView.Adapter<TopBarberShopsAd
             imageView = itemView.findViewById(R.id.image);
             title = itemView.findViewById(R.id.title);
             address = itemView.findViewById(R.id.address);
-            time = itemView.findViewById(R.id.time);
         }
     }
 
