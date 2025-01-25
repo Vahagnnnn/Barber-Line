@@ -24,7 +24,9 @@
 
         <TextView
             android:id="@+id/Barber_Line_Text"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="@font/poppins_bold"
@@ -33,18 +35,14 @@
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-
         <ImageButton
             android:id="@+id/profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="#00FFFFFF"
+            android:layout_gravity="center_vertical|end"
             android:contentDescription="@string/app_name"
+            android:onClick="ToLogin"
             android:src="@drawable/profile" />
     </LinearLayout>
 

@@ -1,5 +1,7 @@
 package com.vahagn.barber_line.model;
 
+import android.util.Log;
+
 public class TopBarberShops {
     private final int imageResId;
     private final String title, address;

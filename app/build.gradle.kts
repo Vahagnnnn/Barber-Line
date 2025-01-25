@@ -1,7 +1,8 @@
 plugins {
-    alias(libs.plugins.android.application)
-
+    id("com.android.application") version "8.8.0"
+    id("com.google.gms.google-services") version "4.4.2"
 }
+
 
 android {
     namespace = "com.vahagn.barber_line"
@@ -33,11 +34,17 @@ android {
 }
 
 dependencies {
+    implementation("com.google.firebase:firebase-analytics:22.2.0")
+    implementation("com.google.firebase:firebase-auth:23.1.0")
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.auth)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 }
+
+

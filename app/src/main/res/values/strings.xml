@@ -18,4 +18,9 @@
     <string name="the_textured_crop">The Textured Crop</string>
     <string name="top_haircuts">Top Haircuts</string>
     <string name="PARAGON">PARAGON</string>
+    <string name="log_in">Log in</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
 </resources>

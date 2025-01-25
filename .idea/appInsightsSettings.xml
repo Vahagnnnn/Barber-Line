@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.vahagn.barber_line" />
+                  <option name="mobileSdkAppId" value="1:492134639446:android:dd9f16e7a0b63736fc18f7" />
+                  <option name="projectId" value="barber-line" />
+                  <option name="projectNumber" value="492134639446" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

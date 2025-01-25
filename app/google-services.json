@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "492134639446",
+    "project_id": "barber-line",
+    "storage_bucket": "barber-line.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:492134639446:android:dd9f16e7a0b63736fc18f7",
+        "android_client_info": {
+          "package_name": "com.vahagn.barber_line"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8X3E-0kHSHbfhb9UFhE_JrhbkR3qKGhU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
