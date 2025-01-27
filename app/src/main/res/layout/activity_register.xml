@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegisterActivity">
+    tools:context=".Activities.RegisterActivity">
 
     <LinearLayout
         android:id="@+id/container_login"
@@ -32,8 +32,8 @@
 
             <ImageButton
                 android:id="@+id/container_frame2"
-                android:layout_width="44dp"
-                android:layout_height="44dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:background="@drawable/img_back_home"
                 android:contentDescription="@string/app_name"
                 android:onClick="ToHome"
@@ -94,7 +94,7 @@
                 <EditText
                     android:id="@+id/name"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="48dp"
                     android:autofillHints="Name"
                     android:background="@android:color/transparent"
                     android:gravity="center_vertical"
@@ -124,7 +124,7 @@
                 <EditText
                     android:id="@+id/phone"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="48dp"
                     android:autofillHints="Phone Number"
                     android:background="@android:color/transparent"
                     android:gravity="center_vertical"
@@ -136,34 +136,34 @@
             </LinearLayout>
 
             <!-- Verification Code Section -->
-            <LinearLayout
-                android:id="@+id/container_text_field3"
-                android:layout_width="327dp"
-                android:layout_height="48dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/input"
-                android:clipToPadding="false"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingLeft="16dp"
-                android:paddingTop="12dp"
-                android:paddingRight="16dp"
-                android:paddingBottom="12dp">
+<!--            <LinearLayout-->
+<!--                android:id="@+id/container_text_field3"-->
+<!--                android:layout_width="327dp"-->
+<!--                android:layout_height="48dp"-->
+<!--                android:layout_gravity="center_horizontal"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:background="@drawable/input"-->
+<!--                android:clipToPadding="false"-->
+<!--                android:gravity="center_vertical"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:paddingLeft="16dp"-->
+<!--                android:paddingTop="12dp"-->
+<!--                android:paddingRight="16dp"-->
+<!--                android:paddingBottom="12dp">-->
 
-                <EditText
-                    android:id="@+id/verification_code"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:autofillHints="Phone Number"
-                    android:background="@android:color/transparent"
-                    android:gravity="center_vertical"
-                    android:hint="@string/enter_verification_code"
-                    android:inputType="phone"
-                    android:textColor="@android:color/white"
-                    android:textColorHint="#FF8F9098"
-                    android:textSize="14sp" />
-            </LinearLayout>
+<!--                <EditText-->
+<!--                    android:id="@+id/verification_code"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:autofillHints="Phone Number"-->
+<!--                    android:background="@android:color/transparent"-->
+<!--                    android:gravity="center_vertical"-->
+<!--                    android:hint="@string/enter_verification_code"-->
+<!--                    android:inputType="phone"-->
+<!--                    android:textColor="@android:color/white"-->
+<!--                    android:textColorHint="#FF8F9098"-->
+<!--                    android:textSize="14sp" />-->
+<!--            </LinearLayout>-->
 
             <!-- Password Section -->
             <LinearLayout
@@ -183,11 +183,11 @@
                 <EditText
                     android:id="@+id/password"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="48dp"
                     android:layout_weight="1"
                     android:autofillHints="Password"
                     android:background="@android:color/transparent"
-                    android:gravity="center_vertical"
+                    android:layout_gravity="center"
                     android:hint="@string/password"
                     android:inputType="textPassword"
                     android:textColor="@android:color/white"
@@ -204,14 +204,13 @@
                     android:src="@drawable/img_password_icon" />
             </LinearLayout>
 
-            <!-- Login Button -->
+            <!-- Register Button -->
             <FrameLayout
-                android:id="@+id/login_button"
+                android:id="@+id/register_button"
                 android:layout_width="327dp"
                 android:layout_height="48dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="24dp"
-                android:onClick="registration_button"
                 android:textSize="12sp">
 
                 <ImageView
@@ -229,7 +228,6 @@
                     android:layout_gravity="center"
                     android:fontFamily="@font/poppins_bold"
                     android:gravity="center"
-                    android:onClick="registration_button"
                     android:singleLine="true"
                     android:text="@string/register"
                     android:textColor="#FFFFFFFF"

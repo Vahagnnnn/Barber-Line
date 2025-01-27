@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.vahagn.barber_line.R;
-import com.vahagn.barber_line.FirebaseDatabaseClasses.BarberShops;
+import com.vahagn.barber_line.Firebase.BarberShops;
 
 import java.util.List;
 
