@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                     BarberShopsDetail shop = snapshot.getValue(BarberShopsDetail.class);
                     int imageResId = getResources().getIdentifier(shop.getImage(), "drawable", getPackageName());
                     TopBarberShopsList.add(new BarberShops(imageResId, shop.getName(), shop.getAddress()));
-                    Log.d("Firebase", "Barber Shop: " + shop.getName() + ", Address: " + shop.getAddress()+ ", imageResId: " + imageResId);
+//                    Log.d("Firebase", "Barber Shop: " + shop.getName() + ", Address: " + shop.getAddress()+ ", imageResId: " + imageResId);
                 }
                 setTopBarberShopsRecycler(TopBarberShopsList);
             }
