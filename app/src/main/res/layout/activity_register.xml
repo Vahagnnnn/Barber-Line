@@ -199,6 +199,7 @@
                     android:layout_gravity="center"
                     android:fontFamily="@font/poppins_bold"
                     android:gravity="center"
+                    android:onClick="registration_button"
                     android:singleLine="true"
                     android:text="@string/register"
                     android:textColor="#FFFFFFFF"
@@ -207,7 +208,7 @@
 
             <!-- Click to Register Text -->
             <TextView
-                android:id="@+id/click_to_register"
+                android:id="@+id/click_to_login"
                 android:layout_width="327dp"
                 android:layout_height="16dp"
                 android:layout_gravity="center_horizontal"
@@ -217,7 +218,7 @@
                 android:includeFontPadding="false"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:text="@string/login"
+                android:text="@string/click_to_login"
                 android:textColor="#FF006FFD"
                 android:textSize="12sp" />
 

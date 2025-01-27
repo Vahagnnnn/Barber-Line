@@ -288,7 +288,7 @@
                 android:id="@+id/img_home_fill"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginStart="9dp"
+                android:layout_gravity="center_horizontal"
                 android:contentDescription="@string/app_name"
                 android:scaleType="centerInside"
                 android:src="@drawable/img_home_fill" />
@@ -332,7 +332,7 @@
                 android:id="@+id/img_event"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginStart="9dp"
+                android:layout_gravity="center_horizontal"
                 android:contentDescription="@string/app_name"
                 android:scaleType="centerInside"
                 android:src="@drawable/img_book" />
@@ -365,7 +365,7 @@
                 android:id="@+id/img_location"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginStart="12dp"
+                android:layout_gravity="center_horizontal"
                 android:contentDescription="@string/app_name"
                 android:scaleType="centerInside"
                 android:src="@drawable/img_location" />
@@ -390,6 +390,7 @@
             android:layout_width="wrap_content"
             android:layout_height="57dp"
             android:layout_marginEnd="15dp"
+            android:onClick="ToSettings"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
@@ -397,8 +398,8 @@
                 android:id="@+id/img_setting"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginStart="13dp"
                 android:contentDescription="@string/app_name"
+                android:layout_gravity="center_horizontal"
                 android:scaleType="centerInside"
                 android:src="@drawable/img_setting" />
 

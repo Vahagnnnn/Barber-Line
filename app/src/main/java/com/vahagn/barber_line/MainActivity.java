@@ -113,6 +113,9 @@ public class MainActivity extends AppCompatActivity {
     public void ToLogin(View view) {
         navigateTo(LoginActivity.class);
     }
+    public void ToSettings(View view) {
+        navigateTo(SettingsActivity.class);
+    }
 
     void storeDataInArrays() {
         Cursor cursor = myDB.readAllData();

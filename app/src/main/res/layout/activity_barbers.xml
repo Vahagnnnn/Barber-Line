@@ -24,27 +24,26 @@
 
         <TextView
             android:id="@+id/Barber_Line_Text"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_weight="1"
             android:fontFamily="@font/poppins_bold"
+            android:gravity="center_vertical"
             android:text="@string/Barber_Line"
             android:textColor="@color/white"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-
         <ImageButton
             android:id="@+id/profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|end"
             android:backgroundTint="#00FFFFFF"
             android:contentDescription="@string/app_name"
+            android:onClick="ToLogin"
             android:src="@drawable/profile" />
     </LinearLayout>
 
@@ -154,7 +153,7 @@
                 android:id="@+id/img_home_fill"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginStart="9dp"
+                android:layout_gravity="center_horizontal"
                 android:contentDescription="@string/app_name"
                 android:scaleType="centerInside"
                 android:src="@drawable/img_home" />
@@ -198,7 +197,7 @@
                 android:id="@+id/img_event"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginStart="9dp"
+                android:layout_gravity="center_horizontal"
                 android:contentDescription="@string/app_name"
                 android:scaleType="centerInside"
                 android:src="@drawable/img_book" />
@@ -230,7 +229,7 @@
                 android:id="@+id/img_location"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginStart="12dp"
+                android:layout_gravity="center_horizontal"
                 android:contentDescription="@string/app_name"
                 android:scaleType="centerInside"
                 android:src="@drawable/img_location_fill" />
@@ -255,6 +254,7 @@
             android:layout_width="wrap_content"
             android:layout_height="57dp"
             android:layout_marginEnd="15dp"
+            android:onClick="ToSettings"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
@@ -262,7 +262,7 @@
                 android:id="@+id/img_setting"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginStart="13dp"
+                android:layout_gravity="center_horizontal"
                 android:contentDescription="@string/app_name"
                 android:scaleType="centerInside"
                 android:src="@drawable/img_setting" />

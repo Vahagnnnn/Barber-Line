@@ -96,6 +96,12 @@ public class BarbersActivity extends AppCompatActivity {
     public void ToHome(View view) {
         navigateTo(MainActivity.class);
     }
+    public void ToLogin(View view) {
+        navigateTo(LoginActivity.class);
+    }
+    public void ToSettings(View view) {
+        navigateTo(SettingsActivity.class);
+    }
     private void navigateTo(Class<?> targetActivity) {
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
                 this,
