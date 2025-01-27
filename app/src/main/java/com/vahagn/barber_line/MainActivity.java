@@ -48,9 +48,6 @@ public class MainActivity extends AppCompatActivity {
         shop_address = new ArrayList<>();
         shop_images = new ArrayList<>();
 
-        storeDataInArrays();
-
-
         TopBarbersList.add(new TopBarbers(R.drawable.img_barber, "Sargis", "077-77-77-77"));
         TopBarbersList.add(new TopBarbers(R.drawable.img_barber, "Sargis", "077-77-77-77"));
         TopBarbersList.add(new TopBarbers(R.drawable.img_barber, "Sargis", "077-77-77-77"));
@@ -117,36 +114,5 @@ public class MainActivity extends AppCompatActivity {
         navigateTo(SettingsActivity.class);
     }
 
-    void storeDataInArrays() {
-        Cursor cursor = myDB.readAllData();
-        if (cursor.getCount() == 0) {
-            Toast.makeText(this, "NO", Toast.LENGTH_SHORT).show();
-        } else {
-            while (cursor.moveToNext()) {
-                shop_name.add(cursor.getString(1));
-                shop_address.add(cursor.getString(2));
-                shop_images.add(cursor.getString(8));
-            }
-        }
-        cursor.close();
-        ShowBarberShops();
-    }
 
-    private void ShowBarberShops() {
-        LinearLayout secondActivityContainer = findViewById(R.id.barbers_list);
-
-        for (int i = 0; i < shop_name.size(); i++) {
-            String name = shop_name.get(i);
-            String address = shop_address.get(i);
-            String imageName = shop_images.get(i);
-
-            int resourceId = getResources().getIdentifier(imageName, "drawable", getPackageName());
-
-            TopBarberShopsList.add(new TopBarberShops(resourceId, name, address));
-
-        }
-        setTopBarberShopsRecycler(TopBarberShopsList);
-
-//        TopBarberShopsList.add(new TopBarberShops(R.drawable.img_paragon, "Paragon", "9 Ghazar Parpetsi St, 8"));
-    }
 }

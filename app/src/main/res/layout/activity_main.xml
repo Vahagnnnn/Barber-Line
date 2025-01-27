@@ -398,8 +398,8 @@
                 android:id="@+id/img_setting"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:contentDescription="@string/app_name"
                 android:layout_gravity="center_horizontal"
+                android:contentDescription="@string/app_name"
                 android:scaleType="centerInside"
                 android:src="@drawable/img_setting" />
 
