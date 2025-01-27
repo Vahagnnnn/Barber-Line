@@ -44,7 +44,7 @@ public class RegisterActivity extends AppCompatActivity {
         click_to_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToLogin(v);
+                ToLogin();
             }
         });
     }
@@ -64,6 +64,8 @@ public class RegisterActivity extends AppCompatActivity {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Toast.makeText(this, "Registration successful!", Toast.LENGTH_SHORT).show();
+                        ToLogin();
+                        finish();
                     } else {
                         Toast.makeText(this, "Registration failed! Try again.", Toast.LENGTH_SHORT).show();
                     }
@@ -74,8 +76,9 @@ public class RegisterActivity extends AppCompatActivity {
         navigateTo(MainActivity.class);
     }
 
-    public void ToLogin(View view) {
+    public void ToLogin() {
         navigateTo(LoginActivity.class);
+        finish();
     }
 
     private void navigateTo(Class<?> targetActivity) {
