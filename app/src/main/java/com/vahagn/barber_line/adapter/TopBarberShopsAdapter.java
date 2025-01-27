@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.vahagn.barber_line.R;
-import com.vahagn.barber_line.model.TopBarberShops;
+import com.vahagn.barber_line.FirebaseDatabaseClasses.BarberShops;
 
 import java.util.List;
 
@@ -20,9 +20,9 @@ public class TopBarberShopsAdapter extends RecyclerView.Adapter<TopBarberShopsAd
 
 
     Context context;
-    List<TopBarberShops> topbarbershops;
+    List<BarberShops> topbarbershops;
 
-    public TopBarberShopsAdapter(Context context, List<TopBarberShops> topbarbershops) {
+    public TopBarberShopsAdapter(Context context, List<BarberShops> topbarbershops) {
         this.context = context;
         this.topbarbershops = topbarbershops;
     }
@@ -36,8 +36,8 @@ public class TopBarberShopsAdapter extends RecyclerView.Adapter<TopBarberShopsAd
 
     @Override
     public void onBindViewHolder(@NonNull TopBarberShopsAdapter.TopBarberShopsViewHolder holder, int position) {
-        TopBarberShops item = topbarbershops.get(position);
-        holder.title.setText(item.getTitle());
+        BarberShops item = topbarbershops.get(position);
+        holder.title.setText(item.getName());
         holder.address.setText(item.getAddress());
         holder.imageView.setImageResource(item.getImageResId());
     }

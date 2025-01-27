@@ -3,21 +3,24 @@ package com.vahagn.barber_line;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.vahagn.barber_line.FirebaseDatabaseClasses.BarberShopsDetail;
 import com.vahagn.barber_line.adapter.TopBarberShopsAdapter;
 import com.vahagn.barber_line.adapter.TopBarbersAdapter;
 import com.vahagn.barber_line.adapter.TopHaircutsAdapter;
-import com.vahagn.barber_line.database.BarberLineDatabaseHelper;
-import com.vahagn.barber_line.model.TopBarberShops;
+import com.vahagn.barber_line.FirebaseDatabaseClasses.BarberShops;
 import com.vahagn.barber_line.model.TopBarbers;
 import com.vahagn.barber_line.model.TopHaircuts;
 
@@ -31,22 +34,44 @@ public class MainActivity extends AppCompatActivity {
     TopBarbersAdapter topbarbersAdapter;
     TopHaircutsAdapter tophaircutsAdapter;
 
-    List<TopBarberShops> TopBarberShopsList = new ArrayList<>();
+    List<BarberShops> TopBarberShopsList = new ArrayList<>();
     List<TopBarbers> TopBarbersList = new ArrayList<>();
     List<TopHaircuts> TopHaircutsList = new ArrayList<>();
 
-    BarberLineDatabaseHelper myDB;
-    ArrayList<String> shop_name, shop_address, shop_images;
+    DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("topBarberShops");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        myDB = new BarberLineDatabaseHelper(this);
-        shop_name = new ArrayList<>();
-        shop_address = new ArrayList<>();
-        shop_images = new ArrayList<>();
+//        myRef.push().setValue(new TopBarberShops(R.drawable.img_paragon, "Paragon", "9 Ghazar Parpetsi St, 8"));
+
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                TopBarberShopsList.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    BarberShopsDetail shop = snapshot.getValue(BarberShopsDetail.class);
+                    int imageResId = getResources().getIdentifier(shop.getImage(), "drawable", getPackageName());
+                    TopBarberShopsList.add(new BarberShops(imageResId, shop.getName(), shop.getAddress()));
+                    Log.d("Firebase", "Barber Shop: " + shop.getName() + ", Address: " + shop.getAddress()+ ", imageResId: " + imageResId);
+                }
+                setTopBarberShopsRecycler(TopBarberShopsList);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w("Firebase", "Failed to read value.", databaseError.toException());
+            }
+        });
+
+
+//        TopBarberShopsList.add(new TopBarberShops(R.drawable.img_paragon, "Paragon", "9 Ghazar Parpetsi St, 8"));
+//        TopBarberShopsList.add(new TopBarberShops(R.drawable.img_paragon, "Paragon", "9 Ghazar Parpetsi St, 8"));
+//        TopBarberShopsList.add(new TopBarberShops(R.drawable.img_paragon, "Paragon", "9 Ghazar Parpetsi St, 8"));
+//        TopBarberShopsList.add(new TopBarberShops(R.drawable.img_paragon, "Paragon", "9 Ghazar Parpetsi St, 8"));
+//        setTopBarberShopsRecycler(TopBarberShopsList);
 
         TopBarbersList.add(new TopBarbers(R.drawable.img_barber, "Sargis", "077-77-77-77"));
         TopBarbersList.add(new TopBarbers(R.drawable.img_barber, "Sargis", "077-77-77-77"));
@@ -63,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void setTopBarberShopsRecycler(List<TopBarberShops> topBarberShopsList) {
+    private void setTopBarberShopsRecycler(List<BarberShops> topBarberShopsList) {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
 
         topbarbershopsRecycler = findViewById(R.id.top_barber_shops_Recycler);
@@ -107,9 +132,11 @@ public class MainActivity extends AppCompatActivity {
     public void ToBarbers(View view) {
         navigateTo(BarbersActivity.class);
     }
+
     public void ToLogin(View view) {
         navigateTo(LoginActivity.class);
     }
+
     public void ToSettings(View view) {
         navigateTo(SettingsActivity.class);
     }
