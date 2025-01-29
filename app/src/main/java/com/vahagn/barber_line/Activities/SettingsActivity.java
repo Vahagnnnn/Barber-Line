@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
@@ -17,7 +18,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.vahagn.barber_line.R;
 
 public class SettingsActivity extends AppCompatActivity {
-    TextView logout_button,nameText, phoneNumberText;
+    TextView logout_button, nameText, emailText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,15 +26,28 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
         logout_button = findViewById(R.id.logout_button);
 
-        nameText = findViewById(R.id.name_text);
-        phoneNumberText = findViewById(R.id.phoneNumber_text);
+        nameText = findViewById(R.id.name);
+        emailText = findViewById(R.id.email);
 
-        SharedPreferences sharedPreferences = getSharedPreferences("UserInfromation", MODE_PRIVATE);
-        String name = sharedPreferences.getString("name", "User");
-        String phone = sharedPreferences.getString("phone", " ");
-
+        SharedPreferences sharedPreferences = getSharedPreferences("UserInformation", MODE_PRIVATE);
+        String name = sharedPreferences.getString("password", " ");
+        String email = sharedPreferences.getString("email", " ");
+//        Log.e("SharedPreferences", "Email: " + name + ", Password: " + email);
         nameText.setText(name);
-        phoneNumberText.setText(phone);
+        emailText.setText(email);
+        logout_button.setOnClickListener(view -> logOut());
+    }
+
+    public void logOut() {
+        FirebaseAuth.getInstance().signOut();
+        SharedPreferences sharedPreferences = getSharedPreferences("UserInfromation", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
+        Toast.makeText(SettingsActivity.this, "You have been logged out.", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void navigateTo(Class<?> targetActivity) {

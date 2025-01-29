@@ -74,7 +74,7 @@
                 android:textColor="#FFFFFFFF"
                 android:textSize="27sp" />
 
-            <!-- Phone Number Section -->
+            <!-- Email Section -->
             <LinearLayout
                 android:id="@+id/container_text_field1"
                 android:layout_width="327dp"
@@ -91,14 +91,14 @@
                 android:paddingBottom="12dp">
 
                 <EditText
-                    android:id="@+id/phone"
+                    android:id="@+id/email"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:autofillHints="Phone Number"
+                    android:layout_height="48dp"
+                    android:autofillHints="Name"
                     android:background="@android:color/transparent"
                     android:gravity="center_vertical"
-                    android:hint="@string/phone_number"
-                    android:inputType="phone"
+                    android:hint="@string/enter_your_email"
+                    android:inputType="text"
                     android:textColor="@android:color/white"
                     android:textColorHint="#FF8F9098"
                     android:textSize="14sp" />
@@ -106,11 +106,10 @@
 
             <!-- Password Section -->
             <LinearLayout
-                android:id="@+id/container_text_field2"
                 android:layout_width="327dp"
                 android:layout_height="48dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/input"
                 android:clipToPadding="false"
                 android:orientation="horizontal"
@@ -122,19 +121,18 @@
                 <EditText
                     android:id="@+id/password"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center"
                     android:layout_weight="1"
                     android:autofillHints="Password"
                     android:background="@android:color/transparent"
-                    android:gravity="center_vertical"
-                    android:hint="@string/password"
+                    android:hint="@string/enter_your_password"
                     android:inputType="textPassword"
                     android:textColor="@android:color/white"
                     android:textColorHint="#FF8F9098"
                     android:textSize="14sp" />
 
                 <ImageView
-                    android:id="@+id/image_password_icon"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center_vertical|end"

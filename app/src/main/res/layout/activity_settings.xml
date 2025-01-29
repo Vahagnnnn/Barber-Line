@@ -73,7 +73,7 @@
             android:src="@drawable/img_avatar" />
 
         <TextView
-            android:id="@+id/name_text"
+            android:id="@+id/name"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_bold"
@@ -83,8 +83,8 @@
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/phoneNumber_text"
-            android:layout_width="200dp"
+            android:id="@+id/email"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_bold"
             android:gravity="center"

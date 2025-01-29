@@ -39,4 +39,7 @@
     <string name="language">Language</string>
     <string name="english">English</string>
     <string name="remove_account">Remove account</string>
+    <string name="enter_your_email">Enter your email</string>
+    <string name="confirm_your_password">Confirm your password</string>
+    <string name="enter_your_password">Enter your password</string>
 </resources>

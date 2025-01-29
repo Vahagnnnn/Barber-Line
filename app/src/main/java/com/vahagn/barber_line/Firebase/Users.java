@@ -1,14 +1,13 @@
 package com.vahagn.barber_line.Firebase;
 
 public class Users {
-    public String name, phone, password;
+    public String email, password;
 
     public Users() {
     }
 
-    public Users(String name, String phone, String password) {
-        this.name = name;
-        this.phone = phone;
+    public Users(String email, String password) {
+        this.email = email;
         this.password = password;
     }
 }
