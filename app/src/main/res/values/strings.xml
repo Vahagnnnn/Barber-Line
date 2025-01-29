@@ -42,4 +42,11 @@
     <string name="enter_your_email">Enter your email</string>
     <string name="confirm_your_password">Confirm your password</string>
     <string name="enter_your_password">Enter your password</string>
+    <string name="_5_0">5.0 ★★★★★</string>
+    <string name="_1_547">(1,547)</string>
+    <string name="specialists">Specialists</string>
+    <string name="reviews">Reviews</string>
+    <string name="services">Services</string>
+    <string name="sargis_xachatryan">Sargis Xachatryan</string>
+    <string name="_5_0s">5.0</string>
 </resources>

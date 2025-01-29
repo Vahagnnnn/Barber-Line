@@ -323,6 +323,7 @@
         <FrameLayout
             android:id="@+id/container_book"
             android:layout_width="49dp"
+            android:onClick="To"
             android:layout_height="57dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/img_hairstyle"

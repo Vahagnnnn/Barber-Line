@@ -133,6 +133,9 @@ public class MainActivity extends AppCompatActivity {
     public void ToBarbers(View view) {
         navigateTo(BarbersActivity.class);
     }
+    public void To(View view) {
+        navigateTo(BarberShopsAboutActivity.class);
+    }
 
     public void ToLogin(View view) {
         navigateTo(LoginActivity.class);

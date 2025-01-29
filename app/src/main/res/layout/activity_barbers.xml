@@ -48,8 +48,6 @@
     </LinearLayout>
 
     <!-- Search Bar Section -->
-
-
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nested_scroll_view"
         android:layout_width="match_parent"
@@ -128,7 +126,6 @@
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-
 
     <!-- Bottom Navigation -->
     <androidx.constraintlayout.widget.ConstraintLayout

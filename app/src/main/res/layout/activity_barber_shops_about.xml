@@ -1,0 +1,670 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#242C3B"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    tools:context=".Activities.BarberShopsAboutActivity">
+
+    <!-- Barber Image -->
+    <ImageView
+        android:id="@+id/barber_image"
+        android:layout_width="match_parent"
+        android:layout_height="243dp"
+        android:contentDescription="@string/app_name"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_paragon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Back Section -->
+    <FrameLayout
+        android:id="@+id/back_section"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/white_circle"
+            android:contentDescription="@string/app_name"
+            android:scaleType="centerInside" />
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/app_name"
+            android:scaleType="centerInside"
+            android:src="@drawable/img_arrow" />
+    </FrameLayout>
+
+    <!-- Like Section -->
+    <FrameLayout
+        android:id="@+id/like_section"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="13dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/white_circle"
+            android:contentDescription="@string/app_name"
+            android:scaleType="centerInside" />
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="1dp"
+            android:contentDescription="@string/app_name"
+            android:scaleType="centerInside"
+            android:src="@drawable/img_heart" />
+    </FrameLayout>
+
+    <!-- Information Section-->
+    <FrameLayout
+        android:id="@+id/info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/barber_image">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Barber Name -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/plus_jakarta_sans_extrabold"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:text="@string/paragon"
+                android:textColor="#FFFFFFFF"
+                android:textSize="32sp" />
+
+            <!-- Rating Section -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:clipToPadding="false"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/img_star" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="21dp"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:text="@string/_5_0"
+                    android:textColor="#FFFFFFFF"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="21dp"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:text="@string/_1_547"
+                    android:textColor="#FFFFFFFF"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- Location Section -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:clipToPadding="false"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/img_location_small" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="21dp"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:text="@string/_9_ghazar_parpetsi_st_8"
+                    android:textColor="#FFFFFFFF"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+
+    <!-- Category Section-->
+    <FrameLayout
+        android:id="@+id/category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/info">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:orientation="horizontal">
+
+            <!-- Specialists Section -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/white_bg"
+                android:clipToPadding="false"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingLeft="16dp"
+                android:paddingTop="7.5dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="7.5dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/about" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="21dp"
+                    android:layout_marginStart="4dp"
+                    android:fontFamily="@font/plus_jakarta_sans_extrabold"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text="@string/specialists"
+                    android:textColor="#FF363062"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <!-- Services Section -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:clipToPadding="false"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingLeft="16dp"
+                android:paddingTop="7.5dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="7.5dp">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/drawable_image_14" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="21dp"
+                    android:layout_marginStart="4dp"
+                    android:fontFamily="@font/plus_jakarta_sans_extrabold"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text="@string/services"
+                    android:textColor="#FF8683A1"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <!-- Reviews Section -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:clipToPadding="false"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingLeft="16dp"
+                android:paddingTop="7.5dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="7.5dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/star_xml" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="21dp"
+                    android:layout_marginStart="4dp"
+                    android:fontFamily="@font/plus_jakarta_sans_extrabold"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text="@string/reviews"
+                    android:textColor="#FF8683A1"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+
+    <!-- Specialists Section-->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/category">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:paddingTop="0.5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="21dp"
+                android:fontFamily="@font/plus_jakarta_sans_semibold"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="@string/specialists"
+                android:textColor="#FFFFFFFF"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:clipToPadding="false"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp">
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="46dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="23dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="54dp"
+                        android:layout_marginTop="0.5dp"
+                        android:fontFamily="@font/plus_jakarta_sans_semibold"
+                        android:includeFontPadding="false"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:text="@string/sargis_xachatryan"
+                        android:textColor="#FFFFFFFF"
+                        android:textSize="18sp" />
+
+                    <ImageView
+                        android:layout_width="46dp"
+                        android:layout_height="46dp"
+                        android:contentDescription="@string/app_name"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/img_barber" />
+                </FrameLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:contentDescription="@string/app_name"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/img_star" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="18dp"
+                        android:layout_marginStart="8dp"
+                        android:fontFamily="@font/plus_jakarta_sans_semibold"
+                        android:includeFontPadding="false"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:text="@string/_5_0s"
+                        android:textColor="#FF6B7280"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:clipToPadding="false"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp">
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="46dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="23dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="54dp"
+                        android:layout_marginTop="0.5dp"
+                        android:includeFontPadding="false"
+                        android:fontFamily="@font/plus_jakarta_sans_semibold"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:text="@string/sargis_xachatryan"
+                        android:textColor="#FFFFFFFF"
+                        android:textSize="18sp" />
+
+                    <ImageView
+                        android:layout_width="46dp"
+                        android:layout_height="46dp"
+                        android:contentDescription="@string/app_name"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/img_barber" />
+                </FrameLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:contentDescription="@string/app_name"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/img_star" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="18dp"
+                        android:layout_marginStart="8dp"
+                        android:includeFontPadding="false"
+                        android:fontFamily="@font/plus_jakarta_sans_semibold"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:text="@string/_5_0s"
+                        android:textColor="#FF6B7280"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:clipToPadding="false"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp">
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="46dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="23dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="54dp"
+                        android:layout_marginTop="0.5dp"
+                        android:includeFontPadding="false"
+                        android:fontFamily="@font/plus_jakarta_sans_semibold"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:text="@string/sargis_xachatryan"
+                        android:textColor="#FFFFFFFF"
+                        android:textSize="18sp" />
+
+                    <ImageView
+                        android:layout_width="46dp"
+                        android:layout_height="46dp"
+                        android:contentDescription="@string/app_name"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/img_barber" />
+                </FrameLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:contentDescription="@string/app_name"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/img_star" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="18dp"
+                        android:layout_marginStart="8dp"
+                        android:includeFontPadding="false"
+                        android:fontFamily="@font/plus_jakarta_sans_semibold"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:text="@string/_5_0s"
+                        android:textColor="#FF6B7280"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </FrameLayout>
+
+
+    <!-- Bottom Navigation -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/dark_blue"
+        android:transitionName="sharedImageTransition"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <!-- Home -->
+        <FrameLayout
+            android:id="@+id/container_home_fill"
+            android:layout_width="49dp"
+            android:layout_height="57dp"
+            android:layout_marginStart="17dp"
+            android:onClick="ToHome"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageView
+                android:id="@+id/img_home_fill"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="@string/app_name"
+                android:scaleType="centerInside"
+                android:src="@drawable/img_home" />
+
+            <TextView
+                android:id="@+id/txt_home"
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:layout_marginTop="33dp"
+                android:gravity="center_horizontal"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="@string/home"
+                android:textColor="#FFFFFFFF"
+                android:textSize="16sp" />
+        </FrameLayout>
+
+        <!-- Hairstyle (Center Element) -->
+        <ImageView
+            android:id="@+id/img_hairstyle"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:contentDescription="@string/app_name"
+            android:scaleType="centerInside"
+            android:src="@drawable/img_hairstyle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <!-- Book -->
+        <FrameLayout
+            android:id="@+id/container_book"
+            android:layout_width="49dp"
+            android:layout_height="57dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/img_hairstyle"
+            app:layout_constraintStart_toEndOf="@id/container_home_fill">
+
+            <ImageView
+                android:id="@+id/img_event"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="@string/app_name"
+                android:scaleType="centerInside"
+                android:src="@drawable/img_book" />
+
+            <TextView
+                android:id="@+id/txt_book"
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:layout_marginTop="33dp"
+                android:gravity="center_horizontal"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="@string/book"
+                android:textColor="#FFFFFFFF"
+                android:textSize="16sp" />
+        </FrameLayout>
+
+        <!-- Location -->
+        <FrameLayout
+            android:id="@+id/container_barber"
+            android:layout_width="wrap_content"
+            android:layout_height="57dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/container_settings"
+            app:layout_constraintStart_toEndOf="@id/img_hairstyle">
+
+            <ImageView
+                android:id="@+id/img_location"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="@string/app_name"
+                android:scaleType="centerInside"
+                android:src="@drawable/img_location_fill" />
+
+            <TextView
+                android:id="@+id/txt_barbers"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_marginTop="33dp"
+                android:gravity="center_horizontal"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="@string/barbers"
+                android:textColor="#FFFFFFFF"
+                android:textSize="16sp" />
+        </FrameLayout>
+
+        <!-- Settings -->
+        <FrameLayout
+            android:id="@+id/container_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="57dp"
+            android:layout_marginEnd="15dp"
+            android:onClick="ToSettings"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                android:id="@+id/img_setting"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="@string/app_name"
+                android:scaleType="centerInside"
+                android:src="@drawable/img_setting" />
+
+            <TextView
+                android:id="@+id/txt_settings"
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:layout_marginTop="33dp"
+                android:gravity="center_horizontal"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="@string/settings"
+                android:textColor="#FFFFFFFF"
+                android:textSize="16sp" />
+        </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
