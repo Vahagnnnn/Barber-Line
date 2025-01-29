@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
         android:allowBackup="true"
@@ -26,6 +27,7 @@
         <activity
             android:name=".Activities.BarbersActivity"
             android:exported="false" />
+        <activity android:name=".Firebase.PhoneVerificationActivity" />
         <activity
             android:name=".Activities.MainActivity"
             android:exported="true">

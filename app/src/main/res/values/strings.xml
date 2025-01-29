@@ -3,9 +3,9 @@
     <string name="Barber_Line">Barber Line</string>
     <string name="search">Search</string>
     <string name="names_of_barbershops">Names of barbershops</string>
-    <string name="_9_ghazar_parpetsi_st_8">9 Ghazar Parpetsi St, 8</string>
     <string name="paragon">Paragon</string>
     <string name="open_from_08_30_to_23_30">Open from 08:30 to 23:30</string>
+    <string name="_9_ghazar_parpetsi_st_8">9 Ghazar Parpetsi St, 8</string>
     <string name="see_more">See more</string>
     <string name="top_barber_shops">Top Barber Shops</string>
     <string name="home">Home</string>
@@ -13,7 +13,8 @@
     <string name="barbers">Barbers</string>
     <string name="settings">Settings</string>
     <string name="sargis">Sargis</string>
-    <string name="_077_77_77_77">077-77-77-77</string>
+    <string name="_077_77_77_77">077–77–77–77</string>
+    <string name="_000_00_00_00">000–00–00–00</string>
     <string name="top_barbers">Top Barbers</string>
     <string name="the_textured_crop">The Textured Crop</string>
     <string name="top_haircuts">Top Haircuts</string>
@@ -29,7 +30,13 @@
     <string name="register">Register</string>
     <string name="click_to_login">Click to Login</string>
     <string name="log_out">Log Out</string>
-    <string name="vahagn">Vahagn</string>
     <string name="enter_verification_code">Enter verification code</string>
     <string name="edit_profile">Edit profile</string>
+    <string name="favourites">Favourites</string>
+    <string name="bank_cards">Bank Cards</string>
+    <string name="news">News</string>
+    <string name="about_the_developer">About the developer</string>
+    <string name="language">Language</string>
+    <string name="english">English</string>
+    <string name="remove_account">Remove account</string>
 </resources>

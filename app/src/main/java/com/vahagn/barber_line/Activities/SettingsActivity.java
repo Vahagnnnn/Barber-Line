@@ -17,8 +17,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.vahagn.barber_line.R;
 
 public class SettingsActivity extends AppCompatActivity {
-    TextView logout_button;
-    public static TextView nameText, phoneNumberText;
+    TextView logout_button,nameText, phoneNumberText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

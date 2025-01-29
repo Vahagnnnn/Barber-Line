@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "492134639446",
+    "firebase_url": "https://barber-line-default-rtdb.firebaseio.com",
     "project_id": "barber-line",
     "storage_bucket": "barber-line.firebasestorage.app"
   },
