@@ -17,12 +17,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
 import com.vahagn.barber_line.Classes.Barbers;
 import com.vahagn.barber_line.R;
+import com.vahagn.barber_line.adapter.CategoryAdapter;
+import com.vahagn.barber_line.adapter.TopBarbersAdapter;
+import com.vahagn.barber_line.model.Category;
+import com.vahagn.barber_line.model.TopBarbers;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -31,6 +38,10 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
     ImageView image;
     TextView name, rating, adress;
     LinearLayout specialistsContainer;
+
+    CategoryAdapter tcategoryAdapter;
+    RecyclerView categoryRecycler;
+    List<Category> categoryList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +75,6 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
             }
         }
 
-        Toast.makeText(this, from_where, Toast.LENGTH_SHORT).show();
         back_section.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,6 +84,22 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
                     ToHome(v);
             }
         });
+
+        categoryList.add(new Category(1, "Specialists",R.drawable.specialists));
+        categoryList.add(new Category(2, "Services",R.drawable.scissors));
+        categoryList.add(new Category(3, "Reviews",R.drawable.star_xml));
+        setCategoryRecycler(categoryList);
+
+
+    }
+    private void setCategoryRecycler(List<Category> categoryList) {
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
+
+        categoryRecycler = findViewById(R.id.category);
+        categoryRecycler.setLayoutManager(layoutManager);
+
+        tcategoryAdapter = new CategoryAdapter(this, categoryList);
+        categoryRecycler.setAdapter(tcategoryAdapter);
     }
 
     private void addSpecialist(LinearLayout container, Barbers specialist) {

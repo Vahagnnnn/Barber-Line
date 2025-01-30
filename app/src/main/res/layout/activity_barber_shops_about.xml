@@ -30,8 +30,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="13dp"
-        android:clickable="true"
         android:layout_marginTop="15dp"
+        android:clickable="true"
         android:focusable="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -177,123 +177,19 @@
         </LinearLayout>
     </FrameLayout>
 
-    <!-- Category Section-->
-    <FrameLayout
+<!--    Category Section-->
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/category"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginHorizontal="15dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="15dp"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
+        tools:listitem="@layout/categories"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/info">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="left"
-            android:orientation="horizontal">
-
-            <!-- Specialists Section -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/white_bg"
-                android:clipToPadding="false"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingLeft="16dp"
-                android:paddingTop="7.5dp"
-                android:paddingRight="16dp"
-                android:paddingBottom="7.5dp">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:contentDescription="@string/app_name"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/about" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="21dp"
-                    android:layout_marginStart="4dp"
-                    android:fontFamily="@font/plus_jakarta_sans_extrabold"
-                    android:includeFontPadding="false"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:text="@string/specialists"
-                    android:textColor="#FF363062"
-                    android:textSize="16sp" />
-            </LinearLayout>
-
-            <!-- Services Section -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:clipToPadding="false"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingLeft="16dp"
-                android:paddingTop="7.5dp"
-                android:paddingRight="16dp"
-                android:paddingBottom="7.5dp">
-
-                <ImageView
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:contentDescription="@string/app_name"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/drawable_image_14" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="21dp"
-                    android:layout_marginStart="4dp"
-                    android:fontFamily="@font/plus_jakarta_sans_extrabold"
-                    android:includeFontPadding="false"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:text="@string/services"
-                    android:textColor="#FF8683A1"
-                    android:textSize="16sp" />
-            </LinearLayout>
-
-            <!-- Reviews Section -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:clipToPadding="false"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingLeft="16dp"
-                android:paddingTop="7.5dp"
-                android:paddingRight="16dp"
-                android:paddingBottom="7.5dp">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:contentDescription="@string/app_name"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/star_xml" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="21dp"
-                    android:layout_marginStart="4dp"
-                    android:fontFamily="@font/plus_jakarta_sans_extrabold"
-                    android:includeFontPadding="false"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:text="@string/reviews"
-                    android:textColor="#FF8683A1"
-                    android:textSize="16sp" />
-            </LinearLayout>
-        </LinearLayout>
-    </FrameLayout>
+        app:layout_constraintTop_toBottomOf="@+id/info" />
 
     <!-- Specialists Section-->
     <FrameLayout
@@ -311,6 +207,7 @@
             android:layout_height="wrap_content"
             android:clipToPadding="false"
             android:orientation="vertical"
+
             android:paddingTop="0.5dp">
 
             <TextView
@@ -324,198 +221,198 @@
                 android:textColor="#FFFFFFFF"
                 android:textSize="16sp" />
 
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="7dp"-->
-<!--                android:clipToPadding="false"-->
-<!--                android:gravity="center_vertical"-->
-<!--                android:orientation="horizontal"-->
-<!--                android:paddingTop="8dp"-->
-<!--                android:paddingBottom="8dp">-->
+            <!--            <LinearLayout-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="7dp"-->
+            <!--                android:clipToPadding="false"-->
+            <!--                android:gravity="center_vertical"-->
+            <!--                android:orientation="horizontal"-->
+            <!--                android:paddingTop="8dp"-->
+            <!--                android:paddingBottom="8dp">-->
 
-<!--                <FrameLayout-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="46dp">-->
+            <!--                <FrameLayout-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="46dp">-->
 
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="23dp"-->
-<!--                        android:layout_gravity="center_vertical"-->
-<!--                        android:layout_marginStart="54dp"-->
-<!--                        android:layout_marginTop="0.5dp"-->
-<!--                        android:fontFamily="@font/plus_jakarta_sans_semibold"-->
-<!--                        android:includeFontPadding="false"-->
-<!--                        android:maxLines="1"-->
-<!--                        android:singleLine="true"-->
-<!--                        android:text="@string/sargis_xachatryan"-->
-<!--                        android:textColor="#FFFFFFFF"-->
-<!--                        android:textSize="18sp" />-->
+            <!--                    <TextView-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="23dp"-->
+            <!--                        android:layout_gravity="center_vertical"-->
+            <!--                        android:layout_marginStart="54dp"-->
+            <!--                        android:layout_marginTop="0.5dp"-->
+            <!--                        android:fontFamily="@font/plus_jakarta_sans_semibold"-->
+            <!--                        android:includeFontPadding="false"-->
+            <!--                        android:maxLines="1"-->
+            <!--                        android:singleLine="true"-->
+            <!--                        android:text="@string/sargis_xachatryan"-->
+            <!--                        android:textColor="#FFFFFFFF"-->
+            <!--                        android:textSize="18sp" />-->
 
-<!--                    <ImageView-->
-<!--                        android:layout_width="46dp"-->
-<!--                        android:layout_height="46dp"-->
-<!--                        android:contentDescription="@string/app_name"-->
-<!--                        android:scaleType="centerInside"-->
-<!--                        android:src="@drawable/img_barber" />-->
-<!--                </FrameLayout>-->
-
-
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:gravity="end"-->
-<!--                    android:orientation="horizontal">-->
-
-<!--                    <ImageView-->
-<!--                        android:layout_width="16dp"-->
-<!--                        android:layout_height="16dp"-->
-<!--                        android:contentDescription="@string/app_name"-->
-<!--                        android:scaleType="centerInside"-->
-<!--                        android:src="@drawable/img_star" />-->
-
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="18dp"-->
-<!--                        android:layout_marginStart="8dp"-->
-<!--                        android:fontFamily="@font/plus_jakarta_sans_semibold"-->
-<!--                        android:includeFontPadding="false"-->
-<!--                        android:maxLines="1"-->
-<!--                        android:singleLine="true"-->
-<!--                        android:text="@string/_5_0s"-->
-<!--                        android:textColor="#FF6B7280"-->
-<!--                        android:textSize="14sp" />-->
-<!--                </LinearLayout>-->
-
-<!--            </LinearLayout>-->
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="7dp"-->
-<!--                android:clipToPadding="false"-->
-<!--                android:gravity="center_vertical"-->
-<!--                android:orientation="horizontal"-->
-<!--                android:paddingTop="8dp"-->
-<!--                android:paddingBottom="8dp">-->
-
-<!--                <FrameLayout-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="46dp">-->
-
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="23dp"-->
-<!--                        android:layout_gravity="center_vertical"-->
-<!--                        android:layout_marginStart="54dp"-->
-<!--                        android:layout_marginTop="0.5dp"-->
-<!--                        android:includeFontPadding="false"-->
-<!--                        android:fontFamily="@font/plus_jakarta_sans_semibold"-->
-<!--                        android:maxLines="1"-->
-<!--                        android:singleLine="true"-->
-<!--                        android:text="@string/sargis_xachatryan"-->
-<!--                        android:textColor="#FFFFFFFF"-->
-<!--                        android:textSize="18sp" />-->
-
-<!--                    <ImageView-->
-<!--                        android:layout_width="46dp"-->
-<!--                        android:layout_height="46dp"-->
-<!--                        android:contentDescription="@string/app_name"-->
-<!--                        android:scaleType="centerInside"-->
-<!--                        android:src="@drawable/img_barber" />-->
-<!--                </FrameLayout>-->
+            <!--                    <ImageView-->
+            <!--                        android:layout_width="46dp"-->
+            <!--                        android:layout_height="46dp"-->
+            <!--                        android:contentDescription="@string/app_name"-->
+            <!--                        android:scaleType="centerInside"-->
+            <!--                        android:src="@drawable/img_barber" />-->
+            <!--                </FrameLayout>-->
 
 
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:gravity="end"-->
-<!--                    android:orientation="horizontal">-->
+            <!--                <LinearLayout-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:gravity="end"-->
+            <!--                    android:orientation="horizontal">-->
 
-<!--                    <ImageView-->
-<!--                        android:layout_width="16dp"-->
-<!--                        android:layout_height="16dp"-->
-<!--                        android:contentDescription="@string/app_name"-->
-<!--                        android:scaleType="centerInside"-->
-<!--                        android:src="@drawable/img_star" />-->
+            <!--                    <ImageView-->
+            <!--                        android:layout_width="16dp"-->
+            <!--                        android:layout_height="16dp"-->
+            <!--                        android:contentDescription="@string/app_name"-->
+            <!--                        android:scaleType="centerInside"-->
+            <!--                        android:src="@drawable/img_star" />-->
 
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="18dp"-->
-<!--                        android:layout_marginStart="8dp"-->
-<!--                        android:includeFontPadding="false"-->
-<!--                        android:fontFamily="@font/plus_jakarta_sans_semibold"-->
-<!--                        android:maxLines="1"-->
-<!--                        android:singleLine="true"-->
-<!--                        android:text="@string/_5_0s"-->
-<!--                        android:textColor="#FF6B7280"-->
-<!--                        android:textSize="14sp" />-->
-<!--                </LinearLayout>-->
+            <!--                    <TextView-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="18dp"-->
+            <!--                        android:layout_marginStart="8dp"-->
+            <!--                        android:fontFamily="@font/plus_jakarta_sans_semibold"-->
+            <!--                        android:includeFontPadding="false"-->
+            <!--                        android:maxLines="1"-->
+            <!--                        android:singleLine="true"-->
+            <!--                        android:text="@string/_5_0s"-->
+            <!--                        android:textColor="#FF6B7280"-->
+            <!--                        android:textSize="14sp" />-->
+            <!--                </LinearLayout>-->
 
-<!--            </LinearLayout>-->
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="7dp"-->
-<!--                android:clipToPadding="false"-->
-<!--                android:gravity="center_vertical"-->
-<!--                android:orientation="horizontal"-->
-<!--                android:paddingTop="8dp"-->
-<!--                android:paddingBottom="8dp">-->
+            <!--            </LinearLayout>-->
+            <!--            <LinearLayout-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="7dp"-->
+            <!--                android:clipToPadding="false"-->
+            <!--                android:gravity="center_vertical"-->
+            <!--                android:orientation="horizontal"-->
+            <!--                android:paddingTop="8dp"-->
+            <!--                android:paddingBottom="8dp">-->
 
-<!--                <FrameLayout-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="46dp">-->
+            <!--                <FrameLayout-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="46dp">-->
 
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="23dp"-->
-<!--                        android:layout_gravity="center_vertical"-->
-<!--                        android:layout_marginStart="54dp"-->
-<!--                        android:layout_marginTop="0.5dp"-->
-<!--                        android:includeFontPadding="false"-->
-<!--                        android:fontFamily="@font/plus_jakarta_sans_semibold"-->
-<!--                        android:maxLines="1"-->
-<!--                        android:singleLine="true"-->
-<!--                        android:text="@string/sargis_xachatryan"-->
-<!--                        android:textColor="#FFFFFFFF"-->
-<!--                        android:textSize="18sp" />-->
+            <!--                    <TextView-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="23dp"-->
+            <!--                        android:layout_gravity="center_vertical"-->
+            <!--                        android:layout_marginStart="54dp"-->
+            <!--                        android:layout_marginTop="0.5dp"-->
+            <!--                        android:includeFontPadding="false"-->
+            <!--                        android:fontFamily="@font/plus_jakarta_sans_semibold"-->
+            <!--                        android:maxLines="1"-->
+            <!--                        android:singleLine="true"-->
+            <!--                        android:text="@string/sargis_xachatryan"-->
+            <!--                        android:textColor="#FFFFFFFF"-->
+            <!--                        android:textSize="18sp" />-->
 
-<!--                    <ImageView-->
-<!--                        android:layout_width="46dp"-->
-<!--                        android:layout_height="46dp"-->
-<!--                        android:contentDescription="@string/app_name"-->
-<!--                        android:scaleType="centerInside"-->
-<!--                        android:src="@drawable/img_barber" />-->
-<!--                </FrameLayout>-->
+            <!--                    <ImageView-->
+            <!--                        android:layout_width="46dp"-->
+            <!--                        android:layout_height="46dp"-->
+            <!--                        android:contentDescription="@string/app_name"-->
+            <!--                        android:scaleType="centerInside"-->
+            <!--                        android:src="@drawable/img_barber" />-->
+            <!--                </FrameLayout>-->
 
 
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:gravity="end"-->
-<!--                    android:orientation="horizontal">-->
+            <!--                <LinearLayout-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:gravity="end"-->
+            <!--                    android:orientation="horizontal">-->
 
-<!--                    <ImageView-->
-<!--                        android:layout_width="16dp"-->
-<!--                        android:layout_height="16dp"-->
-<!--                        android:contentDescription="@string/app_name"-->
-<!--                        android:scaleType="centerInside"-->
-<!--                        android:src="@drawable/img_star" />-->
+            <!--                    <ImageView-->
+            <!--                        android:layout_width="16dp"-->
+            <!--                        android:layout_height="16dp"-->
+            <!--                        android:contentDescription="@string/app_name"-->
+            <!--                        android:scaleType="centerInside"-->
+            <!--                        android:src="@drawable/img_star" />-->
 
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="18dp"-->
-<!--                        android:layout_marginStart="8dp"-->
-<!--                        android:includeFontPadding="false"-->
-<!--                        android:fontFamily="@font/plus_jakarta_sans_semibold"-->
-<!--                        android:maxLines="1"-->
-<!--                        android:singleLine="true"-->
-<!--                        android:text="@string/_5_0s"-->
-<!--                        android:textColor="#FF6B7280"-->
-<!--                        android:textSize="14sp" />-->
-<!--                </LinearLayout>-->
+            <!--                    <TextView-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="18dp"-->
+            <!--                        android:layout_marginStart="8dp"-->
+            <!--                        android:includeFontPadding="false"-->
+            <!--                        android:fontFamily="@font/plus_jakarta_sans_semibold"-->
+            <!--                        android:maxLines="1"-->
+            <!--                        android:singleLine="true"-->
+            <!--                        android:text="@string/_5_0s"-->
+            <!--                        android:textColor="#FF6B7280"-->
+            <!--                        android:textSize="14sp" />-->
+            <!--                </LinearLayout>-->
 
-<!--            </LinearLayout>-->
+            <!--            </LinearLayout>-->
+            <!--            <LinearLayout-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="7dp"-->
+            <!--                android:clipToPadding="false"-->
+            <!--                android:gravity="center_vertical"-->
+            <!--                android:orientation="horizontal"-->
+            <!--                android:paddingTop="8dp"-->
+            <!--                android:paddingBottom="8dp">-->
+
+            <!--                <FrameLayout-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="46dp">-->
+
+            <!--                    <TextView-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="23dp"-->
+            <!--                        android:layout_gravity="center_vertical"-->
+            <!--                        android:layout_marginStart="54dp"-->
+            <!--                        android:layout_marginTop="0.5dp"-->
+            <!--                        android:includeFontPadding="false"-->
+            <!--                        android:fontFamily="@font/plus_jakarta_sans_semibold"-->
+            <!--                        android:maxLines="1"-->
+            <!--                        android:singleLine="true"-->
+            <!--                        android:text="@string/sargis_xachatryan"-->
+            <!--                        android:textColor="#FFFFFFFF"-->
+            <!--                        android:textSize="18sp" />-->
+
+            <!--                    <ImageView-->
+            <!--                        android:layout_width="46dp"-->
+            <!--                        android:layout_height="46dp"-->
+            <!--                        android:contentDescription="@string/app_name"-->
+            <!--                        android:scaleType="centerInside"-->
+            <!--                        android:src="@drawable/img_barber" />-->
+            <!--                </FrameLayout>-->
+
+
+            <!--                <LinearLayout-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:gravity="end"-->
+            <!--                    android:orientation="horizontal">-->
+
+            <!--                    <ImageView-->
+            <!--                        android:layout_width="16dp"-->
+            <!--                        android:layout_height="16dp"-->
+            <!--                        android:contentDescription="@string/app_name"-->
+            <!--                        android:scaleType="centerInside"-->
+            <!--                        android:src="@drawable/img_star" />-->
+
+            <!--                    <TextView-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="18dp"-->
+            <!--                        android:layout_marginStart="8dp"-->
+            <!--                        android:includeFontPadding="false"-->
+            <!--                        android:fontFamily="@font/plus_jakarta_sans_semibold"-->
+            <!--                        android:maxLines="1"-->
+            <!--                        android:singleLine="true"-->
+            <!--                        android:text="@string/_5_0s"-->
+            <!--                        android:textColor="#FF6B7280"-->
+            <!--                        android:textSize="14sp" />-->
+            <!--                </LinearLayout>-->
+
+            <!--            </LinearLayout>-->
 
         </LinearLayout>
     </FrameLayout>
@@ -673,4 +570,6 @@
                 android:textSize="16sp" />
         </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
