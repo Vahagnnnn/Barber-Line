@@ -16,12 +16,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.vahagn.barber_line.Firebase.BarberShopsDetail;
+import com.vahagn.barber_line.Classes.BarberShops;
 import com.vahagn.barber_line.R;
 import com.vahagn.barber_line.adapter.TopBarberShopsAdapter;
 import com.vahagn.barber_line.adapter.TopBarbersAdapter;
 import com.vahagn.barber_line.adapter.TopHaircutsAdapter;
-import com.vahagn.barber_line.Firebase.BarberShops;
 import com.vahagn.barber_line.model.TopBarbers;
 import com.vahagn.barber_line.model.TopHaircuts;
 
@@ -39,24 +38,31 @@ public class MainActivity extends AppCompatActivity {
     List<TopBarbers> TopBarbersList = new ArrayList<>();
     List<TopHaircuts> TopHaircutsList = new ArrayList<>();
 
-    DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("topBarberShops");
-
+    DatabaseReference myRef = FirebaseDatabase.getInstance().getReference().child("barberShops");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
 //        myRef.push().setValue(new TopBarberShops(R.drawable.img_paragon, "Paragon", "9 Ghazar Parpetsi St, 8"));
-
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 TopBarberShopsList.clear();
+//                Log.i("Firebase", "Raw DataSnapshot: " + dataSnapshot.toString());
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    BarberShopsDetail shop = snapshot.getValue(BarberShopsDetail.class);
+//                    Log.i("Firebase", "Child Snapshot: " + snapshot.toString()); // ✅ Logs each child
+
+//                    if (snapshot.exists()) {
+//                        Log.i("Firebase", "Child Exists: " + snapshot.getValue());
+//                    } else {
+//                        Log.w("Firebase", "Null child found!");
+//                    }
+                    BarberShops shop = snapshot.getValue(BarberShops.class);
+//                    Log.i("Firebase", "read");
                     int imageResId = getResources().getIdentifier(shop.getImage(), "drawable", getPackageName());
+//                    Log.i("Firebase", "Barber Shop: " + shop.getName() + ", Address: " + shop.getAddress()+ ", imageResId: " + imageResId);
                     TopBarberShopsList.add(new BarberShops(imageResId, shop.getName(), shop.getAddress()));
-//                    Log.d("Firebase", "Barber Shop: " + shop.getName() + ", Address: " + shop.getAddress()+ ", imageResId: " + imageResId);
                 }
                 setTopBarberShopsRecycler(TopBarberShopsList);
             }

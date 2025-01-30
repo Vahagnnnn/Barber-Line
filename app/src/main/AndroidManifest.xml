@@ -33,7 +33,7 @@
         <activity
             android:name=".Activities.BarbersActivity"
             android:exported="false" />
-        <activity android:name=".Firebase.PhoneVerificationActivity" />
+        <activity android:name=".Classes.PhoneVerificationActivity" />
         <activity
             android:name=".Activities.MainActivity"
             android:exported="true">

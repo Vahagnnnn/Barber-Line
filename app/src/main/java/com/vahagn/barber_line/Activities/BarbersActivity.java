@@ -17,12 +17,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.vahagn.barber_line.Firebase.BarberShopsDetail;
+import com.vahagn.barber_line.Classes.BarberShops;
 import com.vahagn.barber_line.R;
 
 public class BarbersActivity extends AppCompatActivity {
 
-    DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("topBarberShops");
+    DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("barberShops");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +32,12 @@ public class BarbersActivity extends AppCompatActivity {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.i("Firebase", "Raw DataSnapshot: " + dataSnapshot.toString());
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    BarberShopsDetail shop = snapshot.getValue(BarberShopsDetail.class);
+                    BarberShops shop = snapshot.getValue(BarberShops.class);
                     int logoResId = getResources().getIdentifier(shop.getLogo(), "drawable", getPackageName());
                     addBarbershop(secondActivityContainer, shop.getName(), shop.getAddress(), logoResId);
-                    Log.d("Firebase", "Barber Shop: " + shop.getName() + ", Address: " + shop.getAddress()+ ", imageResId: " + logoResId);
+//                    Log.d("Firebase", "Barber Shop: " + shop.getName() + ", Address: " + shop.getAddress()+ ", imageResId: " + logoResId);
                 }
             }
 
