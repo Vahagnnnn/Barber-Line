@@ -1,8 +1,9 @@
 package com.vahagn.barber_line.Classes;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Barbers {
+public class Barbers implements Serializable {
     private int ID;
     private String name;
     private int phone;

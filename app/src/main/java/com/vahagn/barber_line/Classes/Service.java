@@ -1,6 +1,8 @@
 package com.vahagn.barber_line.Classes;
 
-public class Service {
+import java.io.Serializable;
+
+public class Service implements Serializable {
     private String name;
     private double price;
     public int duration;

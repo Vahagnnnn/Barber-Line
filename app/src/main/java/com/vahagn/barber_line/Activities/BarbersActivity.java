@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,7 +19,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.vahagn.barber_line.Classes.BarberShops;
+import com.vahagn.barber_line.Classes.Barbers;
 import com.vahagn.barber_line.R;
+
+import java.io.Serializable;
+import java.util.List;
 
 public class BarbersActivity extends AppCompatActivity {
 
@@ -35,8 +40,7 @@ public class BarbersActivity extends AppCompatActivity {
                 Log.i("Firebase", "Raw DataSnapshot: " + dataSnapshot.toString());
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     BarberShops shop = snapshot.getValue(BarberShops.class);
-                    int logoResId = getResources().getIdentifier(shop.getLogo(), "drawable", getPackageName());
-                    addBarbershop(secondActivityContainer, shop.getName(), shop.getAddress(), logoResId);
+                    addBarbershop(secondActivityContainer, shop.getLogo(), shop.getImage(),shop.getName(),shop.getRating(), shop.getAddress(),shop.getSpecialists());
 //                    Log.d("Firebase", "Barber Shop: " + shop.getName() + ", Address: " + shop.getAddress()+ ", imageResId: " + logoResId);
                 }
             }
@@ -50,16 +54,31 @@ public class BarbersActivity extends AppCompatActivity {
     }
 
 
-    public void addBarbershop(LinearLayout container, String titleText, String addressText, int imageResId) {
+    public void addBarbershop(LinearLayout container, String logo,String image, String name,double rating, String address, List<Barbers> specialists) {
         View barbershopView = LayoutInflater.from(this).inflate(R.layout.barbershops_gray, container, false);
 
-        TextView title = barbershopView.findViewById(R.id.title);
-        TextView address = barbershopView.findViewById(R.id.address);
-        ImageView logo = barbershopView.findViewById(R.id.logo);
+        ImageView logoImageView = barbershopView.findViewById(R.id.logo);
+        int logoResId = getResources().getIdentifier(logo, "drawable", getPackageName());
+        logoImageView.setImageResource(logoResId);
 
-        title.setText(titleText);
-        address.setText(addressText);
-        logo.setImageResource(imageResId);
+        TextView nameTextView = barbershopView.findViewById(R.id.name);
+        TextView addressTextView = barbershopView.findViewById(R.id.address);
+
+        nameTextView.setText(name);
+        addressTextView.setText(address);
+
+
+        barbershopView.setOnClickListener(v -> {
+            Intent intent = new Intent(BarbersActivity.this, BarberShopsAboutActivity.class);
+            intent.putExtra("from_where", "BarbersActivity");
+            intent.putExtra("image", image);
+            intent.putExtra("name", name);
+            intent.putExtra("rating", String.valueOf(rating));
+            intent.putExtra("address", address);
+            intent.putExtra("specialists", (Serializable) specialists);
+
+            startActivity(intent);
+        });
 
         container.addView(barbershopView);
     }

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container_iphone_pro_max"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <FrameLayout
+        android:id="@+id/container_frame1"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/gray_frame"
+        android:paddingBottom="5dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="5dp">
+
+        <FrameLayout
+            android:id="@+id/container_group"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center">
+
+            <!-- Barber Image -->
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:contentDescription="@string/app_name"
+                android:scaleType="centerInside"
+                android:clipToOutline="true"
+                android:background="@drawable/radius20"
+                android:src="@drawable/img_barber" />
+
+            <!-- Name Text -->
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="23dp"
+                android:layout_marginStart="69dp"
+                android:layout_marginBottom="0.5dp"
+                android:layout_gravity="center_vertical"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:fontFamily="@font/plus_jakarta_sans_semibold"
+                android:text="@string/sargis_xachatryan"
+                android:textColor="#FF000000"
+                android:textSize="18sp" />
+
+            <!-- Star Icon -->
+            <ImageView
+                android:id="@+id/image_star"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginEnd="30dp"
+                android:layout_gravity="end|center_vertical"
+                android:scaleType="centerInside"
+                android:src="@drawable/img_star" />
+
+            <!-- Rating Text -->
+            <TextView
+                android:id="@+id/rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center_vertical"
+                android:gravity="start"
+                android:fontFamily="@font/plus_jakarta_sans_semibold"
+                android:text="5.0"
+                android:textColor="#FF000000"
+                android:textSize="16sp" />
+        </FrameLayout>
+
+    </FrameLayout>
+</LinearLayout>

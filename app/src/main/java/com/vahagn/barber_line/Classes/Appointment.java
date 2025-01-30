@@ -1,6 +1,8 @@
 package com.vahagn.barber_line.Classes;
 
-class Appointment {
+import java.io.Serializable;
+
+class Appointment implements Serializable {
     public String userName;
     public String barbershopName;
     public String barberName;

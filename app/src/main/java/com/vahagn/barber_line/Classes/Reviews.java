@@ -1,6 +1,8 @@
 package com.vahagn.barber_line.Classes;
 
-public class Reviews {
+import java.io.Serializable;
+
+public class Reviews implements Serializable {
     private String userName;
     private String reviewText;
     private double rating;
