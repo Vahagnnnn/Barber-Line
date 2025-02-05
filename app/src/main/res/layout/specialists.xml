@@ -32,7 +32,7 @@
                 android:scaleType="centerInside"
                 android:clipToOutline="true"
                 android:background="@drawable/radius20"
-                android:src="@drawable/img_barber" />
+                android:src="@drawable/img_sargis_paragon" />
 
             <!-- Name Text -->
             <TextView

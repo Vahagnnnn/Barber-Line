@@ -80,10 +80,10 @@ public class MainActivity extends AppCompatActivity {
 //        TopBarberShopsList.add(new TopBarberShops(R.drawable.img_paragon, "Paragon", "9 Ghazar Parpetsi St, 8"));
 //        setTopBarberShopsRecycler(TopBarberShopsList);
 
-        TopBarbersList.add(new TopBarbers(R.drawable.img_barber, "Sargis", "077-77-77-77"));
-        TopBarbersList.add(new TopBarbers(R.drawable.img_barber, "Sargis", "077-77-77-77"));
-        TopBarbersList.add(new TopBarbers(R.drawable.img_barber, "Sargis", "077-77-77-77"));
-        TopBarbersList.add(new TopBarbers(R.drawable.img_barber, "Sargis", "077-77-77-77"));
+        TopBarbersList.add(new TopBarbers(R.drawable.img_sargis_paragon, "Sargis", "077-77-77-77"));
+        TopBarbersList.add(new TopBarbers(R.drawable.img_narine_paragon, "Narine", "077-77-77-77"));
+        TopBarbersList.add(new TopBarbers(R.drawable.img_sargis_paragon, "Sargis", "077-77-77-77"));
+        TopBarbersList.add(new TopBarbers(R.drawable.img_narine_paragon, "Narine", "077-77-77-77"));
         setTopBarbersRecycler(TopBarbersList);
 
         TopHaircutsList.add(new TopHaircuts(R.drawable.img_haircut, "The Textured Crop"));

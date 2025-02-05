@@ -2,6 +2,7 @@ package com.vahagn.barber_line.Activities;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,11 +18,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
 import com.vahagn.barber_line.Classes.Barbers;
+import com.vahagn.barber_line.Fragments.SpecialistsFragment;
 import com.vahagn.barber_line.R;
 import com.vahagn.barber_line.adapter.CategoryAdapter;
 import com.vahagn.barber_line.adapter.TopBarbersAdapter;
@@ -37,11 +40,11 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
     FrameLayout back_section;
     ImageView image;
     TextView name, rating, adress;
-    LinearLayout specialistsContainer;
 
-    CategoryAdapter tcategoryAdapter;
+    CategoryAdapter categoryAdapter;
     RecyclerView categoryRecycler;
     List<Category> categoryList = new ArrayList<>();
+    List<Barbers> specialists = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,14 +56,12 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
         rating = findViewById(R.id.rating);
         adress = findViewById(R.id.adress);
         back_section = findViewById(R.id.back_section);
-        specialistsContainer = findViewById(R.id.specialists_container);
 
         String from_where = getIntent().getStringExtra("from_where");
         String imageText = getIntent().getStringExtra("image");
         String nameText = getIntent().getStringExtra("name");
         String ratingText = getIntent().getStringExtra("rating");
         String addressText = getIntent().getStringExtra("address");
-        List<Barbers> specialists = (List<Barbers>) getIntent().getSerializableExtra("specialists");
 
         int imageResId = getResources().getIdentifier(imageText, "drawable", getPackageName());
         image.setImageResource(imageResId);
@@ -68,11 +69,12 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
         rating.setText(ratingText);
         adress.setText(addressText);
 
+        specialists = (List<Barbers>) getIntent().getSerializableExtra("specialists");
         if (specialists != null) {
-            for (Barbers specialist : specialists) {
-                addSpecialist(specialistsContainer, specialist);
-                Log.i("addSpecialist","addSpecialist");
-            }
+            SpecialistsFragment specialistsFragment = new SpecialistsFragment(specialists);
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.specialists_container, specialistsFragment);
+            transaction.commit();
         }
 
         back_section.setOnClickListener(new View.OnClickListener() {
@@ -84,37 +86,20 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
                     ToHome(v);
             }
         });
-
-        categoryList.add(new Category(1, "Specialists",R.drawable.specialists));
-        categoryList.add(new Category(2, "Services",R.drawable.scissors));
-        categoryList.add(new Category(3, "Reviews",R.drawable.star_xml));
+        categoryList.add(new Category(1, "Specialists", R.drawable.specialists, "#EDEFFB"));
+        categoryList.add(new Category(2, "Services", R.drawable.scissors, "#242C3B"));
+        categoryList.add(new Category(3, "Reviews", R.drawable.star_xml, "#242C3B"));
         setCategoryRecycler(categoryList);
-
-
     }
+
     private void setCategoryRecycler(List<Category> categoryList) {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
 
         categoryRecycler = findViewById(R.id.category);
         categoryRecycler.setLayoutManager(layoutManager);
 
-        tcategoryAdapter = new CategoryAdapter(this, categoryList);
-        categoryRecycler.setAdapter(tcategoryAdapter);
-    }
-
-    private void addSpecialist(LinearLayout container, Barbers specialist) {
-        View specialistView = LayoutInflater.from(this).inflate(R.layout.specialists, container, false);
-
-        ImageView specialistImage = specialistView.findViewById(R.id.image);
-        TextView specialistName = specialistView.findViewById(R.id.name);
-        TextView specialistRating = specialistView.findViewById(R.id.rating);
-
-        int specialistImageResId = getResources().getIdentifier(specialist.getImage(), "drawable", getPackageName());
-        specialistImage.setImageResource(specialistImageResId);
-        specialistName.setText(specialist.getName());
-        specialistRating.setText(String.valueOf(specialist.getRating()));
-
-        container.addView(specialistView);
+        categoryAdapter = new CategoryAdapter(this, categoryList, specialists, getSupportFragmentManager());
+        categoryRecycler.setAdapter(categoryAdapter);
     }
 
     public void ToHome(View view) {
