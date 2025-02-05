@@ -2,36 +2,23 @@ package com.vahagn.barber_line.Activities;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
 import com.vahagn.barber_line.Classes.Barbers;
+import com.vahagn.barber_line.Classes.Services;
+import com.vahagn.barber_line.Fragments.ServicesFragment;
 import com.vahagn.barber_line.Fragments.SpecialistsFragment;
 import com.vahagn.barber_line.R;
 import com.vahagn.barber_line.adapter.CategoryAdapter;
-import com.vahagn.barber_line.adapter.TopBarbersAdapter;
 import com.vahagn.barber_line.model.Category;
-import com.vahagn.barber_line.model.TopBarbers;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -44,7 +31,8 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
     CategoryAdapter categoryAdapter;
     RecyclerView categoryRecycler;
     List<Category> categoryList = new ArrayList<>();
-    List<Barbers> specialists = new ArrayList<>();
+    List<Barbers> ListSpecialist = new ArrayList<>();
+    List<Services> ListService = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,14 +57,15 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
         rating.setText(ratingText);
         adress.setText(addressText);
 
-        specialists = (List<Barbers>) getIntent().getSerializableExtra("specialists");
-        if (specialists != null) {
-            SpecialistsFragment specialistsFragment = new SpecialistsFragment(specialists);
+        ListSpecialist = (List<Barbers>) getIntent().getSerializableExtra("ListSpecialist");
+        ListService = (List<Services>) getIntent().getSerializableExtra("ListService");
+
+        if (ListSpecialist != null) {
+            SpecialistsFragment specialistsFragment = new SpecialistsFragment(ListSpecialist);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.specialists_container, specialistsFragment);
+            transaction.replace(R.id.info_container, specialistsFragment);
             transaction.commit();
         }
-
         back_section.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,7 +87,7 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
         categoryRecycler = findViewById(R.id.category);
         categoryRecycler.setLayoutManager(layoutManager);
 
-        categoryAdapter = new CategoryAdapter(this, categoryList, specialists, getSupportFragmentManager());
+        categoryAdapter = new CategoryAdapter(this, categoryList, ListSpecialist, ListService, getSupportFragmentManager());
         categoryRecycler.setAdapter(categoryAdapter);
     }
 

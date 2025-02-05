@@ -9,7 +9,7 @@
 
 
     <FrameLayout
-        android:id="@+id/specialists"
+        android:id="@+id/services"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -17,7 +17,7 @@
         app:layout_constraintTop_toBottomOf="@id/category">
 
         <LinearLayout
-            android:id="@+id/specialists_container"
+            android:id="@+id/services_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clipToPadding="false"

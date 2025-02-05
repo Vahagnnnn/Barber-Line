@@ -13,7 +13,7 @@ public class BarberShops {
     private String logo;
     private double rating;
     private List<Reviews> reviews;
-    private List<Service> services;
+    private List<Services> services;
     private List<Barbers> specialists;
 
     public BarberShops() {
@@ -25,8 +25,8 @@ public class BarberShops {
         this.name = name;
     }
 
-    public BarberShops(String name,String address, String image, String logo,  double rating,
-                       List<Reviews> reviews, List<Service> services, List<Barbers> specialists) {
+    public BarberShops(String name, String address, String image, String logo, double rating,
+                       List<Reviews> reviews, List<Services> services, List<Barbers> specialists) {
         this.name = name;
         this.address = address;
         this.image = image;
@@ -93,11 +93,11 @@ public class BarberShops {
         this.reviews = reviews;
     }
 
-    public List<Service> getServices() {
+    public List<Services> getServices() {
         return services;
     }
 
-    public void setServices(List<Service> services) {
+    public void setServices(List<Services> services) {
         this.services = services;
     }
 

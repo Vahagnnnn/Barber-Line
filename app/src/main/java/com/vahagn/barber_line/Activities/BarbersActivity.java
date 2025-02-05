@@ -19,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.vahagn.barber_line.Classes.BarberShops;
 import com.vahagn.barber_line.Classes.Barbers;
+import com.vahagn.barber_line.Classes.Services;
 import com.vahagn.barber_line.R;
 
 import java.io.Serializable;
@@ -36,11 +37,10 @@ public class BarbersActivity extends AppCompatActivity {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.i("Firebase", "Raw DataSnapshot: " + dataSnapshot.toString());
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     BarberShops shop = snapshot.getValue(BarberShops.class);
-                    addBarbershop(secondActivityContainer, shop.getLogo(), shop.getImage(),shop.getName(),shop.getRating(), shop.getAddress(),shop.getSpecialists());
-//                    Log.d("Firebase", "Barber Shop: " + shop.getName() + ", Address: " + shop.getAddress()+ ", imageResId: " + logoResId);
+                    Log.i("getServices",shop.getServices().toString());
+                    addBarbershop(secondActivityContainer, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists(), shop.getServices());
                 }
             }
 
@@ -53,7 +53,7 @@ public class BarbersActivity extends AppCompatActivity {
     }
 
 
-    public void addBarbershop(LinearLayout container, String logo,String image, String name,double rating, String address, List<Barbers> specialists) {
+    public void addBarbershop(LinearLayout container, String logo, String image, String name, double rating, String address, List<Barbers> ListSpecialist, List<Services> ListService) {
         View barbershopView = LayoutInflater.from(this).inflate(R.layout.barbershops_gray, container, false);
 
         ImageView logoImageView = barbershopView.findViewById(R.id.logo);
@@ -74,7 +74,8 @@ public class BarbersActivity extends AppCompatActivity {
             intent.putExtra("name", name);
             intent.putExtra("rating", String.valueOf(rating));
             intent.putExtra("address", address);
-            intent.putExtra("specialists", (Serializable) specialists);
+            intent.putExtra("ListSpecialist", (Serializable) ListSpecialist);
+            intent.putExtra("ListService", (Serializable) ListService);
 
             startActivity(intent);
         });
@@ -85,12 +86,15 @@ public class BarbersActivity extends AppCompatActivity {
     public void ToHome(View view) {
         navigateTo(MainActivity.class);
     }
+
     public void ToLogin(View view) {
         navigateTo(LoginActivity.class);
     }
+
     public void ToSettings(View view) {
         navigateTo(SettingsActivity.class);
     }
+
     private void navigateTo(Class<?> targetActivity) {
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
                 this,

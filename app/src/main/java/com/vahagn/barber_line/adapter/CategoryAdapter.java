@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.vahagn.barber_line.Activities.BarberShopsAboutActivity;
 import com.vahagn.barber_line.Classes.Barbers;
+import com.vahagn.barber_line.Classes.Services;
 import com.vahagn.barber_line.Fragments.ReviewsFragment;
 import com.vahagn.barber_line.Fragments.ServicesFragment;
 import com.vahagn.barber_line.Fragments.SpecialistsFragment;
@@ -33,13 +34,15 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     private Context context;
     private List<Category> categories;
-    private List<Barbers> specialists;
+    private List<Barbers> ListSpecialist;
+    private List<Services> ListService;
     private FragmentManager fragmentManager;
 
-    public CategoryAdapter(Context context, List<Category> categories, List<Barbers> specialists, FragmentManager fragmentManager) {
+    public CategoryAdapter(Context context, List<Category> categories, List<Barbers> ListSpecialist, List<Services> ListService, FragmentManager fragmentManager) {
         this.context = context;
         this.categories = categories;
-        this.specialists = specialists;
+        this.ListSpecialist = ListSpecialist;
+        this.ListService = ListService;
         this.fragmentManager = fragmentManager;
     }
 
@@ -71,20 +74,21 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
                 notifyDataSetChanged();
                 switch (categoryName) {
                     case "Specialists":
-                        Fragment specialistsFragment = new SpecialistsFragment(specialists);
-                        transaction.replace(R.id.specialists_container, specialistsFragment);
+                        Fragment specialistsFragment = new SpecialistsFragment(ListSpecialist);
+                        transaction.replace(R.id.info_container, specialistsFragment);
                         transaction.addToBackStack(null);
                         transaction.commit();
                         break;
                     case "Services":
-                        Fragment servicesFragment = new ServicesFragment();
-                        transaction.replace(R.id.specialists_container, servicesFragment);
+                        Fragment servicesFragment = new ServicesFragment(ListService);
+                        transaction.replace(R.id.info_container, servicesFragment);
                         transaction.addToBackStack(null);
                         transaction.commit();
+                        Log.i("getServices",ListService.toString());
                         break;
                     case "Reviews":
                         Fragment reviewsFragment = new ReviewsFragment();
-                        transaction.replace(R.id.specialists_container, reviewsFragment);
+                        transaction.replace(R.id.info_container, reviewsFragment);
                         transaction.addToBackStack(null);
                         transaction.commit();
                         break;

@@ -23,7 +23,7 @@ import com.vahagn.barber_line.Classes.Barbers;
 import java.util.List;
 
 public class SpecialistsFragment extends Fragment {
-    private LinearLayout specialistsContainer;
+    private LinearLayout infoContainer;
     private List<Barbers> specialists;
 
     public SpecialistsFragment(List<Barbers> specialists) {
@@ -34,11 +34,10 @@ public class SpecialistsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_specialists, container, false);
-        specialistsContainer = view.findViewById(R.id.specialists_container);
+        infoContainer = view.findViewById(R.id.info_container);
         if (specialists != null) {
             for (Barbers specialist : specialists) {
-                Log.i("specialist", specialist.getName() + specialist.getImage() + specialist.getImageResId());
-                addSpecialist(specialistsContainer, specialist);
+                addSpecialist(infoContainer, specialist);
             }
         }
         return view;

@@ -11,14 +11,14 @@ public class Barbers implements Serializable {
     private int imageResId;
     private String workPlace;
     private double rating;
-    private List<Service> services;
+    private List<Services> services;
     private List<Reviews> reviews;
     private List<Appointment> appointments;
 
     public Barbers() {
     }
 
-    public Barbers(int ID, String name, int phone, String image, int imageResId, String workPlace, double rating, List<Service> services, List<Reviews> reviews, List<Appointment> appointments) {
+    public Barbers(int ID, String name, int phone, String image, int imageResId, String workPlace, double rating, List<Services> services, List<Reviews> reviews, List<Appointment> appointments) {
         this.ID = ID;
         this.name = name;
         this.phone = phone;
@@ -87,11 +87,11 @@ public class Barbers implements Serializable {
         this.rating = rating;
     }
 
-    public List<Service> getServices() {
+    public List<Services> getServices() {
         return services;
     }
 
-    public void setServices(List<Service> services) {
+    public void setServices(List<Services> services) {
         this.services = services;
     }
 
