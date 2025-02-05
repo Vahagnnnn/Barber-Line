@@ -44,25 +44,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        myRef.push().setValue(new TopBarberShops(R.drawable.img_paragon, "Paragon", "9 Ghazar Parpetsi St, 8"));
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 TopBarberShopsList.clear();
-//                Log.i("Firebase", "Raw DataSnapshot: " + dataSnapshot.toString());
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//                    Log.i("Firebase", "Child Snapshot: " + snapshot.toString()); // ✅ Logs each child
-
-//                    if (snapshot.exists()) {
-//                        Log.i("Firebase", "Child Exists: " + snapshot.getValue());
-//                    } else {
-//                        Log.w("Firebase", "Null child found!");
-//                    }
                     BarberShops shop = snapshot.getValue(BarberShops.class);
-//                    Log.i("Firebase", "read");
-                    int imageResId = getResources().getIdentifier(shop.getImage(), "drawable", getPackageName());
-//                    Log.i("Firebase", "Barber Shop: " + shop.getName() + ", Address: " + shop.getAddress()+ ", imageResId: " + imageResId);
-                    TopBarberShopsList.add(new BarberShops(imageResId, shop.getName(), shop.getAddress()));
+//                    int imageResId = getResources().getIdentifier(shop.getImage(), "drawable", getPackageName());
+//                    TopBarberShopsList.add(new BarberShops(imageResId, shop.getName(), shop.getAddress()));
+                    TopBarberShopsList.add(new BarberShops(shop.getName(), shop.getAddress(), shop.getImage(), shop.getLogo(), shop.getRating(), shop.getReviews(), shop.getServices(), shop.getSpecialists()));
                 }
                 setTopBarberShopsRecycler(TopBarberShopsList);
             }
@@ -81,9 +71,9 @@ public class MainActivity extends AppCompatActivity {
 //        setTopBarberShopsRecycler(TopBarberShopsList);
 
         TopBarbersList.add(new TopBarbers(R.drawable.img_sargis_paragon, "Sargis", "077-77-77-77"));
-        TopBarbersList.add(new TopBarbers(R.drawable.img_narine_paragon, "Narine", "077-77-77-77"));
+        TopBarbersList.add(new TopBarbers(R.drawable.img_narine_paragon, "Narine", "099-99-99-99"));
         TopBarbersList.add(new TopBarbers(R.drawable.img_sargis_paragon, "Sargis", "077-77-77-77"));
-        TopBarbersList.add(new TopBarbers(R.drawable.img_narine_paragon, "Narine", "077-77-77-77"));
+        TopBarbersList.add(new TopBarbers(R.drawable.img_narine_paragon, "Narine", "099-99-99-99"));
         setTopBarbersRecycler(TopBarbersList);
 
         TopHaircutsList.add(new TopHaircuts(R.drawable.img_haircut, "The Textured Crop"));

@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -66,11 +68,14 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
             transaction.replace(R.id.info_container, specialistsFragment);
             transaction.commit();
         }
+        Toast.makeText(BarberShopsAboutActivity.this, from_where, Toast.LENGTH_SHORT).show();
         back_section.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (Objects.equals(from_where, "BarbersActivity"))
                     ToBarbers(v);
+                else if (Objects.equals(from_where, "MainActivity"))
+                    ToHome(v);
                 else
                     ToHome(v);
             }
