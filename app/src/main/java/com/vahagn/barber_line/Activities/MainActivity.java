@@ -72,8 +72,6 @@ public class MainActivity extends AppCompatActivity {
 
         TopBarbersList.add(new TopBarbers(R.drawable.img_sargis_paragon, "Sargis", "077-77-77-77"));
         TopBarbersList.add(new TopBarbers(R.drawable.img_narine_paragon, "Narine", "099-99-99-99"));
-        TopBarbersList.add(new TopBarbers(R.drawable.img_sargis_paragon, "Sargis", "077-77-77-77"));
-        TopBarbersList.add(new TopBarbers(R.drawable.img_narine_paragon, "Narine", "099-99-99-99"));
         setTopBarbersRecycler(TopBarbersList);
 
         TopHaircutsList.add(new TopHaircuts(R.drawable.img_haircut, "The Textured Crop"));

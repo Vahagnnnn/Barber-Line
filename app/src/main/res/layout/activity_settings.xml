@@ -65,6 +65,7 @@
         android:paddingBottom="7dp">
 
         <ImageView
+            android:id="@+id/profileImageView"
             android:layout_width="81.5dp"
             android:layout_height="82dp"
             android:layout_marginBottom="1dp"

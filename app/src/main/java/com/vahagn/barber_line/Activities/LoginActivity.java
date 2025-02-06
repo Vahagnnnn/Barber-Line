@@ -4,6 +4,7 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -84,6 +85,7 @@ public class LoginActivity extends AppCompatActivity {
                                             SharedPreferences.Editor editor = sharedPreferences.edit();
                                             editor.putString("email", email_str);
                                             editor.putString("password", password_str);
+                                            Log.i("email","send");
                                             editor.apply();
 //                                            Log.d("SharedPreferences", "Email: " + email_str + ", Password: " + password_str);
                                             Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
