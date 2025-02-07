@@ -1,6 +1,10 @@
 package com.vahagn.barber_line.Activities;
 
+import static java.security.AccessController.getContext;
+
+import android.app.Activity;
 import android.app.ActivityOptions;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -13,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
@@ -20,25 +26,25 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
+import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.vahagn.barber_line.R;
 
 import java.io.IOException;
 
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
+
 public class SettingsActivity extends AppCompatActivity {
     TextView logout_button, nameText, emailText;
-    private static final int PICK_IMAGE_REQUEST = 1;
-    private ImageView profileImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         logout_button = findViewById(R.id.logout_button);
-
-        profileImageView = findViewById(R.id.profileImageView);
-        profileImageView.setOnClickListener(v -> openGallery());
 
         nameText = findViewById(R.id.name);
         emailText = findViewById(R.id.email);
@@ -50,23 +56,6 @@ public class SettingsActivity extends AppCompatActivity {
         nameText.setText(name);
         emailText.setText(email);
         logout_button.setOnClickListener(view -> logOut());
-    }
-
-    private void openGallery() {
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, PICK_IMAGE_REQUEST);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
-            Uri imageUri = data.getData();
-            Glide.with(this)
-                    .load(imageUri)
-                    .transform(new RoundedCorners(30))
-                    .into(profileImageView);
-        }
     }
 
     public void logOut() {
