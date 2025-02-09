@@ -1,0 +1,219 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#242C3B"
+    app:circularflow_radiusInDP="30dp"
+    tools:context=".Activities.MapActivity">
+
+
+    <!-- Search Bar Section -->
+    <FrameLayout
+        android:id="@+id/search_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/search_input"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:autofillHints="Search Barbershop"
+            android:background="@drawable/radius_10_dp"
+            android:hint="@string/names_of_barbershops"
+            android:inputType="text"
+            android:padding="12dp"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#A0A4AC"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Search Button -->
+        <FrameLayout
+            android:id="@+id/container_apply_button"
+            android:layout_width="125dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="end">
+
+            <ImageView
+                android:id="@+id/img_rectangle2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/search_button"
+                android:contentDescription="@string/app_name"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:id="@+id/txt_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/poppins_bold"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="@string/search"
+                android:textColor="#FFFFFFFF"
+                android:textSize="16sp" />
+        </FrameLayout>
+    </FrameLayout>
+
+    <!-- Bottom Navigation -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/dark_blue"
+        android:transitionName="sharedImageTransition"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <!-- Home -->
+        <FrameLayout
+            android:id="@+id/container_home_fill"
+            android:layout_width="49dp"
+            android:layout_height="57dp"
+            android:layout_marginStart="17dp"
+            android:onClick="ToHome"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageView
+                android:id="@+id/img_home_fill"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="@string/app_name"
+                android:scaleType="centerInside"
+                android:src="@drawable/img_home" />
+
+            <TextView
+                android:id="@+id/txt_home"
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:layout_marginTop="33dp"
+                android:gravity="center_horizontal"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="@string/home"
+                android:textColor="#FFFFFFFF"
+                android:textSize="16sp" />
+        </FrameLayout>
+
+        <!-- Hairstyle (Center Element) -->
+        <ImageView
+            android:id="@+id/img_hairstyle"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:contentDescription="@string/app_name"
+            android:scaleType="centerInside"
+            android:src="@drawable/img_hairstyle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <!-- Book -->
+        <FrameLayout
+            android:id="@+id/container_book"
+            android:layout_width="49dp"
+            android:layout_height="57dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/img_hairstyle"
+            app:layout_constraintStart_toEndOf="@id/container_home_fill">
+
+            <ImageView
+                android:id="@+id/img_event"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="@string/app_name"
+                android:scaleType="centerInside"
+                android:src="@drawable/img_book" />
+
+            <TextView
+                android:id="@+id/txt_book"
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:layout_marginTop="33dp"
+                android:gravity="center_horizontal"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="@string/book"
+                android:textColor="#FFFFFFFF"
+                android:textSize="16sp" />
+        </FrameLayout>
+
+        <!-- Location -->
+        <FrameLayout
+            android:id="@+id/container_barber"
+            android:layout_width="wrap_content"
+            android:layout_height="57dp"
+            android:onClick="ToBarbers"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/container_settings"
+            app:layout_constraintStart_toEndOf="@id/img_hairstyle">
+
+            <ImageView
+                android:id="@+id/img_location"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="@string/app_name"
+                android:scaleType="centerInside"
+                android:src="@drawable/img_barbers" />
+
+            <TextView
+                android:id="@+id/txt_barbers"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_marginTop="33dp"
+                android:gravity="center_horizontal"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="@string/barbers"
+                android:textColor="#FFFFFFFF"
+                android:textSize="16sp" />
+        </FrameLayout>
+
+        <!-- Map -->
+        <FrameLayout
+            android:id="@+id/container_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="57dp"
+            android:layout_marginEnd="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                android:id="@+id/img_setting"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="@string/app_name"
+                android:scaleType="centerInside"
+                android:src="@drawable/img_location_fill" />
+
+            <TextView
+                android:id="@+id/txt_settings"
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:layout_marginTop="33dp"
+                android:gravity="center_horizontal"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="Map"
+                android:textColor="#FFFFFFFF"
+                android:textSize="16sp" />
+        </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

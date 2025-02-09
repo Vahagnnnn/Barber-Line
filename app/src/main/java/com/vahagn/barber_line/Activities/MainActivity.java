@@ -29,6 +29,8 @@ import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
+    public static boolean isLogin = false;
+
     RecyclerView topbarbershopsRecycler, topbarbersRecycler, tophaircutsRecycler;
     TopBarberShopsAdapter topbarbershopsAdapter;
     TopBarbersAdapter topbarbersAdapter;
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     List<TopHaircuts> TopHaircutsList = new ArrayList<>();
 
     DatabaseReference myRef = FirebaseDatabase.getInstance().getReference().child("barberShops");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
 //        setTopBarberShopsRecycler(TopBarberShopsList);
 
         TopBarbersList.add(new TopBarbers(R.drawable.img_sargis_paragon, "Sargis", "077-77-77-77"));
+        TopBarbersList.add(new TopBarbers(R.drawable.img_narine_paragon, "Narine", "099-99-99-99"));
         TopBarbersList.add(new TopBarbers(R.drawable.img_narine_paragon, "Narine", "099-99-99-99"));
         setTopBarbersRecycler(TopBarbersList);
 
@@ -127,17 +131,25 @@ public class MainActivity extends AppCompatActivity {
     public void ToBarbers(View view) {
         navigateTo(BarbersActivity.class);
     }
+
     public void To(View view) {
-        navigateTo(BarberShopsAboutActivity.class);
+        Log.i("isLogin", String.valueOf(isLogin));
+        if (isLogin) {
+            Log.i("isLogin", String.valueOf(isLogin));
+            navigateTo(SettingsActivity.class);
+        } else {
+            Log.i("isLogin", String.valueOf(isLogin));
+            navigateTo(LoginActivity.class);
+        }
+
     }
 
     public void ToLogin(View view) {
         navigateTo(LoginActivity.class);
     }
 
-    public void ToSettings(View view) {
-        navigateTo(SettingsActivity.class);
+    public void ToMap(View view) {
+        navigateTo(MapActivity.class);
     }
-
 
 }

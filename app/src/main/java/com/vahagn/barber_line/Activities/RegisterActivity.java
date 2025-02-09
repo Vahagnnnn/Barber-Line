@@ -8,11 +8,7 @@ import com.vahagn.barber_line.R;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -72,7 +68,6 @@ public class RegisterActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         FirebaseUser user = mAuth.getCurrentUser();
 
-                        // Send email verification
                         if (user != null) {
                             user.sendEmailVerification()
                                     .addOnCompleteListener(task1 -> {
@@ -87,7 +82,6 @@ public class RegisterActivity extends AppCompatActivity {
                                     });
                         }
                     } else {
-                        Log.i("failed",task.getException().getMessage());
                         Toast.makeText(RegisterActivity.this, "Sign-up failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });

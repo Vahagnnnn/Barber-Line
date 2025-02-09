@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -26,7 +27,6 @@ public class LoginActivity extends AppCompatActivity {
     TextView click_to_register;
     EditText email, password;
     FrameLayout login_button;
-
     private FirebaseAuth mAuth;
 
     private DatabaseReference usersRef;
@@ -48,7 +48,6 @@ public class LoginActivity extends AppCompatActivity {
         password = findViewById(R.id.password);
         login_button = findViewById(R.id.login_button);
         click_to_register = findViewById(R.id.click_to_register);
-
         settingsActivity = new SettingsActivity();
 
         usersRef = FirebaseDatabase.getInstance().getReference("Users");
@@ -87,9 +86,8 @@ public class LoginActivity extends AppCompatActivity {
                                             editor.putString("password", password_str);
                                             Log.i("email","send");
                                             editor.apply();
-//                                            Log.d("SharedPreferences", "Email: " + email_str + ", Password: " + password_str);
                                             Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-
+                                            MainActivity.isLogin=true;
                                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                             startActivity(intent);
                                             finish();

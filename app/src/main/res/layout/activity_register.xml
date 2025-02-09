@@ -58,8 +58,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:transitionName="sharedImageTransition"
-            android:padding="16dp">
+            android:padding="16dp"
+            android:transitionName="sharedImageTransition">
 
 
             <!-- Log In Text -->
@@ -76,109 +76,65 @@
                 android:textSize="27sp" />
 
             <!-- Email Section -->
-            <LinearLayout
-                android:id="@+id/container_text_field1"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="327dp"
-                android:layout_height="48dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/input"
-                android:clipToPadding="false"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingLeft="16dp"
-                android:paddingTop="12dp"
-                android:paddingRight="16dp"
-                android:paddingBottom="12dp">
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:boxCornerRadiusTopStart="12dp"
+                app:boxCornerRadiusTopEnd="12dp"
+                app:boxCornerRadiusBottomStart="12dp"
+                app:boxCornerRadiusBottomEnd="12dp">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/email"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:autofillHints="Name"
-                    android:background="@android:color/transparent"
-                    android:gravity="center_vertical"
+                    android:layout_height="54dp"
+                    android:layout_marginTop="7dp"
                     android:hint="@string/enter_your_email"
-                    android:inputType="text"
-                    android:textColor="@android:color/white"
-                    android:textColorHint="#FF8F9098"
-                    android:textSize="14sp" />
-            </LinearLayout>
+                    android:inputType="textEmailAddress" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Password Section -->
-            <LinearLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="327dp"
-                android:layout_height="48dp"
-                android:layout_gravity="center_horizontal"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/input"
-                android:clipToPadding="false"
-                android:orientation="horizontal"
-                android:paddingLeft="16dp"
-                android:paddingTop="12dp"
-                android:paddingRight="16dp"
-                android:paddingBottom="12dp">
+                app:passwordToggleEnabled="true"
+                app:boxCornerRadiusTopStart="12dp"
+                app:boxCornerRadiusTopEnd="12dp"
+                app:boxCornerRadiusBottomStart="12dp"
+                app:boxCornerRadiusBottomEnd="12dp">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/password"
-                    android:layout_width="0dp"
-                    android:layout_height="48dp"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:autofillHints="Password"
-                    android:background="@android:color/transparent"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:layout_marginTop="7dp"
                     android:hint="@string/enter_your_password"
-                    android:inputType="textPassword"
-                    android:textColor="@android:color/white"
-                    android:textColorHint="#FF8F9098"
-                    android:textSize="14sp" />
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center_vertical|end"
-                    android:contentDescription="@string/app_name"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/img_password_icon" />
-            </LinearLayout>
+                    android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Confirm Password Section -->
-            <LinearLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="327dp"
-                android:layout_height="48dp"
-                android:layout_gravity="center_horizontal"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/input"
-                android:clipToPadding="false"
-                android:orientation="horizontal"
-                android:paddingLeft="16dp"
-                android:paddingTop="12dp"
-                android:paddingRight="16dp"
-                android:paddingBottom="12dp">
+                app:passwordToggleEnabled="true"
+                app:boxCornerRadiusTopStart="12dp"
+                app:boxCornerRadiusTopEnd="12dp"
+                app:boxCornerRadiusBottomStart="12dp"
+                app:boxCornerRadiusBottomEnd="12dp">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/confirm_password"
-                    android:layout_width="0dp"
-                    android:layout_height="48dp"
-                    android:layout_weight="1"
-                    android:autofillHints="Password"
-                    android:background="@android:color/transparent"
-                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:layout_marginTop="7dp"
                     android:hint="@string/confirm_your_password"
-                    android:inputType="textPassword"
-                    android:textColor="@android:color/white"
-                    android:textColorHint="#FF8F9098"
-                    android:textSize="14sp" />
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center_vertical|end"
-                    android:contentDescription="@string/app_name"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/img_password_icon" />
-            </LinearLayout>
-
+                    android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Register Button -->
             <FrameLayout

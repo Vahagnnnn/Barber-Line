@@ -65,9 +65,9 @@ public class SettingsActivity extends AppCompatActivity {
         editor.clear();
         editor.apply();
         Toast.makeText(SettingsActivity.this, "You have been logged out.", Toast.LENGTH_SHORT).show();
+        MainActivity.isLogin = false;
         nameText.setText(" ");
         emailText.setText(" ");
-        Log.i("email", "delete");
         Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
@@ -89,4 +89,8 @@ public class SettingsActivity extends AppCompatActivity {
     public void ToBarbers(View view) {
         navigateTo(BarbersActivity.class);
     }
+    public void ToMap(View view) {
+        navigateTo(MapActivity.class);
+    }
+
 }

@@ -218,6 +218,7 @@
             android:id="@+id/container_barber"
             android:layout_width="wrap_content"
             android:layout_height="57dp"
+            android:onClick="ToBarbers"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/container_settings"
             app:layout_constraintStart_toEndOf="@id/img_hairstyle">
@@ -229,7 +230,7 @@
                 android:layout_gravity="center_horizontal"
                 android:contentDescription="@string/app_name"
                 android:scaleType="centerInside"
-                android:src="@drawable/img_location_fill" />
+                android:src="@drawable/img_barbers_fill" />
 
             <TextView
                 android:id="@+id/txt_barbers"
@@ -245,13 +246,13 @@
                 android:textSize="16sp" />
         </FrameLayout>
 
-        <!-- Settings -->
+        <!-- Map -->
         <FrameLayout
             android:id="@+id/container_settings"
             android:layout_width="wrap_content"
             android:layout_height="57dp"
             android:layout_marginEnd="15dp"
-            android:onClick="ToSettings"
+            android:onClick="ToMap"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
@@ -262,7 +263,7 @@
                 android:layout_gravity="center_horizontal"
                 android:contentDescription="@string/app_name"
                 android:scaleType="centerInside"
-                android:src="@drawable/img_setting" />
+                android:src="@drawable/img_location" />
 
             <TextView
                 android:id="@+id/txt_settings"
@@ -273,7 +274,7 @@
                 android:includeFontPadding="false"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:text="@string/settings"
+                android:text="Map"
                 android:textColor="#FFFFFFFF"
                 android:textSize="16sp" />
         </FrameLayout>
