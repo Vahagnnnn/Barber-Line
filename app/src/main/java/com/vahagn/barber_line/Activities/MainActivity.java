@@ -147,6 +147,9 @@ public class MainActivity extends AppCompatActivity {
     public void ToLogin(View view) {
         navigateTo(LoginActivity.class);
     }
+    public void ToSetting(View view) {
+        navigateTo(SettingsActivity.class);
+    }
 
     public void ToMap(View view) {
         navigateTo(MapActivity.class);

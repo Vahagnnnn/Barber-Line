@@ -305,7 +305,7 @@
                 android:layout_gravity="center_horizontal"
                 android:contentDescription="@string/app_name"
                 android:scaleType="centerInside"
-                android:src="@drawable/img_barbers" />
+                android:src="@drawable/img_barbers_fill" />
 
             <TextView
                 android:id="@+id/txt_barbers"

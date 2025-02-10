@@ -391,7 +391,7 @@
             android:layout_width="wrap_content"
             android:layout_height="57dp"
             android:layout_marginEnd="15dp"
-            android:onClick="ToMap"
+            android:onClick="ToSetting"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 

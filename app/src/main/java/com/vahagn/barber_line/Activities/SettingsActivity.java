@@ -44,18 +44,18 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        logout_button = findViewById(R.id.logout_button);
-
-        nameText = findViewById(R.id.name);
-        emailText = findViewById(R.id.email);
-
-        SharedPreferences sharedPreferences = getSharedPreferences("UserInformation", MODE_PRIVATE);
-        String email = sharedPreferences.getString("email", " ");
-        String name = sharedPreferences.getString("password", " ");
-        Log.e("email", "Email: " + name + ", Password: " + email);
-        nameText.setText(name);
-        emailText.setText(email);
-        logout_button.setOnClickListener(view -> logOut());
+//        logout_button = findViewById(R.id.logout_button);
+//
+//        nameText = findViewById(R.id.name);
+//        emailText = findViewById(R.id.email);
+//
+//        SharedPreferences sharedPreferences = getSharedPreferences("UserInformation", MODE_PRIVATE);
+//        String email = sharedPreferences.getString("email", " ");
+//        String name = sharedPreferences.getString("password", " ");
+//        Log.e("email", "Email: " + name + ", Password: " + email);
+//        nameText.setText(name);
+//        emailText.setText(email);
+//        logout_button.setOnClickListener(view -> logOut());
     }
 
     public void logOut() {
