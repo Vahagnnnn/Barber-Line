@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,24 +39,39 @@ import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 
 public class SettingsActivity extends AppCompatActivity {
-    TextView logout_button, nameText, emailText;
+    FrameLayout logout_button;
+    TextView Firstname_LastnameText, emailText;
+    ImageView profileImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-//        logout_button = findViewById(R.id.logout_button);
-//
-//        nameText = findViewById(R.id.name);
-//        emailText = findViewById(R.id.email);
-//
-//        SharedPreferences sharedPreferences = getSharedPreferences("UserInformation", MODE_PRIVATE);
-//        String email = sharedPreferences.getString("email", " ");
-//        String name = sharedPreferences.getString("password", " ");
-//        Log.e("email", "Email: " + name + ", Password: " + email);
-//        nameText.setText(name);
-//        emailText.setText(email);
-//        logout_button.setOnClickListener(view -> logOut());
+        logout_button = findViewById(R.id.logout_button);
+
+        Firstname_LastnameText = findViewById(R.id.Firstname_LastnameText);
+        emailText = findViewById(R.id.email);
+        profileImageView = findViewById(R.id.profileImageView);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("UserInformation", MODE_PRIVATE);
+        String name = sharedPreferences.getString("firstname_lastnameText", " ");
+        String email = sharedPreferences.getString("email", " ");
+        String photoUrl = sharedPreferences.getString("photoUrl", " ");
+
+        Firstname_LastnameText.setText(name);
+        emailText.setText(email);
+        if (photoUrl != null && !photoUrl.isEmpty()) {
+            Glide.with(this)
+                    .load(photoUrl)
+                    .circleCrop()
+                    .placeholder(R.drawable.img_avatar)
+                    .error(R.drawable.img_avatar)
+                    .into(profileImageView);
+        } else {
+            profileImageView.setImageResource(R.drawable.img_avatar);
+        }
+
+        logout_button.setOnClickListener(view -> logOut());
     }
 
     public void logOut() {
@@ -66,7 +82,7 @@ public class SettingsActivity extends AppCompatActivity {
         editor.apply();
         Toast.makeText(SettingsActivity.this, "You have been logged out.", Toast.LENGTH_SHORT).show();
         MainActivity.isLogin = false;
-        nameText.setText(" ");
+        Firstname_LastnameText.setText(" ");
         emailText.setText(" ");
         Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
         startActivity(intent);
@@ -89,6 +105,7 @@ public class SettingsActivity extends AppCompatActivity {
     public void ToBarbers(View view) {
         navigateTo(BarbersActivity.class);
     }
+
     public void ToMap(View view) {
         navigateTo(MapActivity.class);
     }

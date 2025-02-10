@@ -34,13 +34,16 @@ android {
 }
 
 dependencies {
+    implementation("com.github.bumptech.glide:glide:4.12.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
     implementation("com.google.firebase:firebase-auth:23.1.0")
     implementation("com.google.firebase:firebase-analytics:22.2.0")
     implementation("com.google.firebase:firebase-database:21.0.0")
     implementation("com.github.dhaval2404:imagepicker:2.1")
-    implementation ("com.github.bumptech.glide:glide:4.15.1")
+    implementation("com.github.bumptech.glide:glide:4.15.1")
     implementation("com.google.android.material:material:1.4.0")
-    annotationProcessor ("com.github.bumptech.glide:compiler:4.15.1")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.15.1")
+    implementation("com.google.android.gms:play-services-auth:20.7.0")
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)

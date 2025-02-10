@@ -13,7 +13,20 @@
           "package_name": "com.vahagn.barber_line"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "492134639446-7bhj6ea21856ivg15diguvnngtalle1s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vahagn.barber_line",
+            "certificate_hash": "11255474d1f31ac9f24f35adf340b654fa1c149f"
+          }
+        },
+        {
+          "client_id": "492134639446-8d6b7m9ru0mta1a6gsrfuhsbc82rd5si.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyA8X3E-0kHSHbfhb9UFhE_JrhbkR3qKGhU"
@@ -21,7 +34,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "492134639446-8d6b7m9ru0mta1a6gsrfuhsbc82rd5si.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
