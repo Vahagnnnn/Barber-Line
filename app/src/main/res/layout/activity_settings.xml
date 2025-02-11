@@ -117,7 +117,7 @@
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/text_phone"
+                android:id="@+id/phoneNumberText"
                 android:layout_width="match_parent"
                 android:layout_height="18dp"
                 android:layout_gravity="center_horizontal"

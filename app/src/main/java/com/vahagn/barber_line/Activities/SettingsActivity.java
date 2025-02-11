@@ -40,7 +40,7 @@ import kotlin.jvm.functions.Function1;
 
 public class SettingsActivity extends AppCompatActivity {
     FrameLayout logout_button;
-    TextView Firstname_LastnameText, emailText;
+    TextView Firstname_LastnameText, emailText, phoneNumberText;
     ImageView profileImageView;
 
     @Override
@@ -49,17 +49,20 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
         logout_button = findViewById(R.id.logout_button);
 
+        profileImageView = findViewById(R.id.profileImageView);
         Firstname_LastnameText = findViewById(R.id.Firstname_LastnameText);
         emailText = findViewById(R.id.email);
-        profileImageView = findViewById(R.id.profileImageView);
+        phoneNumberText = findViewById(R.id.phoneNumberText);
 
         SharedPreferences sharedPreferences = getSharedPreferences("UserInformation", MODE_PRIVATE);
         String name = sharedPreferences.getString("firstname_lastnameText", " ");
         String email = sharedPreferences.getString("email", " ");
         String photoUrl = sharedPreferences.getString("photoUrl", " ");
-
+        String phoneNumber = sharedPreferences.getString("phoneNumber", " ");
+        Log.i("phoneNumber", phoneNumber);
         Firstname_LastnameText.setText(name);
         emailText.setText(email);
+        phoneNumberText.setText(phoneNumber);
         if (photoUrl != null && !photoUrl.isEmpty()) {
             Glide.with(this)
                     .load(photoUrl)
@@ -82,8 +85,6 @@ public class SettingsActivity extends AppCompatActivity {
         editor.apply();
         Toast.makeText(SettingsActivity.this, "You have been logged out.", Toast.LENGTH_SHORT).show();
         MainActivity.isLogin = false;
-        Firstname_LastnameText.setText(" ");
-        emailText.setText(" ");
         Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
         startActivity(intent);
         finish();

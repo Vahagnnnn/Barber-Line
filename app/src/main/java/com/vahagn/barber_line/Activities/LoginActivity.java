@@ -1,5 +1,6 @@
 package com.vahagn.barber_line.Activities;
 
+import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,16 +19,22 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.vahagn.barber_line.Classes.Users;
 import com.vahagn.barber_line.R;
 
@@ -74,8 +81,9 @@ public class LoginActivity extends AppCompatActivity {
         googleSignInButton.setOnClickListener(v -> signIn());
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id)) // From google-services.json
+                .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
+                .requestServerAuthCode(getString(R.string.default_web_client_id))
                 .build();
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
@@ -90,24 +98,7 @@ public class LoginActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         FirebaseUser user = mAuth.getCurrentUser();
                         if (user != null && user.isEmailVerified()) {
-                            Users user_DB = new Users(email_str, password_str);
-                            usersRef.child(user.getUid()).setValue(user_DB)
-                                    .addOnCompleteListener(task1 -> {
-                                        if (task1.isSuccessful()) {
-                                            SharedPreferences sharedPreferences = getSharedPreferences("UserInformation", MODE_PRIVATE);
-                                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                                            editor.putString("email", email_str);
-                                            editor.putString("password", password_str);
-                                            editor.apply();
-                                            Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-                                            MainActivity.isLogin = true;
-                                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                            startActivity(intent);
-                                            finish();
-                                        } else {
-                                            Toast.makeText(LoginActivity.this, "Failed to store user data", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
+                            saveUserToDatabase(user,MainActivity.class);
                         } else {
                             Toast.makeText(LoginActivity.this, "Please verify your email address.", Toast.LENGTH_LONG).show();
                         }
@@ -117,10 +108,65 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        try {
+            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+            firebaseAuthWithGoogle(account.getIdToken());
+
+            mAuth.addAuthStateListener(authStateListener -> {
+                FirebaseUser user = mAuth.getCurrentUser();
+                if (user != null) {
+                    saveUserToDatabase(user,PhoneNumberActivity.class);
+                }
+            });
+        } catch (ApiException e) {
+            Log.w("GoogleSignIn", "signInResult:failed code=" + e.getStatusCode());
+        }
+    }
+
+
+
+    private void saveUserToDatabase(FirebaseUser user, Class Activity) {
+        getNextUserIndex(lastIndex -> {
+            int newIndex = lastIndex + 1;
+            String fullName = user.getDisplayName();
+            String email = user.getEmail();
+            String photoUrl = String.valueOf(user.getPhotoUrl());
+            Users user_DB = new Users(fullName, email, photoUrl);
+
+            usersRef.child(String.valueOf(newIndex)).setValue(user_DB)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            DatabaseReference lastIndexRef = FirebaseDatabase.getInstance().getReference("LastUserIndex");
+                            lastIndexRef.setValue(newIndex);
+
+                            SharedPreferences sharedPreferences = getSharedPreferences("UserInformation", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString("firstname_lastnameText", fullName);
+                            editor.putString("email", email);
+                            editor.putString("photoUrl", String.valueOf(photoUrl));
+                            editor.apply();
+
+                            Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+                            MainActivity.isLogin = true;
+                            Intent intent = new Intent(LoginActivity.this, Activity);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Failed to store user data", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        });
+    }
+
+
+
+
     private void signIn() {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
-        Toast.makeText(LoginActivity.this, "Intent", Toast.LENGTH_SHORT).show();
+        mGoogleSignInClient.signOut().addOnCompleteListener(this, task -> {
+            Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+            startActivityForResult(signInIntent, RC_SIGN_IN);
+        });
     }
 
     @Override
@@ -133,51 +179,6 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
-        try {
-            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            firebaseAuthWithGoogle(account.getIdToken());
-
-            String fullName = account.getDisplayName();
-            String email = account.getEmail();
-            Uri photoUrl = account.getPhotoUrl();
-            Log.i("email", "email " + email + " fullName " + fullName + " photoUrl " + photoUrl);
-
-            FirebaseUser user = mAuth.getCurrentUser();
-
-            if (user != null && user.isEmailVerified()) {
-                Users user_DB = new Users(fullName, email, photoUrl);
-                usersRef.child(user.getUid()).setValue(user_DB)
-                        .addOnCompleteListener(task1 -> {
-                            if (task1.isSuccessful()) {
-                                SharedPreferences sharedPreferences = getSharedPreferences("UserInformation", MODE_PRIVATE);
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
-                                editor.putString("email", email);
-                                editor.putString("firstname_lastnameText", fullName);
-                                editor.putString("photoUrl", String.valueOf(photoUrl));
-                                editor.apply();
-
-                                Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-
-                                MainActivity.isLogin = true;
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                startActivity(intent);
-                                finish();
-                            } else {
-                                Toast.makeText(LoginActivity.this, "Failed to store user data", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-
-                Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(LoginActivity.this, "Please verify your email address.", Toast.LENGTH_LONG).show();
-            }
-        } catch (ApiException e) {
-            Log.w("GoogleSignIn", "signInResult:failed code=" + e.getStatusCode());
-        }
-    }
-
-
     private void firebaseAuthWithGoogle(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(credential)
@@ -188,6 +189,30 @@ public class LoginActivity extends AppCompatActivity {
                         Log.w("FirebaseAuth", "signInWithCredential:failure", task.getException());
                     }
                 });
+    }
+
+    private void getNextUserIndex(OnIndexFetchedListener listener) {
+        DatabaseReference lastIndexRef = FirebaseDatabase.getInstance().getReference("LastUserIndex");
+        lastIndexRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                int lastIndex = 0;
+                if (dataSnapshot.exists()) {
+                    lastIndex = dataSnapshot.getValue(Integer.class);
+                }
+                listener.onIndexFetched(lastIndex);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w("DatabaseError", "getLastUserIndex:onCancelled", databaseError.toException());
+                listener.onIndexFetched(0);
+            }
+        });
+    }
+
+    interface OnIndexFetchedListener {
+        void onIndexFetched(int index);
     }
 
     public boolean validateEmail() {

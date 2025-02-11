@@ -11,20 +11,15 @@ public class Users {
     public String name;
     public String email;
     public String password;
+    public String photoUrl;
     private String image;
     private int imageResId;
-    private Uri photoUrl;
     public String phoneNumber;
     public String passwordHash;
     public String profilePictureUrl;
     public List<Appointment> appointments;
 
-    public Users(String Firstname_LastnameText, String email) {
-        this.Firstname_LastnameText = Firstname_LastnameText;
-        this.email = email;
-    }
-
-    public Users(String Firstname_LastnameText, String email, Uri photoUrl) {
+    public Users(String Firstname_LastnameText, String email, String photoUrl) {
         this.Firstname_LastnameText = Firstname_LastnameText;
         this.email = email;
         this.photoUrl = photoUrl;
