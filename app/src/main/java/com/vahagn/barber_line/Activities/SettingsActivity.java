@@ -33,7 +33,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.vahagn.barber_line.R;
 
 public class SettingsActivity extends AppCompatActivity {
-    FrameLayout logout_button;
+    FrameLayout logout_button,remove_account;
     TextView Firstname_LastnameText, emailText, phoneNumberText;
     ImageView profileImageView;
 
@@ -44,6 +44,7 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         logout_button = findViewById(R.id.logout_button);
+        remove_account = findViewById(R.id.remove_account);
 
         profileImageView = findViewById(R.id.profileImageView);
         Firstname_LastnameText = findViewById(R.id.Firstname_LastnameText);
@@ -91,7 +92,40 @@ public class SettingsActivity extends AppCompatActivity {
 
 
         logout_button.setOnClickListener(view -> logOut());
+        remove_account.setOnClickListener(view -> remove_account());
     }
+
+    private void remove_account() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (user != null) {
+            databaseReference.child(user.getUid()).removeValue()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            user.delete()
+                                    .addOnCompleteListener(deleteTask -> {
+                                        if (deleteTask.isSuccessful()) {
+                                            SharedPreferences sharedPreferences = getSharedPreferences("UserInformation", MODE_PRIVATE);
+                                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                                            editor.clear();
+                                            editor.apply();
+
+                                            Toast.makeText(SettingsActivity.this, "Account has been removed.", Toast.LENGTH_SHORT).show();
+                                            MainActivity.isLogin = false;
+                                            Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
+                                            startActivity(intent);
+                                            finish();
+                                        } else {
+                                            Toast.makeText(SettingsActivity.this, "Failed to delete account.", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                        } else {
+                            Toast.makeText(SettingsActivity.this, "Failed to remove account data.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
+    }
+
 
     public void logOut() {
         FirebaseAuth.getInstance().signOut();

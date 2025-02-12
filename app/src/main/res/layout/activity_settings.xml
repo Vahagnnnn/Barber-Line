@@ -382,7 +382,7 @@
             </FrameLayout>
 
             <FrameLayout
-                android:id="@+id/container_group7"
+                android:id="@+id/remove_account"
                 android:layout_width="173dp"
                 android:layout_height="22dp"
                 android:layout_marginTop="10dp"

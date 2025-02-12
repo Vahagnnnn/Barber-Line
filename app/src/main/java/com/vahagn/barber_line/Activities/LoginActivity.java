@@ -127,7 +127,6 @@ public class LoginActivity extends AppCompatActivity {
                 if (user != null) {
                     sendInfoToPhoneNumberActivity(user, "Google");
                     MainActivity.isLogin = true;
-//                    saveUserToDatabase(user,PhoneNumberActivity.class);
                 }
             });
         } catch (ApiException e) {

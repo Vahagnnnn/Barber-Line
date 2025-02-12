@@ -105,7 +105,7 @@ public class RegisterActivity extends AppCompatActivity {
                                             editor.putString("email", email);
                                             editor.apply();
 
-                                            Users user_DB = new Users(first_name + " " + last_name, email, password, phoneNumber, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxJCybEdDgkbOAh8b0fJiCpwmvsGO4-RnLhA&s");
+                                            Users user_DB = new Users(first_name + " " + last_name, email, password, phoneNumber, "https://i.pinimg.com/736x/09/21/fc/0921fc87aa989330b8d403014bf4f340.jpg");
                                             usersRef.child(user.getUid()).setValue(user_DB)
                                                     .addOnCompleteListener(task2 -> {
                                                         if (task2.isSuccessful()) {
@@ -130,64 +130,6 @@ public class RegisterActivity extends AppCompatActivity {
                 });
     }
 
-
-    //    public void signInUser() {
-//
-//        String email_str = email.getText().toString().trim();
-//        String password_str = password.getText().toString().trim();
-//
-//        mAuth.signInWithEmailAndPassword(email_str, password_str)
-//                .addOnCompleteListener(this, task -> {
-//                    if (task.isSuccessful()) {
-//                        FirebaseUser user = mAuth.getCurrentUser();
-//                        if (user != null && user.isEmailVerified()) {
-//                            Log.i("email", "email_str " + email_str);
-//                            Log.i("email", "password_str " + password_str);
-//                            MainActivity.isLogin = true;
-//
-//                            FirebaseUser currentUser = mAuth.getCurrentUser();
-//                            if (currentUser == null) {
-//                                Toast.makeText(this, "User not authenticated", Toast.LENGTH_SHORT).show();
-//                                return;
-//                            }
-//                            Users user_DB = new Users(fullName, email, password, phoneNumber, photoUrl);
-//
-//                            usersRef.child(currentUser.getUid()).setValue(user_DB)
-//                                    .addOnCompleteListener(task -> {
-//                                        if (task.isSuccessful()) {
-//                                            Toast.makeText(RegisterActivity.this, "Store successful", Toast.LENGTH_SHORT).show();
-//                                            Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-//                                            startActivity(intent);
-//                                            finish();
-//                                        } else {
-//                                            Toast.makeText(RegisterActivity.this, "Failed to store user data", Toast.LENGTH_SHORT).show();
-//                                        }
-//                                    });
-//                        } else {
-//                            Toast.makeText(PhoneNumberActivity.this, "Please verify your email address.", Toast.LENGTH_LONG).show();
-//                        }
-//                    } else {
-//                        usersRef.orderByChild("email").equalTo(email_str).addListenerForSingleValueEvent(new ValueEventListener() {
-//                            @Override
-//                            public void onDataChange(DataSnapshot dataSnapshot) {
-//                                if (dataSnapshot.exists()) {
-//                                    Toast.makeText(LoginActivity.this, "Authentication failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-//                                } else {
-//                                    Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-//                                    startActivity(intent);
-//                                    finish();
-//                                }
-//                            }
-//
-//                            @Override
-//                            public void onCancelled(DatabaseError databaseError) {
-//                                Log.w("DatabaseError", "User check cancelled", databaseError.toException());
-//                            }
-//                        });
-//                    }
-//
-//                });
-//    }
     public void ToHome(View v) {
         navigateTo(MainActivity.class);
     }
