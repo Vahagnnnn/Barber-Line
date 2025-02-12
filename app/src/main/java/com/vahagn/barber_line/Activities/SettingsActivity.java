@@ -63,12 +63,11 @@ public class SettingsActivity extends AppCompatActivity {
                         String name = snapshot.child("Firstname_LastnameText").getValue(String.class);
                         String email = snapshot.child("email").getValue(String.class);
                         String phone = snapshot.child("phoneNumber").getValue(String.class);
+
                         String photoUrl = snapshot.child("photoUrl").getValue(String.class);
 
-                        Log.d("FirebaseData", "Firstname_LastnameText: " + name);
-                        Log.d("FirebaseData", "Email: " + email);
-                        Log.d("FirebaseData", "Phone: " + phone);
-                        Log.d("FirebaseData", "photoUrl: " + photoUrl);
+                        assert phone != null;
+                        phone = phone.substring(0, 4) + " " + phone.substring(4, 6) + " " + phone.substring(6, 8) + " " + phone.substring(8);
 
                         Firstname_LastnameText.setText(name);
                         emailText.setText(email);
@@ -82,7 +81,6 @@ public class SettingsActivity extends AppCompatActivity {
                         }
                     }
                 }
-
 
                 @Override
                 public void onCancelled(DatabaseError error) {

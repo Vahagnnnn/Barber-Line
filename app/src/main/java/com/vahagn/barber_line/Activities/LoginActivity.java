@@ -38,9 +38,8 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference usersRef;
 
-    TextView click_to_register;
     EditText email, password;
-    FrameLayout login_button;
+    FrameLayout continue_button;
     SignInButton googleSignInButton;
 
     @Override
@@ -56,21 +55,15 @@ public class LoginActivity extends AppCompatActivity {
 
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
-        login_button = findViewById(R.id.login_button);
-        click_to_register = findViewById(R.id.click_to_register);
+        continue_button = findViewById(R.id.continue_button);
         googleSignInButton = findViewById(R.id.sign_in_button);
 
         usersRef = FirebaseDatabase.getInstance().getReference("Users");
 
-        login_button.setOnClickListener(view -> {
-            if (!validateEmail() || !validatePassword()) {
-                Toast.makeText(LoginActivity.this, "Invalid information", Toast.LENGTH_SHORT).show();
-            } else {
-                signInUser();
-            }
+        continue_button.setOnClickListener(view -> {
+            signInUser();
         });
 
-        click_to_register.setOnClickListener(v -> ToRegister(v));
 
         googleSignInButton.setOnClickListener(v -> signIn());
 
@@ -83,30 +76,46 @@ public class LoginActivity extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
     }
 
+    public void ToPasswordActivity() {
+        SharedPreferences sharedPreferences = getSharedPreferences("UserInformation", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        String email_str = email.getText().toString().trim();
+        editor.putString("email", email_str);
+        editor.apply();
+        navigateTo(PasswordActivity.class);
+    }
+
     public void signInUser() {
         String email_str = email.getText().toString().trim();
-        String password_str = password.getText().toString().trim();
 
-        mAuth.signInWithEmailAndPassword(email_str, password_str)
-                .addOnCompleteListener(this, task -> {
-                    if (task.isSuccessful()) {
-                        FirebaseUser user = mAuth.getCurrentUser();
-                        if (user != null && user.isEmailVerified()) {
-                            Log.i("email","email_str "+email_str);
-                            Log.i("email","password_str "+password_str);
-                            Log.i("email","getPhotoUrl "+user.getPhotoUrl());
-                            Log.i("email","getDisplayName "+user.getDisplayName());
-                            sendInfoToPhoneNumberActivity(user,password_str);
-                            MainActivity.isLogin = true;
-//                            saveUserToDatabase(user,MainActivity.class);
-                        } else {
-                            Toast.makeText(LoginActivity.this, "Please verify your email address.", Toast.LENGTH_LONG).show();
-                        }
+        if (email_str.isEmpty()) {
+            email.setError("Email can't be empty");
+            Toast.makeText(LoginActivity.this, "Email can't be empty", Toast.LENGTH_SHORT).show();
+        } else {
+            usersRef.orderByChild("email").equalTo(email_str).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        ToPasswordActivity();
                     } else {
-                        Toast.makeText(LoginActivity.this, "Authentication failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        SharedPreferences sharedPreferences = getSharedPreferences("email_str", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("email", email_str);
+                        editor.apply();
+                        Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                        startActivity(intent);
+                        finish();
                     }
-                });
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.w("DatabaseError", "User check cancelled", databaseError.toException());
+                }
+            });
+        }
     }
+
 
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
@@ -116,7 +125,7 @@ public class LoginActivity extends AppCompatActivity {
             mAuth.addAuthStateListener(authStateListener -> {
                 FirebaseUser user = mAuth.getCurrentUser();
                 if (user != null) {
-                    sendInfoToPhoneNumberActivity(user,"Google");
+                    sendInfoToPhoneNumberActivity(user, "Google");
                     MainActivity.isLogin = true;
 //                    saveUserToDatabase(user,PhoneNumberActivity.class);
                 }
@@ -126,9 +135,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-
-
-    private void sendInfoToPhoneNumberActivity(FirebaseUser user,String password) {
+    private void sendInfoToPhoneNumberActivity(FirebaseUser user, String password) {
         String fullName = user.getDisplayName();
         String email = user.getEmail();
         String photoUrl = String.valueOf(user.getPhotoUrl());
@@ -137,7 +144,7 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("firstname_lastnameText", fullName);
         editor.putString("email", email);
-        editor.putString("password",password);
+        editor.putString("password", password);
         editor.putString("photoUrl", photoUrl);
         editor.apply();
 
@@ -146,37 +153,6 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-//    private void saveUserToDatabase(FirebaseUser user, Class Activity) {
-//            String fullName = user.getDisplayName();
-//            String email = user.getEmail();
-//            String photoUrl = String.valueOf(user.getPhotoUrl());
-//            Users user_DB = new Users(fullName, email, photoUrl);
-//
-//            usersRef.child(String.valueOf(newIndex)).setValue(user_DB)
-//                    .addOnCompleteListener(task -> {
-//                        if (task.isSuccessful()) {
-//
-//                            SharedPreferences sharedPreferences = getSharedPreferences("UserInformation", MODE_PRIVATE);
-//                            SharedPreferences.Editor editor = sharedPreferences.edit();
-//                            editor.putString("firstname_lastnameText", fullName);
-//                            editor.putString("email", email);
-//                            editor.putString("photoUrl", String.valueOf(photoUrl));
-//                            editor.apply();
-//
-//                            Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-//                            MainActivity.isLogin = true;
-//                            Intent intent = new Intent(LoginActivity.this, Activity);
-//                            startActivity(intent);
-//                            finish();
-//                        } else {
-//                            Toast.makeText(LoginActivity.this, "Failed to store user data", Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
-//        });
-//    }
-
-
-
 
     private void signIn() {
         mGoogleSignInClient.signOut().addOnCompleteListener(this, task -> {
@@ -207,51 +183,6 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    private void getNextUserIndex(OnIndexFetchedListener listener) {
-        DatabaseReference lastIndexRef = FirebaseDatabase.getInstance().getReference("LastUserIndex");
-        lastIndexRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                int lastIndex = 0;
-                if (dataSnapshot.exists()) {
-                    lastIndex = dataSnapshot.getValue(Integer.class);
-                }
-                listener.onIndexFetched(lastIndex);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.w("DatabaseError", "getLastUserIndex:onCancelled", databaseError.toException());
-                listener.onIndexFetched(0);
-            }
-        });
-    }
-
-    interface OnIndexFetchedListener {
-        void onIndexFetched(int index);
-    }
-
-    public boolean validateEmail() {
-        String val = email.getText().toString();
-        if (val.isEmpty()) {
-            email.setError("Email can't be empty");
-            return false;
-        } else {
-            email.setError(null);
-            return true;
-        }
-    }
-
-    public boolean validatePassword() {
-        String val = password.getText().toString();
-        if (val.isEmpty()) {
-            password.setError("Password can't be empty");
-            return false;
-        } else {
-            password.setError(null);
-            return true;
-        }
-    }
 
     public void ToHome(View view) {
         navigateTo(MainActivity.class);
