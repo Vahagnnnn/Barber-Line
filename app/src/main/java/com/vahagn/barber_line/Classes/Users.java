@@ -11,17 +11,19 @@ public class Users {
     public String name;
     public String email;
     public String password;
+    public String phoneNumber;
     public String photoUrl;
     private String image;
     private int imageResId;
-    public String phoneNumber;
     public String passwordHash;
     public String profilePictureUrl;
     public List<Appointment> appointments;
 
-    public Users(String Firstname_LastnameText, String email, String photoUrl) {
+    public Users(String Firstname_LastnameText, String email, String password, String phoneNumber, String photoUrl) {
         this.Firstname_LastnameText = Firstname_LastnameText;
         this.email = email;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
         this.photoUrl = photoUrl;
     }
 

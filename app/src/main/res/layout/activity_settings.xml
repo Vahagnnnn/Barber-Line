@@ -70,8 +70,8 @@
 
         <ImageView
             android:id="@+id/profileImageView"
-            android:layout_width="81.5dp"
-            android:layout_height="82dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginBottom="1dp"
             android:contentDescription="@string/app_name"
             android:scaleType="centerCrop"
@@ -79,7 +79,7 @@
 
         <FrameLayout
             android:id="@+id/container_group1"
-            android:layout_width="221dp"
+            android:layout_width="400dp"
             android:layout_height="61dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp">
@@ -123,8 +123,10 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="46dp"
                 android:layout_marginBottom="-3dp"
+                android:fontFamily="@font/inter_bold"
                 android:gravity="center"
                 android:includeFontPadding="false"
+                android:letterSpacing="0.01"
                 android:maxLines="1"
                 android:singleLine="true"
                 android:text="+374 00 00 0000"

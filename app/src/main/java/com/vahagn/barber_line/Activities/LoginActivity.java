@@ -1,10 +1,8 @@
 package com.vahagn.barber_line.Activities;
 
-import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,11 +17,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthCredential;
@@ -35,7 +30,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.vahagn.barber_line.Classes.Users;
 import com.vahagn.barber_line.R;
 
 public class LoginActivity extends AppCompatActivity {
@@ -98,7 +92,13 @@ public class LoginActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         FirebaseUser user = mAuth.getCurrentUser();
                         if (user != null && user.isEmailVerified()) {
-                            saveUserToDatabase(user,MainActivity.class);
+                            Log.i("email","email_str "+email_str);
+                            Log.i("email","password_str "+password_str);
+                            Log.i("email","getPhotoUrl "+user.getPhotoUrl());
+                            Log.i("email","getDisplayName "+user.getDisplayName());
+                            sendInfoToPhoneNumberActivity(user,password_str);
+                            MainActivity.isLogin = true;
+//                            saveUserToDatabase(user,MainActivity.class);
                         } else {
                             Toast.makeText(LoginActivity.this, "Please verify your email address.", Toast.LENGTH_LONG).show();
                         }
@@ -116,7 +116,9 @@ public class LoginActivity extends AppCompatActivity {
             mAuth.addAuthStateListener(authStateListener -> {
                 FirebaseUser user = mAuth.getCurrentUser();
                 if (user != null) {
-                    saveUserToDatabase(user,PhoneNumberActivity.class);
+                    sendInfoToPhoneNumberActivity(user,"Google");
+                    MainActivity.isLogin = true;
+//                    saveUserToDatabase(user,PhoneNumberActivity.class);
                 }
             });
         } catch (ApiException e) {
@@ -126,38 +128,52 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-    private void saveUserToDatabase(FirebaseUser user, Class Activity) {
-        getNextUserIndex(lastIndex -> {
-            int newIndex = lastIndex + 1;
-            String fullName = user.getDisplayName();
-            String email = user.getEmail();
-            String photoUrl = String.valueOf(user.getPhotoUrl());
-            Users user_DB = new Users(fullName, email, photoUrl);
+    private void sendInfoToPhoneNumberActivity(FirebaseUser user,String password) {
+        String fullName = user.getDisplayName();
+        String email = user.getEmail();
+        String photoUrl = String.valueOf(user.getPhotoUrl());
 
-            usersRef.child(String.valueOf(newIndex)).setValue(user_DB)
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            DatabaseReference lastIndexRef = FirebaseDatabase.getInstance().getReference("LastUserIndex");
-                            lastIndexRef.setValue(newIndex);
+        SharedPreferences sharedPreferences = getSharedPreferences("UserInformation", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("firstname_lastnameText", fullName);
+        editor.putString("email", email);
+        editor.putString("password",password);
+        editor.putString("photoUrl", photoUrl);
+        editor.apply();
 
-                            SharedPreferences sharedPreferences = getSharedPreferences("UserInformation", MODE_PRIVATE);
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putString("firstname_lastnameText", fullName);
-                            editor.putString("email", email);
-                            editor.putString("photoUrl", String.valueOf(photoUrl));
-                            editor.apply();
-
-                            Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-                            MainActivity.isLogin = true;
-                            Intent intent = new Intent(LoginActivity.this, Activity);
-                            startActivity(intent);
-                            finish();
-                        } else {
-                            Toast.makeText(LoginActivity.this, "Failed to store user data", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-        });
+        Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(LoginActivity.this, PhoneNumberActivity.class);
+        startActivity(intent);
+        finish();
     }
+//    private void saveUserToDatabase(FirebaseUser user, Class Activity) {
+//            String fullName = user.getDisplayName();
+//            String email = user.getEmail();
+//            String photoUrl = String.valueOf(user.getPhotoUrl());
+//            Users user_DB = new Users(fullName, email, photoUrl);
+//
+//            usersRef.child(String.valueOf(newIndex)).setValue(user_DB)
+//                    .addOnCompleteListener(task -> {
+//                        if (task.isSuccessful()) {
+//
+//                            SharedPreferences sharedPreferences = getSharedPreferences("UserInformation", MODE_PRIVATE);
+//                            SharedPreferences.Editor editor = sharedPreferences.edit();
+//                            editor.putString("firstname_lastnameText", fullName);
+//                            editor.putString("email", email);
+//                            editor.putString("photoUrl", String.valueOf(photoUrl));
+//                            editor.apply();
+//
+//                            Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+//                            MainActivity.isLogin = true;
+//                            Intent intent = new Intent(LoginActivity.this, Activity);
+//                            startActivity(intent);
+//                            finish();
+//                        } else {
+//                            Toast.makeText(LoginActivity.this, "Failed to store user data", Toast.LENGTH_SHORT).show();
+//                        }
+//                    });
+//        });
+//    }
 
 
 

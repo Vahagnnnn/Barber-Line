@@ -19,45 +19,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <!-- Top Section -->
-        <LinearLayout
-            android:id="@+id/container_top_navigation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="17dp"
-            android:layout_marginTop="20dp"
-            android:clipToPadding="false"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <ImageButton
-                android:id="@+id/container_frame2"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="@drawable/img_back_home"
-                android:contentDescription="@string/app_name"
-                android:onClick="ToLogin"
-                android:scaleType="centerInside" />
-
-            <TextView
-                android:id="@+id/text_barber_time"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:layout_marginStart="20dp"
-                android:fontFamily="@font/poppins_bold"
-                android:gravity="center"
-                android:includeFontPadding="false"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:text="@string/Barber_Line"
-                android:textColor="#FFFFFFFF"
-                android:textSize="24sp" />
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:gravity="center"
             android:transitionName="sharedImageTransition"
             android:padding="16dp">
 
@@ -66,7 +33,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="41dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="220dp"
                 android:fontFamily="@font/poppins_bold"
                 android:gravity="center"
                 android:text="Write your phone number"
@@ -89,7 +55,7 @@
                     android:id="@+id/phoneNumber"
                     android:layout_width="match_parent"
                     android:layout_height="54dp"
-                    android:hint="Enter your phone number"
+                    android:hint="+374XXXXXXXX"
                     android:inputType="phone" />
             </com.google.android.material.textfield.TextInputLayout>
 

@@ -59,6 +59,19 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(RegisterActivity.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
             return false;
         }
+        if (password.length() < 8) {
+            Toast.makeText(RegisterActivity.this, "Password must be at least 8 characters", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (!password.matches(".*[A-Z].*")) {
+            Toast.makeText(RegisterActivity.this, "Password must contain at least one uppercase letter", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (!password.matches(".*[0-9].*")) {
+            Toast.makeText(RegisterActivity.this, "Password must contain at least one number", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
         return true;
     }
 

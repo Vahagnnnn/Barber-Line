@@ -18,30 +18,26 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
-import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.vahagn.barber_line.R;
-
-import java.io.IOException;
-
-import kotlin.Unit;
-import kotlin.jvm.functions.Function1;
 
 public class SettingsActivity extends AppCompatActivity {
     FrameLayout logout_button;
     TextView Firstname_LastnameText, emailText, phoneNumberText;
     ImageView profileImageView;
+
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,25 +50,46 @@ public class SettingsActivity extends AppCompatActivity {
         emailText = findViewById(R.id.email);
         phoneNumberText = findViewById(R.id.phoneNumberText);
 
-        SharedPreferences sharedPreferences = getSharedPreferences("UserInformation", MODE_PRIVATE);
-        String name = sharedPreferences.getString("firstname_lastnameText", " ");
-        String email = sharedPreferences.getString("email", " ");
-        String photoUrl = sharedPreferences.getString("photoUrl", " ");
-        String phoneNumber = sharedPreferences.getString("phoneNumber", " ");
-        Log.i("phoneNumber", phoneNumber);
-        Firstname_LastnameText.setText(name);
-        emailText.setText(email);
-        phoneNumberText.setText(phoneNumber);
-        if (photoUrl != null && !photoUrl.isEmpty()) {
-            Glide.with(this)
-                    .load(photoUrl)
-                    .circleCrop()
-                    .placeholder(R.drawable.img_avatar)
-                    .error(R.drawable.img_avatar)
-                    .into(profileImageView);
-        } else {
-            profileImageView.setImageResource(R.drawable.img_avatar);
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            String userId = user.getUid();
+            databaseReference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        String name = snapshot.child("Firstname_LastnameText").getValue(String.class);
+                        String email = snapshot.child("email").getValue(String.class);
+                        String phone = snapshot.child("phoneNumber").getValue(String.class);
+                        String photoUrl = snapshot.child("photoUrl").getValue(String.class);
+
+                        Log.d("FirebaseData", "Firstname_LastnameText: " + name);
+                        Log.d("FirebaseData", "Email: " + email);
+                        Log.d("FirebaseData", "Phone: " + phone);
+                        Log.d("FirebaseData", "photoUrl: " + photoUrl);
+
+                        Firstname_LastnameText.setText(name);
+                        emailText.setText(email);
+                        phoneNumberText.setText(phone);
+
+                        if (photoUrl != null && !photoUrl.isEmpty()) {
+                            Glide.with(SettingsActivity.this)
+                                    .load(photoUrl)
+                                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(100)))
+                                    .into(profileImageView);
+                        }
+                    }
+                }
+
+
+                @Override
+                public void onCancelled(DatabaseError error) {
+                    Log.w("Firebase", "Failed to read value.", error.toException());
+                }
+            });
         }
+
 
         logout_button.setOnClickListener(view -> logOut());
     }
