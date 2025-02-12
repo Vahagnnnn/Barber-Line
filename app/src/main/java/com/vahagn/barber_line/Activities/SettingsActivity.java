@@ -49,6 +49,7 @@ public class SettingsActivity extends AppCompatActivity {
         Firstname_LastnameText = findViewById(R.id.Firstname_LastnameText);
         emailText = findViewById(R.id.email);
         phoneNumberText = findViewById(R.id.phoneNumberText);
+        Log.i("email", String.valueOf(MainActivity.isLogin));
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
 
