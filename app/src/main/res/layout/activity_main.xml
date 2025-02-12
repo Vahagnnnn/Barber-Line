@@ -25,22 +25,23 @@
         <TextView
             android:id="@+id/Barber_Line_Text"
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_weight="1"
             android:fontFamily="@font/poppins_bold"
+            android:gravity="center_vertical"
             android:text="@string/Barber_Line"
             android:textColor="@color/white"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
         <ImageButton
             android:id="@+id/profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="#00FFFFFF"
             android:layout_gravity="center_vertical|end"
+            android:backgroundTint="#00FFFFFF"
             android:contentDescription="@string/app_name"
             android:onClick="To"
             android:src="@drawable/profile" />
@@ -53,9 +54,9 @@
         android:id="@+id/nested_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:transitionName="sharedImageTransition"
         android:layout_marginTop="7dp"
         android:fillViewport="true"
+        android:transitionName="sharedImageTransition"
         app:layout_constraintTop_toBottomOf="@id/top">
 
         <!-- Main Content Layout -->
@@ -323,8 +324,8 @@
         <FrameLayout
             android:id="@+id/container_book"
             android:layout_width="49dp"
-            android:onClick="To"
             android:layout_height="57dp"
+            android:onClick="To"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/img_hairstyle"
             app:layout_constraintStart_toEndOf="@id/container_home_fill">
@@ -388,7 +389,7 @@
         <!-- Map -->
         <FrameLayout
             android:id="@+id/container_settings"
-            android:layout_width="wrap_content"
+            android:layout_width="48dp"
             android:layout_height="57dp"
             android:layout_marginEnd="15dp"
             android:onClick="ToSetting"

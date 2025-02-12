@@ -32,8 +32,8 @@
 
             <ImageButton
                 android:id="@+id/container_frame2"
-                android:layout_width="44dp"
-                android:layout_height="44dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:background="@drawable/img_back_home"
                 android:contentDescription="@string/app_name"
                 android:onClick="ToHome"
@@ -73,6 +73,7 @@
                 android:text="@string/log_in"
                 android:textColor="#FFFFFFFF"
                 android:textSize="27sp" />
+
 
             <!-- Email Section -->
             <com.google.android.material.textfield.TextInputLayout
@@ -119,7 +120,8 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/poppins_bold"
-                android:gravity="left"
+                android:gravity="start"
+                android:onClick="ToForgot"
                 android:includeFontPadding="false"
                 android:maxLines="1"
                 android:singleLine="true"
@@ -172,6 +174,17 @@
                 android:text="@string/click_to_register"
                 android:textColor="#FF006FFD"
                 android:textSize="12sp" />
+
+            <com.google.android.gms.common.SignInButton
+                android:id="@+id/sign_in_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </LinearLayout>
 

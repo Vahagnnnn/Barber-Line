@@ -49,8 +49,14 @@
     <string name="services">Services</string>
     <string name="sargis_xachatryan">Sargis Xachatryan</string>
     <string name="_5_0s">5.0</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="haircut">ԿՏՐՎԱԾՔ ՄԿՐԱՏՈՎ / Haircut</string>
     <string name="profile">Profile</string>
+
+    <string name="default_web_client_id">1:492134639446:android:dd9f16e7a0b63736fc18f7</string>
+
+    <string name="map">Map</string>
+    <string name="continue_with_google">Continue with Google</string>
+    <string name="reset_password">Reset Password</string>
+
 </resources>
