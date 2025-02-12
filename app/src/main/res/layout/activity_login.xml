@@ -69,7 +69,6 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="220dp"
                 android:fontFamily="@font/poppins_bold"
-                android:gravity="center"
                 android:text="Log in or sign up"
                 android:textColor="#FFFFFFFF"
                 android:textSize="27sp" />
