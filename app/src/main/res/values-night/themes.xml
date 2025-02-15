@@ -2,6 +2,9 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.BarberLine" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="android:statusBarColor">#242C3B</item>
+        <item name="colorOnSurfaceVariant">#928f96</item>
     </style>
+
+    <style name="Theme.BarberLine" parent="Base.Theme.BarberLine" />
 </resources>

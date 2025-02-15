@@ -28,7 +28,7 @@
             android:layout_marginTop="20dp"
             android:clipToPadding="false"
             android:gravity="center"
-                android:orientation="horizontal">
+            android:orientation="horizontal">
 
             <ImageButton
                 android:id="@+id/container_frame2"
@@ -58,8 +58,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:transitionName="sharedImageTransition"
-            android:padding="16dp">
+            android:padding="16dp"
+            android:transitionName="sharedImageTransition">
 
             <!-- Log In Text -->
             <TextView
@@ -79,36 +79,20 @@
                 android:layout_width="327dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                app:boxCornerRadiusTopStart="12dp"
-                app:boxCornerRadiusTopEnd="12dp"
+                app:boxCornerRadiusBottomEnd="12dp"
                 app:boxCornerRadiusBottomStart="12dp"
-                app:boxCornerRadiusBottomEnd="12dp">
+                app:boxCornerRadiusTopEnd="12dp"
+                app:boxCornerRadiusTopStart="12dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="54dp"
+                    android:background="@null"
                     android:hint="@string/enter_your_email"
+                    android:textColor="@color/white"
                     android:inputType="textEmailAddress" />
             </com.google.android.material.textfield.TextInputLayout>
-
-
-
-            <!-- Forgot Password Text -->
-<!--            <TextView-->
-<!--                android:layout_width="327dp"-->
-<!--                android:layout_height="16dp"-->
-<!--                android:layout_gravity="center"-->
-<!--                android:layout_marginTop="8dp"-->
-<!--                android:fontFamily="@font/poppins_bold"-->
-<!--                android:gravity="start"-->
-<!--                android:onClick="ToForgot"-->
-<!--                android:includeFontPadding="false"-->
-<!--                android:maxLines="1"-->
-<!--                android:singleLine="true"-->
-<!--                android:text="@string/forgot_password"-->
-<!--                android:textColor="#FF006FFD"-->
-<!--                android:textSize="12sp" />-->
 
             <!-- Continue Button -->
             <FrameLayout
@@ -141,20 +125,20 @@
             </FrameLayout>
 
             <!-- Click to Register Text -->
-<!--            <TextView-->
-<!--                android:id="@+id/click_to_register"-->
-<!--                android:layout_width="327dp"-->
-<!--                android:layout_height="16dp"-->
-<!--                android:layout_gravity="center_horizontal"-->
-<!--                android:layout_marginTop="16dp"-->
-<!--                android:fontFamily="@font/poppins_bold"-->
-<!--                android:gravity="center_horizontal|center_vertical"-->
-<!--                android:includeFontPadding="false"-->
-<!--                android:maxLines="1"-->
-<!--                android:singleLine="true"-->
-<!--                android:text="@string/click_to_register"-->
-<!--                android:textColor="#FF006FFD"-->
-<!--                android:textSize="12sp" />-->
+            <!--            <TextView-->
+            <!--                android:id="@+id/click_to_register"-->
+            <!--                android:layout_width="327dp"-->
+            <!--                android:layout_height="16dp"-->
+            <!--                android:layout_gravity="center_horizontal"-->
+            <!--                android:layout_marginTop="16dp"-->
+            <!--                android:fontFamily="@font/poppins_bold"-->
+            <!--                android:gravity="center_horizontal|center_vertical"-->
+            <!--                android:includeFontPadding="false"-->
+            <!--                android:maxLines="1"-->
+            <!--                android:singleLine="true"-->
+            <!--                android:text="@string/click_to_register"-->
+            <!--                android:textColor="#FF006FFD"-->
+            <!--                android:textSize="12sp" />-->
 
             <com.google.android.gms.common.SignInButton
                 android:id="@+id/sign_in_button"

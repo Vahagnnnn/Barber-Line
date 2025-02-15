@@ -32,13 +32,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.vahagn.barber_line.R;
 
+
 public class LoginActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 9001;
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
     private DatabaseReference usersRef;
 
-    EditText email, password;
+    EditText email;
     FrameLayout continue_button;
     SignInButton googleSignInButton;
 
@@ -54,14 +55,13 @@ public class LoginActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         email = findViewById(R.id.email);
-        password = findViewById(R.id.password);
         continue_button = findViewById(R.id.continue_button);
         googleSignInButton = findViewById(R.id.sign_in_button);
 
         usersRef = FirebaseDatabase.getInstance().getReference("Users");
 
         continue_button.setOnClickListener(view -> {
-            signInUser();
+                signInUser();
         });
 
 
@@ -87,7 +87,6 @@ public class LoginActivity extends AppCompatActivity {
 
     public void signInUser() {
         String email_str = email.getText().toString().trim();
-
         if (email_str.isEmpty()) {
             email.setError("Email can't be empty");
             Toast.makeText(LoginActivity.this, "Email can't be empty", Toast.LENGTH_SHORT).show();
@@ -181,7 +180,6 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
     }
-
 
     public void ToHome(View view) {
         navigateTo(MainActivity.class);
