@@ -39,7 +39,7 @@ public class BarbersActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     BarberShops shop = snapshot.getValue(BarberShops.class);
-                    Log.i("getServices",shop.getServices().toString());
+                    Log.i("getServices", shop.getServices().toString());
                     addBarbershop(secondActivityContainer, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists(), shop.getServices());
                 }
             }
@@ -49,7 +49,6 @@ public class BarbersActivity extends AppCompatActivity {
                 Log.w("Firebase", "Failed to read value.", databaseError.toException());
             }
         });
-//        addBarbershop(secondActivityContainer, "PARAGON", "9 Khazar Parpetsi St, 8", R.drawable.img_paragon_logo);
     }
 
 
@@ -68,7 +67,7 @@ public class BarbersActivity extends AppCompatActivity {
 
 
         barbershopView.setOnClickListener(v -> {
-            Intent intent = new Intent(BarbersActivity.this, BarberShopsAboutActivity.class);
+            Intent intent = new Intent(this, BarberShopsAboutActivity.class);
             intent.putExtra("from_where", "BarbersActivity");
             intent.putExtra("image", image);
             intent.putExtra("name", name);
@@ -77,7 +76,11 @@ public class BarbersActivity extends AppCompatActivity {
             intent.putExtra("ListSpecialist", (Serializable) ListSpecialist);
             intent.putExtra("ListService", (Serializable) ListService);
 
-            startActivity(intent);
+            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
+                    this,
+                    findViewById(R.id.bottom_navigation),
+                    "sharedImageTransition");
+            startActivity(intent, options.toBundle());
         });
 
         container.addView(barbershopView);

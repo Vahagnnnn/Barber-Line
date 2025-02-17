@@ -50,7 +50,6 @@ public class SettingsActivity extends AppCompatActivity {
         Firstname_LastnameText = findViewById(R.id.Firstname_LastnameText);
         emailText = findViewById(R.id.email);
         phoneNumberText = findViewById(R.id.phoneNumberText);
-        Log.i("email", String.valueOf(MainActivity.isLogin));
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
 
@@ -148,17 +147,16 @@ public class SettingsActivity extends AppCompatActivity {
         Intent intent = new Intent(this, targetActivity);
         startActivity(intent, options.toBundle());
     }
-
     public void ToHome(View view) {
         navigateTo(MainActivity.class);
     }
-
     public void ToBarbers(View view) {
         navigateTo(BarbersActivity.class);
     }
-
+    public void ToEdit(View view) {
+        navigateTo(EditProfileActivity.class);
+    }
     public void ToMap(View view) {
         navigateTo(MapActivity.class);
     }
-
 }

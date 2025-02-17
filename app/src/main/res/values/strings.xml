@@ -58,5 +58,11 @@
     <string name="map">Map</string>
     <string name="continue_with_google">Continue with Google</string>
     <string name="reset_password">Reset Password</string>
+    <string name="change_photo">Change photo</string>
+    <string name="about_you">About you</string>
+    <string name="user">User</string>
+    <string name="_374_00_00_0000">+374 00 00 0000</string>
+    <string name="user_useryan_u_gmail_com">user.useryan.u@gmail.com</string>
+    <string name="name_surname">Name Surname</string>
 
 </resources>

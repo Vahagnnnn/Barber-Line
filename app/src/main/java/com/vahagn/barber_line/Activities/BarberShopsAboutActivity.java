@@ -67,7 +67,6 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
             transaction.replace(R.id.info_container, specialistsFragment);
             transaction.commit();
         }
-        Toast.makeText(BarberShopsAboutActivity.this, from_where, Toast.LENGTH_SHORT).show();
         back_section.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
