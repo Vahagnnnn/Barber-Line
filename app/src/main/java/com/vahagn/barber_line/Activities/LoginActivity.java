@@ -197,7 +197,7 @@ public class LoginActivity extends AppCompatActivity {
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
                 this,
                 findViewById(R.id.container_login),
-                "sharedImageTransition");
+                "main");
         Intent intent = new Intent(this, targetActivity);
         startActivity(intent, options.toBundle());
     }

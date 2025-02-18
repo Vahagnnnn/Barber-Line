@@ -44,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
                 android:layout_marginStart="20dp"
-                android:fontFamily="@font/poppins_bold"
+                android:fontFamily="@font/montserrat_bold"
                 android:gravity="center"
                 android:includeFontPadding="false"
                 android:maxLines="1"
@@ -68,8 +68,8 @@
                 android:layout_height="41dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="220dp"
-                android:fontFamily="@font/poppins_bold"
-                android:text="Log in or sign up"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="@string/log_in_or_sign_up"
                 android:textColor="#FFFFFFFF"
                 android:textSize="27sp" />
 
@@ -116,7 +116,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:fontFamily="@font/poppins_bold"
+                    android:fontFamily="@font/montserrat_bold"
                     android:gravity="center"
                     android:singleLine="true"
                     android:text="Continue"

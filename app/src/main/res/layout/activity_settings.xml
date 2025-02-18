@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:transitionName="sharedImageTransition"
     android:background="#242C3B"
     tools:context=".Activities.SettingsActivity">
 
@@ -15,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
-        android:layout_marginTop="22dp"
+        android:layout_marginTop="16dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="32dp"
             android:layout_gravity="center"
-            android:fontFamily="@font/inter_bold"
+            android:fontFamily="@font/montserrat_bold"
             android:gravity="center"
             android:includeFontPadding="false"
             android:maxLines="1"
@@ -107,7 +108,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="1.5dp"
                 android:layout_marginBottom="-3dp"
-                android:fontFamily="@font/inter_bold"
+                android:fontFamily="@font/inter_semibold"
                 android:gravity="center"
                 android:includeFontPadding="false"
                 android:maxLines="1"
@@ -123,7 +124,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="46dp"
                 android:layout_marginBottom="-3dp"
-                android:fontFamily="@font/inter_bold"
+                android:fontFamily="@font/inter_semibold"
                 android:gravity="center"
                 android:includeFontPadding="false"
                 android:letterSpacing="0.01"
@@ -161,7 +162,7 @@
             <!--Edit Profile Section -->
             <FrameLayout
                 android:id="@+id/container_group9"
-                android:layout_width="149dp"
+                android:layout_width="match_parent"
                 android:layout_height="27dp"
                 android:onClick="ToEdit"
                 app:layout_constraintStart_toStartOf="parent"
@@ -185,6 +186,7 @@
                     android:layout_marginTop="2.5dp"
                     android:layout_marginBottom="-3.5dp"
                     android:includeFontPadding="false"
+                    android:fontFamily="@font/nunito_sans_semibold"
                     android:maxLines="1"
                     android:singleLine="true"
                     android:text="@string/edit_profile"
@@ -195,7 +197,7 @@
             <!--Favourites Section-->
             <FrameLayout
                 android:id="@+id/container_group8"
-                android:layout_width="144dp"
+                android:layout_width="match_parent"
                 android:layout_height="22dp"
                 android:layout_marginTop="10dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -214,6 +216,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="21dp"
                     android:layout_marginStart="45dp"
+                    android:fontFamily="@font/nunito_sans_semibold"
                     android:layout_marginTop="0.5dp"
                     android:layout_marginBottom="0.5dp"
                     android:includeFontPadding="false"
@@ -227,7 +230,7 @@
             <!--News Section-->
             <FrameLayout
                 android:id="@+id/container_group10"
-                android:layout_width="151dp"
+                android:layout_width="match_parent"
                 android:layout_height="22dp"
                 android:layout_marginTop="10dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -246,6 +249,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="21dp"
                     android:layout_marginStart="45dp"
+                    android:fontFamily="@font/nunito_sans_semibold"
                     android:layout_marginTop="0.5dp"
                     android:layout_marginBottom="0.5dp"
                     android:includeFontPadding="false"
@@ -260,7 +264,7 @@
             <!--News Section-->
             <FrameLayout
                 android:id="@+id/container_group3"
-                android:layout_width="106dp"
+                android:layout_width="match_parent"
                 android:layout_height="22dp"
                 android:layout_marginTop="10dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -280,6 +284,7 @@
                     android:layout_height="21dp"
                     android:layout_marginStart="45dp"
                     android:layout_marginTop="0.5dp"
+                    android:fontFamily="@font/nunito_sans_semibold"
                     android:layout_marginBottom="0.5dp"
                     android:includeFontPadding="false"
                     android:maxLines="1"
@@ -291,7 +296,7 @@
 
             <FrameLayout
                 android:id="@+id/container_group4"
-                android:layout_width="221dp"
+                android:layout_width="match_parent"
                 android:layout_height="22dp"
                 android:layout_marginTop="15dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -311,6 +316,7 @@
                     android:layout_height="21dp"
                     android:layout_marginStart="45dp"
                     android:layout_marginTop="0.5dp"
+                    android:fontFamily="@font/nunito_sans_semibold"
                     android:layout_marginBottom="0.5dp"
                     android:includeFontPadding="false"
                     android:maxLines="1"
@@ -322,7 +328,7 @@
 
             <FrameLayout
                 android:id="@+id/language_button"
-                android:layout_width="139dp"
+                android:layout_width="match_parent"
                 android:layout_height="22dp"
                 android:layout_marginTop="10dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -342,6 +348,7 @@
                     android:layout_height="21dp"
                     android:layout_marginStart="45dp"
                     android:layout_marginTop="0.5dp"
+                    android:fontFamily="@font/nunito_sans_semibold"
                     android:layout_marginBottom="0.5dp"
                     android:includeFontPadding="false"
                     android:maxLines="1"
@@ -353,7 +360,7 @@
 
             <FrameLayout
                 android:id="@+id/logout_button"
-                android:layout_width="115dp"
+                android:layout_width="match_parent"
                 android:layout_height="22dp"
                 android:layout_marginTop="10dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -373,6 +380,7 @@
                     android:layout_height="21dp"
                     android:layout_marginStart="45dp"
                     android:layout_marginTop="0.5dp"
+                    android:fontFamily="@font/nunito_sans_semibold"
                     android:layout_marginBottom="0.5dp"
                     android:includeFontPadding="false"
                     android:maxLines="1"
@@ -384,7 +392,7 @@
 
             <FrameLayout
                 android:id="@+id/remove_account"
-                android:layout_width="173dp"
+                android:layout_width="match_parent"
                 android:layout_height="22dp"
                 android:layout_marginTop="10dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -405,6 +413,7 @@
                     android:layout_marginStart="45dp"
                     android:layout_marginTop="1dp"
                     android:layout_marginBottom="1dp"
+                    android:fontFamily="@font/nunito_sans_semibold"
                     android:includeFontPadding="false"
                     android:maxLines="1"
                     android:singleLine="true"
@@ -423,7 +432,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="@color/dark_blue"
-        android:transitionName="sharedImageTransition"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <!-- Home -->

@@ -127,7 +127,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, targetActivity);
         startActivity(intent, options.toBundle());
     }
-
     public void ToBarbers(View view) {
         navigateTo(BarbersActivity.class);
     }

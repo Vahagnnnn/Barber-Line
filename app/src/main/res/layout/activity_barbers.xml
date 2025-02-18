@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:fontFamily="@font/poppins_bold"
+            android:fontFamily="@font/montserrat_bold"
             android:gravity="center_vertical"
             android:text="@string/Barber_Line"
             android:textColor="@color/white"

@@ -33,9 +33,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="41dp"
                 android:layout_gravity="center"
-                android:fontFamily="@font/poppins_bold"
+                android:fontFamily="@font/montserrat_bold"
                 android:gravity="center"
-                android:text="Write your phone number"
+                android:text="@string/write_your_phone_number"
                 android:textColor="#FFFFFFFF"
                 android:textSize="27sp" />
 

@@ -1,16 +1,9 @@
 package com.vahagn.barber_line.Activities;
 
-import static java.security.AccessController.getContext;
-
-import android.app.Activity;
 import android.app.ActivityOptions;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -30,14 +23,17 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.vahagn.barber_line.Activities.EditProfile.EditProfileActivity;
 import com.vahagn.barber_line.R;
 
 public class SettingsActivity extends AppCompatActivity {
-    FrameLayout logout_button,remove_account;
+    FrameLayout logout_button, remove_account;
     TextView Firstname_LastnameText, emailText, phoneNumberText;
     ImageView profileImageView;
 
     private DatabaseReference databaseReference;
+
+    public String name, phone,photoUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,11 +56,10 @@ public class SettingsActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
                     if (snapshot.exists()) {
-                        String name = snapshot.child("Firstname_LastnameText").getValue(String.class);
+                        name = snapshot.child("Firstname_LastnameText").getValue(String.class);
                         String email = snapshot.child("email").getValue(String.class);
-                        String phone = snapshot.child("phoneNumber").getValue(String.class);
-
-                        String photoUrl = snapshot.child("photoUrl").getValue(String.class);
+                        phone = snapshot.child("phoneNumber").getValue(String.class);
+                        photoUrl = snapshot.child("photoUrl").getValue(String.class);
 
                         assert phone != null;
                         phone = phone.substring(0, 4) + " " + phone.substring(4, 6) + " " + phone.substring(6, 8) + " " + phone.substring(8);
@@ -142,20 +137,34 @@ public class SettingsActivity extends AppCompatActivity {
     private void navigateTo(Class<?> targetActivity) {
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
                 this,
-                findViewById(R.id.bottom_navigation),
+                findViewById(R.id.main),
                 "sharedImageTransition");
         Intent intent = new Intent(this, targetActivity);
         startActivity(intent, options.toBundle());
     }
+
     public void ToHome(View view) {
         navigateTo(MainActivity.class);
     }
+
     public void ToBarbers(View view) {
         navigateTo(BarbersActivity.class);
     }
+
     public void ToEdit(View view) {
-        navigateTo(EditProfileActivity.class);
+        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
+                this,
+                findViewById(R.id.main),
+                "sharedImageTransition");
+        Intent intent = new Intent(this, EditProfileActivity.class);
+        String[] parts = name.split(" ");
+        intent.putExtra("first_name", parts[0]);
+        intent.putExtra("last_name", parts[1]);
+        intent.putExtra("phone", phone);
+        intent.putExtra("photoUrl", photoUrl);
+        startActivity(intent, options.toBundle());
     }
+
     public void ToMap(View view) {
         navigateTo(MapActivity.class);
     }
