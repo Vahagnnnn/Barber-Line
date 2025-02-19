@@ -16,6 +16,9 @@
         android:theme="@style/Theme.BarberLine"
         tools:targetApi="31">
         <activity
+            android:name=".Activities.EditProfile.EditPasswordActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activities.EditProfile.EditPhoneNumberActivity"
             android:exported="false" />
         <activity

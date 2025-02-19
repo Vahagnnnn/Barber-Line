@@ -45,7 +45,6 @@ public class EditPhoneNumberActivity extends AppCompatActivity {
         String phoneNumberFromInfoArr = EditProfileActivity.InfoArr.get("phoneNumber");
         PhoneNumber.setText(prefix + phoneNumberFromInfoArr.substring(4));
 
-        // Ensure the prefix cannot be edited
         PhoneNumber.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -54,7 +53,6 @@ public class EditPhoneNumberActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s == null || !s.toString().startsWith(prefix)) {
-                    // If the prefix is removed or modified, reset it
                     PhoneNumber.setText(prefix);
                     PhoneNumber.setSelection(prefix.length());
                 }
@@ -65,21 +63,20 @@ public class EditPhoneNumberActivity extends AppCompatActivity {
             }
         });
 
-        // Set the cursor to the end of the prefix initially
         PhoneNumber.setSelection(prefix.length());
 
         save.setOnClickListener(view -> {
             String fullPhoneNumber = PhoneNumber.getText().toString();
             if (fullPhoneNumber.startsWith(prefix)) {
                 String phoneNumberWithoutPrefix = fullPhoneNumber.substring(prefix.length());
-                UpdateUserName(phoneNumberWithoutPrefix);
+                UpdateUserPhoneNumber(phoneNumberWithoutPrefix);
             } else {
                 Toast.makeText(EditPhoneNumberActivity.this, "Invalid phone number format", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void UpdateUserName(String PhoneNumber) {
+    private void UpdateUserPhoneNumber(String PhoneNumber) {
         PhoneNumber = "+374" + PhoneNumber;
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {

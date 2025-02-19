@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +25,7 @@ import com.vahagn.barber_line.Activities.SettingsActivity;
 import com.vahagn.barber_line.R;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 public class EditProfileActivity extends AppCompatActivity {
     public static HashMap<String, String> InfoArr = new HashMap<>();
@@ -98,8 +100,13 @@ public class EditProfileActivity extends AppCompatActivity {
     public void ToEditLastName(View view) {
         navigateTo(EditLastNameActivity.class);
     }
+
     public void ToEditPhoneNumber(View view) {
         navigateTo(EditPhoneNumberActivity.class);
+    }
+
+    public void ToEditPassword(View view) {
+        navigateTo(EditPasswordActivity.class);
     }
 
     private void navigateTo(Class<?> targetActivity) {

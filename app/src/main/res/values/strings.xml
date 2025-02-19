@@ -70,5 +70,7 @@
     <string name="log_in_or_sign_up">Log in or sign up</string>
     <string name="write_your_phone_number">Write your phone number</string>
     <string name="last_name">Last Name</string>
+    <string name="old_password">Old password</string>
+    <string name="new_password">New password</string>
 
 </resources>

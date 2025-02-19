@@ -41,10 +41,10 @@ public class EditLastNameActivity extends AppCompatActivity {
 
         LastnameText.setText(EditProfileActivity.InfoArr.get("last_name"));
 
-        save.setOnClickListener(view -> UpdateUserName(String.valueOf(LastnameText.getText())));
+        save.setOnClickListener(view -> UpdateLastName(String.valueOf(LastnameText.getText())));
     }
 
-    private void UpdateUserName(String LastName) {
+    private void UpdateLastName(String LastName) {
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
             String userId = user.getUid();

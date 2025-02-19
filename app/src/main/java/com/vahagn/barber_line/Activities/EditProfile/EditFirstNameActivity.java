@@ -14,7 +14,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.vahagn.barber_line.Activities.SettingsActivity;
 import com.vahagn.barber_line.R;
 
 public class EditFirstNameActivity extends AppCompatActivity {
@@ -36,10 +35,10 @@ public class EditFirstNameActivity extends AppCompatActivity {
 
         FirstnameText.setText(EditProfileActivity.InfoArr.get("first_name"));
 
-        save.setOnClickListener(view -> UpdateUserName(String.valueOf(FirstnameText.getText())));
+        save.setOnClickListener(view -> UpdateUserFirstName(String.valueOf(FirstnameText.getText())));
     }
 
-    private void UpdateUserName(String newName) {
+    private void UpdateUserFirstName(String newName) {
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
             String userId = user.getUid();
