@@ -69,14 +69,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/top">
 
-        <ImageView
-            android:id="@+id/profileImageView"
+<!--        <ImageView-->
+<!--            android:id="@+id/profileImageView"-->
+<!--            android:layout_width="100dp"-->
+<!--            android:layout_height="100dp"-->
+<!--            android:layout_marginBottom="1dp"-->
+<!--            android:contentDescription="@string/app_name"-->
+<!--            android:scaleType="centerCrop"-->
+<!--            android:src="@drawable/img_avatar" />-->
+
+        <androidx.cardview.widget.CardView
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:layout_gravity="center"
             android:layout_marginBottom="1dp"
-            android:contentDescription="@string/app_name"
-            android:scaleType="centerCrop"
-            android:src="@drawable/img_avatar" />
+            app:cardCornerRadius="37dp">
+
+            <ImageView
+                android:id="@+id/profileImageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/img_avatar" />
+        </androidx.cardview.widget.CardView>
 
         <FrameLayout
             android:id="@+id/container_group1"

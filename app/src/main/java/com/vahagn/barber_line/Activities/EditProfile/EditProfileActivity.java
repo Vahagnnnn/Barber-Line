@@ -2,16 +2,22 @@ package com.vahagn.barber_line.Activities.EditProfile;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,6 +27,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.vahagn.barber_line.Activities.SettingsActivity;
 import com.vahagn.barber_line.R;
 
@@ -34,6 +42,11 @@ public class EditProfileActivity extends AppCompatActivity {
     TextView FirstnameText, LastnameText, phoneNumberText;
     ImageView profileImageView;
 
+
+    private static final int PICK_IMAGE_REQUEST = 1;
+    private Uri imageUri;
+    private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +58,11 @@ public class EditProfileActivity extends AppCompatActivity {
         phoneNumberText = findViewById(R.id.phoneNumberText);
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+
+
+        mAuth = FirebaseAuth.getInstance();
+        profileImageView.setOnClickListener(v -> openGallery());
+
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
@@ -86,6 +104,41 @@ public class EditProfileActivity extends AppCompatActivity {
                     Log.w("Firebase", "Failed to read value.", error.toException());
                 }
             });
+        }
+    }
+
+    private void openGallery() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setType("image/*");
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            imageUri = data.getData();
+            Log.i("imageUri", String.valueOf(imageUri));
+            String photoUrl = String.valueOf(imageUri);
+
+            profileImageView.setImageURI(imageUri);
+            FirebaseUser user = mAuth.getCurrentUser();
+            if (user != null) {
+                String userId = user.getUid();
+                DatabaseReference userRef = databaseReference.child(userId);
+
+                userRef.child("photoUrl").setValue(photoUrl)
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(EditProfileActivity.this, "Photo updated successfully", Toast.LENGTH_SHORT).show();
+                                navigateTo(EditProfileActivity.class);
+                            } else {
+                                Toast.makeText(EditProfileActivity.this, "Failed to update Photo: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            } else {
+                Toast.makeText(EditProfileActivity.this, "User not logged in", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
