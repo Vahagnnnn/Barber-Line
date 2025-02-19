@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:transitionName="sharedImageTransition"
     tools:context=".Activities.RegisterActivity">
 
     <LinearLayout
@@ -12,7 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#242C3B"
-        android:gravity=""
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -59,8 +59,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="16dp"
-            android:transitionName="sharedImageTransition">
+            android:padding="16dp">
 
 
             <!-- Log In Text -->
@@ -88,10 +87,10 @@
                     android:id="@+id/first_name"
                     android:layout_width="match_parent"
                     android:layout_height="54dp"
-                    android:textColor="@color/white"
                     android:layout_marginTop="7dp"
                     android:hint=" Enter your first name"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:textColor="@color/white" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Last name -->
@@ -108,19 +107,19 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/last_name"
                     android:layout_width="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:textColor="@color/white"
                     android:layout_height="54dp"
+                    android:layout_marginTop="10dp"
                     android:hint=" Enter your last name"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:textColor="@color/white" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Email Section -->
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="327dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_gravity="center"
+                android:layout_marginTop="8dp"
                 app:boxCornerRadiusBottomEnd="12dp"
                 app:boxCornerRadiusBottomStart="12dp"
                 app:boxCornerRadiusTopEnd="12dp"
@@ -131,9 +130,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="54dp"
                     android:layout_marginTop="10dp"
-                    android:textColor="@color/white"
                     android:hint="@string/enter_your_email"
-                    android:inputType="textEmailAddress" />
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/white" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Password Section -->
@@ -153,9 +152,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="54dp"
                     android:layout_marginTop="7dp"
-                    android:textColor="@color/white"
                     android:hint="@string/enter_your_password"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:textColor="@color/white" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Phone number Section -->
@@ -167,15 +166,18 @@
                 app:boxCornerRadiusBottomEnd="12dp"
                 app:boxCornerRadiusBottomStart="12dp"
                 app:boxCornerRadiusTopEnd="12dp"
-                app:boxCornerRadiusTopStart="12dp">
+                app:boxCornerRadiusTopStart="12dp"
+                app:prefixTextColor="@color/white">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/phoneNumber"
                     android:layout_width="match_parent"
                     android:layout_height="54dp"
-                    android:textColor="@color/white"
+                    android:digits="0123456789"
                     android:hint="+374XXXXXXXX"
-                    android:inputType="phone" />
+                    android:inputType="phone"
+                    android:maxLength="13"
+                    android:textColor="@color/white" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Register Button -->
@@ -209,20 +211,20 @@
             </FrameLayout>
 
             <!-- Click to Register Text -->
-<!--            <TextView-->
-<!--                android:id="@+id/click_to_login"-->
-<!--                android:layout_width="327dp"-->
-<!--                android:layout_height="16dp"-->
-<!--                android:layout_gravity="center_horizontal"-->
-<!--                android:layout_marginTop="16dp"-->
-<!--                android:fontFamily="@font/poppins_bold"-->
-<!--                android:gravity="center_horizontal|center_vertical"-->
-<!--                android:includeFontPadding="false"-->
-<!--                android:maxLines="1"-->
-<!--                android:singleLine="true"-->
-<!--                android:text="@string/click_to_login"-->
-<!--                android:textColor="#FF006FFD"-->
-<!--                android:textSize="12sp" />-->
+            <!--            <TextView-->
+            <!--                android:id="@+id/click_to_login"-->
+            <!--                android:layout_width="327dp"-->
+            <!--                android:layout_height="16dp"-->
+            <!--                android:layout_gravity="center_horizontal"-->
+            <!--                android:layout_marginTop="16dp"-->
+            <!--                android:fontFamily="@font/poppins_bold"-->
+            <!--                android:gravity="center_horizontal|center_vertical"-->
+            <!--                android:includeFontPadding="false"-->
+            <!--                android:maxLines="1"-->
+            <!--                android:singleLine="true"-->
+            <!--                android:text="@string/click_to_login"-->
+            <!--                android:textColor="#FF006FFD"-->
+            <!--                android:textSize="12sp" />-->
 
         </LinearLayout>
 

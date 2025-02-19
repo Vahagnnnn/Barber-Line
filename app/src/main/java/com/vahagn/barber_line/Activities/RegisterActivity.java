@@ -11,6 +11,8 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -24,7 +26,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private DatabaseReference usersRef;
-
+    private final String prefix = "+374 ";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +42,25 @@ public class RegisterActivity extends AppCompatActivity {
         phoneNumber = findViewById(R.id.phoneNumber);
         register_button = findViewById(R.id.register_button);
 
+        phoneNumber.setText(prefix);
+
+        phoneNumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s == null || !s.toString().startsWith(prefix)) {
+                    phoneNumber.setText(prefix);
+                    phoneNumber.setSelection(prefix.length());
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+        phoneNumber.setSelection(prefix.length());
+
         SharedPreferences sharedPreferences = getSharedPreferences("email_str", MODE_PRIVATE);
         email.setText(sharedPreferences.getString("email", " "));
 
@@ -48,8 +69,7 @@ public class RegisterActivity extends AppCompatActivity {
             String last_name_str = last_name.getText().toString();
             String email_str = email.getText().toString();
             String password_str = password.getText().toString();
-            String phoneNumber_str = phoneNumber.getText().toString();
-
+            String phoneNumber_str = "+374" + phoneNumber.getText().toString().substring(5);
             if (validateInput(first_name_str, last_name_str, email_str, password_str, phoneNumber_str)) {
                 signUpUser(first_name_str, last_name_str, email_str, password_str, phoneNumber_str);
             }
@@ -99,7 +119,7 @@ public class RegisterActivity extends AppCompatActivity {
                                             editor.putString("email", email);
                                             editor.apply();
 
-                                            Users user_DB = new Users(first_name + " " + last_name, email, password, phoneNumber, "https://i.pinimg.com/736x/09/21/fc/0921fc87aa989330b8d403014bf4f340.jpg");
+                                            Users user_DB = new Users(first_name, last_name, email, password, phoneNumber, "https://i.pinimg.com/736x/09/21/fc/0921fc87aa989330b8d403014bf4f340.jpg");
                                             usersRef.child(user.getUid()).setValue(user_DB)
                                                     .addOnCompleteListener(task2 -> {
                                                         if (task2.isSuccessful()) {
@@ -135,7 +155,7 @@ public class RegisterActivity extends AppCompatActivity {
     private void navigateTo(Class<?> targetActivity) {
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
                 this,
-                findViewById(R.id.container_login),
+                findViewById(R.id.main),
                 "sharedImageTransition");
         Intent intent = new Intent(this, targetActivity);
         startActivity(intent, options.toBundle());

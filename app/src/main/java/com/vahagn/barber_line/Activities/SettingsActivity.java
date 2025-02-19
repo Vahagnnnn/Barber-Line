@@ -26,14 +26,15 @@ import com.google.firebase.database.ValueEventListener;
 import com.vahagn.barber_line.Activities.EditProfile.EditProfileActivity;
 import com.vahagn.barber_line.R;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class SettingsActivity extends AppCompatActivity {
+    private DatabaseReference databaseReference;
+
     FrameLayout logout_button, remove_account;
     TextView Firstname_LastnameText, emailText, phoneNumberText;
     ImageView profileImageView;
-
-    private DatabaseReference databaseReference;
-
-    public String name, phone,photoUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,15 +57,16 @@ public class SettingsActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
                     if (snapshot.exists()) {
-                        name = snapshot.child("Firstname_LastnameText").getValue(String.class);
+                        String first_name = snapshot.child("first_name").getValue(String.class);
+                        String last_name = snapshot.child("last_name").getValue(String.class);
                         String email = snapshot.child("email").getValue(String.class);
-                        phone = snapshot.child("phoneNumber").getValue(String.class);
-                        photoUrl = snapshot.child("photoUrl").getValue(String.class);
+                        String phone = snapshot.child("phoneNumber").getValue(String.class);
+                        String photoUrl = snapshot.child("photoUrl").getValue(String.class);
 
                         assert phone != null;
                         phone = phone.substring(0, 4) + " " + phone.substring(4, 6) + " " + phone.substring(6, 8) + " " + phone.substring(8);
 
-                        Firstname_LastnameText.setText(name);
+                        Firstname_LastnameText.setText(first_name + " " + last_name);
                         emailText.setText(email);
                         phoneNumberText.setText(phone);
 
@@ -152,17 +154,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void ToEdit(View view) {
-        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
-                this,
-                findViewById(R.id.main),
-                "sharedImageTransition");
-        Intent intent = new Intent(this, EditProfileActivity.class);
-        String[] parts = name.split(" ");
-        intent.putExtra("first_name", parts[0]);
-        intent.putExtra("last_name", parts[1]);
-        intent.putExtra("phone", phone);
-        intent.putExtra("photoUrl", photoUrl);
-        startActivity(intent, options.toBundle());
+        navigateTo(EditProfileActivity.class);
     }
 
     public void ToMap(View view) {

@@ -23,10 +23,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             android:gravity="center"
-            android:transitionName="sharedImageTransition"
-            android:padding="16dp">
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:transitionName="sharedImageTransition">
 
             <!-- Log In Text -->
             <TextView
@@ -40,27 +40,28 @@
                 android:textSize="27sp" />
 
 
-            <!-- Email Section -->
+            <!-- Phone Section -->
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout"
                 android:layout_width="327dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                app:boxCornerRadiusTopStart="12dp"
-                app:boxCornerRadiusTopEnd="12dp"
+                app:boxCornerRadiusBottomEnd="12dp"
                 app:boxCornerRadiusBottomStart="12dp"
-                app:boxCornerRadiusBottomEnd="12dp">
+                app:boxCornerRadiusTopEnd="12dp"
+                app:boxCornerRadiusTopStart="12dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/phoneNumber"
                     android:layout_width="match_parent"
                     android:layout_height="54dp"
+                    android:digits="0123456789"
                     android:hint="+374XXXXXXXX"
-                    android:inputType="phone" />
+                    android:inputType="phone"
+                    android:maxLength="13"
+                    android:textColor="@color/white" />
             </com.google.android.material.textfield.TextInputLayout>
-
-
-
 
             <!-- Registration Button -->
             <FrameLayout

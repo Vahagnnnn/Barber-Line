@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -101,7 +101,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:onClick="ToEditName"
+            android:onClick="ToEditFirstName"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -137,7 +137,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:onClick="ToEditName"
+            android:onClick="ToEditLastName"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -173,6 +173,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:onClick="ToEditPhoneNumber"
             android:gravity="center"
             android:orientation="horizontal">
 

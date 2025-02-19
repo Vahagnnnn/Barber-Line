@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:transitionName="sharedImageTransition"
     tools:context=".Activities.LoginActivity">
 
     <LinearLayout
@@ -12,8 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#242C3B"
-        android:gravity=""
         android:orientation="vertical"
+        android:transitionName=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -58,8 +59,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="16dp"
-            android:transitionName="sharedImageTransition">
+            android:padding="16dp">
 
             <!-- Log In Text -->
             <TextView
@@ -90,8 +90,8 @@
                     android:layout_height="54dp"
                     android:background="@null"
                     android:hint="@string/enter_your_email"
-                    android:textColor="@color/white"
-                    android:inputType="textEmailAddress" />
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/white" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Continue Button -->

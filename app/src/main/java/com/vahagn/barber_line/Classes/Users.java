@@ -7,7 +7,8 @@ import java.util.UUID;
 
 public class Users {
     public String ID;
-    public String Firstname_LastnameText;
+    public String first_name;
+    public String last_name;
     public String name;
     public String email;
     public String password;
@@ -19,8 +20,9 @@ public class Users {
     public String profilePictureUrl;
     public List<Appointment> appointments;
 
-    public Users(String Firstname_LastnameText, String email, String password, String phoneNumber, String photoUrl) {
-        this.Firstname_LastnameText = Firstname_LastnameText;
+    public Users(String first_name, String last_name,String email, String password, String phoneNumber, String photoUrl) {
+        this.first_name = first_name;
+        this.last_name = last_name;
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;

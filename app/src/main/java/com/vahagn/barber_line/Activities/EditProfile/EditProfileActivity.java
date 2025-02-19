@@ -23,11 +23,14 @@ import com.google.firebase.database.ValueEventListener;
 import com.vahagn.barber_line.Activities.SettingsActivity;
 import com.vahagn.barber_line.R;
 
+import java.util.HashMap;
+
 public class EditProfileActivity extends AppCompatActivity {
+    public static HashMap<String, String> InfoArr = new HashMap<>();
+
+    private DatabaseReference databaseReference;
     TextView FirstnameText, LastnameText, phoneNumberText;
     ImageView profileImageView;
-
-    public String first_name, last_name, phone, photoUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,37 +42,64 @@ public class EditProfileActivity extends AppCompatActivity {
         LastnameText = findViewById(R.id.LastnameText);
         phoneNumberText = findViewById(R.id.phoneNumberText);
 
-        Intent intent = getIntent();
-        first_name = intent.getStringExtra("first_name");
-        last_name = intent.getStringExtra("last_name");
-        phone = intent.getStringExtra("phone");
-        photoUrl = intent.getStringExtra("photoUrl");
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
 
-        FirstnameText.setText(first_name);
-        LastnameText.setText(last_name);
-        phoneNumberText.setText(phone);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            String userId = user.getUid();
+            databaseReference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        String first_name = snapshot.child("first_name").getValue(String.class);
+                        String last_name = snapshot.child("last_name").getValue(String.class);
+                        String email = snapshot.child("email").getValue(String.class);
+                        String phone = snapshot.child("phoneNumber").getValue(String.class);
+                        String photoUrl = snapshot.child("photoUrl").getValue(String.class);
 
-        if (photoUrl != null && !photoUrl.isEmpty()) {
-            Glide.with(EditProfileActivity.this)
-                    .load(photoUrl)
-                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(100)))
-                    .into(profileImageView);
+                        InfoArr.put("first_name", first_name);
+                        InfoArr.put("last_name", last_name);
+                        InfoArr.put("email", email);
+                        InfoArr.put("phoneNumber", phone);
+                        InfoArr.put("photoUrl", photoUrl);
+
+                        assert phone != null;
+                        phone = phone.substring(0, 4) + " " + phone.substring(4, 6) + " " + phone.substring(6, 8) + " " + phone.substring(8);
+
+                        FirstnameText.setText(first_name);
+                        LastnameText.setText(last_name);
+                        phoneNumberText.setText(phone);
+
+                        if (photoUrl != null && !photoUrl.isEmpty()) {
+                            Glide.with(EditProfileActivity.this)
+                                    .load(photoUrl)
+                                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(100)))
+                                    .into(profileImageView);
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError error) {
+                    Log.w("Firebase", "Failed to read value.", error.toException());
+                }
+            });
         }
-
     }
 
     public void ToSetting(View view) {
         navigateTo(SettingsActivity.class);
     }
 
-    public void ToEditName(View view) {
-        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
-                this,
-                findViewById(R.id.main),
-                "sharedImageTransition");
-        Intent intent = new Intent(this, EditNameActivity.class);
-        intent.putExtra("first_name", first_name);
-        startActivity(intent, options.toBundle());
+    public void ToEditFirstName(View view) {
+        navigateTo(EditFirstNameActivity.class);
+    }
+
+    public void ToEditLastName(View view) {
+        navigateTo(EditLastNameActivity.class);
+    }
+    public void ToEditPhoneNumber(View view) {
+        navigateTo(EditPhoneNumberActivity.class);
     }
 
     private void navigateTo(Class<?> targetActivity) {

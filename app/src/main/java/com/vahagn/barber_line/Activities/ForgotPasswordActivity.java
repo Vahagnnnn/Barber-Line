@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -38,6 +39,8 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         email = findViewById(R.id.email);
         mAuth = FirebaseAuth.getInstance();
 
+        SharedPreferences sharedPreferences = getSharedPreferences("UserInformation", MODE_PRIVATE);
+        email.setText(sharedPreferences.getString("email", " "));
 
         reset_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,11 +74,9 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                     }
                 });
     }
-    public void ToHome(View view) {
-        navigateTo(MainActivity.class);
-    }
-    public void ToLogin(View view) {
-        navigateTo(LoginActivity.class);
+
+    public void ToPassword(View view) {
+        navigateTo(PasswordActivity.class);
     }
     private void navigateTo(Class<?> targetActivity) {
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(

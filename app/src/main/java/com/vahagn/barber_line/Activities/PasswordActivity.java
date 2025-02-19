@@ -45,7 +45,9 @@ public class PasswordActivity extends AppCompatActivity {
         continue_button = findViewById(R.id.continue_button);
 
         SharedPreferences sharedPreferences = getSharedPreferences("UserInformation", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
         String email = sharedPreferences.getString("email", " ");
+        editor.putString("email", email);
 
         continue_button.setOnClickListener(view -> {
             if (!validatePassword()) {

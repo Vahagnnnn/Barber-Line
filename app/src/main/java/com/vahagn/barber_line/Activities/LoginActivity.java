@@ -61,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
         usersRef = FirebaseDatabase.getInstance().getReference("Users");
 
         continue_button.setOnClickListener(view -> {
-                signInUser();
+            signInUser();
         });
 
 
@@ -101,9 +101,7 @@ public class LoginActivity extends AppCompatActivity {
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString("email", email_str);
                         editor.apply();
-                        Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-                        startActivity(intent);
-                        finish();
+                        navigateTo(RegisterActivity.class);
                     }
                 }
 
@@ -135,12 +133,18 @@ public class LoginActivity extends AppCompatActivity {
 
     private void sendInfoToPhoneNumberActivity(FirebaseUser user, String password) {
         String fullName = user.getDisplayName();
+        String[] first_name_last_name = fullName.split(" ");
         String email = user.getEmail();
         String photoUrl = String.valueOf(user.getPhotoUrl());
 
         SharedPreferences sharedPreferences = getSharedPreferences("UserInformation", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("firstname_lastnameText", fullName);
+        editor.putString("first_name", first_name_last_name[0]);
+        editor.putString("last_name", first_name_last_name[1]);
+        Log.i("fullName",fullName);
+        Log.i("fullName",first_name_last_name[0]);
+        Log.i("fullName",first_name_last_name[1]);
+
         editor.putString("email", email);
         editor.putString("password", password);
         editor.putString("photoUrl", photoUrl);
@@ -184,20 +188,11 @@ public class LoginActivity extends AppCompatActivity {
     public void ToHome(View view) {
         navigateTo(MainActivity.class);
     }
-
-    public void ToRegister(View view) {
-        navigateTo(RegisterActivity.class);
-    }
-
-    public void ToForgot(View view) {
-        navigateTo(ForgotPasswordActivity.class);
-    }
-
     private void navigateTo(Class<?> targetActivity) {
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
                 this,
-                findViewById(R.id.container_login),
-                "main");
+                findViewById(R.id.main),
+                "sharedImageTransition");
         Intent intent = new Intent(this, targetActivity);
         startActivity(intent, options.toBundle());
     }
