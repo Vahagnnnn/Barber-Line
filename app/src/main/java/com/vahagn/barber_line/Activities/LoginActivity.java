@@ -32,8 +32,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.vahagn.barber_line.R;
 
-import java.util.HashMap;
-
 
 public class LoginActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 9001;

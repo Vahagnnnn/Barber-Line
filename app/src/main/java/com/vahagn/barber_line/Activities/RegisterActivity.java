@@ -124,7 +124,6 @@ public class RegisterActivity extends AppCompatActivity {
                                                     .addOnCompleteListener(task2 -> {
                                                         if (task2.isSuccessful()) {
                                                             Toast.makeText(RegisterActivity.this, "Store successful", Toast.LENGTH_SHORT).show();
-
                                                             Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                                                             startActivity(intent);
                                                             finish();

@@ -82,7 +82,7 @@ public class EditPasswordActivity extends AppCompatActivity {
         if (user != null) {
             String userId = user.getUid();
             DatabaseReference userRef = usersRef.child(userId);
-            userRef.child("first_name").setValue(newName)
+            userRef.child("password").setValue(newName)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             Toast.makeText(EditPasswordActivity.this, "Name updated successfully", Toast.LENGTH_SHORT).show();
