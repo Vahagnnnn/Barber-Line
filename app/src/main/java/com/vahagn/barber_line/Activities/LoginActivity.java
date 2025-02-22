@@ -32,6 +32,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.vahagn.barber_line.R;
 
+import java.util.Objects;
+
 
 public class LoginActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 9001;
@@ -138,7 +140,17 @@ public class LoginActivity extends AppCompatActivity {
         usersRef.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
+                if (snapshot.exists())
+                {
+
+                    Log.i("mtav",snapshot.child("photoUrl").getValue(String.class));
+                    if (Objects.equals(snapshot.child("photoUrl").getValue(String.class), "https://i.pinimg.com/736x/09/21/fc/0921fc87aa989330b8d403014bf4f340.jpg"))
+                    {
+                        String photoUrl = String.valueOf(user.getPhotoUrl());
+                        usersRef.child(userId).child("photoUrl").setValue(photoUrl);
+                        Log.i("mtav","mtav");
+                    }
+                    Log.i("mtav","helav");
                     Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);

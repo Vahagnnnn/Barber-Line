@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
 
     DatabaseReference myRef = FirebaseDatabase.getInstance().getReference().child("barberShops");
 
+    private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,8 +57,6 @@ public class MainActivity extends AppCompatActivity {
                 TopBarberShopsList.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     BarberShops shop = snapshot.getValue(BarberShops.class);
-//                    int imageResId = getResources().getIdentifier(shop.getImage(), "drawable", getPackageName());
-//                    TopBarberShopsList.add(new BarberShops(imageResId, shop.getName(), shop.getAddress()));
                     TopBarberShopsList.add(new BarberShops(shop.getName(), shop.getAddress(), shop.getImage(), shop.getLogo(), shop.getRating(), shop.getReviews(), shop.getServices(), shop.getSpecialists()));
                 }
                 setTopBarberShopsRecycler(TopBarberShopsList);
@@ -67,12 +69,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-//        TopBarberShopsList.add(new TopBarberShops(R.drawable.img_paragon, "Paragon", "9 Ghazar Parpetsi St, 8"));
-//        TopBarberShopsList.add(new TopBarberShops(R.drawable.img_paragon, "Paragon", "9 Ghazar Parpetsi St, 8"));
-//        TopBarberShopsList.add(new TopBarberShops(R.drawable.img_paragon, "Paragon", "9 Ghazar Parpetsi St, 8"));
-//        TopBarberShopsList.add(new TopBarberShops(R.drawable.img_paragon, "Paragon", "9 Ghazar Parpetsi St, 8"));
-//        setTopBarberShopsRecycler(TopBarberShopsList);
-
         TopBarbersList.add(new TopBarbers(R.drawable.img_sargis_paragon, "Sargis", "077-77-77-77"));
         TopBarbersList.add(new TopBarbers(R.drawable.img_narine_paragon, "Narine", "099-99-99-99"));
         TopBarbersList.add(new TopBarbers(R.drawable.img_narine_paragon, "Narine", "099-99-99-99"));
@@ -84,6 +80,15 @@ public class MainActivity extends AppCompatActivity {
         TopHaircutsList.add(new TopHaircuts(R.drawable.img_haircut, "The Textured Crop"));
         setTopHaircutsRecycler(TopHaircutsList);
 
+
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            Log.i("currentUser", "Log In " + isLogin);
+            MainActivity.isLogin = true;
+        } else {
+            Log.i("currentUser", "Dont Log In " + isLogin);
+        }
 
     }
 
@@ -127,9 +132,11 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, targetActivity);
         startActivity(intent, options.toBundle());
     }
+
     public void ToBarbers(View view) {
         navigateTo(BarbersActivity.class);
     }
+
     public void To(View view) {
         Log.i("isLogin", String.valueOf(isLogin));
         if (isLogin) {
@@ -141,12 +148,15 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
     public void ToLogin(View view) {
         navigateTo(LoginActivity.class);
     }
+
     public void ToSetting(View view) {
         navigateTo(SettingsActivity.class);
     }
+
     public void ToMap(View view) {
         navigateTo(MapActivity.class);
     }
