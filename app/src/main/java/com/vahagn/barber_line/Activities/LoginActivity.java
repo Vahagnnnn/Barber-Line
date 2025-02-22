@@ -8,9 +8,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -31,6 +31,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.vahagn.barber_line.R;
+
+import java.util.HashMap;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -131,30 +133,75 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+
     private void sendInfoToPhoneNumberActivity(FirebaseUser user, String password) {
-        String fullName = user.getDisplayName();
-        String[] first_name_last_name = fullName.split(" ");
-        String email = user.getEmail();
-        String photoUrl = String.valueOf(user.getPhotoUrl());
+        String userId = user.getUid();
 
-        SharedPreferences sharedPreferences = getSharedPreferences("UserInformation", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("first_name", first_name_last_name[0]);
-        editor.putString("last_name", first_name_last_name[1]);
-        Log.i("fullName",fullName);
-        Log.i("fullName",first_name_last_name[0]);
-        Log.i("fullName",first_name_last_name[1]);
+        usersRef.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    String fullName = user.getDisplayName();
+                    String[] first_name_last_name = fullName.split(" ");
+                    String email = user.getEmail();
+                    String photoUrl = String.valueOf(user.getPhotoUrl());
 
-        editor.putString("email", email);
-        editor.putString("password", password);
-        editor.putString("photoUrl", photoUrl);
-        editor.apply();
+                    SharedPreferences sharedPreferences = getSharedPreferences("UserInformation", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("first_name", first_name_last_name[0]);
+                    editor.putString("last_name", first_name_last_name[1]);
+                    Log.i("fullName",fullName);
+                    Log.i("fullName",first_name_last_name[0]);
+                    Log.i("fullName",first_name_last_name[1]);
 
-        Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(LoginActivity.this, PhoneNumberActivity.class);
-        startActivity(intent);
-        finish();
+                    editor.putString("email", email);
+                    editor.putString("password", password);
+                    editor.putString("photoUrl", photoUrl);
+                    editor.apply();
+
+                    Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(LoginActivity.this, PhoneNumberActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("FirebaseError", "Database check failed", databaseError.toException());
+            }
+        });
     }
+
+//    private void sendInfoToPhoneNumberActivity(FirebaseUser user, String password) {
+//        String fullName = user.getDisplayName();
+//        String[] first_name_last_name = fullName.split(" ");
+//        String email = user.getEmail();
+//        String photoUrl = String.valueOf(user.getPhotoUrl());
+//
+//        SharedPreferences sharedPreferences = getSharedPreferences("UserInformation", MODE_PRIVATE);
+//        SharedPreferences.Editor editor = sharedPreferences.edit();
+//        editor.putString("first_name", first_name_last_name[0]);
+//        editor.putString("last_name", first_name_last_name[1]);
+//        Log.i("fullName",fullName);
+//        Log.i("fullName",first_name_last_name[0]);
+//        Log.i("fullName",first_name_last_name[1]);
+//
+//        editor.putString("email", email);
+//        editor.putString("password", password);
+//        editor.putString("photoUrl", photoUrl);
+//        editor.apply();
+//
+//        Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+//        Intent intent = new Intent(LoginActivity.this, PhoneNumberActivity.class);
+//        startActivity(intent);
+//        finish();
+//    }
 
     private void signIn() {
         mGoogleSignInClient.signOut().addOnCompleteListener(this, task -> {
