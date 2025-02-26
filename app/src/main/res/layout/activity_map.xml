@@ -10,7 +10,6 @@
 
 
     <!-- Search Bar Section -->
-
     <FrameLayout
         android:id="@+id/search_bar"
         android:layout_width="match_parent"
@@ -63,6 +62,20 @@
                 android:textSize="16sp" />
         </FrameLayout>
     </FrameLayout>
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginHorizontal="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_bar" />
+
 
     <!-- Bottom Navigation -->
     <androidx.constraintlayout.widget.ConstraintLayout
