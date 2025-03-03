@@ -55,12 +55,6 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
         String ratingText = getIntent().getStringExtra("rating");
         String addressText = getIntent().getStringExtra("address");
 
-        Log.d("IntentData2", "From where: " + from_where);
-        Log.d("IntentData2", "Image URL: " + imageUrl);
-        Log.d("IntentData2", "Name: " + nameText);
-        Log.d("IntentData2", "Rating: " + ratingText);
-        Log.d("IntentData2", "Address: " + addressText);
-
 //        image.setImageResource(imageUrl);
         Glide.with(this)
                 .load(imageUrl)

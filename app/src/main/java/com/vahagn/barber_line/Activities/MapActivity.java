@@ -50,6 +50,7 @@ import com.vahagn.barber_line.R;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
     private FusedLocationProviderClient fusedLocationClient;
@@ -57,11 +58,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private GoogleMap gMap;
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
-
-    public String logo, image, name, address;
-    public double rating;
-    public List<Barbers> ListSpecialist;
-    public List<Services> ListService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,20 +88,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     double latitude = Double.parseDouble(latitudeString);
                     double longitude = Double.parseDouble(longitudeString);
 
-                    Log.i("coords", String.valueOf(latitude));
-                    Log.i("coords", String.valueOf(longitude));
-
                     LatLng location = new LatLng(latitude, longitude);
 
-                    image = barberShop.getImage();
-                    logo = barberShop.getLogo();
-                    name = barberShop.getName();
-                    rating = barberShop.getRating();
-                    address = barberShop.getAddress();
-                    ListSpecialist = barberShop.getSpecialists();
-                    ListService = barberShop.getServices();
-
-                    addCustomMarker(location, barberShop.getLogo());
+                    addCustomMarker(location, barberShop.getName(), barberShop.getLogo());
                 } catch (NumberFormatException e) {
                     Log.i("coords", "Error parsing coordinates: " + e.getMessage());
                 }
@@ -154,16 +139,18 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
 
-    private void addCustomMarker(LatLng location, String logo) {
-        new LoadImageTask(location).execute(logo);
+    private void addCustomMarker(LatLng location, String Name, String logo) {
+        new LoadImageTask(location, Name).execute(logo);
     }
 
     @SuppressLint("StaticFieldLeak")
     private class LoadImageTask extends AsyncTask<String, Void, Bitmap> {
         private final LatLng location;
+        private String Name;
 
-        public LoadImageTask(LatLng location) {
+        public LoadImageTask(LatLng location, String Name) {
             this.location = location;
+            this.Name = Name;
         }
 
         @Override
@@ -176,7 +163,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     int height = 130;
                     Bitmap resizedBitmap = Bitmap.createScaledBitmap(originalBitmap, width, height, false);
 
-                    // Apply rounded corners and add gradient border
                     Bitmap finalBitmap = addRoundedCornersAndBorder(resizedBitmap, 15, 10);
                     return finalBitmap;
                 }
@@ -198,33 +184,31 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             MarkerOptions markerOptions = new MarkerOptions()
                     .position(location)
                     .icon(icon)
-                    .title(bitmap != null ? "Current Location" : "Default Marker");
+                    .title(bitmap != null ? Name : "Default Marker");
 
-            // Add the marker to the map
-            Marker marker = gMap.addMarker(markerOptions);
-
-            // Set the OnClickListener for the marker
+            gMap.addMarker(markerOptions);
             gMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                 @Override
                 public boolean onMarkerClick(Marker marker) {
-                    // Custom action when the marker is clicked
                     if (marker.equals(marker)) {
                         Toast.makeText(getApplicationContext(), "Marker clicked!", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getApplicationContext(), BarberShopsAboutActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-                        intent.putExtra("from_where", "MapActivity");
-                        intent.putExtra("image", image);
-                        intent.putExtra("name", name);
-                        intent.putExtra("rating", String.valueOf(rating));
-                        intent.putExtra("address", address);
-                        intent.putExtra("ListSpecialist", (Serializable) ListSpecialist);
-                        intent.putExtra("ListService", (Serializable) ListService);
 
-                        Log.d("IntentData1", "Image URL: " + image);
-                        Log.d("IntentData1", "Name: " + name);
-                        Log.d("IntentData1", "Rating: " + String.valueOf(rating));
-                        Log.d("IntentData1", "Address: " + address);
+                        List<BarberShops> paragonShops = TopBarberShopsList.stream()
+                                .filter(shop -> marker.getTitle().equals(shop.getName()))
+                                .collect(Collectors.toList());
+
+                        paragonShops.forEach(shop -> {
+                            intent.putExtra("from_where", "MapActivity");
+                            intent.putExtra("image", shop.getImage());
+                            intent.putExtra("name", shop.getName());
+                            intent.putExtra("rating", String.valueOf(shop.getRating()));
+                            intent.putExtra("address", shop.getAddress());
+                            intent.putExtra("ListSpecialist", (Serializable) shop.getSpecialists());
+                            intent.putExtra("ListService", (Serializable) shop.getServices());
+                        });
 
                         getApplicationContext().startActivity(intent);
 
@@ -253,14 +237,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             RectF rectF = new RectF(0, 0, width + 2 * borderWidth, height + 2 * borderWidth);
             canvas.drawRoundRect(rectF, cornerRadius, cornerRadius, paint);
 
-            // Draw image with rounded corners
-            paint.setShader(null);  // Reset the shader to draw the image without gradient
+            paint.setShader(null);
             Bitmap roundedBitmap = getRoundedBitmap(bitmap, cornerRadius);
             canvas.drawBitmap(roundedBitmap, borderWidth, borderWidth, null);
             return newBitmap;
         }
 
-        // Function to add rounded corners to the image
         private Bitmap getRoundedBitmap(Bitmap bitmap, int cornerRadius) {
             Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
             Canvas canvas = new Canvas(output);
