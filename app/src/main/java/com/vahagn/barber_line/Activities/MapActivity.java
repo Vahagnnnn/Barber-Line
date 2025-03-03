@@ -9,6 +9,9 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -78,7 +81,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     Log.i("coords", String.valueOf(longitude));
 
                     LatLng location = new LatLng(latitude, longitude);
-                    addCustomMarker(location, barberShop.getImage());
+                    addCustomMarker(location, barberShop.getLogo());
                 } catch (NumberFormatException e) {
                     Log.i("coords", "Error parsing coordinates: " + e.getMessage());
                 }
@@ -170,11 +173,20 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         @Override
         protected Bitmap doInBackground(String... params) {
             try {
-                return BitmapFactory.decodeStream(new java.net.URL(params[0]).openStream());
+                Bitmap originalBitmap = BitmapFactory.decodeStream(new java.net.URL(params[0]).openStream());
+
+                if (originalBitmap != null) {
+                    int width = 130;
+                    int height = 130;
+                    Bitmap resizedBitmap = Bitmap.createScaledBitmap(originalBitmap, width, height, false);
+
+                    Bitmap finalBitmap = addBorderToBitmap(resizedBitmap, 5);
+                    return finalBitmap;
+                }
             } catch (Exception e) {
                 Log.e("coords", "Error loading image: " + e.getMessage());
-                return null;
             }
+            return null;
         }
 
         @Override
@@ -192,7 +204,24 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     .title(bitmap != null ? "Current Location" : "Default Marker");
             gMap.addMarker(markerOptions);
         }
+
+        private Bitmap addBorderToBitmap(Bitmap bitmap, int borderWidth) {
+            int width = bitmap.getWidth();
+            int height = bitmap.getHeight();
+            Bitmap newBitmap = Bitmap.createBitmap(width + 2 * borderWidth, height + 2 * borderWidth, Bitmap.Config.ARGB_8888);
+
+            Canvas canvas = new Canvas(newBitmap);
+            Paint paint = new Paint();
+            paint.setColor(Color.GRAY);
+            paint.setStyle(Paint.Style.FILL);
+
+            canvas.drawRect(0, 0, newBitmap.getWidth(), newBitmap.getHeight(), paint);
+
+            canvas.drawBitmap(bitmap, borderWidth, borderWidth, null);
+            return newBitmap;
+        }
     }
+
 
 
     private void navigateTo(Class<?> targetActivity) {
