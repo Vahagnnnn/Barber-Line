@@ -8,7 +8,6 @@ public class Barbers implements Serializable {
     private String name;
     private int phone;
     private String image;
-    private int imageResId;
     private String workPlace;
     private double rating;
     private List<Services> services;
@@ -18,12 +17,11 @@ public class Barbers implements Serializable {
     public Barbers() {
     }
 
-    public Barbers(int ID, String name, int phone, String image, int imageResId, String workPlace, double rating, List<Services> services, List<Reviews> reviews, List<Appointment> appointments) {
+    public Barbers(int ID, String name, int phone, String image, String workPlace, double rating, List<Services> services, List<Reviews> reviews, List<Appointment> appointments) {
         this.ID = ID;
         this.name = name;
         this.phone = phone;
         this.image = image;
-        this.imageResId = imageResId;
         this.workPlace = workPlace;
         this.rating = rating;
         this.services = services;
@@ -61,14 +59,6 @@ public class Barbers implements Serializable {
 
     public void setImage(String image) {
         this.image = image;
-    }
-
-    public int getImageResId() {
-        return imageResId;
-    }
-
-    public void setImageResId(int imageResId) {
-        this.imageResId = imageResId;
     }
 
     public String getWorkPlace() {

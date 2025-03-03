@@ -1,5 +1,6 @@
 package com.vahagn.barber_line.Fragments;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,10 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.bumptech.glide.Glide;
 import com.vahagn.barber_line.R;
 
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,23 +40,37 @@ public class SpecialistsFragment extends Fragment {
         infoContainer = view.findViewById(R.id.info_container);
         if (specialists != null) {
             for (Barbers specialist : specialists) {
-                addSpecialist(infoContainer, specialist);
+                addSpecialist(specialist);
             }
         }
         return view;
     }
 
-    private void addSpecialist(LinearLayout container, Barbers specialist) {
-        View specialistView = LayoutInflater.from(getContext()).inflate(R.layout.specialists, container, false);
+    private void addSpecialist(Barbers specialist) {
+        View specialistView = LayoutInflater.from(getContext()).inflate(R.layout.specialists, infoContainer, false);
         ImageView specialistImage = specialistView.findViewById(R.id.image);
         TextView specialistName = specialistView.findViewById(R.id.name);
         TextView specialistRating = specialistView.findViewById(R.id.rating);
 
-        int specialistImageResId = getResources().getIdentifier(specialist.getImage(), "drawable", getContext().getPackageName());
-        specialistImage.setImageResource(specialistImageResId);
+//        int specialistImageResId = getResources().getIdentifier(specialist.getImage(), "drawable", getContext().getPackageName());
+//        specialistImage.setImageResource(specialistImageResId);
+
+        Glide.with(this)
+                .load(specialist.getImage())
+                .into(specialistImage);
+
         specialistName.setText(specialist.getName());
         specialistRating.setText(String.valueOf(specialist.getRating()));
 
-        container.addView(specialistView);
+        specialistView.setOnClickListener(v -> {
+            Toast.makeText(getContext(), specialist.getName(), Toast.LENGTH_SHORT).show();
+        });
+
+        infoContainer.addView(specialistView);
+//        TextView testView = new TextView(getContext());
+//        testView.setText("Test Specialist");
+//        testView.setTextColor(Color.WHITE);
+//        infoContainer.addView(testView);
+
     }
 }

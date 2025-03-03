@@ -126,14 +126,15 @@
         <!-- Book -->
         <ImageView
             android:id="@+id/img_hairstyle"
-            android:layout_width="65dp"
-            android:layout_height="65dp"
+            android:layout_width="62dp"
+            android:layout_height="62dp"
             android:contentDescription="@string/app_name"
             android:scaleType="centerInside"
             android:src="@drawable/img_hairstyle"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <FrameLayout
             android:id="@+id/container_book"

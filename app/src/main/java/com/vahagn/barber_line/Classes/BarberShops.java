@@ -10,7 +10,6 @@ public class BarberShops {
     private String address;
     private String coordinates;
     private String image;
-    private int imageResId;
     private String logo;
     private double rating;
     private List<Reviews> reviews;
@@ -18,12 +17,6 @@ public class BarberShops {
     private List<Barbers> specialists;
 
     public BarberShops() {
-    }
-
-    public BarberShops(int imageResId, String name, String address) {
-        this.imageResId = imageResId;
-        this.address = address;
-        this.name = name;
     }
 
     public BarberShops(String name, String address,String coordinates, String image, String logo, double rating,
@@ -53,14 +46,6 @@ public class BarberShops {
 
     public void setImage(String image) {
         this.image = image;
-    }
-
-    public int getImageResId() {
-        return imageResId;
-    }
-
-    public void setImageResId(int imageResId) {
-        this.imageResId = imageResId;
     }
 
     public String getLogo() {
