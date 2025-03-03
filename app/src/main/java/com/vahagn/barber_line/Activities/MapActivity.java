@@ -191,7 +191,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 @Override
                 public boolean onMarkerClick(Marker marker) {
                     if (marker.equals(marker)) {
-                        Toast.makeText(getApplicationContext(), "Marker clicked!", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getApplicationContext(), BarberShopsAboutActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 

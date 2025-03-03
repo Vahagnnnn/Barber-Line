@@ -67,10 +67,5 @@ public class SpecialistsFragment extends Fragment {
         });
 
         infoContainer.addView(specialistView);
-//        TextView testView = new TextView(getContext());
-//        testView.setText("Test Specialist");
-//        testView.setTextColor(Color.WHITE);
-//        infoContainer.addView(testView);
-
     }
 }

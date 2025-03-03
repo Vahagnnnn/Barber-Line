@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.vahagn.barber_line.Classes.Services;
 import com.vahagn.barber_line.R;
@@ -41,15 +42,19 @@ public class ServicesFragment extends Fragment {
         return view;
     }
     private void addServices(LinearLayout container, Services services) {
-        View specialistView = LayoutInflater.from(getContext()).inflate(R.layout.services, container, false);
-        TextView serviceName = specialistView.findViewById(R.id.name);
-        TextView serviceDuration= specialistView.findViewById(R.id.duration);
-        TextView servicePrice= specialistView.findViewById(R.id.price);
+        View servicesView = LayoutInflater.from(getContext()).inflate(R.layout.services, container, false);
+        TextView serviceName = servicesView.findViewById(R.id.name);
+        TextView serviceDuration= servicesView.findViewById(R.id.duration);
+        TextView servicePrice= servicesView.findViewById(R.id.price);
 
         serviceName.setText(services.getName());
         serviceDuration.setText(services.getDuration());
         servicePrice.setText(services.getPrice());
 
-        container.addView(specialistView);
+        servicesView.setOnClickListener(v -> {
+            Toast.makeText(getContext(), services.getName(), Toast.LENGTH_SHORT).show();
+        });
+
+        container.addView(servicesView);
     }
 }
