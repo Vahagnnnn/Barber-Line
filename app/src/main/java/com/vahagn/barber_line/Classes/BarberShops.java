@@ -8,6 +8,7 @@ import java.util.List;
 public class BarberShops {
     private String name;
     private String address;
+    private String coordinates;
     private String image;
     private int imageResId;
     private String logo;
@@ -25,10 +26,11 @@ public class BarberShops {
         this.name = name;
     }
 
-    public BarberShops(String name, String address, String image, String logo, double rating,
+    public BarberShops(String name, String address,String coordinates, String image, String logo, double rating,
                        List<Reviews> reviews, List<Services> services, List<Barbers> specialists) {
         this.name = name;
         this.address = address;
+        this.coordinates = coordinates;
         this.image = image;
         this.logo = logo;
         this.rating = rating;
@@ -109,19 +111,12 @@ public class BarberShops {
         this.specialists = specialists;
     }
 
-    @Override
-    public String toString() {
-        return "BarberShops{" +
-                "name='" + name + '\'' +
-                ", address='" + address + '\'' +
-                ", image='" + image + '\'' +
-                ", imageResId=" + imageResId +
-                ", logo='" + logo + '\'' +
-                ", rating=" + rating +
-                ", reviews=" + reviews +
-                ", services=" + services +
-                ", specialists=" + specialists +
-                '}';
+    public String getCoordinates() {
+        return coordinates;
+    }
+
+    public void setCoordinates(String coordinates) {
+        this.coordinates = coordinates;
     }
 }
 

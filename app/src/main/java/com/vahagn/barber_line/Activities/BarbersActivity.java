@@ -12,6 +12,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -56,8 +59,13 @@ public class BarbersActivity extends AppCompatActivity {
         View barbershopView = LayoutInflater.from(this).inflate(R.layout.barbershops_gray, container, false);
 
         ImageView logoImageView = barbershopView.findViewById(R.id.logo);
-        int logoResId = getResources().getIdentifier(logo, "drawable", getPackageName());
-        logoImageView.setImageResource(logoResId);
+//        int logoResId = getResources().getIdentifier(logo, "drawable", getPackageName());
+//        logoImageView.setImageResource(logoResId);
+//        Glide.with(this).load(logo).into(logoImageView);
+
+        Glide.with(this)
+                .load(logo)
+                .into(logoImageView);
 
         TextView nameTextView = barbershopView.findViewById(R.id.name);
         TextView addressTextView = barbershopView.findViewById(R.id.address);

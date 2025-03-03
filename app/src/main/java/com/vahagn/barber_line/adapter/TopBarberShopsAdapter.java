@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.vahagn.barber_line.Activities.BarberShopsAboutActivity;
 import com.vahagn.barber_line.Activities.BarbersActivity;
 import com.vahagn.barber_line.Activities.MainActivity;
@@ -48,8 +49,11 @@ public class TopBarberShopsAdapter extends RecyclerView.Adapter<TopBarberShopsAd
         BarberShops item = topBarberShopsList.get(position);
         holder.title.setText(item.getName());
         holder.address.setText(item.getAddress());
-        int imageResId = context.getResources().getIdentifier(item.getImage(), "drawable", context.getPackageName());
-        holder.imageView.setImageResource(imageResId);
+//        int imageResId = context.getResources().getIdentifier(item.getImage(), "drawable", context.getPackageName());
+//        holder.imageView.setImageResource(imageResId);
+
+        String imageUrl = item.getImage();
+        Glide.with(context).load(imageUrl).into(holder.imageView);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,23 +68,6 @@ public class TopBarberShopsAdapter extends RecyclerView.Adapter<TopBarberShopsAd
                 intent.putExtra("ListService", (Serializable) item.getServices());
                 context.startActivity(intent);
 
-//                Log.d("IntentData", "from_where: BarbersActivity");
-//                Log.d("IntentData", "image: " + item.getImage());
-//                Log.d("IntentData", "name: " + item.getName());
-//                Log.d("IntentData", "rating: " + item.getRating());
-//                Log.d("IntentData", "address: " + item.getAddress());
-//
-//                if (item.getSpecialists() != null) {
-//                    Log.d("IntentData", "ListSpecialist: " + item.getSpecialists().toString());
-//                } else {
-//                    Log.d("IntentData", "ListSpecialist: null");
-//                }
-//
-//                if (item.getServices() != null) {
-//                    Log.d("IntentData", "ListService: " + item.getServices().toString());
-//                } else {
-//                    Log.d("IntentData", "ListService: null");
-//                }
             }
         });
     }

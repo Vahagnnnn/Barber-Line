@@ -14,12 +14,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 import com.vahagn.barber_line.Classes.Barbers;
 import com.vahagn.barber_line.Classes.Services;
 import com.vahagn.barber_line.Fragments.SpecialistsFragment;
 import com.vahagn.barber_line.R;
 import com.vahagn.barber_line.adapter.CategoryAdapter;
 import com.vahagn.barber_line.model.Category;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -47,13 +50,15 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
         back_section = findViewById(R.id.back_section);
 
         String from_where = getIntent().getStringExtra("from_where");
-        String imageText = getIntent().getStringExtra("image");
+        String imageUrl = getIntent().getStringExtra("image");
         String nameText = getIntent().getStringExtra("name");
         String ratingText = getIntent().getStringExtra("rating");
         String addressText = getIntent().getStringExtra("address");
 
-        int imageResId = getResources().getIdentifier(imageText, "drawable", getPackageName());
-        image.setImageResource(imageResId);
+//        image.setImageResource(imageUrl);
+        Glide.with(this)
+                .load(imageUrl)
+                .into(image);
         name.setText(nameText);
         rating.setText(ratingText);
         adress.setText(addressText);
@@ -109,6 +114,7 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
     public void ToMap(View view) {
         navigateTo(MapActivity.class);
     }
+
     private void navigateTo(Class<?> targetActivity) {
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
                 this,

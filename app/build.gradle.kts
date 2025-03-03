@@ -46,7 +46,6 @@ dependencies {
     implementation(libs.google.firebase.analytics)
     implementation(libs.firebase.database)
     implementation(libs.imagepicker)
-    implementation(libs.github.glide)
     annotationProcessor(libs.glide.compiler)
     implementation(libs.play.services.auth)
     implementation(libs.firebase.storage)

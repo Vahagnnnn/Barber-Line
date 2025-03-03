@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     TopBarbersAdapter topbarbersAdapter;
     TopHaircutsAdapter tophaircutsAdapter;
 
-    List<BarberShops> TopBarberShopsList = new ArrayList<>();
+    public static List<BarberShops> TopBarberShopsList = new ArrayList<>();
     List<TopBarbers> TopBarbersList = new ArrayList<>();
     List<TopHaircuts> TopHaircutsList = new ArrayList<>();
 
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                 TopBarberShopsList.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     BarberShops shop = snapshot.getValue(BarberShops.class);
-                    TopBarberShopsList.add(new BarberShops(shop.getName(), shop.getAddress(), shop.getImage(), shop.getLogo(), shop.getRating(), shop.getReviews(), shop.getServices(), shop.getSpecialists()));
+                    TopBarberShopsList.add(new BarberShops(shop.getName(), shop.getAddress(),shop.getCoordinates(), shop.getImage(), shop.getLogo(), shop.getRating(), shop.getReviews(), shop.getServices(), shop.getSpecialists()));
                 }
                 setTopBarberShopsRecycler(TopBarberShopsList);
             }
