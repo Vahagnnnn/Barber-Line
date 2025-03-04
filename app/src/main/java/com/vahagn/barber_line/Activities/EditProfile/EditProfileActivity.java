@@ -1,13 +1,18 @@
 package com.vahagn.barber_line.Activities.EditProfile;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -41,12 +46,13 @@ public class EditProfileActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     TextView FirstnameText, LastnameText, phoneNumberText;
     ImageView profileImageView;
-
+    LinearLayout editFirstName, editLastName, editPhoneNumber,editPassword;
 
     private static final int PICK_IMAGE_REQUEST = 1;
     private Uri imageUri;
     private FirebaseAuth mAuth;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +62,11 @@ public class EditProfileActivity extends AppCompatActivity {
         FirstnameText = findViewById(R.id.FirstnameText);
         LastnameText = findViewById(R.id.LastnameText);
         phoneNumberText = findViewById(R.id.phoneNumberText);
+
+        editFirstName = findViewById(R.id.editFirstName);
+        editLastName = findViewById(R.id.editLastName);
+        editPhoneNumber = findViewById(R.id.editPhoneNumber);
+        editPassword = findViewById(R.id.editPassword);
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
 
@@ -105,6 +116,36 @@ public class EditProfileActivity extends AppCompatActivity {
                 }
             });
         }
+
+
+        View.OnTouchListener touchEffect = (v, event) -> {
+            GradientDrawable drawable = new GradientDrawable();
+            drawable.setColor(Color.TRANSPARENT);
+            drawable.setCornerRadius(15);
+            v.setBackground(drawable);
+
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    v.postDelayed(() -> {
+                        drawable.setColor(Color.parseColor("#646363"));
+                        v.setBackground(drawable);
+                    }, 0);
+                    return false;
+                case MotionEvent.ACTION_UP:
+                case MotionEvent.ACTION_CANCEL:
+                    v.postDelayed(() -> {
+                        drawable.setColor(Color.TRANSPARENT);
+                        v.setBackground(drawable);
+                    }, 0);
+                    break;
+            }
+            return false;
+        };
+
+        editFirstName.setOnTouchListener(touchEffect);
+        editLastName.setOnTouchListener(touchEffect);
+        editPhoneNumber.setOnTouchListener(touchEffect);
+        editPassword.setOnTouchListener(touchEffect);
     }
 
     private void openGallery() {

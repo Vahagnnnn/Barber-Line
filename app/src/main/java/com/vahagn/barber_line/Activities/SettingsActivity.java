@@ -92,20 +92,6 @@ public class SettingsActivity extends AppCompatActivity {
             });
         }
 
-
-//        View.OnTouchListener touchEffect = (v, event) -> {
-//            switch (event.getAction()) {
-//                case MotionEvent.ACTION_DOWN:
-//                    v.postDelayed(() -> v.setBackgroundColor(Color.parseColor("#9e9e9e")), 10);
-//                    return false;
-//                case MotionEvent.ACTION_UP:
-//                case MotionEvent.ACTION_CANCEL:
-//                    v.postDelayed(() -> v.setBackgroundColor(Color.parseColor("#C4C1C1")), 250);
-//                    break;
-//            }
-//            return false;
-//        };
-
         View.OnTouchListener touchEffect = (v, event) -> {
             GradientDrawable drawable = new GradientDrawable();
             drawable.setColor(Color.parseColor("#C4C1C1"));
@@ -117,14 +103,14 @@ public class SettingsActivity extends AppCompatActivity {
                     v.postDelayed(() -> {
                         drawable.setColor(Color.parseColor("#9e9e9e"));
                         v.setBackground(drawable);
-                    }, 50);
+                    }, 0);
                     return false;
                 case MotionEvent.ACTION_UP:
                 case MotionEvent.ACTION_CANCEL:
                     v.postDelayed(() -> {
                         drawable.setColor(Color.parseColor("#C4C1C1"));
                         v.setBackground(drawable);
-                    }, 250);
+                    }, 0);
                     break;
             }
             return false;
