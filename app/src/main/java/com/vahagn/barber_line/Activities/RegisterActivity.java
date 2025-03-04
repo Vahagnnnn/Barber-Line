@@ -7,12 +7,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.vahagn.barber_line.Classes.Users;
 import com.vahagn.barber_line.R;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -27,6 +29,8 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference usersRef;
     private final String prefix = "+374 ";
+
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +50,8 @@ public class RegisterActivity extends AppCompatActivity {
 
         phoneNumber.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -57,23 +62,39 @@ public class RegisterActivity extends AppCompatActivity {
             }
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
         phoneNumber.setSelection(prefix.length());
 
         SharedPreferences sharedPreferences = getSharedPreferences("email_str", MODE_PRIVATE);
         email.setText(sharedPreferences.getString("email", " "));
 
-        register_button.setOnClickListener(view -> {
-            String first_name_str = first_name.getText().toString();
-            String last_name_str = last_name.getText().toString();
-            String email_str = email.getText().toString();
-            String password_str = password.getText().toString();
-            String phoneNumber_str = "+374" + phoneNumber.getText().toString().substring(5);
-            if (validateInput(first_name_str, last_name_str, email_str, password_str, phoneNumber_str)) {
-                signUpUser(first_name_str, last_name_str, email_str, password_str, phoneNumber_str);
+        register_button.setOnTouchListener((v, event) -> {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    v.animate().alpha(0.8f).setDuration(50).start();
+                    break;
+                case MotionEvent.ACTION_UP:
+                    v.animate().alpha(1.0f).setDuration(50).start();
+
+                    String first_name_str = first_name.getText().toString();
+                    String last_name_str = last_name.getText().toString();
+                    String email_str = email.getText().toString();
+                    String password_str = password.getText().toString();
+                    String phoneNumber_str = "+374" + phoneNumber.getText().toString().substring(5);
+
+                    if (validateInput(first_name_str, last_name_str, email_str, password_str, phoneNumber_str)) {
+                        signUpUser(first_name_str, last_name_str, email_str, password_str, phoneNumber_str);
+                    }
+                    break;
+                case MotionEvent.ACTION_CANCEL:
+                    v.animate().alpha(1.0f).setDuration(50).start();
+                    break;
             }
+            return true;
         });
+
     }
 
     private boolean validateInput(String first_name, String last_name, String email, String password, String phoneNumber) {

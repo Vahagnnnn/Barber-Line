@@ -1,13 +1,16 @@
 package com.vahagn.barber_line.Activities;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -45,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
     FrameLayout continue_button;
     SignInButton googleSignInButton;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,8 +66,20 @@ public class LoginActivity extends AppCompatActivity {
 
         usersRef = FirebaseDatabase.getInstance().getReference("Users");
 
-        continue_button.setOnClickListener(view -> {
-            signInUser();
+        continue_button.setOnTouchListener((v, event) -> {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    v.animate().alpha(0.8f).setDuration(50).start();
+                    break;
+                case MotionEvent.ACTION_UP:
+                    v.animate().alpha(1.0f).setDuration(50).start();
+                    signInUser();
+                    break;
+                case MotionEvent.ACTION_CANCEL:
+                    v.animate().alpha(1.0f).setDuration(50).start();
+                    break;
+            }
+            return true;
         });
 
 
@@ -76,6 +92,8 @@ public class LoginActivity extends AppCompatActivity {
                 .build();
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+
     }
 
     public void ToPasswordActivity() {

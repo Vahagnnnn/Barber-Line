@@ -1,10 +1,12 @@
 package com.vahagn.barber_line.Activities;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -33,6 +35,7 @@ public class PasswordActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference usersRef;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,14 +52,27 @@ public class PasswordActivity extends AppCompatActivity {
         String email = sharedPreferences.getString("email", " ");
         editor.putString("email", email);
 
-        continue_button.setOnClickListener(view -> {
-            if (!validatePassword()) {
-                Toast.makeText(PasswordActivity.this, "Invalid information", Toast.LENGTH_SHORT).show();
-            } else {
-                signInUser(email);
-            }
-        });
+        continue_button.setOnTouchListener((v, event) -> {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    v.animate().alpha(0.8f).setDuration(50).start();
+                    break;
+                case MotionEvent.ACTION_UP:
+                    v.animate().alpha(1.0f).setDuration(50).start();
 
+                    if (!validatePassword()) {
+                        Toast.makeText(PasswordActivity.this, "Invalid information", Toast.LENGTH_SHORT).show();
+                    } else {
+                        signInUser(email);
+                    }
+
+                    break;
+                case MotionEvent.ACTION_CANCEL:
+                    v.animate().alpha(1.0f).setDuration(50).start();
+                    break;
+            }
+            return true;
+        });
     }
 
     public void signInUser(String email) {

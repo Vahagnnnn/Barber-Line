@@ -5,8 +5,9 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:transitionName="sharedImageTransition"
     android:background="#242C3B"
+    android:transitionGroup="true"
+    android:transitionName="sharedImageTransition"
     tools:context=".Activities.SettingsActivity">
 
 
@@ -69,14 +70,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/top">
 
-<!--        <ImageView-->
-<!--            android:id="@+id/profileImageView"-->
-<!--            android:layout_width="100dp"-->
-<!--            android:layout_height="100dp"-->
-<!--            android:layout_marginBottom="1dp"-->
-<!--            android:contentDescription="@string/app_name"-->
-<!--            android:scaleType="centerCrop"-->
-<!--            android:src="@drawable/img_avatar" />-->
+        <!--        <ImageView-->
+        <!--            android:id="@+id/profileImageView"-->
+        <!--            android:layout_width="100dp"-->
+        <!--            android:layout_height="100dp"-->
+        <!--            android:layout_marginBottom="1dp"-->
+        <!--            android:contentDescription="@string/app_name"-->
+        <!--            android:scaleType="centerCrop"-->
+        <!--            android:src="@drawable/img_avatar" />-->
 
         <androidx.cardview.widget.CardView
             android:layout_width="100dp"
@@ -166,9 +167,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/gray_frame_10dp"
-            android:paddingStart="20dp"
-            android:paddingTop="20dp"
-            android:paddingBottom="20dp"
+            android:paddingHorizontal="10dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -176,10 +177,12 @@
 
             <!--Edit Profile Section -->
             <FrameLayout
-                android:id="@+id/container_group9"
+                android:id="@+id/edit_profile"
                 android:layout_width="match_parent"
-                android:layout_height="27dp"
+                android:layout_height="35dp"
                 android:onClick="ToEdit"
+                android:background="@drawable/gray_frame_10dp"
+                android:paddingStart="10dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -187,7 +190,7 @@
                     android:id="@+id/image_profile_light"
                     android:layout_width="22dp"
                     android:layout_height="22dp"
-                    android:layout_gravity="start"
+                    android:layout_gravity="start|center_vertical"
                     android:contentDescription="@string/app_name"
                     android:scaleType="centerInside"
                     android:src="@drawable/img_edit_profile" />
@@ -196,12 +199,10 @@
                     android:id="@+id/text_edit_profile"
                     android:layout_width="match_parent"
                     android:layout_height="21dp"
-                    android:layout_gravity="top"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginStart="45dp"
-                    android:layout_marginTop="2.5dp"
-                    android:layout_marginBottom="-3.5dp"
-                    android:includeFontPadding="false"
                     android:fontFamily="@font/nunito_sans_semibold"
+                    android:includeFontPadding="false"
                     android:maxLines="1"
                     android:singleLine="true"
                     android:text="@string/edit_profile"
@@ -213,16 +214,16 @@
             <FrameLayout
                 android:id="@+id/container_group8"
                 android:layout_width="match_parent"
-                android:layout_height="22dp"
-                android:layout_marginTop="10dp"
+                android:layout_height="35dp"
+                android:paddingStart="10dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/container_group9">
+                app:layout_constraintTop_toBottomOf="@+id/edit_profile">
 
                 <ImageView
                     android:id="@+id/image_heart"
                     android:layout_width="23dp"
                     android:layout_height="23dp"
-                    android:layout_gravity="start"
+                    android:layout_gravity="start|center_vertical"
                     android:contentDescription="@string/app_name"
                     android:src="@drawable/img_favourites" />
 
@@ -230,10 +231,9 @@
                     android:id="@+id/text_favourites"
                     android:layout_width="match_parent"
                     android:layout_height="21dp"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginStart="45dp"
                     android:fontFamily="@font/nunito_sans_semibold"
-                    android:layout_marginTop="0.5dp"
-                    android:layout_marginBottom="0.5dp"
                     android:includeFontPadding="false"
                     android:maxLines="1"
                     android:singleLine="true"
@@ -246,8 +246,8 @@
             <FrameLayout
                 android:id="@+id/container_group10"
                 android:layout_width="match_parent"
-                android:layout_height="22dp"
-                android:layout_marginTop="10dp"
+                android:layout_height="35dp"
+                android:paddingStart="10dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/container_group8">
 
@@ -255,6 +255,7 @@
                     android:id="@+id/image_credit_card"
                     android:layout_width="22dp"
                     android:layout_height="22dp"
+                    android:layout_gravity="start|center_vertical"
                     android:contentDescription="@string/app_name"
                     android:scaleType="centerInside"
                     android:src="@drawable/img_bank_card" />
@@ -263,10 +264,9 @@
                     android:id="@+id/text_bank_cards"
                     android:layout_width="match_parent"
                     android:layout_height="21dp"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginStart="45dp"
                     android:fontFamily="@font/nunito_sans_semibold"
-                    android:layout_marginTop="0.5dp"
-                    android:layout_marginBottom="0.5dp"
                     android:includeFontPadding="false"
                     android:maxLines="1"
                     android:singleLine="true"
@@ -280,8 +280,8 @@
             <FrameLayout
                 android:id="@+id/container_group3"
                 android:layout_width="match_parent"
-                android:layout_height="22dp"
-                android:layout_marginTop="10dp"
+                android:layout_height="35dp"
+                android:paddingStart="10dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/container_group10">
 
@@ -289,6 +289,7 @@
                     android:id="@+id/image_megaphone"
                     android:layout_width="22dp"
                     android:layout_height="22dp"
+                    android:layout_gravity="start|center_vertical"
                     android:contentDescription="@string/app_name"
                     android:scaleType="centerInside"
                     android:src="@drawable/img_news" />
@@ -297,10 +298,9 @@
                     android:id="@+id/text_news"
                     android:layout_width="match_parent"
                     android:layout_height="21dp"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginStart="45dp"
-                    android:layout_marginTop="0.5dp"
                     android:fontFamily="@font/nunito_sans_semibold"
-                    android:layout_marginBottom="0.5dp"
                     android:includeFontPadding="false"
                     android:maxLines="1"
                     android:singleLine="true"
@@ -312,8 +312,8 @@
             <FrameLayout
                 android:id="@+id/container_group4"
                 android:layout_width="match_parent"
-                android:layout_height="22dp"
-                android:layout_marginTop="15dp"
+                android:layout_height="35dp"
+                android:paddingStart="10dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/container_group3">
 
@@ -321,6 +321,7 @@
                     android:id="@+id/image_information"
                     android:layout_width="22dp"
                     android:layout_height="22dp"
+                    android:layout_gravity="start|center_vertical"
                     android:contentDescription="@string/app_name"
                     android:scaleType="centerInside"
                     android:src="@drawable/img_about" />
@@ -329,10 +330,9 @@
                     android:id="@+id/text_about_developer"
                     android:layout_width="match_parent"
                     android:layout_height="21dp"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginStart="45dp"
-                    android:layout_marginTop="0.5dp"
                     android:fontFamily="@font/nunito_sans_semibold"
-                    android:layout_marginBottom="0.5dp"
                     android:includeFontPadding="false"
                     android:maxLines="1"
                     android:singleLine="true"
@@ -344,8 +344,8 @@
             <FrameLayout
                 android:id="@+id/language_button"
                 android:layout_width="match_parent"
-                android:layout_height="22dp"
-                android:layout_marginTop="10dp"
+                android:layout_height="35dp"
+                android:paddingStart="10dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/container_group4">
 
@@ -353,6 +353,7 @@
                     android:id="@+id/image_internet"
                     android:layout_width="22dp"
                     android:layout_height="22dp"
+                    android:layout_gravity="start|center_vertical"
                     android:contentDescription="@string/app_name"
                     android:scaleType="centerInside"
                     android:src="@drawable/img_language" />
@@ -361,10 +362,9 @@
                     android:id="@+id/text_language"
                     android:layout_width="match_parent"
                     android:layout_height="21dp"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginStart="45dp"
-                    android:layout_marginTop="0.5dp"
                     android:fontFamily="@font/nunito_sans_semibold"
-                    android:layout_marginBottom="0.5dp"
                     android:includeFontPadding="false"
                     android:maxLines="1"
                     android:singleLine="true"
@@ -376,8 +376,8 @@
             <FrameLayout
                 android:id="@+id/logout_button"
                 android:layout_width="match_parent"
-                android:layout_height="22dp"
-                android:layout_marginTop="10dp"
+                android:layout_height="35dp"
+                android:paddingStart="10dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/language_button">
 
@@ -385,6 +385,7 @@
                     android:id="@+id/image_logout"
                     android:layout_width="22dp"
                     android:layout_height="22dp"
+                    android:layout_gravity="start|center_vertical"
                     android:contentDescription="@string/app_name"
                     android:scaleType="centerInside"
                     android:src="@drawable/img_logout" />
@@ -393,10 +394,9 @@
                     android:id="@+id/text_logout"
                     android:layout_width="match_parent"
                     android:layout_height="21dp"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginStart="45dp"
-                    android:layout_marginTop="0.5dp"
                     android:fontFamily="@font/nunito_sans_semibold"
-                    android:layout_marginBottom="0.5dp"
                     android:includeFontPadding="false"
                     android:maxLines="1"
                     android:singleLine="true"
@@ -408,8 +408,8 @@
             <FrameLayout
                 android:id="@+id/remove_account"
                 android:layout_width="match_parent"
-                android:layout_height="22dp"
-                android:layout_marginTop="10dp"
+                android:layout_height="35dp"
+                android:paddingStart="10dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/logout_button">
 
@@ -417,6 +417,7 @@
                     android:id="@+id/image_remove_user"
                     android:layout_width="22dp"
                     android:layout_height="22dp"
+                    android:layout_gravity="start|center_vertical"
                     android:contentDescription="@string/app_name"
                     android:scaleType="centerInside"
                     android:src="@drawable/img_remove_account" />
@@ -425,9 +426,8 @@
                     android:id="@+id/text_remove_account"
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginStart="45dp"
-                    android:layout_marginTop="1dp"
-                    android:layout_marginBottom="1dp"
                     android:fontFamily="@font/nunito_sans_semibold"
                     android:includeFontPadding="false"
                     android:maxLines="1"
@@ -489,8 +489,8 @@
             android:id="@+id/img_hairstyle"
             android:layout_width="62dp"
             android:layout_height="62dp"
-            android:onClick="ToBarberShopOwner"
             android:contentDescription="@string/app_name"
+            android:onClick="ToBarberShopOwner"
             android:scaleType="centerInside"
             android:src="@drawable/img_hairstyle"
             app:layout_constraintBottom_toBottomOf="parent"

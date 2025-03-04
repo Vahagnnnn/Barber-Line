@@ -47,7 +47,7 @@
         </FrameLayout>
 
         <FrameLayout
-            android:id="@+id/continue_button"
+            android:id="@+id/joinToBarberShop"
             android:layout_width="327dp"
             android:layout_height="48dp"
             android:layout_gravity="center"
@@ -70,7 +70,7 @@
                 android:fontFamily="@font/montserrat_bold"
                 android:gravity="center"
                 android:singleLine="true"
-                android:text="Join To Barber Shop "
+                android:text="Join To Barber Shop"
                 android:textColor="#FFFFFFFF"
                 android:textSize="16sp" />
         </FrameLayout>

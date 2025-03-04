@@ -1,10 +1,14 @@
 package com.vahagn.barber_line.Activities;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -32,14 +36,16 @@ import java.util.HashMap;
 public class SettingsActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
 
-    FrameLayout logout_button, remove_account;
+    FrameLayout edit_profile, logout_button, remove_account;
     TextView Firstname_LastnameText, emailText, phoneNumberText;
     ImageView profileImageView;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        edit_profile = findViewById(R.id.edit_profile);
         logout_button = findViewById(R.id.logout_button);
         remove_account = findViewById(R.id.remove_account);
 
@@ -87,6 +93,47 @@ public class SettingsActivity extends AppCompatActivity {
         }
 
 
+//        View.OnTouchListener touchEffect = (v, event) -> {
+//            switch (event.getAction()) {
+//                case MotionEvent.ACTION_DOWN:
+//                    v.postDelayed(() -> v.setBackgroundColor(Color.parseColor("#9e9e9e")), 10);
+//                    return false;
+//                case MotionEvent.ACTION_UP:
+//                case MotionEvent.ACTION_CANCEL:
+//                    v.postDelayed(() -> v.setBackgroundColor(Color.parseColor("#C4C1C1")), 250);
+//                    break;
+//            }
+//            return false;
+//        };
+
+        View.OnTouchListener touchEffect = (v, event) -> {
+            GradientDrawable drawable = new GradientDrawable();
+            drawable.setColor(Color.parseColor("#C4C1C1"));
+            drawable.setCornerRadius(15);
+            v.setBackground(drawable);
+
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    v.postDelayed(() -> {
+                        drawable.setColor(Color.parseColor("#9e9e9e"));
+                        v.setBackground(drawable);
+                    }, 50);
+                    return false;
+                case MotionEvent.ACTION_UP:
+                case MotionEvent.ACTION_CANCEL:
+                    v.postDelayed(() -> {
+                        drawable.setColor(Color.parseColor("#C4C1C1"));
+                        v.setBackground(drawable);
+                    }, 250);
+                    break;
+            }
+            return false;
+        };
+
+        edit_profile.setOnTouchListener(touchEffect);
+        logout_button.setOnTouchListener(touchEffect);
+        remove_account.setOnTouchListener(touchEffect);
+
         logout_button.setOnClickListener(view -> logOut());
         remove_account.setOnClickListener(view -> remove_account());
     }
@@ -122,7 +169,6 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
-
     public void logOut() {
         FirebaseAuth.getInstance().signOut();
         SharedPreferences sharedPreferences = getSharedPreferences("UserInformation", MODE_PRIVATE);
@@ -156,6 +202,7 @@ public class SettingsActivity extends AppCompatActivity {
     public void ToEdit(View view) {
         navigateTo(EditProfileActivity.class);
     }
+
     public void ToBarberShopOwner(View view) {
         navigateTo(BarberShopOwnerActivity.class);
     }
