@@ -160,4 +160,7 @@ public class MainActivity extends AppCompatActivity {
     public void ToMap(View view) {
         navigateTo(MapActivity.class);
     }
+    public void ToBarberShopOwner(View view) {
+        navigateTo(BarberShopOwnerActivity.class);
+    }
 }

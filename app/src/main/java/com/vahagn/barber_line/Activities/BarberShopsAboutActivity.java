@@ -116,6 +116,9 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
     public void ToMap(View view) {
         navigateTo(MapActivity.class);
     }
+    public void ToBarberShopOwner(View view) {
+        navigateTo(BarberShopOwnerActivity.class);
+    }
 
     private void navigateTo(Class<?> targetActivity) {
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(

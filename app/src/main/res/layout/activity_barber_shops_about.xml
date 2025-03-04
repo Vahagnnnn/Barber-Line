@@ -255,6 +255,7 @@
             android:layout_height="62dp"
             android:contentDescription="@string/app_name"
             android:scaleType="centerInside"
+            android:onClick="ToBarberShopOwner"
             android:src="@drawable/img_hairstyle"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

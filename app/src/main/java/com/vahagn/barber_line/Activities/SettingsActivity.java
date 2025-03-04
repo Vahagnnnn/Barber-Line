@@ -156,6 +156,9 @@ public class SettingsActivity extends AppCompatActivity {
     public void ToEdit(View view) {
         navigateTo(EditProfileActivity.class);
     }
+    public void ToBarberShopOwner(View view) {
+        navigateTo(BarberShopOwnerActivity.class);
+    }
 
     public void ToMap(View view) {
         navigateTo(MapActivity.class);

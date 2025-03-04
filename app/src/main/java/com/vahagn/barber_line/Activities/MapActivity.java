@@ -219,7 +219,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             });
         }
 
-        // Adding rounded corners and gradient border
         private Bitmap addRoundedCornersAndBorder(Bitmap bitmap, int cornerRadius, int borderWidth) {
             int width = bitmap.getWidth();
             int height = bitmap.getHeight();
@@ -227,10 +226,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             Bitmap newBitmap = Bitmap.createBitmap(width + 2 * borderWidth, height + 2 * borderWidth, Bitmap.Config.ARGB_8888);
             Canvas canvas = new Canvas(newBitmap);
             Paint paint = new Paint();
-            paint.setAntiAlias(true);  // Enable anti-aliasing for smoother edges
-            paint.setColor(Color.WHITE);  // Default background for the border
+            paint.setAntiAlias(true);
+            paint.setColor(Color.WHITE);
 
-            // Draw rounded rectangle with gradient border
             paint.setShader(new LinearGradient(0, 0, width + 2 * borderWidth, height + 2 * borderWidth,
                     Color.DKGRAY, Color.LTGRAY, Shader.TileMode.CLAMP));
             RectF rectF = new RectF(0, 0, width + 2 * borderWidth, height + 2 * borderWidth);
@@ -269,6 +267,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     public void ToHome(View view) {
         navigateTo(MainActivity.class);
+    }
+    public void ToBarberShopOwner(View view) {
+        navigateTo(BarberShopOwnerActivity.class);
     }
 
     public void ToBarbers(View view) {
