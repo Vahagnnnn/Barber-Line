@@ -1,93 +1,56 @@
 package com.vahagn.barber_line.Activities;
 
-import android.Manifest;
 import android.app.ActivityOptions;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.FragmentTransaction;
 
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.vahagn.barber_line.Activities.EditProfile.EditProfileActivity;
+import com.vahagn.barber_line.Activities.Admin.AddBarbersActivity;
+import com.vahagn.barber_line.Activities.Admin.AddLocationActivity;
+import com.vahagn.barber_line.Activities.Admin.AdminActivity;
+import com.vahagn.barber_line.Classes.Barbers;
+import com.vahagn.barber_line.Fragments.SpecialistsFragment;
 import com.vahagn.barber_line.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CreateBarberShopActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
     private Uri imageUri;
     ImageView BarberShopImage;
 
-//    private Marker currentLocationMarker;
-//    private FusedLocationProviderClient fusedLocationClient;
-//    private GoogleMap mMap;
+    List<Barbers> ListSpecialist = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_barber_shop);
 
-//        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-//        assert mapFragment != null;
-//        mapFragment.getMapAsync(this);
-//
-//        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-
 
         BarberShopImage = findViewById(R.id.BarberShopImage);
         BarberShopImage.setOnClickListener(v -> openGallery());
-    }
 
-//    @Override
-//    public void onMapReady(GoogleMap googleMap) {
-//        mMap = googleMap;
-//        updateLocation();
-//    }
-//
-//    private void updateLocation() {
-//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-//            fusedLocationClient.getLastLocation()
-//                    .addOnSuccessListener(this, new com.google.android.gms.tasks.OnSuccessListener<Location>() {
-//                        @Override
-//                        public void onSuccess(Location location) {
-//                            if (location != null) {
-//                                LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-//
-//                                if (currentLocationMarker != null) {
-//                                    currentLocationMarker.setPosition(currentLatLng);
-//                                } else {
-//                                    currentLocationMarker = mMap.addMarker(new MarkerOptions().position(currentLatLng).title("Current Location"));
-//                                }
-//
-//                                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15)); // Zoom to current location
-//                            }
-//                        }
-//                    });
-//        } else {
-//            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-//        }
-//    }
+        ListSpecialist.add(new Barbers(R.drawable.img_sargis_paragon, "Sargis", 077777777));
+        ListSpecialist.add(new Barbers(R.drawable.img_sargis_paragon, "Sargis", 077777777));
+        ListSpecialist.add(new Barbers(R.drawable.img_sargis_paragon, "Sargis", 077777777));
+
+
+        if (ListSpecialist != null) {
+            SpecialistsFragment specialistsFragment = new SpecialistsFragment(ListSpecialist);
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.info_container, specialistsFragment);
+            transaction.commit();
+        }
+
+    }
 
 
     private void openGallery() {
@@ -120,11 +83,16 @@ public class CreateBarberShopActivity extends AppCompatActivity {
     public void ToHome(View view) {
         navigateTo(MainActivity.class);
     }
+
     public void ToAdmin(View view) {
         navigateTo(AdminActivity.class);
     }
+
     public void ToAddLocation(View view) {
         navigateTo(AddLocationActivity.class);
+    }
+    public void ToAddBarber(View view) {
+        navigateTo(AddBarbersActivity.class);
     }
     public void ToSetting(View view) {
         navigateTo(AdminActivity.class);

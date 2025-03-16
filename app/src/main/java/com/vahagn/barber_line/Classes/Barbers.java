@@ -14,7 +14,16 @@ public class Barbers implements Serializable {
     private List<Reviews> reviews;
     private List<Appointment> appointments;
 
+
+    private int imageResId;
+
     public Barbers() {
+    }
+
+    public Barbers(int imageResId, String name, int phone) {
+        this.imageResId = imageResId;
+        this.name = name;
+        this.phone = phone;
     }
 
     public Barbers(int ID, String name, int phone, String image, String workPlace, double rating, List<Services> services, List<Reviews> reviews, List<Appointment> appointments) {
