@@ -41,6 +41,17 @@ public class ServicesFragment extends Fragment {
         }
         return view;
     }
+
+    public void updateServicesList(List<Services> newServicesList) {
+        this.serviceslists = newServicesList;
+        servicesContainer.removeAllViews();
+        if (serviceslists != null) {
+            for (Services services : serviceslists) {
+                addServices(servicesContainer, services);
+            }
+        }
+    }
+
     private void addServices(LinearLayout container, Services services) {
         View servicesView = LayoutInflater.from(getContext()).inflate(R.layout.services, container, false);
         TextView serviceName = servicesView.findViewById(R.id.name);

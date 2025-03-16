@@ -29,6 +29,8 @@ public class SpecialistsFragment extends Fragment {
     private LinearLayout infoContainer;
     private List<Barbers> specialists;
 
+    public SpecialistsFragment() {
+    }
     public SpecialistsFragment(List<Barbers> specialists) {
         this.specialists = specialists;
     }

@@ -20,7 +20,7 @@ public class AdminActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.admin);
+        setContentView(R.layout.activity_admin);
 
         FrameLayout createBarberShop = findViewById(R.id.createBarberShop);
         FrameLayout joinToBarberShop = findViewById(R.id.joinToBarberShop);
