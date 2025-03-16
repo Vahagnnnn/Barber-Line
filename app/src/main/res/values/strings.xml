@@ -73,5 +73,6 @@
     <string name="old_password">Old password</string>
     <string name="new_password">New password</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="reservations">Reservations</string>
 
 </resources>

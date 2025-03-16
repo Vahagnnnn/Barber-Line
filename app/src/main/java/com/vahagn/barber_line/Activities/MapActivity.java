@@ -25,13 +25,10 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.transition.Transition;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -44,8 +41,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.vahagn.barber_line.Classes.BarberShops;
-import com.vahagn.barber_line.Classes.Barbers;
-import com.vahagn.barber_line.Classes.Services;
 import com.vahagn.barber_line.R;
 
 import java.io.Serializable;
@@ -269,7 +264,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         navigateTo(MainActivity.class);
     }
     public void ToBarberShopOwner(View view) {
-        navigateTo(BarberShopOwnerActivity.class);
+        navigateTo(AdminActivity.class);
     }
 
     public void ToBarbers(View view) {

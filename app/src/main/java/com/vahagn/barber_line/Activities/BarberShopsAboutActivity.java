@@ -3,12 +3,10 @@ package com.vahagn.barber_line.Activities;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
@@ -117,7 +115,7 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
         navigateTo(MapActivity.class);
     }
     public void ToBarberShopOwner(View view) {
-        navigateTo(BarberShopOwnerActivity.class);
+        navigateTo(AdminActivity.class);
     }
 
     private void navigateTo(Class<?> targetActivity) {

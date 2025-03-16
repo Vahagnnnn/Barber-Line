@@ -30,9 +30,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.vahagn.barber_line.Activities.EditProfile.EditProfileActivity;
 import com.vahagn.barber_line.R;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 public class SettingsActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
 
@@ -190,7 +187,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void ToBarberShopOwner(View view) {
-        navigateTo(BarberShopOwnerActivity.class);
+        navigateTo(AdminActivity.class);
     }
 
     public void ToMap(View view) {
