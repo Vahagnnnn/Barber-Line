@@ -23,13 +23,17 @@ import com.vahagn.barber_line.Activities.MainActivity;
 import com.vahagn.barber_line.Activities.PhoneNumberActivity;
 import com.vahagn.barber_line.Classes.BarberShops;
 import com.vahagn.barber_line.Classes.Barbers;
+import com.vahagn.barber_line.Classes.Services;
 import com.vahagn.barber_line.Fragments.SpecialistsFragment;
 import com.vahagn.barber_line.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class CreateBarberShopActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
@@ -48,7 +52,7 @@ public class CreateBarberShopActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_barber_shop);
 
-        barberShopsRef = FirebaseDatabase.getInstance().getReference("barberShops");
+        barberShopsRef = FirebaseDatabase.getInstance().getReference("pending_barbershops");
 
         FrameLayout Send_for_moderation = findViewById(R.id.Send_for_moderation);
         BarberShopImage = findViewById(R.id.BarberShopImage);
@@ -122,11 +126,11 @@ public class CreateBarberShopActivity extends AppCompatActivity {
             return;
         }
         if (BarberShopName_str.isEmpty()) {
-            Toast.makeText(this, "Please write Barber Shop's address", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please write Barber Shop's name", Toast.LENGTH_SHORT).show();
             return;
         }
         if (BarberShopAddress_str.isEmpty()) {
-            Toast.makeText(this, "Please write Barber Shop's name", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please write Barber Shop's address", Toast.LENGTH_SHORT).show();
             return;
         }
         if (ListSpecialist.isEmpty()) {
@@ -136,22 +140,48 @@ public class CreateBarberShopActivity extends AppCompatActivity {
         for (Barbers barber : ListSpecialist) {
             barber.setWorkPlace(BarberShopName_str);
         }
-//        BarberShops BarberShop = new BarberShops(BarberShopName_str,BarberShopAddress_str,String.valueOf(imageUri),BarberShopLogo, Ser)
+
+        AddBarbersActivity.ListServices = new ArrayList<>(new LinkedHashSet<>(AddBarbersActivity.ListServices));
+
+        BarberShops BarberShop = new BarberShops(BarberShopName_str, BarberShopAddress_str, String.valueOf(BarberShopImageUri), String.valueOf(BarberShopLogoUri),"pending", AddBarbersActivity.ListServices, ListSpecialist);
+        addBarberShop(BarberShop);
     }
 
-//    public void addBarberShop(String name, String owner, String location, String phone) {
-//        barberShopsRef.child(currentUser.getUid()).setValue(user_DB)
+    public void addBarberShop(BarberShops BarberShop) {
+        barberShopsRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                long newId = task.getResult().getChildrenCount();
+                barberShopsRef.child(String.valueOf(newId)).setValue(BarberShop)
+                        .addOnCompleteListener(storeTask -> {
+                            if (storeTask.isSuccessful()) {
+                                Toast.makeText(CreateBarberShopActivity.this, "Store successful", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(CreateBarberShopActivity.this, AdminActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Toast.makeText(CreateBarberShopActivity.this, "Failed to store user data", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            } else {
+                Toast.makeText(CreateBarberShopActivity.this, "Failed to retrieve data", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
+//    public void addBarberShop( BarberShops BarberShop) {
+//        barberShopsRef.child(currentUser.getUid()).setValue(BarberShop)
 //                .addOnCompleteListener(task -> {
 //                    if (task.isSuccessful()) {
-//                        Toast.makeText(PhoneNumberActivity.this, "Store successful", Toast.LENGTH_SHORT).show();
-//                        Intent intent = new Intent(PhoneNumberActivity.this, MainActivity.class);
+//                        Toast.makeText(CreateBarberShopActivity.this, "Store successful", Toast.LENGTH_SHORT).show();
+//                        Intent intent = new Intent(CreateBarberShopActivity.this, AdminActivity.class);
 //                        startActivity(intent);
 //                        finish();
 //                    } else {
-//                        Toast.makeText(PhoneNumberActivity.this, "Failed to store user data", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(CreateBarberShopActivity.this, "Failed to store user data", Toast.LENGTH_SHORT).show();
 //                    }
 //                });
-//
+
 //        FirebaseFirestore db = FirebaseFirestore.getInstance();
 //        Map<String, Object> barberShop = new HashMap<>();
 //        barberShop.put("name", name);
