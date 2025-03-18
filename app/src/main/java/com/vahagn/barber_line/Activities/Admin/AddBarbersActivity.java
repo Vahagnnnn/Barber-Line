@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,6 +38,8 @@ public class AddBarbersActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
     private Uri imageUri;
     ImageView BarberImage;
+
+    private ServicesFragment servicesFragment;
 
     private List<Services> Serviceslists = new ArrayList<>();
     private FrameLayout Save, AddService;
@@ -72,18 +75,11 @@ public class AddBarbersActivity extends AppCompatActivity {
         ServiceDuration = findViewById(R.id.ServiceDuration);
         AddService = findViewById(R.id.AddService);
 
-//        if (ListSpecialist != null) {
-//            SpecialistsFragment specialistsFragment = new SpecialistsFragment(ListSpecialist);
-//            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//            transaction.replace(R.id.info_container, specialistsFragment);
-//            transaction.commit();
-//        }
-
-        Fragment servicesFragment = new ServicesFragment(Serviceslists);
+        servicesFragment = new ServicesFragment(Serviceslists);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.info_container, servicesFragment);
-        transaction.addToBackStack(null);
         transaction.commit();
+
 
         Save.setOnTouchListener(touchEffect);
         AddService.setOnTouchListener(touchEffect);
@@ -97,12 +93,18 @@ public class AddBarbersActivity extends AppCompatActivity {
         String ServicePrice_str = ServicePrice.getText().toString().trim();
         String ServiceDuration_str = ServiceDuration.getText().toString().trim();
 
+        if (ServiceName_str.isEmpty() || ServicePrice_str.isEmpty() || ServiceDuration_str.isEmpty()) {
+            Toast.makeText(this, "All fields must be filled in", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         Serviceslists.add(new Services(ServiceName_str, ServicePrice_str, ServiceDuration_str));
 
         Fragment servicesFragment = getSupportFragmentManager().findFragmentById(R.id.info_container);
-        if (servicesFragment != null && servicesFragment instanceof ServicesFragment) {
+        if (servicesFragment instanceof ServicesFragment) {
             ((ServicesFragment) servicesFragment).updateServicesList(Serviceslists);
         }
+
     }
 
 
