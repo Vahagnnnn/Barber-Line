@@ -22,7 +22,7 @@ public class Barbers implements Serializable {
         this.image = image;
         this.name = name;
         this.phone = phone;
-        this.rating = 5f;
+        this.rating = 5;
     }
 
     public Barbers(int ID, String name, String phone, String image, String workPlace, double rating, List<Services> services, List<Reviews> reviews, List<Appointment> appointments) {

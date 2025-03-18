@@ -19,6 +19,17 @@ public class BarberShops {
     public BarberShops() {
     }
 
+    public BarberShops(String name, String address, String image, String logo,
+                       List<Services> services, List<Barbers> specialists) {
+        this.name = name;
+        this.address = address;
+        this.image = image;
+        this.logo = logo;
+        this.rating = 5;
+        this.services = services;
+        this.specialists = specialists;
+    }
+
     public BarberShops(String name, String address,String coordinates, String image, String logo, double rating,
                        List<Reviews> reviews, List<Services> services, List<Barbers> specialists) {
         this.name = name;
