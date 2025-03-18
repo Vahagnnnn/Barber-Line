@@ -10,7 +10,6 @@ import android.widget.FrameLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.vahagn.barber_line.Activities.CreateBarberShopActivity;
 import com.vahagn.barber_line.Activities.MainActivity;
 import com.vahagn.barber_line.R;
 

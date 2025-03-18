@@ -10,15 +10,7 @@
     app:circularflow_radiusInDP="30dp"
     tools:context=".Activities.Admin.AddBarbersActivity">
 
-    <ImageView
-        android:id="@+id/image_arrow_left"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:contentDescription="@string/app_name"
-        android:onClick="ToCreateBarberShop"
-        android:scaleType="centerInside"
-        android:src="@drawable/img_arrow_left"
-        tools:ignore="MissingConstraints" />
+
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nested_scroll_view"
@@ -33,6 +25,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <ImageView
+                android:id="@+id/image_arrow_left"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:contentDescription="@string/app_name"
+                android:onClick="ToCreateBarberShop"
+                android:scaleType="centerInside"
+                android:src="@drawable/img_arrow_left"
+                tools:ignore="MissingConstraints" />
             <androidx.cardview.widget.CardView
                 android:id="@+id/BarberImageCardView"
                 android:layout_width="100dp"
@@ -81,8 +82,8 @@
                 android:id="@+id/BarberPhoneNumberInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:layout_marginHorizontal="10dp"
+                android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 app:boxCornerRadiusBottomEnd="5dp"
                 app:boxCornerRadiusBottomStart="5dp"

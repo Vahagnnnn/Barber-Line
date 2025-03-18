@@ -27,7 +27,7 @@
             android:name=".Activities.Admin.AddLocationActivity"
             android:exported="false" />
         <activity
-            android:name=".Activities.CreateBarberShopActivity"
+            android:name=".Activities.Admin.CreateBarberShopActivity"
             android:exported="false" />
         <activity
             android:name=".Activities.Admin.AdminActivity"

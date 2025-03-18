@@ -6,7 +6,7 @@ import java.util.List;
 public class Barbers implements Serializable {
     private int ID;
     private String name;
-    private int phone;
+    private String phone;
     private String image;
     private String workPlace;
     private double rating;
@@ -20,13 +20,13 @@ public class Barbers implements Serializable {
     public Barbers() {
     }
 
-    public Barbers(int imageResId, String name, int phone) {
+    public Barbers(int imageResId, String name, String phone) {
         this.imageResId = imageResId;
         this.name = name;
         this.phone = phone;
     }
 
-    public Barbers(int ID, String name, int phone, String image, String workPlace, double rating, List<Services> services, List<Reviews> reviews, List<Appointment> appointments) {
+    public Barbers(int ID, String name, String phone, String image, String workPlace, double rating, List<Services> services, List<Reviews> reviews, List<Appointment> appointments) {
         this.ID = ID;
         this.name = name;
         this.phone = phone;
@@ -54,11 +54,11 @@ public class Barbers implements Serializable {
         this.name = name;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 

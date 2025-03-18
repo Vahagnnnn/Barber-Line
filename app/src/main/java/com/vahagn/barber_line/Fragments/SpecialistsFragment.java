@@ -1,6 +1,5 @@
 package com.vahagn.barber_line.Fragments;
 
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -60,6 +59,11 @@ public class SpecialistsFragment extends Fragment {
         Glide.with(this)
                 .load(specialist.getImage())
                 .into(specialistImage);
+        if (specialist.getImage() != null) {
+            Log.i("getImage", specialist.getImage());
+        } else {
+            Log.i("getImage", "yourVariable is null");
+        }
 
         specialistName.setText(specialist.getName());
         specialistRating.setText(String.valueOf(specialist.getRating()));

@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,42 +16,39 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.textfield.TextInputEditText;
-import com.vahagn.barber_line.Activities.CreateBarberShopActivity;
 import com.vahagn.barber_line.Classes.Barbers;
 import com.vahagn.barber_line.Classes.Services;
 import com.vahagn.barber_line.Fragments.ServicesFragment;
-import com.vahagn.barber_line.Fragments.SpecialistsFragment;
 import com.vahagn.barber_line.R;
-import com.vahagn.barber_line.model.TopHaircuts;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class AddBarbersActivity extends AppCompatActivity {
+    private final String prefix = "+374 ";
     private static final int PICK_IMAGE_REQUEST = 1;
-    private Uri imageUri;
     ImageView BarberImage;
 
-    private ServicesFragment servicesFragment;
-
-    private List<Services> Serviceslists = new ArrayList<>();
-    private FrameLayout Save, AddService;
-    private EditText BarberName, BarberPhoneNumber, ServiceName, ServicePrice, ServiceDuration;
+    private final List<Services> Serviceslists = new ArrayList<>();
+    private TextInputEditText BarberPhoneNumber;
+    private EditText BarberName, ServiceName, ServicePrice, ServiceDuration;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_barbers);
+
+        ServicesFragment servicesFragment = new ServicesFragment(Serviceslists);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.info_container, servicesFragment);
+        transaction.commit();
 
         View.OnTouchListener touchEffect = (v, event) -> {
             switch (event.getAction()) {
@@ -64,28 +63,41 @@ public class AddBarbersActivity extends AppCompatActivity {
             return false;
         };
 
-
         BarberImage = findViewById(R.id.BarberImage);
         BarberName = findViewById(R.id.BarberName);
         BarberPhoneNumber = findViewById(R.id.BarberPhoneNumber);
-        Save = findViewById(R.id.Save);
-
+        FrameLayout save = findViewById(R.id.Save);
         ServiceName = findViewById(R.id.ServiceName);
         ServicePrice = findViewById(R.id.ServicePrice);
         ServiceDuration = findViewById(R.id.ServiceDuration);
-        AddService = findViewById(R.id.AddService);
+        FrameLayout addService = findViewById(R.id.AddService);
 
-        servicesFragment = new ServicesFragment(Serviceslists);
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.info_container, servicesFragment);
-        transaction.commit();
-
-
-        Save.setOnTouchListener(touchEffect);
-        AddService.setOnTouchListener(touchEffect);
+        save.setOnTouchListener(touchEffect);
+        addService.setOnTouchListener(touchEffect);
 
         BarberImage.setOnClickListener(v -> openGallery());
-        AddService.setOnClickListener(v -> AddService());
+        addService.setOnClickListener(v -> AddService());
+        save.setOnClickListener(v -> SaveBarber());
+
+        BarberPhoneNumber.setText(prefix);
+        BarberPhoneNumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s == null || !s.toString().startsWith(prefix)) {
+                    BarberPhoneNumber.setText(prefix);
+                    BarberPhoneNumber.setSelection(prefix.length());
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+        BarberPhoneNumber.setSelection(prefix.length());
     }
 
     private void AddService() {
@@ -105,8 +117,62 @@ public class AddBarbersActivity extends AppCompatActivity {
             ((ServicesFragment) servicesFragment).updateServicesList(Serviceslists);
         }
 
+        Log.i("imageUri", "imageUriFromAddService " + String.valueOf(BarberImage.getResources()));
     }
 
+    private void SaveBarber() {
+        String BarberName_str = BarberName.getText().toString().trim();
+        String BarberPhoneNumber_str = Objects.requireNonNull(BarberPhoneNumber.getText()).toString().trim();
+        Log.i("imageUri", "imageUriFromSaveBarber " + String.valueOf(BarberImage.getDrawable()));
+
+//        if (String.valueOf(BarberImage.getResources()).startsWith("android.content.res.Resources@"))
+//        {
+//            Toast.makeText(this, "Please upload the image", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+        if (BarberImage.getDrawable() == null) {
+            Toast.makeText(this, "Please upload the image", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (BarberName_str.isEmpty()) {
+            Toast.makeText(this, "Please write Barber's name", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+//        if (BarberPhoneNumber_str.isEmpty()) {
+//            Toast.makeText(this, "Please enter your phone number", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+        if (BarberPhoneNumber_str.length() == 13)
+            BarberPhoneNumber_str = BarberPhoneNumber_str.substring(5);
+        else {
+            Toast.makeText(this, "Please enter a valid Armenian phone number", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+//        if (BarberPhoneNumber_str.length() > 5)
+//            BarberPhoneNumber_str = BarberPhoneNumber_str.substring(0, 5);
+//        else {
+//            Toast.makeText(this, "Please enter a valid Armenian phone number", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+        BarberPhoneNumber_str = "+374" + BarberPhoneNumber_str;
+        String phoneNumberPattern = "^\\+374[0-9]{8}$";
+        Log.i("phone", BarberPhoneNumber_str);
+        if (!BarberPhoneNumber_str.matches(phoneNumberPattern)) {
+            Toast.makeText(this, "Please enter a valid Armenian phone number", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (Serviceslists.isEmpty()) {
+            Toast.makeText(this, "The Services list is empty", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        CreateBarberShopActivity.ListSpecialist.add(new Barbers(R.drawable.img_sargis_paragon, BarberName_str, BarberPhoneNumber_str));
+        Toast.makeText(this, "The Barber has been added", Toast.LENGTH_SHORT).show();
+        navigateTo(CreateBarberShopActivity.class);
+    }
 
     private void openGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -118,8 +184,8 @@ public class AddBarbersActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            imageUri = data.getData();
-            Log.i("imageUri", String.valueOf(imageUri));
+            Uri imageUri = data.getData();
+            Log.i("imageUri", "imageUriFromActivityResult " + String.valueOf(imageUri));
             String photoUrl = String.valueOf(imageUri);
 
             BarberImage.setImageURI(imageUri);

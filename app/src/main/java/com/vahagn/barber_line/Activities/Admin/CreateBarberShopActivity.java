@@ -1,4 +1,4 @@
-package com.vahagn.barber_line.Activities;
+package com.vahagn.barber_line.Activities.Admin;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
@@ -12,9 +12,7 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.vahagn.barber_line.Activities.Admin.AddBarbersActivity;
-import com.vahagn.barber_line.Activities.Admin.AddLocationActivity;
-import com.vahagn.barber_line.Activities.Admin.AdminActivity;
+import com.vahagn.barber_line.Activities.MainActivity;
 import com.vahagn.barber_line.Classes.Barbers;
 import com.vahagn.barber_line.Fragments.SpecialistsFragment;
 import com.vahagn.barber_line.R;
@@ -27,7 +25,7 @@ public class CreateBarberShopActivity extends AppCompatActivity {
     private Uri imageUri;
     ImageView BarberShopImage;
 
-    List<Barbers> ListSpecialist = new ArrayList<>();
+     public static List<Barbers> ListSpecialist = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +36,9 @@ public class CreateBarberShopActivity extends AppCompatActivity {
         BarberShopImage = findViewById(R.id.BarberShopImage);
         BarberShopImage.setOnClickListener(v -> openGallery());
 
-        ListSpecialist.add(new Barbers(R.drawable.img_sargis_paragon, "Sargis", 077777777));
-        ListSpecialist.add(new Barbers(R.drawable.img_sargis_paragon, "Sargis", 077777777));
-        ListSpecialist.add(new Barbers(R.drawable.img_sargis_paragon, "Sargis", 077777777));
-
+//        ListSpecialist.add(new Barbers(R.drawable.img_sargis_paragon, "Sargis", "77777777"));
+//        ListSpecialist.add(new Barbers(R.drawable.img_sargis_paragon, "Sargis", "77777777"));
+//        ListSpecialist.add(new Barbers(R.drawable.img_sargis_paragon, "Sargis", "77777777"));
 
         if (ListSpecialist != null) {
             SpecialistsFragment specialistsFragment = new SpecialistsFragment(ListSpecialist);
