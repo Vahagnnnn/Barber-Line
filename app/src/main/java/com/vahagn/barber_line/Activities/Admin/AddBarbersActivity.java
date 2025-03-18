@@ -3,6 +3,7 @@ package com.vahagn.barber_line.Activities.Admin;
 import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -38,6 +39,8 @@ public class AddBarbersActivity extends AppCompatActivity {
     private final List<Services> Serviceslists = new ArrayList<>();
     private TextInputEditText BarberPhoneNumber;
     private EditText BarberName, ServiceName, ServicePrice, ServiceDuration;
+
+    Uri imageUri;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -117,32 +120,25 @@ public class AddBarbersActivity extends AppCompatActivity {
             ((ServicesFragment) servicesFragment).updateServicesList(Serviceslists);
         }
 
-        Log.i("imageUri", "imageUriFromAddService " + String.valueOf(BarberImage.getResources()));
+        Log.i("imageUri", "imageUriFromAddService " + String.valueOf(BarberImage.getDrawable()));
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private void SaveBarber() {
         String BarberName_str = BarberName.getText().toString().trim();
         String BarberPhoneNumber_str = Objects.requireNonNull(BarberPhoneNumber.getText()).toString().trim();
-        Log.i("imageUri", "imageUriFromSaveBarber " + String.valueOf(BarberImage.getDrawable()));
 
-//        if (String.valueOf(BarberImage.getResources()).startsWith("android.content.res.Resources@"))
-//        {
-//            Toast.makeText(this, "Please upload the image", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-        if (BarberImage.getDrawable() == null) {
+        Log.i("imageUri", "imageUriFromSaveBarber " + String.valueOf( BarberImage.getDrawable().getConstantState().equals(getResources().getDrawable(R.drawable.img_avatar).getConstantState())));
+        if ( BarberImage.getDrawable().getConstantState().equals(getResources().getDrawable(R.drawable.img_avatar).getConstantState())) {
             Toast.makeText(this, "Please upload the image", Toast.LENGTH_SHORT).show();
             return;
         }
+
         if (BarberName_str.isEmpty()) {
             Toast.makeText(this, "Please write Barber's name", Toast.LENGTH_SHORT).show();
             return;
         }
 
-//        if (BarberPhoneNumber_str.isEmpty()) {
-//            Toast.makeText(this, "Please enter your phone number", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
         if (BarberPhoneNumber_str.length() == 13)
             BarberPhoneNumber_str = BarberPhoneNumber_str.substring(5);
         else {
@@ -169,7 +165,8 @@ public class AddBarbersActivity extends AppCompatActivity {
             return;
         }
 
-        CreateBarberShopActivity.ListSpecialist.add(new Barbers(R.drawable.img_sargis_paragon, BarberName_str, BarberPhoneNumber_str));
+        CreateBarberShopActivity.ListSpecialist.add(new Barbers(String.valueOf(imageUri), BarberName_str, BarberPhoneNumber_str,Serviceslists));
+        Log.i("getImage", String.valueOf(imageUri));
         Toast.makeText(this, "The Barber has been added", Toast.LENGTH_SHORT).show();
         navigateTo(CreateBarberShopActivity.class);
     }
@@ -184,8 +181,7 @@ public class AddBarbersActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            Uri imageUri = data.getData();
-            Log.i("imageUri", "imageUriFromActivityResult " + String.valueOf(imageUri));
+            imageUri = data.getData();
             String photoUrl = String.valueOf(imageUri);
 
             BarberImage.setImageURI(imageUri);

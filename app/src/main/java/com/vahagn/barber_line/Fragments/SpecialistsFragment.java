@@ -11,6 +11,9 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
+import com.vahagn.barber_line.Activities.SettingsActivity;
 import com.vahagn.barber_line.R;
 
 import android.widget.ImageView;
@@ -30,6 +33,7 @@ public class SpecialistsFragment extends Fragment {
 
     public SpecialistsFragment() {
     }
+
     public SpecialistsFragment(List<Barbers> specialists) {
         this.specialists = specialists;
     }
@@ -55,10 +59,17 @@ public class SpecialistsFragment extends Fragment {
 
 //        int specialistImageResId = getResources().getIdentifier(specialist.getImage(), "drawable", getContext().getPackageName());
 //        specialistImage.setImageResource(specialistImageResId);
-
-        Glide.with(this)
-                .load(specialist.getImage())
-                .into(specialistImage);
+//        if (specialist.getPhotoUrl() != null && !specialist.getPhotoUrl().isEmpty() ) {
+//            Glide.with(this)
+//                    .load(specialist.getPhotoUrl())
+//                    .into(specialistImage);
+//        }
+        if (specialist.getImage() != null && !specialist.getImage().isEmpty()) {
+            Glide.with(SpecialistsFragment.this)
+                    .load(specialist.getImage())
+                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(100)))
+                    .into(specialistImage);
+        }
         if (specialist.getImage() != null) {
             Log.i("getImage", specialist.getImage());
         } else {

@@ -15,15 +15,14 @@ public class Barbers implements Serializable {
     private List<Appointment> appointments;
 
 
-    private int imageResId;
-
     public Barbers() {
     }
 
-    public Barbers(int imageResId, String name, String phone) {
-        this.imageResId = imageResId;
+    public Barbers(String image, String name, String phone,List<Services> services) {
+        this.image = image;
         this.name = name;
         this.phone = phone;
+        this.rating = 5f;
     }
 
     public Barbers(int ID, String name, String phone, String image, String workPlace, double rating, List<Services> services, List<Reviews> reviews, List<Appointment> appointments) {
