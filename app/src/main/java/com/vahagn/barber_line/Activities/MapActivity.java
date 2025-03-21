@@ -1,6 +1,7 @@
 package com.vahagn.barber_line.Activities;
 
 import static com.vahagn.barber_line.Activities.MainActivity.TopBarberShopsList;
+import static com.vahagn.barber_line.Activities.MainActivity.isLogin;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -264,10 +265,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public void ToHome(View view) {
         navigateTo(MainActivity.class);
     }
-    public void ToBarberShopOwner(View view) {
-        navigateTo(AdminActivity.class);
+    public void ToAdmin(View view) {
+        if (isLogin)
+            navigateTo(AdminActivity.class);
+        else
+            navigateTo(LoginActivity.class);
     }
-
     public void ToBarbers(View view) {
         navigateTo(BarbersActivity.class);
     }

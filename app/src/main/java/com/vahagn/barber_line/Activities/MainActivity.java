@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                 TopBarberShopsList.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     BarberShops shop = snapshot.getValue(BarberShops.class);
-                    TopBarberShopsList.add(new BarberShops(shop.getName(), shop.getAddress(),shop.getCoordinates(), shop.getImage(), shop.getLogo(), shop.getRating(), shop.getReviews(), shop.getServices(), shop.getSpecialists()));
+                    TopBarberShopsList.add(new BarberShops(shop.getName(), shop.getAddress(), shop.getCoordinates(), shop.getImage(), shop.getLogo(), shop.getRating(), shop.getReviews(), shop.getServices(), shop.getSpecialists()));
                 }
                 setTopBarberShopsRecycler(TopBarberShopsList);
             }
@@ -161,7 +161,11 @@ public class MainActivity extends AppCompatActivity {
     public void ToMap(View view) {
         navigateTo(MapActivity.class);
     }
-    public void ToBarberShopOwner(View view) {
-        navigateTo(AdminActivity.class);
+
+    public void ToAdmin(View view) {
+        if (isLogin)
+            navigateTo(AdminActivity.class);
+        else
+            navigateTo(LoginActivity.class);
     }
 }

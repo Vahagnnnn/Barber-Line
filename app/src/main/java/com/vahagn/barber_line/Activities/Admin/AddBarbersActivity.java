@@ -198,7 +198,8 @@ public class AddBarbersActivity extends AppCompatActivity {
     }
 
     public void ToCreateBarberShop(View view) {
-        navigateTo(CreateBarberShopActivity.class);
+//        navigateTo(CreateBarberShopActivity.class);
+        onBackPressed();
     }
 
 }

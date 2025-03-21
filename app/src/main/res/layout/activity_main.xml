@@ -319,7 +319,7 @@
         <!-- Hairstyle (Center Element) -->
         <ImageView
             android:id="@+id/img_hairstyle"
-            android:onClick="ToBarberShopOwner"
+            android:onClick="ToAdmin"
             android:layout_width="62dp"
             android:layout_height="62dp"
             android:contentDescription="@string/app_name"

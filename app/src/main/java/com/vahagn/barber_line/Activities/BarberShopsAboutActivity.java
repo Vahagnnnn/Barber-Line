@@ -1,5 +1,7 @@
 package com.vahagn.barber_line.Activities;
 
+import static com.vahagn.barber_line.Activities.MainActivity.isLogin;
+
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
@@ -115,10 +117,12 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
     public void ToMap(View view) {
         navigateTo(MapActivity.class);
     }
-    public void ToBarberShopOwner(View view) {
-        navigateTo(AdminActivity.class);
+    public void ToAdmin(View view) {
+        if (isLogin)
+            navigateTo(AdminActivity.class);
+        else
+            navigateTo(LoginActivity.class);
     }
-
     private void navigateTo(Class<?> targetActivity) {
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
                 this,
