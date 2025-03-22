@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#242C3B"
+    android:transitionName="sharedImageTransition"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    tools:context=".Activities.Admin.AdminBarberShopsAboutActivity">
+
+    <!-- Barber Image -->
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="243dp"
+        android:contentDescription="@string/app_name"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_paragon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Back Section -->
+    <FrameLayout
+        android:id="@+id/back_section"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="13dp"
+        android:onClick="ToSetting"
+        android:layout_marginTop="15dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/white_circle"
+            android:contentDescription="@string/app_name"
+            android:scaleType="centerInside" />
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/app_name"
+            android:scaleType="centerInside"
+            android:src="@drawable/img_arrow" />
+    </FrameLayout>
+
+    <!-- Like Section -->
+    <FrameLayout
+        android:id="@+id/like_section"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="13dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/white_circle"
+            android:contentDescription="@string/app_name"
+            android:scaleType="centerInside" />
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="1dp"
+            android:contentDescription="@string/app_name"
+            android:scaleType="centerInside"
+            android:src="@drawable/img_heart" />
+    </FrameLayout>
+
+    <!-- Information Section-->
+    <FrameLayout
+        android:id="@+id/info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/image">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Barber Name -->
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/plus_jakarta_sans_extrabold"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:text="@string/paragon"
+                android:textColor="#FFFFFFFF"
+                android:textSize="32sp" />
+
+            <!-- Rating Section -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:clipToPadding="false"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/star_xml" />
+
+                <TextView
+                    android:id="@+id/rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="21dp"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:text="@string/_5_0"
+                    android:textColor="#FFFFFFFF"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="21dp"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:text="@string/_1_547"
+                    android:textColor="#FFFFFFFF"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- Location Section -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:clipToPadding="false"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/img_location_small" />
+
+                <TextView
+                    android:id="@+id/adress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="21dp"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:text="@string/_9_ghazar_parpetsi_st_8"
+                    android:textColor="#FFFFFFFF"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+
+    <!--    Category Section-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/category"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/info"
+        tools:listitem="@layout/categories" />
+
+    <!-- Info Section-->
+    <FrameLayout
+        android:id="@+id/info_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/category" />
+
+    <!-- Bottom Navigation -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/dark_blue"
+        android:transitionName="sharedImageTransition"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+
+        <!-- Hairstyle (Center Element) -->
+        <ImageView
+            android:id="@+id/img_hairstyle"
+            android:layout_width="62dp"
+            android:layout_height="62dp"
+            android:contentDescription="@string/app_name"
+            android:onClick="ToCreateBarberShop"
+            android:scaleType="centerInside"
+            android:src="@drawable/img_hairstyle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Book -->
+        <FrameLayout
+            android:id="@+id/container_book"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/img_hairstyle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/img_event"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="@string/app_name"
+                android:scaleType="centerInside"
+                android:src="@drawable/img_book" />
+
+            <TextView
+                android:id="@+id/txt_book"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="27dp"
+                android:fontFamily="@font/roboto_slab"
+                android:gravity="center_horizontal"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="@string/reservations"
+                android:textColor="#FFFFFFFF"
+                android:textSize="12sp" />
+        </FrameLayout>
+
+        <!-- Location -->
+        <FrameLayout
+            android:id="@+id/container_barber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="ToSetting"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/img_hairstyle"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/img_settings"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="@string/app_name"
+                android:scaleType="centerInside"
+                android:src="@drawable/img_settings_fill" />
+
+            <TextView
+                android:id="@+id/txt_barbers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="27dp"
+                android:fontFamily="@font/roboto_slab"
+                android:gravity="center_horizontal"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="@string/settings"
+                android:textColor="#FFFFFFFF"
+                android:textSize="12sp" />
+        </FrameLayout>
+
+        <!--         Map -->
+        <!--                <FrameLayout-->
+        <!--                    android:id="@+id/container_settings"-->
+        <!--                    android:layout_width="48dp"-->
+        <!--                    android:layout_height="wrap_content"-->
+        <!--                    android:layout_marginEnd="15dp"-->
+        <!--                    android:onClick="ToMap"-->
+        <!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--                    app:layout_constraintEnd_toEndOf="parent"-->
+        <!--                    app:layout_constraintTop_toTopOf="parent">-->
+
+        <!--                    <ImageView-->
+        <!--                        android:id="@+id/img_setting"-->
+        <!--                        android:layout_width="25dp"-->
+        <!--                        android:layout_height="25dp"-->
+        <!--                        android:layout_gravity="center_horizontal"-->
+        <!--                        android:contentDescription="@string/app_name"-->
+        <!--                        android:scaleType="centerInside"-->
+        <!--                        android:src="@drawable/img_location" />-->
+
+        <!--                    <TextView-->
+        <!--                        android:id="@+id/txt_settings"-->
+        <!--                        android:layout_width="match_parent"-->
+        <!--                        android:layout_height="wrap_content"-->
+        <!--                        android:layout_marginTop="27dp"-->
+        <!--                        android:fontFamily="@font/roboto_slab"-->
+        <!--                        android:gravity="center_horizontal"-->
+        <!--                        android:includeFontPadding="false"-->
+        <!--                        android:maxLines="1"-->
+        <!--                        android:singleLine="true"-->
+        <!--                        android:text="@string/map"-->
+        <!--                        android:textColor="#FFFFFFFF"-->
+        <!--                        android:textSize="12sp" />-->
+        <!--                </FrameLayout>-->
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

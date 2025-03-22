@@ -4,7 +4,7 @@
     <selectionStates>
       <SelectionState runConfigName="Barber-Line">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2025-03-04T07:01:48.455398400Z">
+        <DropdownSelection timestamp="2025-03-22T06:23:31.341306100Z">
           <Target type="DEFAULT_BOOT">
             <handle>
               <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\Vahagn\.android\avd\Pixel_8_Pro_API_35.avd" />

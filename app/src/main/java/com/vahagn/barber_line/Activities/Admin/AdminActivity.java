@@ -55,5 +55,8 @@ public class AdminActivity extends AppCompatActivity {
     public void ToHome(View view) {
         navigateTo(MainActivity.class);
     }
+    public void ToSetting(View view) {
+        navigateTo(AdminSettingsActivity.class);
+    }
 
 }

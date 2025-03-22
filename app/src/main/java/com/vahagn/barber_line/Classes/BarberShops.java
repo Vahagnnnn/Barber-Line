@@ -6,6 +6,7 @@ import java.util.List;
 
 @IgnoreExtraProperties
 public class BarberShops {
+    private String ownerEmail;
     private String name;
     private String address;
     private String coordinates;
@@ -20,8 +21,9 @@ public class BarberShops {
     public BarberShops() {
     }
 
-    public BarberShops(String name, String address, String image, String logo,String status,
+    public BarberShops(String ownerEmail,String name, String address, String image, String logo,String status,
                        List<Services> services, List<Barbers> specialists) {
+        this.ownerEmail = ownerEmail;
         this.name = name;
         this.address = address;
         this.image = image;
@@ -43,6 +45,14 @@ public class BarberShops {
         this.reviews = reviews;
         this.services = services;
         this.specialists = specialists;
+    }
+
+    public String getOwnerEmail() {
+        return ownerEmail;
+    }
+
+    public void setOwnerEmail(String ownerEmail) {
+        this.ownerEmail = ownerEmail;
     }
 
     public String getAddress() {

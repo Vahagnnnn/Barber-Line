@@ -17,6 +17,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.vahagn.barber_line.Activities.MainActivity;
@@ -143,7 +145,18 @@ public class CreateBarberShopActivity extends AppCompatActivity {
 
         AddBarbersActivity.ListServices = new ArrayList<>(new LinkedHashSet<>(AddBarbersActivity.ListServices));
 
-        BarberShops BarberShop = new BarberShops(BarberShopName_str, BarberShopAddress_str, String.valueOf(BarberShopImageUri), String.valueOf(BarberShopLogoUri),"pending", AddBarbersActivity.ListServices, ListSpecialist);
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        String ownerEmail = "";
+
+        if (currentUser != null) {
+            ownerEmail = currentUser.getEmail();
+            Log.d("FirebaseAuth", "Current user email: " + ownerEmail);
+        } else {
+            Log.e("FirebaseAuth", "No user is signed in");
+        }
+
+        Log.d("FirebaseAuth", "Current user email: " + ownerEmail);
+        BarberShops BarberShop = new BarberShops(ownerEmail,BarberShopName_str, BarberShopAddress_str, String.valueOf(BarberShopImageUri), String.valueOf(BarberShopLogoUri),"pending", AddBarbersActivity.ListServices, ListSpecialist);
         addBarberShop(BarberShop);
     }
 
@@ -247,7 +260,7 @@ public class CreateBarberShopActivity extends AppCompatActivity {
     }
 
     public void ToSetting(View view) {
-        navigateTo(AdminActivity.class);
+        navigateTo(AdminSettingsActivity.class);
     }
 
 }
