@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
-import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.SearchView;
@@ -60,7 +59,7 @@ public class AddLocationActivity extends AppCompatActivity implements OnMapReady
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                return false; // Поиск выполняется только при нажатии "поиск"
+                return false;
             }
         });
     }
@@ -85,7 +84,7 @@ public class AddLocationActivity extends AppCompatActivity implements OnMapReady
                     if (currentLocationMarker != null) {
                         currentLocationMarker.setPosition(currentLatLng);
                     } else {
-                        currentLocationMarker = myMap.addMarker(new MarkerOptions().position(currentLatLng).title("Текущее местоположение"));
+                        currentLocationMarker = myMap.addMarker(new MarkerOptions().position(currentLatLng).title("Current location"));
                     }
 
                     myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15));
@@ -96,7 +95,7 @@ public class AddLocationActivity extends AppCompatActivity implements OnMapReady
 
     private void searchLocation(String locationName) {
         if (locationName == null || locationName.isEmpty()) {
-            Toast.makeText(this, "Введите название места", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Enter the name of the place", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -108,15 +107,15 @@ public class AddLocationActivity extends AppCompatActivity implements OnMapReady
                 LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
 
                 if (myMap != null) {
-                    myMap.clear(); // Очищаем старые маркеры
+                    myMap.clear();
                     myMap.addMarker(new MarkerOptions().position(latLng).title(locationName));
                     myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
                 }
             } else {
-                Toast.makeText(this, "Местоположение не найдено", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Location not found", Toast.LENGTH_SHORT).show();
             }
         } catch (IOException e) {
-            Toast.makeText(this, "Ошибка поиска местоположения", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Location search error", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }
@@ -129,7 +128,7 @@ public class AddLocationActivity extends AppCompatActivity implements OnMapReady
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 updateLocation();
             } else {
-                Toast.makeText(this, "Требуется разрешение на местоположение", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Location permission required", Toast.LENGTH_LONG).show();
             }
         }
     }
