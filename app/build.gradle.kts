@@ -38,9 +38,15 @@ android {
 }
 
 dependencies {
+    implementation (libs.volley)
+    implementation (libs.recyclerview.v121)
+    implementation(libs.play.services.maps.v1820)
+    implementation(libs.com.google.android.libraries.places.places)
+    implementation(libs.recyclerview.v132)
     implementation(libs.github.glide)
     implementation(libs.play.services.maps)
     implementation(libs.play.services.location)
+    implementation(libs.recyclerview)
     annotationProcessor(libs.compiler.v4120)
     implementation(libs.firebase.auth.v2320)
     implementation(libs.google.firebase.analytics)
@@ -49,7 +55,7 @@ dependencies {
     annotationProcessor(libs.glide.compiler)
     implementation(libs.play.services.auth)
     implementation(libs.firebase.storage)
-    implementation (libs.ucrop)
+    implementation(libs.ucrop)
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)

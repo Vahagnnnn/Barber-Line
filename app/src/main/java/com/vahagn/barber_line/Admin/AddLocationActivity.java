@@ -1,115 +1,140 @@
 package com.vahagn.barber_line.Admin;
 
 import android.Manifest;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
+import android.view.View;
+import android.widget.SearchView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-
-import com.vahagn.barber_line.R;
 import com.google.android.gms.maps.model.LatLng;
+import com.vahagn.barber_line.R;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 public class AddLocationActivity extends AppCompatActivity implements OnMapReadyCallback {
-    private GoogleMap mMap;
-    private Marker currentMarker;
-    private AutoCompleteTextView searchView;
-    private Button saveButton;
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
+    private FusedLocationProviderClient fusedLocationClient;
+    private Marker currentLocationMarker;
+    private GoogleMap myMap;
+    private SearchView mapSearchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_location);
 
-        // Initialize the search view and save button
-        searchView = findViewById(R.id.place_search);
-        saveButton = findViewById(R.id.save_location_button);
+        mapSearchView = findViewById(R.id.mapSearch);
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
-        // Set up map fragment
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        if (mapFragment != null) {
+            mapFragment.getMapAsync(this);
+        }
 
-        // Search button listener
-        searchView.setOnEditorActionListener((v, actionId, event) -> {
-            String query = searchView.getText().toString();
-            searchPlace(query);
-            return false;
-        });
+        mapSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchLocation(query);
+                return false;
+            }
 
-        // Save button click listener
-        saveButton.setOnClickListener(v -> {
-            if (currentMarker != null) {
-                saveLocation(currentMarker.getPosition());
-            } else {
-                Toast.makeText(this, "Please select a location first", Toast.LENGTH_SHORT).show();
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false; // Поиск выполняется только при нажатии "поиск"
             }
         });
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        myMap = googleMap;
 
-        // Enable location layer if permission is granted
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            mMap.setMyLocationEnabled(true);
+            updateLocation();
+        } else {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
         }
-
-        // Set map properties
-        mMap.setOnMapClickListener(latLng -> {
-            if (currentMarker != null) {
-                currentMarker.remove();
-            }
-            currentMarker = mMap.addMarker(new MarkerOptions().position(latLng).title("Selected Location"));
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
-            saveButton.setEnabled(true);  // Enable save button when location is selected
-        });
     }
 
-    private void searchPlace(String query) {
-        Geocoder geocoder = new Geocoder(this);
+    private void updateLocation() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            fusedLocationClient.getLastLocation().addOnSuccessListener(this, location -> {
+                if (location != null && myMap != null) {
+                    LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+
+                    if (currentLocationMarker != null) {
+                        currentLocationMarker.setPosition(currentLatLng);
+                    } else {
+                        currentLocationMarker = myMap.addMarker(new MarkerOptions().position(currentLatLng).title("Текущее местоположение"));
+                    }
+
+                    myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15));
+                }
+            });
+        }
+    }
+
+    private void searchLocation(String locationName) {
+        if (locationName == null || locationName.isEmpty()) {
+            Toast.makeText(this, "Введите название места", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
         try {
-            List<Address> addressList = geocoder.getFromLocationName(query, 1);
+            List<Address> addressList = geocoder.getFromLocationName(locationName, 1);
             if (addressList != null && !addressList.isEmpty()) {
                 Address address = addressList.get(0);
                 LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
-                mMap.clear(); // Clear previous markers
-                currentMarker = mMap.addMarker(new MarkerOptions().position(latLng).title("Selected Place"));
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
-                saveButton.setEnabled(true);  // Enable save button
+
+                if (myMap != null) {
+                    myMap.clear(); // Очищаем старые маркеры
+                    myMap.addMarker(new MarkerOptions().position(latLng).title(locationName));
+                    myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+                }
             } else {
-                Toast.makeText(this, "Place not found", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Местоположение не найдено", Toast.LENGTH_SHORT).show();
             }
         } catch (IOException e) {
+            Toast.makeText(this, "Ошибка поиска местоположения", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
-            Toast.makeText(this, "Error while searching for place", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void saveLocation(LatLng latLng) {
-        SharedPreferences sharedPreferences = getSharedPreferences("BarberShopPrefs", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("saved_location", latLng.latitude + "," + latLng.longitude);
-        editor.apply();
-        Toast.makeText(this, "Location saved", Toast.LENGTH_SHORT).show();
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                updateLocation();
+            } else {
+                Toast.makeText(this, "Требуется разрешение на местоположение", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    public void ToCreateBarberShop(View view) {
+        onBackPressed();
     }
 }

@@ -245,7 +245,7 @@ public class CreateBarberShopActivity extends AppCompatActivity {
         navigateTo(AdminActivity.class);
     }
 
-    public void ToAddLocation(View view) {
+    public void ToAddLocationActivity(View view) {
         navigateTo(AddLocationActivity.class);
     }
 

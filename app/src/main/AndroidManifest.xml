@@ -30,9 +30,6 @@
             android:name=".Admin.AddBarbersActivity"
             android:exported="false" />
         <activity
-            android:name=".Admin.AddLocationActivity"
-            android:exported="false" />
-        <activity
             android:name=".Admin.CreateBarberShopActivity"
             android:exported="false" />
         <activity
@@ -82,6 +79,8 @@
             android:exported="false" />
         <activity
             android:name=".SuperAdmin.SuperAdminModerationActivity"
+            android:exported="false" />
+        <activity android:name=".Admin.AddLocationActivity"
             android:exported="false" />
         <activity
             android:name=".Activities.MainActivity"
