@@ -11,14 +11,18 @@
 
 
     <!-- Top Section -->
+
+    <!-- Search Bar Section -->
+
     <LinearLayout
         android:id="@+id/top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="4dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -47,8 +51,6 @@
             android:src="@drawable/profile" />
     </LinearLayout>
 
-    <!-- Search Bar Section -->
-
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nested_scroll_view"
         android:layout_width="match_parent"
@@ -63,7 +65,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="170dp">
+            android:paddingBottom="150dp">
 
             <!-- Search Bar Section -->
             <FrameLayout

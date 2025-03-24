@@ -12,11 +12,18 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -31,16 +38,22 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 
-public class CreateBarberShopActivity extends AppCompatActivity {
+public class CreateBarberShopActivity extends AppCompatActivity implements OnMapReadyCallback {
     private static final int PICK_IMAGE_REQUEST = 1;
     private Uri BarberShopImageUri, BarberShopLogoUri;
     ImageView BarberShopImage, BarberShopLogo;
 
     public static List<Barbers> ListSpecialist = new ArrayList<>();
     private EditText BarberShopName, BarberShopAddress;
+    private TextView Address;
 
     private DatabaseReference barberShopsRef;
     private boolean isLogoSelected = false;
+
+    private GoogleMap mMap;
+    private double latitude = 0.0;
+    private double longitude = 0.0;
+    private String address = "";
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -54,7 +67,16 @@ public class CreateBarberShopActivity extends AppCompatActivity {
         BarberShopImage = findViewById(R.id.BarberShopImage);
         BarberShopLogo = findViewById(R.id.BarberShopLogo);
         BarberShopName = findViewById(R.id.BarberShopName);
-        BarberShopAddress = findViewById(R.id.BarberShopAddress);
+        Address = findViewById(R.id.Address);
+//        BarberShopAddress = findViewById(R.id.BarberShopAddress);
+
+        View mapOverlay = findViewById(R.id.map_overlay);
+        mapOverlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigateTo(AddLocationActivity.class);
+            }
+        });
 
 //        ListSpecialist.add(new Barbers(R.drawable.img_sargis_paragon, "Sargis", "77777777"));
 //        ListSpecialist.add(new Barbers(R.drawable.img_sargis_paragon, "Sargis", "77777777"));
@@ -107,6 +129,35 @@ public class CreateBarberShopActivity extends AppCompatActivity {
             isLogoSelected = true;
             openGallery();
         });
+
+        Intent intent = getIntent();
+        latitude = intent.getDoubleExtra("latitude", 0.0);
+        longitude = intent.getDoubleExtra("longitude", 0.0);
+        address = intent.getStringExtra("address");
+
+        Log.i("BarberShopp", "Lat: " + latitude + ", Lng: " + longitude);
+        Log.i("BarberShopp", "Address: " + address);
+        Address.setText(address);
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        if (mapFragment != null) {
+            mapFragment.getMapAsync(this);
+        }
+
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+
+        if (latitude != 0.0 && longitude != 0.0) {
+            LatLng barberLocation = new LatLng(latitude, longitude);
+            mMap.addMarker(new MarkerOptions().position(barberLocation).title(address));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(barberLocation, 17f));
+        } else {
+            Toast.makeText(this, "Invalid location coordinates", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void Send_for_moderation() {
@@ -150,7 +201,7 @@ public class CreateBarberShopActivity extends AppCompatActivity {
         }
 
         Log.d("FirebaseAuth", "Current user email: " + ownerEmail);
-        BarberShops BarberShop = new BarberShops(ownerEmail,BarberShopName_str, BarberShopAddress_str, String.valueOf(BarberShopImageUri), String.valueOf(BarberShopLogoUri),"pending", AddBarbersActivity.ListServices, ListSpecialist);
+        BarberShops BarberShop = new BarberShops(ownerEmail, BarberShopName_str, BarberShopAddress_str, String.valueOf(BarberShopImageUri), String.valueOf(BarberShopLogoUri), "pending", AddBarbersActivity.ListServices, ListSpecialist);
         addBarberShop(BarberShop);
     }
 
