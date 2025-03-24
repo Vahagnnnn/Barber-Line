@@ -31,10 +31,12 @@ import com.vahagn.barber_line.Activities.Admin.AdminActivity;
 import com.vahagn.barber_line.Activities.EditProfile.EditProfileActivity;
 import com.vahagn.barber_line.R;
 
+import java.util.Objects;
+
 public class SettingsActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
 
-    FrameLayout edit_profile, logout_button, remove_account;
+    FrameLayout edit_profile, logout_button, remove_account, admin;
     TextView Firstname_LastnameText, emailText, phoneNumberText;
     ImageView profileImageView;
 
@@ -46,6 +48,8 @@ public class SettingsActivity extends AppCompatActivity {
         edit_profile = findViewById(R.id.edit_profile);
         logout_button = findViewById(R.id.logout_button);
         remove_account = findViewById(R.id.remove_account);
+        admin = findViewById(R.id.admin);
+        admin.setVisibility(View.GONE);
 
         profileImageView = findViewById(R.id.profileImageView);
         Firstname_LastnameText = findViewById(R.id.Firstname_LastnameText);
@@ -53,7 +57,6 @@ public class SettingsActivity extends AppCompatActivity {
         phoneNumberText = findViewById(R.id.phoneNumberText);
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
-
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             String userId = user.getUid();
@@ -79,6 +82,10 @@ public class SettingsActivity extends AppCompatActivity {
                                     .load(photoUrl)
                                     .apply(RequestOptions.bitmapTransform(new RoundedCorners(100)))
                                     .into(profileImageView);
+                        }
+
+                        if (Objects.equals(email, "vahagn.makaryan.v@gmail.com")){
+                            admin.setVisibility(View.VISIBLE);
                         }
                     }
                 }
@@ -117,6 +124,7 @@ public class SettingsActivity extends AppCompatActivity {
         edit_profile.setOnTouchListener(touchEffect);
         logout_button.setOnTouchListener(touchEffect);
         remove_account.setOnTouchListener(touchEffect);
+        admin.setOnTouchListener(touchEffect);
 
         logout_button.setOnClickListener(view -> logOut());
         remove_account.setOnClickListener(view -> remove_account());

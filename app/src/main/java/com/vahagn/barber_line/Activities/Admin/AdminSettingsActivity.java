@@ -17,6 +17,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,10 +32,11 @@ import com.vahagn.barber_line.R;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 public class AdminSettingsActivity extends AppCompatActivity {
 
-    DatabaseReference pendingRef = FirebaseDatabase.getInstance().getReference().child("pending_barbershops");
+    DatabaseReference  pendingRef = FirebaseDatabase.getInstance().getReference().child("pending_barbershops");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,13 +45,28 @@ public class AdminSettingsActivity extends AppCompatActivity {
 
         LinearLayout secondActivityContainer = findViewById(R.id.barbers_list);
 
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        String ownerEmail = "";
+
+        if (currentUser != null) {
+            ownerEmail = currentUser.getEmail();
+            Log.d("FirebaseAuth", "Current user email: " + ownerEmail);
+        } else {
+            Log.e("FirebaseAuth", "No user is signed in");
+        }
+
+        String OwnerEmail = ownerEmail;
         pendingRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     BarberShops shop = snapshot.getValue(BarberShops.class);
-                    Log.i("getServices", shop.getServices().toString());
-                    addBarbershop(secondActivityContainer, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists(), shop.getServices());
+                    if (shop != null && Objects.equals(shop.getOwnerEmail(), OwnerEmail)) {
+                        Log.i("getServices", shop.getServices().toString());
+                        addBarbershop(secondActivityContainer, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists(), shop.getServices());
+                    }
+//                    Log.i("getServices", shop.getServices().toString());
+//                    addBarbershop(secondActivityContainer, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists(), shop.getServices());
                 }
             }
 

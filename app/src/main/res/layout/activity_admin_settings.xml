@@ -37,7 +37,7 @@
                 <EditText
                     android:id="@+id/search_input"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
+                    android:layout_height="match_parent"
                     android:autofillHints="Search Barbershop"
                     android:background="@drawable/radius_10_dp"
                     android:hint="@string/names_of_barbershops"
@@ -83,6 +83,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="@font/poppins_bold"
                 android:gravity="center"
+                android:layout_marginTop="20dp"
                 android:singleLine="true"
                 android:text="Wait List"
                 android:textColor="#FFFFFFFF"

@@ -210,6 +210,41 @@
                     android:textSize="16sp" />
             </FrameLayout>
 
+            <!--Admin Profile Section -->
+            <FrameLayout
+                android:id="@+id/admin"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:background="@drawable/gray_frame_10dp"
+                android:onClick="ToAdmin"
+                android:paddingStart="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_profile">
+
+                <ImageView
+                    android:id="@+id/image_admin"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_gravity="start|center_vertical"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/img_admin" />
+
+                <TextView
+                    android:id="@+id/text_admin"
+                    android:layout_width="match_parent"
+                    android:layout_height="21dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="45dp"
+                    android:fontFamily="@font/nunito_sans_semibold"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text="Admin Page"
+                    android:textColor="#FF000000"
+                    android:textSize="16sp" />
+            </FrameLayout>
+
             <!--Favourites Section-->
             <FrameLayout
                 android:id="@+id/container_group8"
@@ -217,7 +252,7 @@
                 android:layout_height="35dp"
                 android:paddingStart="10dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_profile">
+                app:layout_constraintTop_toBottomOf="@+id/admin">
 
                 <ImageView
                     android:id="@+id/image_heart"
