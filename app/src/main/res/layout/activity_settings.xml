@@ -216,7 +216,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:background="@drawable/gray_frame_10dp"
-                android:onClick="ToAdmin"
+                android:onClick="ToSuperAdminModerationActivity"
                 android:paddingStart="10dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edit_profile">
@@ -567,11 +567,12 @@
                 android:textSize="12sp" />
         </FrameLayout>
 
-        <!-- Location -->
+        <!-- Barbers -->
         <FrameLayout
             android:id="@+id/container_barber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="ToBarbers"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/container_settings"
             app:layout_constraintStart_toEndOf="@id/img_hairstyle"

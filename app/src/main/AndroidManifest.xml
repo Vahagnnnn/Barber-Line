@@ -21,37 +21,37 @@
         android:theme="@style/Theme.BarberLine"
         tools:targetApi="31">
         <activity
-            android:name=".Activities.Admin.AdminBarberShopsAboutActivity"
+            android:name=".Admin.AdminBarberShopsAboutActivity"
             android:exported="false" />
         <activity
-            android:name=".Activities.Admin.AdminSettingsActivity"
+            android:name=".Admin.AdminSettingsActivity"
             android:exported="false" />
         <activity
-            android:name=".Activities.Admin.AddBarbersActivity"
+            android:name=".Admin.AddBarbersActivity"
             android:exported="false" />
         <activity
-            android:name=".Activities.Admin.AddLocationActivity"
+            android:name=".Admin.AddLocationActivity"
             android:exported="false" />
         <activity
-            android:name=".Activities.Admin.CreateBarberShopActivity"
+            android:name=".Admin.CreateBarberShopActivity"
             android:exported="false" />
         <activity
-            android:name=".Activities.Admin.AdminActivity"
+            android:name=".Admin.AdminActivity"
             android:exported="false" />
         <activity
-            android:name=".Activities.EditProfile.EditPasswordActivity"
+            android:name=".EditProfile.EditPasswordActivity"
             android:exported="false" />
         <activity
-            android:name=".Activities.EditProfile.EditPhoneNumberActivity"
+            android:name=".EditProfile.EditPhoneNumberActivity"
             android:exported="false" />
         <activity
-            android:name=".Activities.EditProfile.EditFirstNameActivity"
+            android:name=".EditProfile.EditFirstNameActivity"
             android:exported="false" />
         <activity
-            android:name=".Activities.EditProfile.EditLastNameActivity"
+            android:name=".EditProfile.EditLastNameActivity"
             android:exported="false" />
         <activity
-            android:name=".Activities.EditProfile.EditProfileActivity"
+            android:name=".EditProfile.EditProfileActivity"
             android:exported="false" />
         <activity
             android:name=".Activities.PasswordActivity"
@@ -79,6 +79,9 @@
             android:exported="false" />
         <activity
             android:name=".Activities.BarbersActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SuperAdmin.SuperAdminModerationActivity"
             android:exported="false" />
         <activity
             android:name=".Activities.MainActivity"

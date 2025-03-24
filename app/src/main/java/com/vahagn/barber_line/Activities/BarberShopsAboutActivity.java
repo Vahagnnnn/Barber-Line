@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.vahagn.barber_line.Activities.Admin.AdminActivity;
+import com.vahagn.barber_line.Admin.AdminActivity;
 import com.vahagn.barber_line.Classes.Barbers;
 import com.vahagn.barber_line.Classes.Services;
 import com.vahagn.barber_line.Fragments.SpecialistsFragment;

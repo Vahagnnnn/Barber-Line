@@ -8,7 +8,7 @@
     android:background="#242C3B"
     android:transitionGroup="true"
     android:transitionName="sharedImageTransition"
-    tools:context=".Activities.EditProfile.EditProfileActivity">
+    tools:context=".EditProfile.EditProfileActivity">
 
     <!-- Top Section -->
     <FrameLayout

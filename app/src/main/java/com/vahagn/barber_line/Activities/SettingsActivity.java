@@ -27,9 +27,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.vahagn.barber_line.Activities.Admin.AdminActivity;
-import com.vahagn.barber_line.Activities.EditProfile.EditProfileActivity;
+import com.vahagn.barber_line.Admin.AdminActivity;
+import com.vahagn.barber_line.EditProfile.EditProfileActivity;
 import com.vahagn.barber_line.R;
+import com.vahagn.barber_line.SuperAdmin.SuperAdminModerationActivity;
 
 import java.util.Objects;
 
@@ -198,7 +199,9 @@ public class SettingsActivity extends AppCompatActivity {
     public void ToBarberShopOwner(View view) {
         navigateTo(AdminActivity.class);
     }
-
+    public void ToSuperAdminModerationActivity(View view) {
+        navigateTo(SuperAdminModerationActivity.class);
+    }
     public void ToMap(View view) {
         navigateTo(MapActivity.class);
     }
