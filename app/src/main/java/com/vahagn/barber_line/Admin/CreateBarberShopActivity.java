@@ -45,15 +45,15 @@ public class CreateBarberShopActivity extends AppCompatActivity implements OnMap
 
     public static List<Barbers> ListSpecialist = new ArrayList<>();
     private EditText BarberShopName, BarberShopAddress;
-    private TextView Address;
+    private EditText Address;
 
     private DatabaseReference barberShopsRef;
     private boolean isLogoSelected = false;
 
     private GoogleMap mMap;
-    private double latitude = 0.0;
-    private double longitude = 0.0;
-    private String address = "";
+    private double latitude;
+    private double longitude;
+    private String address;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -154,15 +154,18 @@ public class CreateBarberShopActivity extends AppCompatActivity implements OnMap
         if (latitude != 0.0 && longitude != 0.0) {
             LatLng barberLocation = new LatLng(latitude, longitude);
             mMap.addMarker(new MarkerOptions().position(barberLocation).title(address));
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(barberLocation, 17f));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(barberLocation, 15f));
         } else {
-            Toast.makeText(this, "Invalid location coordinates", Toast.LENGTH_SHORT).show();
+            LatLng barberLocation = new LatLng(40.17762323599215, 44.51250583988117);
+            mMap.addMarker(new MarkerOptions().position(barberLocation).title("Default Location"));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(barberLocation, 15f));
+            Toast.makeText(this, "Default Location Selected", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void Send_for_moderation() {
         String BarberShopName_str = BarberShopName.getText().toString().trim();
-        String BarberShopAddress_str = BarberShopAddress.getText().toString().trim();
+//        String BarberShopAddress_str = BarberShopAddress.getText().toString().trim();
 
         if (BarberShopImage.getDrawable().getConstantState().equals(getResources().getDrawable(android.R.drawable.ic_menu_gallery).getConstantState())) {
             Toast.makeText(this, "Please upload the image", Toast.LENGTH_SHORT).show();
@@ -176,10 +179,10 @@ public class CreateBarberShopActivity extends AppCompatActivity implements OnMap
             Toast.makeText(this, "Please write Barber Shop's name", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (BarberShopAddress_str.isEmpty()) {
-            Toast.makeText(this, "Please write Barber Shop's address", Toast.LENGTH_SHORT).show();
-            return;
-        }
+//        if (BarberShopAddress_str.isEmpty()) {
+//            Toast.makeText(this, "Please write Barber Shop's address", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
         if (ListSpecialist.isEmpty()) {
             Toast.makeText(this, "The Specialists list is empty", Toast.LENGTH_SHORT).show();
             return;
@@ -201,7 +204,9 @@ public class CreateBarberShopActivity extends AppCompatActivity implements OnMap
         }
 
         Log.d("FirebaseAuth", "Current user email: " + ownerEmail);
-        BarberShops BarberShop = new BarberShops(ownerEmail, BarberShopName_str, BarberShopAddress_str, String.valueOf(BarberShopImageUri), String.valueOf(BarberShopLogoUri), "pending", AddBarbersActivity.ListServices, ListSpecialist);
+//        BarberShops BarberShop = new BarberShops(ownerEmail, BarberShopName_str, BarberShopAddress_str, String.valueOf(BarberShopImageUri), String.valueOf(BarberShopLogoUri), "pending", AddBarbersActivity.ListServices, ListSpecialist);
+        String coordinates = latitude + " " + longitude;
+        BarberShops BarberShop = new BarberShops(ownerEmail, BarberShopName_str, address, coordinates, String.valueOf(BarberShopImageUri), String.valueOf(BarberShopLogoUri), "pending", AddBarbersActivity.ListServices, ListSpecialist);
         addBarberShop(BarberShop);
     }
 

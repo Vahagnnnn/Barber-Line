@@ -119,4 +119,7 @@ public class AdminSettingsActivity extends AppCompatActivity {
     public void ToCreateBarberShop(View view) {
         navigateTo(CreateBarberShopActivity.class);
     }
+    public void ToAdmin(View view) {
+        navigateTo(AdminActivity.class);
+    }
 }

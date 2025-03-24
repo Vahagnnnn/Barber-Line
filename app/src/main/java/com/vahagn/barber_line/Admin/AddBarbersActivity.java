@@ -35,7 +35,7 @@ public class AddBarbersActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
     ImageView BarberImage;
 
-    public static List<Services>  ListServices = new ArrayList<>();
+    public static List<Services> ListServices;
     private TextInputEditText BarberPhoneNumber;
     private EditText BarberName, ServiceName, ServicePrice, ServiceDuration;
 
@@ -46,6 +46,7 @@ public class AddBarbersActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_barbers);
+        ListServices = new ArrayList<>();
 
         ServicesFragment servicesFragment = new ServicesFragment(ListServices);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -127,8 +128,8 @@ public class AddBarbersActivity extends AppCompatActivity {
         String BarberName_str = BarberName.getText().toString().trim();
         String BarberPhoneNumber_str = Objects.requireNonNull(BarberPhoneNumber.getText()).toString().trim();
 
-        Log.i("imageUri", "imageUriFromSaveBarber " + String.valueOf( BarberImage.getDrawable().getConstantState().equals(getResources().getDrawable(R.drawable.img_avatar).getConstantState())));
-        if ( BarberImage.getDrawable().getConstantState().equals(getResources().getDrawable(R.drawable.img_avatar).getConstantState())) {
+        Log.i("imageUri", "imageUriFromSaveBarber " + String.valueOf(BarberImage.getDrawable().getConstantState().equals(getResources().getDrawable(R.drawable.img_avatar).getConstantState())));
+        if (BarberImage.getDrawable().getConstantState().equals(getResources().getDrawable(R.drawable.img_avatar).getConstantState())) {
             Toast.makeText(this, "Please upload the image", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -164,7 +165,7 @@ public class AddBarbersActivity extends AppCompatActivity {
             return;
         }
 
-        CreateBarberShopActivity.ListSpecialist.add(new Barbers(String.valueOf(imageUri), BarberName_str, BarberPhoneNumber_str,ListServices));
+        CreateBarberShopActivity.ListSpecialist.add(new Barbers(String.valueOf(imageUri), BarberName_str, BarberPhoneNumber_str, ListServices));
         Log.i("getImage", String.valueOf(imageUri));
         Toast.makeText(this, "The Barber has been added", Toast.LENGTH_SHORT).show();
         navigateTo(CreateBarberShopActivity.class);

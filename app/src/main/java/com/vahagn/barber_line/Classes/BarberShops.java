@@ -21,11 +21,12 @@ public class BarberShops {
     public BarberShops() {
     }
 
-    public BarberShops(String ownerEmail,String name, String address, String image, String logo,String status,
+    public BarberShops(String ownerEmail,String name, String address, String coordinates,String image, String logo,String status,
                        List<Services> services, List<Barbers> specialists) {
         this.ownerEmail = ownerEmail;
         this.name = name;
         this.address = address;
+        this.coordinates = coordinates;
         this.image = image;
         this.status = status;
         this.logo = logo;
