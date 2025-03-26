@@ -34,6 +34,7 @@ public class SuperAdminModerationActivity extends AppCompatActivity {
 
     DatabaseReference barberShopsRef = FirebaseDatabase.getInstance().getReference("barberShops");
     DatabaseReference pendingRef = FirebaseDatabase.getInstance().getReference().child("pending_barbershops");
+    DatabaseReference rejectedRef = FirebaseDatabase.getInstance().getReference("rejected_barbershops");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,9 +110,11 @@ public class SuperAdminModerationActivity extends AppCompatActivity {
                                 .setPositiveButton("Send", (dialog1, which1) -> {
                                     String reason = input.getText().toString().trim();
                                     if (!reason.isEmpty()) {
+                                        Reject(barbershopView,container, key,reason);
+
                                         // Можно сохранить причину в БД или логах
-                                        pendingRef.child(key).removeValue();
-                                        container.removeView(barbershopView);
+//                                        pendingRef.child(key).removeValue();
+//                                        container.removeView(barbershopView);
                                     }
                                 })
                                 .setNegativeButton("Cancel", null)
@@ -147,6 +150,47 @@ public class SuperAdminModerationActivity extends AppCompatActivity {
 
                         barberShopsRef.child(String.valueOf(nextId)).setValue(shop)
                                 .addOnSuccessListener(aVoid -> {
+                                    pendingRef.child(key).removeValue()
+                                            .addOnSuccessListener(aVoid1 -> {
+                                                container.removeView(barbershopView);
+                                            });
+                                });
+                    });
+                }
+            }
+        });
+    }
+    private void Reject(View barbershopView,LinearLayout container,String key,String reason) {
+        pendingRef.child(key).get().addOnSuccessListener(dataSnapshot -> {
+            if (dataSnapshot.exists()) {
+                BarberShops shop = dataSnapshot.getValue(BarberShops.class);
+                if (shop != null) {
+                    rejectedRef.get().addOnSuccessListener(snapshot -> {
+                        long nextId = 0;
+
+                        for (DataSnapshot child : snapshot.getChildren()) {
+                            try {
+                                long id = Long.parseLong(child.getKey());
+                                if (id >= nextId) {
+                                    nextId = id + 1;
+                                }
+                            } catch (NumberFormatException ignored) {
+                            }
+                        }
+
+//                        rejectedRef.child(String.valueOf(nextId)).setValue(shop)
+//                                .addOnSuccessListener(aVoid -> {
+//                                    pendingRef.child(key).removeValue()
+//                                            .addOnSuccessListener(aVoid1 -> {
+//                                                container.removeView(barbershopView);
+//
+//                                            });
+//                                });
+
+                        long finalNextId = nextId;
+                        rejectedRef.child(String.valueOf(nextId)).setValue(shop)
+                                .addOnSuccessListener(aVoid -> {
+                                    rejectedRef.child(String.valueOf(finalNextId)).child("reason").setValue(reason);
                                     pendingRef.child(key).removeValue()
                                             .addOnSuccessListener(aVoid1 -> {
                                                 container.removeView(barbershopView);

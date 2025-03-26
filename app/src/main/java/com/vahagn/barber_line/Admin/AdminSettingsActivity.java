@@ -32,13 +32,15 @@ import java.util.Objects;
 public class AdminSettingsActivity extends AppCompatActivity {
 
     DatabaseReference  pendingRef = FirebaseDatabase.getInstance().getReference().child("pending_barbershops");
+    DatabaseReference rejectedRef = FirebaseDatabase.getInstance().getReference("rejected_barbershops");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_settings);
 
-        LinearLayout secondActivityContainer = findViewById(R.id.barbers_list);
+        LinearLayout pending_barbershops_container = findViewById(R.id.pending_barbershops_list);
+        LinearLayout rejected_barbershops_container = findViewById(R.id.rejected_barbershops_list);
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         String ownerEmail = "";
@@ -58,10 +60,28 @@ public class AdminSettingsActivity extends AppCompatActivity {
                     BarberShops shop = snapshot.getValue(BarberShops.class);
                     if (shop != null && Objects.equals(shop.getOwnerEmail(), OwnerEmail)) {
                         Log.i("getServices", shop.getServices().toString());
-                        addBarbershop(secondActivityContainer, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists(), shop.getServices());
+                        addBarbershop(pending_barbershops_container, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists(), shop.getServices());
                     }
 //                    Log.i("getServices", shop.getServices().toString());
 //                    addBarbershop(secondActivityContainer, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists(), shop.getServices());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w("Firebase", "Failed to read value.", databaseError.toException());
+            }
+        });
+
+        rejectedRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    BarberShops shop = snapshot.getValue(BarberShops.class);
+                    if (shop != null && Objects.equals(shop.getOwnerEmail(), OwnerEmail)) {
+                        Log.i("getServices", shop.getServices().toString());
+                        addBarbershop(rejected_barbershops_container, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists(), shop.getServices(),shop.getReason());
+                    }
                 }
             }
 
@@ -107,7 +127,41 @@ public class AdminSettingsActivity extends AppCompatActivity {
 
         container.addView(barbershopView);
     }
+    public void addBarbershop(LinearLayout container, String logo, String image, String name, double rating, String address, List<Barbers> ListSpecialist, List<Services> ListService,String reason) {
+        View barbershopView = LayoutInflater.from(this).inflate(R.layout.barbershops_gray, container, false);
+        ImageView logoImageView = barbershopView.findViewById(R.id.logo);
 
+        Glide.with(this)
+                .load(logo)
+                .into(logoImageView);
+
+        TextView nameTextView = barbershopView.findViewById(R.id.name);
+        TextView addressTextView = barbershopView.findViewById(R.id.address);
+
+//        nameTextView.setText(name);
+        nameTextView.setText(reason);
+        addressTextView.setText(address);
+
+
+        barbershopView.setOnClickListener(v -> {
+            Intent intent = new Intent(this, AdminBarberShopsAboutActivity.class);
+            intent.putExtra("from_where", "BarbersActivity");
+            intent.putExtra("image", image);
+            intent.putExtra("name", name);
+            intent.putExtra("rating", String.valueOf(rating));
+            intent.putExtra("address", address);
+            intent.putExtra("ListSpecialist", (Serializable) ListSpecialist);
+            intent.putExtra("ListService", (Serializable) ListService);
+
+            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
+                    this,
+                    findViewById(R.id.bottom_navigation),
+                    "sharedImageTransition");
+            startActivity(intent, options.toBundle());
+        });
+
+        container.addView(barbershopView);
+    }
     private void navigateTo(Class<?> targetActivity) {
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
                 this,

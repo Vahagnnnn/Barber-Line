@@ -17,6 +17,7 @@ public class BarberShops {
     private List<Reviews> reviews;
     private List<Services> services;
     private List<Barbers> specialists;
+    private String reason;
 
     public BarberShops() {
     }
@@ -126,6 +127,14 @@ public class BarberShops {
 
     public void setCoordinates(String coordinates) {
         this.coordinates = coordinates;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
     }
 }
 

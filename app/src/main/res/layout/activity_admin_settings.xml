@@ -89,10 +89,29 @@
                 android:textColor="#FFFFFFFF"
                 android:textSize="16sp" />
             <LinearLayout
-                android:id="@+id/barbers_list"
+                android:id="@+id/pending_barbershops_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/poppins_bold"
+                android:gravity="center"
+                android:layout_marginTop="25dp"
+                android:singleLine="true"
+                android:text="Rejected List"
+                android:textColor="#FFFFFFFF"
+                android:textSize="16sp" />
+            <LinearLayout
+                android:id="@+id/rejected_barbershops_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:orientation="vertical">
 
             </LinearLayout>
