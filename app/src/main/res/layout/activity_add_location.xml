@@ -92,9 +92,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:backgroundTint="@color/gray"
+            android:backgroundTint="#242C3B"
             android:text="Done"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="18sp" />
 
     </LinearLayout>
