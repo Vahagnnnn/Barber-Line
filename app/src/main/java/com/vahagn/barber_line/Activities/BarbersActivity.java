@@ -21,17 +21,23 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.vahagn.barber_line.Admin.AdminActivity;
+import com.vahagn.barber_line.Admin.AdminSettingsActivity;
 import com.vahagn.barber_line.Classes.BarberShops;
 import com.vahagn.barber_line.Classes.Barbers;
 import com.vahagn.barber_line.Classes.Services;
 import com.vahagn.barber_line.R;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BarbersActivity extends AppCompatActivity {
 
     DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("barberShops");
+
+    public static String imageUrl,name,rating,address;
+    public static  List<Barbers> ListSpecialist = new ArrayList<>();
+    public static List<Services> ListService = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +62,7 @@ public class BarbersActivity extends AppCompatActivity {
     }
 
 
-    public void addBarbershop(LinearLayout container, String logo, String image, String name, double rating, String address, List<Barbers> ListSpecialist, List<Services> ListService) {
+    public void addBarbershop(LinearLayout container, String logo, String imageUrl, String name, double rating, String address, List<Barbers> ListSpecialist, List<Services> ListService) {
         View barbershopView = LayoutInflater.from(this).inflate(R.layout.barbershops_gray, container, false);
 
         ImageView logoImageView = barbershopView.findViewById(R.id.logo);
@@ -78,12 +84,20 @@ public class BarbersActivity extends AppCompatActivity {
         barbershopView.setOnClickListener(v -> {
             Intent intent = new Intent(this, BarberShopsAboutActivity.class);
             intent.putExtra("from_where", "BarbersActivity");
-            intent.putExtra("image", image);
-            intent.putExtra("name", name);
-            intent.putExtra("rating", String.valueOf(rating));
-            intent.putExtra("address", address);
-            intent.putExtra("ListSpecialist", (Serializable) ListSpecialist);
-            intent.putExtra("ListService", (Serializable) ListService);
+//            intent.putExtra("image", image);
+//            intent.putExtra("name", name);
+//            intent.putExtra("rating", String.valueOf(rating));
+//            intent.putExtra("address", address);
+//            intent.putExtra("ListSpecialist", (Serializable) ListSpecialist);
+//            intent.putExtra("ListService", (Serializable) ListService);
+
+
+            BarbersActivity.imageUrl = imageUrl;
+            BarbersActivity.name = name;
+            BarbersActivity.rating = String.valueOf(rating);
+            BarbersActivity.address = address;
+            BarbersActivity.ListSpecialist = ListSpecialist;
+            BarbersActivity.ListService = ListService;
 
             ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
                     this,

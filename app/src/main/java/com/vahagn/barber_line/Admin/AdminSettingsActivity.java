@@ -116,7 +116,7 @@ public class AdminSettingsActivity extends AppCompatActivity {
 
         barbershopView.setOnClickListener(v -> {
             Intent intent = new Intent(this, AdminBarberShopsAboutActivity.class);
-            intent.putExtra("from_where", "BarbersActivity");
+//            intent.putExtra("from_where", "BarbersActivity");
 //            intent.putExtra("image", image);
 //            intent.putExtra("name", name);
 //            intent.putExtra("rating", String.valueOf(rating));

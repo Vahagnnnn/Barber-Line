@@ -19,16 +19,17 @@ import com.bumptech.glide.Glide;
 import com.vahagn.barber_line.Activities.BarberShopsAboutActivity;
 import com.vahagn.barber_line.Activities.BarbersActivity;
 import com.vahagn.barber_line.Activities.MainActivity;
+import com.vahagn.barber_line.Classes.Barbers;
+import com.vahagn.barber_line.Classes.Services;
 import com.vahagn.barber_line.R;
 import com.vahagn.barber_line.Classes.BarberShops;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class TopBarberShopsAdapter extends RecyclerView.Adapter<TopBarberShopsAdapter.TopBarberShopsViewHolder> {
-
-
     Context context;
     List<BarberShops> topBarberShopsList;
 
@@ -60,12 +61,20 @@ public class TopBarberShopsAdapter extends RecyclerView.Adapter<TopBarberShopsAd
             public void onClick(View v) {
                 Intent intent = new Intent(context, BarberShopsAboutActivity.class);
                 intent.putExtra("from_where", "MainActivity");
-                intent.putExtra("image", item.getImage());
-                intent.putExtra("name", item.getName());
-                intent.putExtra("rating", String.valueOf(item.getRating()));
-                intent.putExtra("address", item.getAddress());
-                intent.putExtra("ListSpecialist", (Serializable) item.getSpecialists());
-                intent.putExtra("ListService", (Serializable) item.getServices());
+//                intent.putExtra("image", item.getImage());
+//                intent.putExtra("name", item.getName());
+//                intent.putExtra("rating", String.valueOf(item.getRating()));
+//                intent.putExtra("address", item.getAddress());
+//                intent.putExtra("ListSpecialist", (Serializable) item.getSpecialists());
+//                intent.putExtra("ListService", (Serializable) item.getServices());
+
+                BarbersActivity.imageUrl = item.getImage();
+                BarbersActivity.name = item.getName();
+                BarbersActivity.rating = String.valueOf(item.getRating());
+                BarbersActivity.address = item.getAddress();
+                BarbersActivity.ListSpecialist = item.getSpecialists();
+                BarbersActivity.ListService = item.getServices();
+
                 context.startActivity(intent);
 
             }

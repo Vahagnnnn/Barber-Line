@@ -42,6 +42,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.vahagn.barber_line.Admin.AdminActivity;
+import com.vahagn.barber_line.Admin.AdminSettingsActivity;
 import com.vahagn.barber_line.Classes.BarberShops;
 import com.vahagn.barber_line.R;
 
@@ -198,12 +199,19 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
                         paragonShops.forEach(shop -> {
                             intent.putExtra("from_where", "MapActivity");
-                            intent.putExtra("image", shop.getImage());
-                            intent.putExtra("name", shop.getName());
-                            intent.putExtra("rating", String.valueOf(shop.getRating()));
-                            intent.putExtra("address", shop.getAddress());
-                            intent.putExtra("ListSpecialist", (Serializable) shop.getSpecialists());
-                            intent.putExtra("ListService", (Serializable) shop.getServices());
+//                            intent.putExtra("image", shop.getImage());
+//                            intent.putExtra("name", shop.getName());
+//                            intent.putExtra("rating", String.valueOf(shop.getRating()));
+//                            intent.putExtra("address", shop.getAddress());
+//                            intent.putExtra("ListSpecialist", (Serializable) shop.getSpecialists());
+//                            intent.putExtra("ListService", (Serializable) shop.getServices());
+
+                            BarbersActivity.imageUrl = shop.getImage();
+                            BarbersActivity.name = shop.getName();
+                            BarbersActivity.rating = String.valueOf(shop.getRating());
+                            BarbersActivity.address = shop.getAddress();
+                            BarbersActivity.ListSpecialist = shop.getSpecialists();
+                            BarbersActivity.ListService = shop.getServices();
                         });
 
                         getApplicationContext().startActivity(intent);

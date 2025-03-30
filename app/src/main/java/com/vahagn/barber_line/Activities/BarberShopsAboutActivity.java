@@ -51,21 +51,21 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
         back_section = findViewById(R.id.back_section);
 
         String from_where = getIntent().getStringExtra("from_where");
-        String imageUrl = getIntent().getStringExtra("image");
-        String nameText = getIntent().getStringExtra("name");
-        String ratingText = getIntent().getStringExtra("rating");
-        String addressText = getIntent().getStringExtra("address");
+//        String imageUrl = getIntent().getStringExtra("image");
+//        String nameText = getIntent().getStringExtra("name");
+//        String ratingText = getIntent().getStringExtra("rating");
+//        String addressText = getIntent().getStringExtra("address");
 
 //        image.setImageResource(imageUrl);
         Glide.with(this)
-                .load(imageUrl)
+                .load(BarbersActivity.imageUrl)
                 .into(image);
-        name.setText(nameText);
-        rating.setText(ratingText);
-        adress.setText(addressText);
+        name.setText(BarbersActivity.name);
+        rating.setText(BarbersActivity.rating);
+        adress.setText(BarbersActivity.address);
 
-        ListSpecialist = (List<Barbers>) getIntent().getSerializableExtra("ListSpecialist");
-        ListService = (List<Services>) getIntent().getSerializableExtra("ListService");
+        ListSpecialist =BarbersActivity.ListSpecialist;
+        ListService = BarbersActivity.ListService;
 
         if (ListSpecialist != null) {
             SpecialistsFragment specialistsFragment = new SpecialistsFragment(ListSpecialist);
