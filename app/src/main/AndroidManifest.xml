@@ -21,6 +21,9 @@
         android:theme="@style/Theme.BarberLine"
         tools:targetApi="31">
         <activity
+            android:name=".Admin.AdminBooksActivity"
+            android:exported="false" />
+        <activity
             android:name=".Admin.AdminBarberShopsAboutActivity"
             android:exported="false" />
         <activity
@@ -80,7 +83,8 @@
         <activity
             android:name=".SuperAdmin.SuperAdminModerationActivity"
             android:exported="false" />
-        <activity android:name=".Admin.AddLocationActivity"
+        <activity
+            android:name=".Admin.AddLocationActivity"
             android:exported="false" />
         <activity
             android:name=".Activities.MainActivity"

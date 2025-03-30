@@ -176,4 +176,7 @@ public class AdminSettingsActivity extends AppCompatActivity {
     public void ToAdmin(View view) {
         navigateTo(AdminActivity.class);
     }
+    public void ToBook(View view) {
+        navigateTo(AdminActivity.class);
+    }
 }
