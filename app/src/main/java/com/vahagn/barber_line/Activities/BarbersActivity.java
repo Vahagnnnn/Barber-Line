@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,16 +35,21 @@ import java.util.List;
 public class BarbersActivity extends AppCompatActivity {
 
     DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("barberShops");
+    LinearLayout secondActivityContainer;
 
-    public static String imageUrl,name,rating,address;
-    public static  List<Barbers> ListSpecialist = new ArrayList<>();
+    public static String imageUrl, name, rating, address;
+    public static List<Barbers> ListSpecialist = new ArrayList<>();
     public static List<Services> ListService = new ArrayList<>();
+
+    private List<BarberShops> ListBarberShops = new ArrayList<>();
+    private List<BarberShops> filteredList = new ArrayList<>();
+    private SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_barbers);
-        LinearLayout secondActivityContainer = findViewById(R.id.barbers_list);
+        secondActivityContainer = findViewById(R.id.barbers_list);
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -51,6 +57,7 @@ public class BarbersActivity extends AppCompatActivity {
                     BarberShops shop = snapshot.getValue(BarberShops.class);
                     Log.i("getServices", shop.getServices().toString());
                     addBarbershop(secondActivityContainer, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists(), shop.getServices());
+                    ListBarberShops.add(new BarberShops(shop.getName(), shop.getAddress(), shop.getCoordinates(), shop.getImage(), shop.getLogo(), shop.getRating(), shop.getReviews(), shop.getServices(), shop.getSpecialists()));
                 }
             }
 
@@ -59,6 +66,35 @@ public class BarbersActivity extends AppCompatActivity {
                 Log.w("Firebase", "Failed to read value.", databaseError.toException());
             }
         });
+
+        searchView = findViewById(R.id.searchView);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // Not used here, but you can implement actions on submit if needed
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterBarbershops(newText);
+                return false;
+            }
+        });
+
+    }
+
+    private void filterBarbershops(String query) {
+        filteredList.clear();
+        for (BarberShops barbershop : ListBarberShops) {
+            if (barbershop.getName().toLowerCase().contains(query.toLowerCase())) {
+                filteredList.add(barbershop);
+            }
+        }
+        secondActivityContainer.removeAllViews();
+        for (BarberShops shop : filteredList) {
+            addBarbershop(secondActivityContainer, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists(), shop.getServices());
+        }
     }
 
 

@@ -21,6 +21,7 @@ import android.graphics.Shader;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -88,6 +89,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
                     LatLng location = new LatLng(latitude, longitude);
 
+                    Log.i("img" , barberShop.getLogo());
                     addCustomMarker(location, barberShop.getName(), barberShop.getLogo());
                 } catch (NumberFormatException e) {
                     Log.i("coords", "Error parsing coordinates: " + e.getMessage());
@@ -151,23 +153,55 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             this.Name = Name;
         }
 
+//        @Override
+//        protected Bitmap doInBackground(String... params) {
+//            try {
+//                Bitmap originalBitmap = BitmapFactory.decodeStream(new java.net.URL(params[0]).openStream());
+//
+//                if (originalBitmap != null) {
+//                    int width = 130;
+//                    int height = 130;
+//                    Bitmap resizedBitmap = Bitmap.createScaledBitmap(originalBitmap, width, height, false);
+//
+//                    Bitmap finalBitmap = addRoundedCornersAndBorder(resizedBitmap, 15, 10);
+//                    return finalBitmap;
+//                }
+//            } catch (Exception e) {
+//                Log.e("coords", "Error loading image: " + e.getMessage());
+//            }
+//            return null;
+//        }
+
         @Override
         protected Bitmap doInBackground(String... params) {
+            String logoData = params[0];
+            Bitmap originalBitmap = null;
+
             try {
-                Bitmap originalBitmap = BitmapFactory.decodeStream(new java.net.URL(params[0]).openStream());
+                if (logoData != null && logoData.startsWith("data:image")) {
+                    String base64String = logoData.split(",")[1];
+                    byte[] decodedBytes = Base64.decode(base64String, Base64.DEFAULT);
+                    originalBitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+                } else if (logoData != null && !logoData.isEmpty()) {
+                    originalBitmap = BitmapFactory.decodeStream(new java.net.URL(logoData).openStream());
+                }
 
                 if (originalBitmap != null) {
                     int width = 130;
                     int height = 130;
                     Bitmap resizedBitmap = Bitmap.createScaledBitmap(originalBitmap, width, height, false);
-
-                    Bitmap finalBitmap = addRoundedCornersAndBorder(resizedBitmap, 15, 10);
-                    return finalBitmap;
+                    return addRoundedCornersAndBorder(resizedBitmap, 15, 10);
+                } else {
+                    originalBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.img_avatar);
+                    Bitmap resizedBitmap = Bitmap.createScaledBitmap(originalBitmap, 130, 130, false);
+                    return addRoundedCornersAndBorder(resizedBitmap, 15, 10);
                 }
             } catch (Exception e) {
-                Log.e("coords", "Error loading image: " + e.getMessage());
+                Log.e("imageEror", "Error loading image: " + e.getMessage());
+                originalBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.img_avatar);
+                Bitmap resizedBitmap = Bitmap.createScaledBitmap(originalBitmap, 130, 130, false);
+                return addRoundedCornersAndBorder(resizedBitmap, 15, 10);
             }
-            return null;
         }
 
         @Override

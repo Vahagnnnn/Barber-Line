@@ -49,32 +49,6 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <!-- Search Button -->
-                <FrameLayout
-                    android:id="@+id/container_apply_button"
-                    android:layout_width="125dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="end">
-
-                    <ImageView
-                        android:id="@+id/img_rectangle2"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/search_button"
-                        android:contentDescription="@string/app_name"
-                        android:scaleType="centerCrop" />
-
-                    <TextView
-                        android:id="@+id/txt_search"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:fontFamily="@font/poppins_bold"
-                        android:gravity="center"
-                        android:singleLine="true"
-                        android:text="@string/search"
-                        android:textColor="#FFFFFFFF"
-                        android:textSize="16sp" />
-                </FrameLayout>
             </FrameLayout>
 
             <TextView

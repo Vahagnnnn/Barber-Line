@@ -68,58 +68,71 @@
             android:paddingBottom="150dp">
 
             <!-- Search Bar Section -->
-            <FrameLayout
-                android:id="@+id/search_bar"
+<!--            <FrameLayout-->
+<!--                android:id="@+id/search_bar"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginHorizontal="10dp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/top">-->
+
+<!--                <EditText-->
+<!--                    android:id="@+id/search_input"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="48dp"-->
+<!--                    android:autofillHints="Search Barbershop"-->
+<!--                    android:background="@drawable/radius_10_dp"-->
+<!--                    android:hint="@string/names_of_barbershops"-->
+<!--                    android:inputType="text"-->
+<!--                    android:padding="12dp"-->
+<!--                    android:textColor="#FFFFFF"-->
+<!--                    android:textColorHint="#A0A4AC"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--                &lt;!&ndash; Search Button &ndash;&gt;-->
+<!--                <FrameLayout-->
+<!--                    android:id="@+id/container_apply_button"-->
+<!--                    android:layout_width="125dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_gravity="end">-->
+
+<!--                    <ImageView-->
+<!--                        android:id="@+id/img_rectangle2"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:background="@drawable/search_button"-->
+<!--                        android:contentDescription="@string/app_name"-->
+<!--                        android:scaleType="centerCrop" />-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/txt_search"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:fontFamily="@font/poppins_bold"-->
+<!--                        android:gravity="center"-->
+<!--                        android:singleLine="true"-->
+<!--                        android:text="@string/search"-->
+<!--                        android:textColor="#FFFFFFFF"-->
+<!--                        android:textSize="16sp" />-->
+<!--                </FrameLayout>-->
+<!--            </FrameLayout>-->
+
+            <SearchView
+                android:id="@+id/searchView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginHorizontal="10dp"
+                android:background="@drawable/radius_10_dp"
+                android:iconifiedByDefault="false"
+                android:queryBackground="@android:color/transparent"
+                android:queryHint="Names of barbershops"
+                android:textColorHint="#A0A4AC"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/top">
-
-                <EditText
-                    android:id="@+id/search_input"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:autofillHints="Search Barbershop"
-                    android:background="@drawable/radius_10_dp"
-                    android:hint="@string/names_of_barbershops"
-                    android:inputType="text"
-                    android:padding="12dp"
-                    android:textColor="#FFFFFF"
-                    android:textColorHint="#A0A4AC"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <!-- Search Button -->
-                <FrameLayout
-                    android:id="@+id/container_apply_button"
-                    android:layout_width="125dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="end">
-
-                    <ImageView
-                        android:id="@+id/img_rectangle2"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/search_button"
-                        android:contentDescription="@string/app_name"
-                        android:scaleType="centerCrop" />
-
-                    <TextView
-                        android:id="@+id/txt_search"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:fontFamily="@font/poppins_bold"
-                        android:gravity="center"
-                        android:singleLine="true"
-                        android:text="@string/search"
-                        android:textColor="#FFFFFFFF"
-                        android:textSize="16sp" />
-                </FrameLayout>
-            </FrameLayout>
-
+                app:layout_constraintTop_toBottomOf="@id/search_bar" />
             <!-- Top Barber Shops Text -->
             <LinearLayout
                 android:id="@+id/top_barber_shops_text"
