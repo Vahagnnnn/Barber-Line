@@ -60,11 +60,13 @@ public class CreateBarberShopActivity extends AppCompatActivity implements OnMap
     private double longitude;
     private String address;
 
+    public static boolean isCreateBarberShopActivity  ;
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_barber_shop);
+        isCreateBarberShopActivity = true;
 
         barberShopsRef = FirebaseDatabase.getInstance().getReference("pending_barbershops");
 

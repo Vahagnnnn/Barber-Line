@@ -32,6 +32,7 @@ import java.util.Objects;
 
 public class AdminSettingsActivity extends AppCompatActivity {
 
+    DatabaseReference barberShopsRef = FirebaseDatabase.getInstance().getReference("barberShops");
     DatabaseReference pendingRef = FirebaseDatabase.getInstance().getReference().child("pending_barbershops");
     DatabaseReference rejectedRef = FirebaseDatabase.getInstance().getReference("rejected_barbershops");
 
@@ -45,6 +46,7 @@ public class AdminSettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_settings);
 
+        LinearLayout confirm_barbershops_container = findViewById(R.id.confirm_barbershops_list);
         LinearLayout pending_barbershops_container = findViewById(R.id.pending_barbershops_list);
         LinearLayout rejected_barbershops_container = findViewById(R.id.rejected_barbershops_list);
 
@@ -59,6 +61,26 @@ public class AdminSettingsActivity extends AppCompatActivity {
         }
 
         String OwnerEmail = ownerEmail;
+        barberShopsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    BarberShops shop = snapshot.getValue(BarberShops.class);
+                    if (shop != null && Objects.equals(shop.getOwnerEmail(), OwnerEmail)) {
+                        Log.i("getServices", shop.getServices().toString());
+                        addBarbershop(pending_barbershops_container, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists(), shop.getServices());
+                    }
+//                    Log.i("getServices", shop.getServices().toString());
+//                    addBarbershop(secondActivityContainer, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists(), shop.getServices());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w("Firebase", "Failed to read value.", databaseError.toException());
+            }
+        });
+
         pendingRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

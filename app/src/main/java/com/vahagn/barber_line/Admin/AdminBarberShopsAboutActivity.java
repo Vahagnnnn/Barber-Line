@@ -43,6 +43,7 @@ public class AdminBarberShopsAboutActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_barber_shops_about);
+        CreateBarberShopActivity.isCreateBarberShopActivity = false;
 
         image = findViewById(R.id.image);
         name = findViewById(R.id.name);
