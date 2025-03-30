@@ -3,9 +3,12 @@ package com.vahagn.barber_line.Admin;
 import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -34,6 +37,8 @@ import com.vahagn.barber_line.Classes.Barbers;
 import com.vahagn.barber_line.Fragments.SpecialistsFragment;
 import com.vahagn.barber_line.R;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -265,23 +270,66 @@ public class CreateBarberShopActivity extends AppCompatActivity implements OnMap
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
 
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+//            Uri imageUri = data.getData();
+//            Log.i("imageUri", String.valueOf(imageUri));
+//            String photoUrl = String.valueOf(imageUri);
+//
+//            if (isLogoSelected) {
+//                BarberShopLogo.setImageURI(imageUri);
+//                BarberShopLogoUri = imageUri;
+//            } else {
+//                BarberShopImage.setImageURI(imageUri);
+//                BarberShopImageUri = imageUri;
+//            }
+//
+//        }
+//    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Uri imageUri = data.getData();
             Log.i("imageUri", String.valueOf(imageUri));
-            String photoUrl = String.valueOf(imageUri);
 
-            if (isLogoSelected) {
-                BarberShopLogo.setImageURI(imageUri);
-                BarberShopLogoUri = imageUri;
-            } else {
-                BarberShopImage.setImageURI(imageUri);
-                BarberShopImageUri = imageUri;
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+                Bitmap compressedBitmap = compressBitmap(bitmap, 100);
+
+                String base64Image = bitmapToBase64(compressedBitmap);
+                String dataUrl = "data:image/jpeg;base64," + base64Image;
+
+                if (isLogoSelected) {
+                    BarberShopLogo.setImageURI(imageUri);
+                    BarberShopLogoUri = Uri.parse(dataUrl);
+                } else {
+                    BarberShopImage.setImageURI(imageUri);
+                    BarberShopImageUri = Uri.parse(dataUrl);
+                }
+
+            } catch (IOException e) {
+                Toast.makeText(this, "Error processing image: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("ImageError", "Failed to process image", e);
             }
-
         }
+    }
+
+    private Bitmap compressBitmap(Bitmap bitmap, int quality) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, quality, baos);
+        byte[] bytes = baos.toByteArray();
+        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+    }
+
+    private String bitmapToBase64(Bitmap bitmap) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] bytes = baos.toByteArray();
+        return Base64.encodeToString(bytes, Base64.DEFAULT);
     }
 
     private void navigateTo(Class<?> targetActivity) {

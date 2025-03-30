@@ -3,11 +3,14 @@ package com.vahagn.barber_line.Admin;
 import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -26,6 +29,8 @@ import com.vahagn.barber_line.Classes.Services;
 import com.vahagn.barber_line.Fragments.ServicesFragment;
 import com.vahagn.barber_line.R;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -113,6 +118,14 @@ public class AddBarbersActivity extends AppCompatActivity {
             return;
         }
 
+        for (Services service : ListServices) {
+            if (service.getName().equalsIgnoreCase(ServiceName_str))
+            {
+                Toast.makeText(this, "A service with this name already exists", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
+
         ListServices.add(new Services(ServiceName_str, ServicePrice_str, ServiceDuration_str));
 
         Fragment servicesFragment = getSupportFragmentManager().findFragmentById(R.id.info_container);
@@ -177,15 +190,54 @@ public class AddBarbersActivity extends AppCompatActivity {
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
 
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+//            imageUri = data.getData();
+//            String photoUrl = String.valueOf(imageUri);
+//
+//            BarberImage.setImageURI(imageUri);
+//        }
+//    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             imageUri = data.getData();
-            String photoUrl = String.valueOf(imageUri);
+            Log.i("imageUri", String.valueOf(imageUri));
 
-            BarberImage.setImageURI(imageUri);
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+                Bitmap compressedBitmap = compressBitmap(bitmap, 100);
+
+                String base64Image = bitmapToBase64(compressedBitmap);
+                String dataUrl = "data:image/jpeg;base64," + base64Image;
+
+                BarberImage.setImageURI(imageUri);
+
+                imageUri = Uri.parse(dataUrl);
+
+            } catch (IOException e) {
+                Toast.makeText(this, "Error processing image: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("ImageError", "Failed to process image", e);
+            }
         }
+    }
+
+    private Bitmap compressBitmap(Bitmap bitmap, int quality) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, quality, baos);
+        byte[] bytes = baos.toByteArray();
+        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+    }
+
+    private String bitmapToBase64(Bitmap bitmap) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] bytes = baos.toByteArray();
+        return Base64.encodeToString(bytes, Base64.DEFAULT);
     }
 
     private void navigateTo(Class<?> targetActivity) {

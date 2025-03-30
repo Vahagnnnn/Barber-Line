@@ -26,13 +26,19 @@ import com.vahagn.barber_line.Classes.Services;
 import com.vahagn.barber_line.R;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class AdminSettingsActivity extends AppCompatActivity {
 
-    DatabaseReference  pendingRef = FirebaseDatabase.getInstance().getReference().child("pending_barbershops");
+    DatabaseReference pendingRef = FirebaseDatabase.getInstance().getReference().child("pending_barbershops");
     DatabaseReference rejectedRef = FirebaseDatabase.getInstance().getReference("rejected_barbershops");
+
+
+    public static String imageUrl,name,rating,address;
+    public static  List<Barbers> ListSpecialist = new ArrayList<>();
+    public static List<Services> ListService = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +86,7 @@ public class AdminSettingsActivity extends AppCompatActivity {
                     BarberShops shop = snapshot.getValue(BarberShops.class);
                     if (shop != null && Objects.equals(shop.getOwnerEmail(), OwnerEmail)) {
                         Log.i("getServices", shop.getServices().toString());
-                        addBarbershop(rejected_barbershops_container, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists(), shop.getServices(),shop.getReason());
+                        addBarbershop(rejected_barbershops_container, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists(), shop.getServices(), shop.getReason());
                     }
                 }
             }
@@ -93,7 +99,7 @@ public class AdminSettingsActivity extends AppCompatActivity {
 
     }
 
-    public void addBarbershop(LinearLayout container, String logo, String image, String name, double rating, String address, List<Barbers> ListSpecialist, List<Services> ListService) {
+    public void addBarbershop(LinearLayout container, String logo, String imageUrl, String name, double rating, String address, List<Barbers> ListSpecialist, List<Services> ListService) {
         View barbershopView = LayoutInflater.from(this).inflate(R.layout.barbershops_gray, container, false);
         ImageView logoImageView = barbershopView.findViewById(R.id.logo);
 
@@ -111,12 +117,19 @@ public class AdminSettingsActivity extends AppCompatActivity {
         barbershopView.setOnClickListener(v -> {
             Intent intent = new Intent(this, AdminBarberShopsAboutActivity.class);
             intent.putExtra("from_where", "BarbersActivity");
-            intent.putExtra("image", image);
-            intent.putExtra("name", name);
-            intent.putExtra("rating", String.valueOf(rating));
-            intent.putExtra("address", address);
-            intent.putExtra("ListSpecialist", (Serializable) ListSpecialist);
-            intent.putExtra("ListService", (Serializable) ListService);
+//            intent.putExtra("image", image);
+//            intent.putExtra("name", name);
+//            intent.putExtra("rating", String.valueOf(rating));
+//            intent.putExtra("address", address);
+//            intent.putExtra("ListSpecialist", (Serializable) ListSpecialist);
+//            intent.putExtra("ListService", (Serializable) ListService);
+
+            AdminSettingsActivity.imageUrl = imageUrl;
+            AdminSettingsActivity.name = name;
+            AdminSettingsActivity.rating = String.valueOf(rating);
+            AdminSettingsActivity.address = address;
+            AdminSettingsActivity.ListSpecialist = ListSpecialist;
+            AdminSettingsActivity.ListService = ListService;
 
             ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
                     this,
@@ -127,7 +140,8 @@ public class AdminSettingsActivity extends AppCompatActivity {
 
         container.addView(barbershopView);
     }
-    public void addBarbershop(LinearLayout container, String logo, String image, String name, double rating, String address, List<Barbers> ListSpecialist, List<Services> ListService,String reason) {
+
+    public void addBarbershop(LinearLayout container, String logo, String imageUrl, String name, double rating, String address, List<Barbers> ListSpecialist, List<Services> ListService, String reason) {
         View barbershopView = LayoutInflater.from(this).inflate(R.layout.barbershops_gray, container, false);
         ImageView logoImageView = barbershopView.findViewById(R.id.logo);
 
@@ -145,13 +159,20 @@ public class AdminSettingsActivity extends AppCompatActivity {
 
         barbershopView.setOnClickListener(v -> {
             Intent intent = new Intent(this, AdminBarberShopsAboutActivity.class);
-            intent.putExtra("from_where", "BarbersActivity");
-            intent.putExtra("image", image);
-            intent.putExtra("name", name);
-            intent.putExtra("rating", String.valueOf(rating));
-            intent.putExtra("address", address);
-            intent.putExtra("ListSpecialist", (Serializable) ListSpecialist);
-            intent.putExtra("ListService", (Serializable) ListService);
+//            intent.putExtra("from_where", "BarbersActivity");
+//            intent.putExtra("image", imageUrl);
+//            intent.putExtra("name", name);
+//            intent.putExtra("rating", String.valueOf(rating));
+//            intent.putExtra("address", address);
+//            intent.putExtra("ListSpecialist", (Serializable) ListSpecialist);
+//            intent.putExtra("ListService", (Serializable) ListService);
+
+            AdminSettingsActivity.imageUrl = imageUrl;
+            AdminSettingsActivity.name = name;
+            AdminSettingsActivity.rating = String.valueOf(rating);
+            AdminSettingsActivity.address = address;
+            AdminSettingsActivity.ListSpecialist = ListSpecialist;
+            AdminSettingsActivity.ListService = ListService;
 
             ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
                     this,
@@ -162,6 +183,7 @@ public class AdminSettingsActivity extends AppCompatActivity {
 
         container.addView(barbershopView);
     }
+
     private void navigateTo(Class<?> targetActivity) {
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
                 this,
@@ -170,12 +192,15 @@ public class AdminSettingsActivity extends AppCompatActivity {
         Intent intent = new Intent(this, targetActivity);
         startActivity(intent, options.toBundle());
     }
+
     public void ToCreateBarberShop(View view) {
         navigateTo(CreateBarberShopActivity.class);
     }
+
     public void ToAdmin(View view) {
         navigateTo(AdminActivity.class);
     }
+
     public void ToBook(View view) {
         navigateTo(AdminActivity.class);
     }

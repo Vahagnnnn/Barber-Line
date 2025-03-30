@@ -5,6 +5,7 @@ import static com.vahagn.barber_line.Activities.MainActivity.isLogin;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -48,20 +49,26 @@ public class AdminBarberShopsAboutActivity extends AppCompatActivity {
         rating = findViewById(R.id.rating);
         adress = findViewById(R.id.adress);
 
-        String imageUrl = getIntent().getStringExtra("image");
-        String nameText = getIntent().getStringExtra("name");
-        String ratingText = getIntent().getStringExtra("rating");
-        String addressText = getIntent().getStringExtra("address");
+//        String imageUrl = getIntent().getStringExtra("image");
+//        String nameText = getIntent().getStringExtra("name");
+//        String ratingText = getIntent().getStringExtra("rating");
+//        String addressText = getIntent().getStringExtra("address");
+
+        if (AdminSettingsActivity.imageUrl != null) {
+            Log.i("imagee", AdminSettingsActivity.imageUrl);
+        } else {
+            Log.i("imagee", "someVariable is null");
+        }
 
         Glide.with(this)
-                .load(imageUrl)
+                .load(AdminSettingsActivity.imageUrl)
                 .into(image);
-        name.setText(nameText);
-        rating.setText(ratingText);
-        adress.setText(addressText);
+        name.setText(AdminSettingsActivity.name);
+        rating.setText(AdminSettingsActivity.rating);
+        adress.setText(AdminSettingsActivity.address);
 
-        ListSpecialist = (List<Barbers>) getIntent().getSerializableExtra("ListSpecialist");
-        ListService = (List<Services>) getIntent().getSerializableExtra("ListService");
+        ListSpecialist = AdminSettingsActivity.ListSpecialist;
+        ListService = AdminSettingsActivity.ListService;
 
         if (ListSpecialist != null) {
             SpecialistsFragment specialistsFragment = new SpecialistsFragment(ListSpecialist);
