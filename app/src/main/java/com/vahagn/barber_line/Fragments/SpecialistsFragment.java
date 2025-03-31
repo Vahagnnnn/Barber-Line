@@ -77,11 +77,6 @@ public class SpecialistsFragment extends Fragment {
                     .apply(RequestOptions.bitmapTransform(new RoundedCorners(100)))
                     .into(specialistImage);
         }
-        if (specialist.getImage() != null) {
-            Log.i("getImage", specialist.getImage());
-        } else {
-            Log.i("getImage", "yourVariable is null");
-        }
 
         specialistName.setText(specialist.getName());
         specialistRating.setText(String.valueOf(specialist.getRating()));
@@ -113,15 +108,21 @@ public class SpecialistsFragment extends Fragment {
     private void editSpecialist(Barbers specialist) {
         Toast.makeText(getContext(), "Editing " + specialist.getName(), Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(getContext(), AddBarbersActivity.class);
-//        intent.putExtra("ImageUri", specialist.getImage());
-//        intent.putExtra("Name", specialist.getName());
-//        intent.putExtra("PhoneNumber", specialist.getPhone());
-//        intent.putExtra("ListServices", (Serializable) specialist.getServices());
+
 
         AddBarbersActivity.imageUrl = specialist.getImage();
         AddBarbersActivity.name = specialist.getName();
-        AddBarbersActivity.phoneNumber = specialist.getPhone();
+//        AddBarbersActivity.phoneNumber = specialist.getPhone();
         AddBarbersActivity.ListServiceEdit = specialist.getServices();
+
+        if (AddBarbersActivity.ListServiceEdit != null) {
+            Log.i("ASA", "ServicesFragment: " + AddBarbersActivity.ListServiceEdit);
+        }
+        else
+            Log.i("ASA", "ServicesFragment: Nixuya");
+
+
+
         startActivity(intent);
     }
 
@@ -130,7 +131,7 @@ public class SpecialistsFragment extends Fragment {
         displaySpecialists();
         AddBarbersActivity.imageUrl = null;
         AddBarbersActivity.name = null;
-        AddBarbersActivity.phoneNumber = null;
+//        AddBarbersActivity.phoneNumber = null;
         AddBarbersActivity.ListServiceEdit = null;
         Toast.makeText(getContext(), "Deleted " + specialist.getName(), Toast.LENGTH_SHORT).show();
     }

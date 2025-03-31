@@ -59,7 +59,7 @@ public class AddBarbersActivity extends AppCompatActivity {
 
     Uri imageUri;
 
-    public static String imageUrl, name, phoneNumber;
+    public static String imageUrl, name;
     public static List<Services> ListServiceEdit = new ArrayList<>();
 
 
@@ -108,29 +108,6 @@ public class AddBarbersActivity extends AppCompatActivity {
         addService.setOnClickListener(v -> AddService());
         save.setOnClickListener(v -> SaveBarber());
 
-//        BarberPhoneNumberPrefix.setText(prefix);
-//        BarberPhoneNumberPrefix.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                if (s == null || !s.toString().startsWith(prefix)) {
-//                    BarberPhoneNumberPrefix.setText(prefix);
-//                    BarberPhoneNumberPrefix.setSelection(prefix.length());
-//                }
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//            }
-//        });
-//        BarberPhoneNumberPrefix.setSelection(prefix.length());
-
-        AddEditInfo();
-
-
         setupPhoneNumberInput();
         countryCodePicker.setOnCountryChangeListener(() -> {
             String selectedCountryCode = countryCodePicker.getSelectedCountryCodeWithPlus();
@@ -168,6 +145,9 @@ public class AddBarbersActivity extends AppCompatActivity {
                 // No changes needed here
             }
         });
+
+
+        AddEditInfo();
     }
 
     private void AddEditInfo() {
@@ -179,18 +159,12 @@ public class AddBarbersActivity extends AppCompatActivity {
         if (name != null) {
             BarberName.setText(name);
         }
-        if (phoneNumber != null) {
-            phoneNumber = phoneNumber.substring(5);
-            Log.i("ASA", "Phone Number: " + phoneNumber);
-            countryCodeBarberPhoneNumber.setText(phoneNumber);
-            Log.i("ASA", "Phone: " + countryCodeBarberPhoneNumber.getText());
-//            BarberPhoneNumber.setSelection(phoneNumber.length());
+        if (ListServiceEdit != null) {
+            Log.i("ASA", "ServicesADD: " + ListServiceEdit.toString());
         }
-//        Log.i("ASA", "Name: " + name);
-//        Log.i("ASA", "Phone Number: " + phoneNumber);
-        Log.i("AddBarbersActivity", "Services: " + ListServiceEdit.toString());
-//        Log.i("ASA", "Phone: " + BarberPhoneNumber.getText());
-//        Log.i("ASA", "Image URL: " + imageUrl);
+        else
+            Log.i("ASA", "ServicesADD: Nixuya");
+
         if (ListServiceEdit != null) {
             ListServices.addAll(ListServiceEdit);
             Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.info_container);
@@ -250,18 +224,6 @@ public class AddBarbersActivity extends AppCompatActivity {
         String BarberName_str = BarberName.getText().toString().trim();
         String BarberPhoneNumber_str = Objects.requireNonNull(countryCodeBarberPhoneNumber.getText()).toString().trim();
 
-//        if (BarberPhoneNumber_str.isEmpty()) {
-//            Toast.makeText(this, "Please enter a valid phone number", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-//
-//        BarberPhoneNumber_str = countryCode + BarberPhoneNumber_str;
-//
-//        if (!BarberPhoneNumber_str.matches("^\\+\\d{10,15}$")) {
-//            Toast.makeText(this, "Invalid phone number format", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-
         // Validate phone number using the phone number library
         if (!isValidPhoneNumber()) {
             Toast.makeText(this, "Invalid phone number format", Toast.LENGTH_SHORT).show();
@@ -280,27 +242,19 @@ public class AddBarbersActivity extends AppCompatActivity {
         }
 
 
-//        if (BarberPhoneNumber_str.length() > 5)
-//            BarberPhoneNumber_str = BarberPhoneNumber_str.substring(0, 5);
-//        else {
-//            Toast.makeText(this, "Please enter a valid Armenian phone number", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-//        BarberPhoneNumber_str = "+374" + BarberPhoneNumber_str;
-//        String phoneNumberPattern = "^\\+374[0-9]{8}$";
-//        Log.i("phone", BarberPhoneNumber_str);
-//        if (!BarberPhoneNumber_str.matches(phoneNumberPattern)) {
-//            Toast.makeText(this, "Please enter a valid Armenian phone number", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-
         if (ListServices.isEmpty()) {
             Toast.makeText(this, "The Services list is empty", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        if (ListServices != null) {
+            Log.i("ASA", "ServicesUxarkeluc: " + ListServices);
+        }
+        else
+            Log.i("ASA", "ServicesUxarkeluc: Nixuya");
+
+
         CreateBarberShopActivity.ListSpecialist.add(new Barbers(String.valueOf(imageUri), BarberName_str, BarberPhoneNumber_str, ListServices));
-        Log.i("getImage", String.valueOf(imageUri));
         Toast.makeText(this, "The Barber has been added", Toast.LENGTH_SHORT).show();
         navigateTo(CreateBarberShopActivity.class);
     }
@@ -408,228 +362,15 @@ public class AddBarbersActivity extends AppCompatActivity {
         countryCodeBarberPhoneNumber.setFilters(new InputFilter[]{new InputFilter.LengthFilter(PREFIX.length() + phoneNumberLength)});
     }
 
-//    private boolean isValidPhoneNumber(String phoneNumber) {
-//        PhoneNumberUtil phoneNumberUtil = PhoneNumberUtil.getInstance();
-//        try {
-//            // Parse the phone number with the country code
-//            Phonenumber.PhoneNumber number = phoneNumberUtil.parse(phoneNumber, "");
-//            Log.i("number","phoneNumber = "+ phoneNumber);
-//            Log.i("number","number = "+ number);
-//            Log.i("number","phoneNumberUtil = "+ phoneNumberUtil);
-//            Log.i("number","isValidNumber = "+ phoneNumberUtil.isValidNumber(number));
-//            // Check if the number is valid according to its country-specific rules
-//            if (phoneNumberUtil.isValidNumber(number)) {
-//                return true; // The phone number is valid
-//            }
-//        } catch (NumberParseException e) {
-//            e.printStackTrace();
-//            // Return false if the number cannot be parsed or is invalid
-//        }
-//        return false; // Return false if the number is invalid
-//    }
-
-//    private boolean isValidPhoneNumber(String phoneNumber) {
-//        com.hbb20.CountryCodePicker countryCodePicker = findViewById(R.id.countryCodePicker);
-//        TextInputEditText phoneNumberInput = findViewById(R.id.countryCodeBarberPhoneNumber);
-//        com.google.android.material.textfield.TextInputLayout phoneLayout = findViewById(R.id.phoneInputLayout);
-//
-//        String countryCode = countryCodePicker.getSelectedCountryCode();
-//
-//        if (phoneNumber.isEmpty()) {
-//            phoneLayout.setError("Phone number can't be empty");
-//            return false;
-//        }
-//
-//        PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
-//        try {
-//            String fullPhoneNumber = "+" + countryCode + phoneNumber.substring(countryCode.length()+2);
-//            Log.i("fullPhoneNumber", "fullPhoneNumber = " + fullPhoneNumber);
-//            Log.i("fullPhoneNumber", "= " + phoneNumber.substring(countryCode.length()+2));
-//            Phonenumber.PhoneNumber parsedNumber = phoneUtil.parse(fullPhoneNumber, null);
-//
-//            String regionCode = phoneUtil.getRegionCodeForCountryCode(Integer.parseInt(countryCode));
-//            Log.i("fullPhoneNumber", "regionCode = " + regionCode);
-//
-//            boolean isValid = phoneUtil.isValidNumberForRegion(parsedNumber, regionCode);
-//
-//            if (!isValid) {
-//                phoneLayout.setError("Invalid phone number for " + countryCodePicker.getSelectedCountryName());
-//                return false;
-//            }
-//
-//            phoneLayout.setError(null);
-//            return true;
-//        } catch (NumberParseException e) {
-//            phoneLayout.setError("Invalid phone number format");
-//            return false;
-//        } catch (NumberFormatException e) {
-//            phoneLayout.setError("Invalid country code");
-//            return false;
-//        }
-//    }
-
-
-//    private boolean isValidPhoneNumber() {
-//        com.hbb20.CountryCodePicker countryCodePicker = findViewById(R.id.countryCodePicker);
-//        TextInputEditText phoneNumberInput = findViewById(R.id.countryCodeBarberPhoneNumber);
-//        com.google.android.material.textfield.TextInputLayout phoneLayout = findViewById(R.id.phoneInputLayout);
-//
-//        String phoneNumber = phoneNumberInput.getText().toString().trim();
-//        String countryCode = countryCodePicker.getSelectedCountryCode();
-//
-//        if (phoneNumber.isEmpty()) {
-//            phoneLayout.setError("Phone number can't be empty");
-//            return false;
-//        }
-//
-//        PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
-//        try {
-//            String fullPhoneNumber = "+" + countryCode + phoneNumber;
-//            Phonenumber.PhoneNumber parsedNumber = phoneUtil.parse(fullPhoneNumber, null);
-//
-//            String regionCode = phoneUtil.getRegionCodeForCountryCode(Integer.parseInt(countryCode));
-//            boolean isValid = phoneUtil.isValidNumberForRegion(parsedNumber, regionCode);
-//
-//            if (!isValid) {
-//                phoneLayout.setError("Invalid phone number for " + countryCodePicker.getSelectedCountryName());
-//                return false;
-//            }
-//
-//            phoneLayout.setError(null);
-//            return true;
-//        } catch (NumberParseException e) {
-//            phoneLayout.setError("Invalid phone number format");
-//            return false;
-//        } catch (NumberFormatException e) {
-//            phoneLayout.setError("Invalid country code");
-//            return false;
-//        }
-//    }
-
-
-//    private boolean isValidPhoneNumber() {
-//        com.hbb20.CountryCodePicker countryCodePicker = findViewById(R.id.countryCodePicker);
-//        TextInputEditText phoneNumberInput = findViewById(R.id.countryCodeBarberPhoneNumber);
-//        com.google.android.material.textfield.TextInputLayout phoneLayout = findViewById(R.id.phoneInputLayout);
-//
-//        String phoneNumber = phoneNumberInput.getText().toString().trim();
-//        String countryCode = countryCodePicker.getSelectedCountryCode();
-//
-//        Log.i("PhoneValidation", "Phone number entered: " + phoneNumber);
-//        Log.i("PhoneValidation", "Selected country code: " + countryCode);
-//
-//        if (phoneNumber.isEmpty()) {
-//            phoneLayout.setError("Phone number can't be empty");
-//            Log.w("PhoneValidation", "Validation failed: Phone number is empty");
-//            return false;
-//        }
-//
-//        PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
-//        try {
-//            // Create the full phone number with country code
-//            String fullPhoneNumber = "+" + countryCode + phoneNumber;
-//            Log.i("PhoneValidation", "Full phone number to validate: " + fullPhoneNumber);
-//
-//            Phonenumber.PhoneNumber parsedNumber = phoneUtil.parse(fullPhoneNumber, null);
-//            String regionCode = phoneUtil.getRegionCodeForCountryCode(Integer.parseInt(countryCode));
-//
-//            // Check if the phone number is valid for the region
-//            boolean isValid = phoneUtil.isValidNumberForRegion(parsedNumber, regionCode);
-//
-//            Log.i("PhoneValidation", "Is phone number valid: " + isValid);
-//
-//            if (!isValid) {
-//                phoneLayout.setError("Invalid phone number for " + countryCodePicker.getSelectedCountryName());
-//                Log.w("PhoneValidation", "Validation failed: Invalid phone number for region");
-//                return false;
-//            }
-//
-//            // Clear any existing error
-//            phoneLayout.setError(null);
-//            Log.i("PhoneValidation", "Validation passed: Valid phone number");
-//            return true;
-//        } catch (NumberParseException e) {
-//            phoneLayout.setError("Invalid phone number format");
-//            Log.e("PhoneValidation", "Validation failed: NumberParseException - Invalid phone number format", e);
-//            return false;
-//        } catch (NumberFormatException e) {
-//            phoneLayout.setError("Invalid country code");
-//            Log.e("PhoneValidation", "Validation failed: NumberFormatException - Invalid country code", e);
-//            return false;
-//        }
-//    }
-
-
-//    private boolean isValidPhoneNumber() {
-//        com.hbb20.CountryCodePicker countryCodePicker = findViewById(R.id.countryCodePicker);
-//        TextInputEditText phoneNumberInput = findViewById(R.id.countryCodeBarberPhoneNumber);
-//        com.google.android.material.textfield.TextInputLayout phoneLayout = findViewById(R.id.phoneInputLayout);
-//
-//        String phoneNumber = phoneNumberInput.getText().toString().trim();
-//        String countryCode = countryCodePicker.getSelectedCountryCode();
-//
-//        Log.i("PhoneValidation", "Phone number entered: " + phoneNumber);
-//        Log.i("PhoneValidation", "Selected country code: " + countryCode);
-//
-//        if (phoneNumber.isEmpty()) {
-//            phoneLayout.setError("Phone number can't be empty");
-//            Log.w("PhoneValidation", "Validation failed: Phone number is empty");
-//            return false;
-//        }
-//
-//        PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
-//        try {
-//            // Remove the country code from the phone number input (if it's included)
-//            if (phoneNumber.startsWith("+" + countryCode)) {
-//                phoneNumber = phoneNumber.substring(1 + countryCode.length()); // Remove the country code part
-//            }
-//
-//            // Construct the full phone number with the country code
-//            String fullPhoneNumber = "+" + countryCode + phoneNumber;
-//            Log.i("PhoneValidation", "Full phone number to validate: " + fullPhoneNumber);
-//
-//            Phonenumber.PhoneNumber parsedNumber = phoneUtil.parse(fullPhoneNumber, null);
-//            String regionCode = phoneUtil.getRegionCodeForCountryCode(Integer.parseInt(countryCode));
-//
-//            // Check if the phone number is valid for the region
-//            boolean isValid = phoneUtil.isValidNumberForRegion(parsedNumber, regionCode);
-//
-//            Log.i("PhoneValidation", "Is phone number valid: " + isValid);
-//
-//            if (!isValid) {
-//                phoneLayout.setError("Invalid phone number for " + countryCodePicker.getSelectedCountryName());
-//                Log.w("PhoneValidation", "Validation failed: Invalid phone number for region");
-//                return false;
-//            }
-//
-//            // Clear any existing error
-//            phoneLayout.setError(null);
-//            Log.i("PhoneValidation", "Validation passed: Valid phone number");
-//            return true;
-//        } catch (NumberParseException e) {
-//            phoneLayout.setError("Invalid phone number format");
-//            Log.e("PhoneValidation", "Validation failed: NumberParseException - Invalid phone number format", e);
-//            return false;
-//        } catch (NumberFormatException e) {
-//            phoneLayout.setError("Invalid country code");
-//            Log.e("PhoneValidation", "Validation failed: NumberFormatException - Invalid country code", e);
-//            return false;
-//        }
-//    }
-
 
     private boolean isValidPhoneNumber() {
-//        com.hbb20.CountryCodePicker countryCodePicker = getView().findViewById(R.id.countryCodePicker);
-//        TextInputEditText phoneNumberInput = getView().findViewById(R.id.phoneNumberInput);
-//        com.google.android.material.textfield.TextInputLayout phoneLayout = getView().findViewById(R.id.textInputLayoutPhone);
-
-                com.hbb20.CountryCodePicker countryCodePicker = findViewById(R.id.countryCodePicker);
+        com.hbb20.CountryCodePicker countryCodePicker = findViewById(R.id.countryCodePicker);
         TextInputEditText phoneNumberInput = findViewById(R.id.countryCodeBarberPhoneNumber);
         com.google.android.material.textfield.TextInputLayout phoneLayout = findViewById(R.id.phoneInputLayout);
 
         String phoneNumber = phoneNumberInput.getText().toString().trim();
         String countryCode = countryCodePicker.getSelectedCountryCode();
-        phoneNumber = phoneNumber.substring(countryCode.length()+2);
+        phoneNumber = phoneNumber.substring(countryCode.length() + 2);
 
         Log.d("PhoneValidation", "Phone number: " + phoneNumber);
         Log.d("PhoneValidation", "Country code: " + countryCode);

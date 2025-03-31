@@ -68,6 +68,15 @@ public class CreateBarberShopActivity extends AppCompatActivity implements OnMap
         setContentView(R.layout.activity_create_barber_shop);
         isCreateBarberShopActivity = true;
 
+
+        for (Barbers barber : ListSpecialist) {
+            Log.i("ASA" , "CreateBarberShopActivity = " + barber.getName());
+            Log.i("ASA" , "CreateBarberShopActivity = " + barber.getPhone());
+            Log.i("ASA" , "CreateBarberShopActivity = " + barber.getRating());
+            Log.i("ASA" , "CreateBarberShopActivity = " + barber.getServices().toString());
+        }
+
+
         barberShopsRef = FirebaseDatabase.getInstance().getReference("pending_barbershops");
 
         FrameLayout Send_for_moderation = findViewById(R.id.Send_for_moderation);

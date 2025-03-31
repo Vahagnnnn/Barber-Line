@@ -1,5 +1,7 @@
 package com.vahagn.barber_line.Classes;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 
 public class Services implements Serializable {
@@ -39,6 +41,7 @@ public class Services implements Serializable {
         this.duration = duration;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Services{" +
