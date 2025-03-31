@@ -25,9 +25,11 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
+import com.hbb20.CountryCodePicker;
 import com.vahagn.barber_line.Classes.Barbers;
 import com.vahagn.barber_line.Classes.Services;
 import com.vahagn.barber_line.Fragments.ServicesFragment;
@@ -48,14 +50,16 @@ public class AddBarbersActivity extends AppCompatActivity {
     ImageView BarberImage;
 
     public static List<Services> ListServices;
-    private TextInputEditText BarberPhoneNumber;
+    private TextInputEditText BarberPhoneNumber,BarberPhoneNumberPrefix;
     private EditText BarberName, ServiceName, ServicePrice, ServiceDuration;
 
     Uri imageUri;
 
-
     public static String imageUrl, name, phoneNumber;
     public static List<Services> ListServiceEdit = new ArrayList<>();
+
+
+    private CountryCodePicker countryCodePicker;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -63,6 +67,12 @@ public class AddBarbersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_barbers);
         ListServices = new ArrayList<>();
+
+
+        countryCodePicker = findViewById(R.id.countryCodePicker);
+        BarberPhoneNumber = findViewById(R.id.countryCodeBarberPhoneNumber);
+
+
 
 
         ServicesFragment servicesFragment = new ServicesFragment(ListServices);
@@ -85,7 +95,8 @@ public class AddBarbersActivity extends AppCompatActivity {
 
         BarberImage = findViewById(R.id.BarberImage);
         BarberName = findViewById(R.id.BarberName);
-        BarberPhoneNumber = findViewById(R.id.BarberPhoneNumber);
+//        BarberPhoneNumber = findViewById(R.id.BarberPhoneNumber);
+        BarberPhoneNumberPrefix = findViewById(R.id.BarberPhoneNumberPrefix);
         FrameLayout save = findViewById(R.id.Save);
         ServiceName = findViewById(R.id.ServiceName);
         ServicePrice = findViewById(R.id.ServicePrice);
@@ -99,8 +110,8 @@ public class AddBarbersActivity extends AppCompatActivity {
         addService.setOnClickListener(v -> AddService());
         save.setOnClickListener(v -> SaveBarber());
 
-        BarberPhoneNumber.setText(prefix);
-        BarberPhoneNumber.addTextChangedListener(new TextWatcher() {
+        BarberPhoneNumberPrefix.setText(prefix);
+        BarberPhoneNumberPrefix.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -108,8 +119,8 @@ public class AddBarbersActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s == null || !s.toString().startsWith(prefix)) {
-                    BarberPhoneNumber.setText(prefix);
-                    BarberPhoneNumber.setSelection(prefix.length());
+                    BarberPhoneNumberPrefix.setText(prefix);
+                    BarberPhoneNumberPrefix.setSelection(prefix.length());
                 }
             }
 
@@ -117,14 +128,25 @@ public class AddBarbersActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
             }
         });
-        BarberPhoneNumber.setSelection(prefix.length());
+        BarberPhoneNumberPrefix.setSelection(prefix.length());
 
         AddEditInfo();
+
+//        updatePhoneHint();
+
+        // Listen for country code change and update hint accordingly
+        countryCodePicker.setOnCountryChangeListener(() -> {
+            String selectedCountryCode = countryCodePicker.getSelectedCountryCodeWithPlus();
+            int phoneNumberLength = getPhoneNumberLength(selectedCountryCode);
+
+            TextInputLayout textInputLayout = findViewById(R.id.phoneInputLayout);
+            textInputLayout.setHint(selectedCountryCode + " " + "X".repeat(phoneNumberLength));
+        });
+
+
     }
 
     private void AddEditInfo() {
-
-
 
         if (imageUrl != null) {
             setImageFromBase64(imageUrl,BarberImage);
@@ -203,7 +225,22 @@ public class AddBarbersActivity extends AppCompatActivity {
     @SuppressLint("UseCompatLoadingForDrawables")
     private void SaveBarber() {
         String BarberName_str = BarberName.getText().toString().trim();
+
+        String countryCode = countryCodePicker.getSelectedCountryCodeWithPlus();
         String BarberPhoneNumber_str = Objects.requireNonNull(BarberPhoneNumber.getText()).toString().trim();
+
+        if (BarberPhoneNumber_str.isEmpty()) {
+            Toast.makeText(this, "Please enter a valid phone number", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        BarberPhoneNumber_str = countryCode + BarberPhoneNumber_str;
+
+        if (!BarberPhoneNumber_str.matches("^\\+\\d{10,15}$")) {
+            Toast.makeText(this, "Invalid phone number format", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
 
         Log.i("imageUri", "imageUriFromSaveBarber " + String.valueOf(BarberImage.getDrawable().getConstantState().equals(getResources().getDrawable(R.drawable.img_avatar).getConstantState())));
         if (BarberImage.getDrawable().getConstantState().equals(getResources().getDrawable(R.drawable.img_avatar).getConstantState())) {
@@ -216,12 +253,6 @@ public class AddBarbersActivity extends AppCompatActivity {
             return;
         }
 
-        if (BarberPhoneNumber_str.length() == 13)
-            BarberPhoneNumber_str = BarberPhoneNumber_str.substring(5);
-        else {
-            Toast.makeText(this, "Please enter a valid Armenian phone number", Toast.LENGTH_SHORT).show();
-            return;
-        }
 
 //        if (BarberPhoneNumber_str.length() > 5)
 //            BarberPhoneNumber_str = BarberPhoneNumber_str.substring(0, 5);
@@ -229,13 +260,13 @@ public class AddBarbersActivity extends AppCompatActivity {
 //            Toast.makeText(this, "Please enter a valid Armenian phone number", Toast.LENGTH_SHORT).show();
 //            return;
 //        }
-        BarberPhoneNumber_str = "+374" + BarberPhoneNumber_str;
-        String phoneNumberPattern = "^\\+374[0-9]{8}$";
-        Log.i("phone", BarberPhoneNumber_str);
-        if (!BarberPhoneNumber_str.matches(phoneNumberPattern)) {
-            Toast.makeText(this, "Please enter a valid Armenian phone number", Toast.LENGTH_SHORT).show();
-            return;
-        }
+//        BarberPhoneNumber_str = "+374" + BarberPhoneNumber_str;
+//        String phoneNumberPattern = "^\\+374[0-9]{8}$";
+//        Log.i("phone", BarberPhoneNumber_str);
+//        if (!BarberPhoneNumber_str.matches(phoneNumberPattern)) {
+//            Toast.makeText(this, "Please enter a valid Armenian phone number", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
 
         if (ListServices.isEmpty()) {
             Toast.makeText(this, "The Services list is empty", Toast.LENGTH_SHORT).show();
@@ -317,5 +348,37 @@ public class AddBarbersActivity extends AppCompatActivity {
 //        navigateTo(CreateBarberShopActivity.class);
         onBackPressed();
     }
+
+
+
+    private void updatePhoneHint() {
+        String countryCode = countryCodePicker.getSelectedCountryCodeWithPlus();
+        int phoneNumberLength = getPhoneNumberLength(countryCode);
+
+        // Generate hint dynamically
+        String hint = countryCode + " " + "X".repeat(phoneNumberLength);
+        BarberPhoneNumber.setHint(hint);
+    }
+
+    // Function to get phone number length based on country
+    private int getPhoneNumberLength(String countryCode) {
+        PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
+        try {
+            Phonenumber.PhoneNumber exampleNumber = phoneUtil.getExampleNumberForType(
+                    phoneUtil.getRegionCodeForCountryCode(Integer.parseInt(countryCode.replace("+", ""))),
+                    PhoneNumberUtil.PhoneNumberType.MOBILE
+            );
+
+            if (exampleNumber != null) {
+                // Get the length of the national significant number (excluding country code)
+                return phoneUtil.getNationalSignificantNumber(exampleNumber).length();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return 10; // Default length if unknown
+    }
+
 
 }
