@@ -38,6 +38,8 @@ android {
 }
 
 dependencies {
+    implementation (libs.ccp)
+    implementation (libs.libphonenumber)
     implementation (libs.volley)
     implementation (libs.recyclerview.v121)
     implementation(libs.play.services.maps.v1820)

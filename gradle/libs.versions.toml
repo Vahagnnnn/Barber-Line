@@ -2,6 +2,7 @@
 agp = "8.8.0"
 androidxRecyclerview = "1.2.1"
 appcompatVersion = "1.6.1"
+ccp = "2.7.2"
 compiler = "4.12.0"
 compilerVersion = "4.15.1"
 firebaseAnalytics = "22.2.0"
@@ -19,6 +20,7 @@ junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 appcompat = "1.7.0"
+libphonenumber = "8.12.57"
 material = "1.12.0"
 activity = "1.10.0"
 constraintlayout = "2.2.0"
@@ -38,6 +40,7 @@ volley = "1.2.1"
 
 [libraries]
 appcompat-v161 = { module = "androidx.appcompat:appcompat", version.ref = "appcompatVersion" }
+ccp = { module = "com.hbb20:ccp", version.ref = "ccp" }
 com-google-android-libraries-places-places = { module = "com.google.android.libraries.places:places", version.ref = "googlePlaces" }
 compiler-v4120 = { module = "com.github.bumptech.glide:compiler", version.ref = "compiler" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
@@ -53,6 +56,7 @@ junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+libphonenumber = { module = "com.googlecode.libphonenumber:libphonenumber", version.ref = "libphonenumber" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }

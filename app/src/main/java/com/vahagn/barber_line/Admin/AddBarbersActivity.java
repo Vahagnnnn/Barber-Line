@@ -23,7 +23,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.i18n.phonenumbers.NumberParseException;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.Phonenumber;
 import com.vahagn.barber_line.Classes.Barbers;
 import com.vahagn.barber_line.Classes.Services;
 import com.vahagn.barber_line.Fragments.ServicesFragment;
@@ -34,7 +38,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
+import android.widget.ImageView;
 public class AddBarbersActivity extends AppCompatActivity {
     private final String prefix = "+374 ";
     private static final int PICK_IMAGE_REQUEST = 1;
@@ -46,12 +53,17 @@ public class AddBarbersActivity extends AppCompatActivity {
 
     Uri imageUri;
 
+
+    public static String imageUrl, name, phoneNumber;
+    public static List<Services> ListServiceEdit = new ArrayList<>();
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_barbers);
         ListServices = new ArrayList<>();
+
 
         ServicesFragment servicesFragment = new ServicesFragment(ListServices);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -106,7 +118,60 @@ public class AddBarbersActivity extends AppCompatActivity {
             }
         });
         BarberPhoneNumber.setSelection(prefix.length());
+
+        AddEditInfo();
     }
+
+    private void AddEditInfo() {
+
+
+
+        if (imageUrl != null) {
+            setImageFromBase64(imageUrl,BarberImage);
+        }
+
+        if (name != null) {
+            BarberName.setText(name);
+        }
+        if (phoneNumber != null) {
+            phoneNumber = phoneNumber.substring(5);
+            Log.i("ASA", "Phone Number: " + phoneNumber);
+            BarberPhoneNumber.setText(phoneNumber);
+            Log.i("ASA", "Phone: " + BarberPhoneNumber.getText());
+//            BarberPhoneNumber.setSelection(phoneNumber.length());
+        }
+//        Log.i("ASA", "Name: " + name);
+//        Log.i("ASA", "Phone Number: " + phoneNumber);
+        Log.i("AddBarbersActivity", "Services: " + ListServiceEdit.toString());
+//        Log.i("ASA", "Phone: " + BarberPhoneNumber.getText());
+//        Log.i("ASA", "Image URL: " + imageUrl);
+        if (ListServiceEdit != null) {
+            ListServices.addAll(ListServiceEdit);
+            Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.info_container);
+            if (currentFragment instanceof ServicesFragment) {
+                ((ServicesFragment) currentFragment).updateServicesList(ListServices);
+            }
+        }
+    }
+
+
+
+    public void setImageFromBase64(String base64String, ImageView imageView) {
+        // Remove the prefix if it exists (for example, "data:image/jpeg;base64,")
+        if (base64String.contains("base64,")) {
+            base64String = base64String.split("base64,")[1];
+        }
+
+        // Decode the Base64 string into a byte array
+        byte[] decodedString = Base64.decode(base64String, Base64.DEFAULT);
+
+        // Convert the byte array to a Bitmap
+        Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+        // Set the decoded Bitmap to the ImageView
+        imageView.setImageBitmap(decodedBitmap);
+    }
+
 
     private void AddService() {
         String ServiceName_str = ServiceName.getText().toString().trim();
@@ -119,8 +184,7 @@ public class AddBarbersActivity extends AppCompatActivity {
         }
 
         for (Services service : ListServices) {
-            if (service.getName().equalsIgnoreCase(ServiceName_str))
-            {
+            if (service.getName().equalsIgnoreCase(ServiceName_str)) {
                 Toast.makeText(this, "A service with this name already exists", Toast.LENGTH_SHORT).show();
                 return;
             }

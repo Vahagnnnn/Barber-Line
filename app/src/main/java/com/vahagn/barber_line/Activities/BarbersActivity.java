@@ -142,6 +142,7 @@ public class BarbersActivity extends AppCompatActivity {
             startActivity(intent, options.toBundle());
         });
 
+
         container.addView(barbershopView);
     }
 

@@ -68,7 +68,7 @@ public class AdminSettingsActivity extends AppCompatActivity {
                     BarberShops shop = snapshot.getValue(BarberShops.class);
                     if (shop != null && Objects.equals(shop.getOwnerEmail(), OwnerEmail)) {
                         Log.i("getServices", shop.getServices().toString());
-                        addBarbershop(pending_barbershops_container, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists(), shop.getServices());
+                        addBarbershop(confirm_barbershops_container, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists(), shop.getServices());
                     }
 //                    Log.i("getServices", shop.getServices().toString());
 //                    addBarbershop(secondActivityContainer, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists(), shop.getServices());
