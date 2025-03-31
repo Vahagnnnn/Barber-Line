@@ -78,76 +78,49 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Phone Section -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/BarberPhoneNumberInput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginTop="10dp"
-                app:boxCornerRadiusBottomEnd="5dp"
-                app:boxCornerRadiusBottomStart="5dp"
-                app:boxCornerRadiusTopEnd="5dp"
-                app:boxCornerRadiusTopStart="5dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/BarberNameInput">
+            <!--            <com.google.android.material.textfield.TextInputLayout-->
+            <!--                android:id="@+id/BarberPhoneNumberInput"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_gravity="center"-->
+            <!--                android:layout_marginHorizontal="10dp"-->
+            <!--                android:layout_marginTop="10dp"-->
+            <!--                app:boxCornerRadiusBottomEnd="5dp"-->
+            <!--                app:boxCornerRadiusBottomStart="5dp"-->
+            <!--                app:boxCornerRadiusTopEnd="5dp"-->
+            <!--                app:boxCornerRadiusTopStart="5dp"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@+id/BarberNameInput">-->
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/BarberPhoneNumberPrefix"
-                    android:layout_width="match_parent"
-                    android:layout_height="54dp"
-                    android:digits="0123456789"
-                    android:hint="+374XXXXXXXX"
-                    android:inputType="phone"
-                    android:maxLength="13"
-                    android:textColor="@color/white" />
-            </com.google.android.material.textfield.TextInputLayout>
+            <!--                <com.google.android.material.textfield.TextInputEditText-->
+            <!--                    android:id="@+id/BarberPhoneNumberPrefix"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="54dp"-->
+            <!--                    android:digits="0123456789"-->
+            <!--                    android:hint="+374XXXXXXXX"-->
+            <!--                    android:inputType="phone"-->
+            <!--                    android:maxLength="13"-->
+            <!--                    android:textColor="@color/white" />-->
+            <!--            </com.google.android.material.textfield.TextInputLayout>-->
 
             <LinearLayout
+                android:id="@+id/countryCodeBarberPhoneNumberLiner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@+id/info_container">
-
-                <!--                <com.hbb20.CountryCodePicker-->
-                <!--                    android:id="@+id/countryCodePicker"-->
-                <!--                    android:layout_width="wrap_content"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:layout_gravity="center_vertical"-->
-                <!--                    app:ccp_contentColor="@color/white"-->
-                <!--                    app:ccp_defaultPhoneCode="374"-->
-                <!--                    app:ccp_showNameCode="true"-->
-                <!--                    app:ccp_showPhoneCode="true" />-->
-
-                <!--                <com.google.android.material.textfield.TextInputLayout-->
-                <!--                    android:id="@+id/countryCodeBarberPhoneNumberInput"-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:layout_gravity="center"-->
-                <!--                    android:layout_marginHorizontal="10dp"-->
-                <!--                    app:boxCornerRadiusBottomEnd="5dp"-->
-                <!--                    app:boxCornerRadiusBottomStart="5dp"-->
-                <!--                    app:boxCornerRadiusTopEnd="5dp"-->
-                <!--                    app:boxCornerRadiusTopStart="5dp">-->
-
-                <!--                    <com.google.android.material.textfield.TextInputEditText-->
-                <!--                        android:id="@+id/countryCodeBarberPhoneNumber"-->
-                <!--                        android:layout_width="match_parent"-->
-                <!--                        android:layout_height="54dp"-->
-                <!--                        android:digits="0123456789"-->
-                <!--                        android:hint="+374XXXXXXXX"-->
-                <!--                        android:inputType="phone"-->
-                <!--                        android:maxLength="13"-->
-                <!--                        android:textColor="@color/white" />-->
-                <!--                </com.google.android.material.textfield.TextInputLayout>-->
+                app:layout_constraintTop_toBottomOf="@+id/BarberNameInput">
 
                 <com.hbb20.CountryCodePicker
                     android:id="@+id/countryCodePicker"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginVertical="4dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/countrycodepickerbg"
+                    android:gravity="center"
                     app:ccp_showFlag="true"
                     app:ccp_showFullName="false"
                     app:ccp_showNameCode="false"
@@ -162,6 +135,7 @@
                         android:id="@+id/countryCodeBarberPhoneNumber"
                         android:layout_width="match_parent"
                         android:layout_height="54dp"
+                        android:layout_marginBottom="2dp"
                         android:digits="0123456789"
                         android:inputType="phone"
                         android:maxLength="15"
@@ -179,7 +153,7 @@
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/BarberPhoneNumberInput">
+                app:layout_constraintTop_toBottomOf="@+id/countryCodeBarberPhoneNumberLiner">
 
                 <ImageView
                     android:layout_width="match_parent"
