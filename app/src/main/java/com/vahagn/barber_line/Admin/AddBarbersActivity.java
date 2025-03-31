@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
@@ -132,18 +133,98 @@ public class AddBarbersActivity extends AppCompatActivity {
 
         AddEditInfo();
 
-//        updatePhoneHint();
 
         // Listen for country code change and update hint accordingly
+//        countryCodePicker.setOnCountryChangeListener(() -> {
+//            String selectedCountryCode = countryCodePicker.getSelectedCountryCodeWithPlus();
+//
+//            // Set the new prefix in the prefix field
+//            BarberPhoneNumber.setText(selectedCountryCode+" ");
+//
+//            // Move the cursor to the end
+//            BarberPhoneNumber.setSelection(selectedCountryCode.length());
+//
+//            // Update the phone number hint dynamically
+//            int phoneNumberLength = getPhoneNumberLength(selectedCountryCode);
+//            TextInputLayout textInputLayout = findViewById(R.id.phoneInputLayout);
+//            textInputLayout.setHint(selectedCountryCode + " " + "X".repeat(phoneNumberLength));
+//        });
+
+
+//        countryCodePicker.setOnCountryChangeListener(() -> {
+//            String selectedCountryCode = countryCodePicker.getSelectedCountryCodeWithPlus();
+//
+//            // Set the new prefix in the prefix field
+//            BarberPhoneNumber.setText(selectedCountryCode + " ");
+//
+//            // Move the cursor to the end
+//            BarberPhoneNumber.setSelection(selectedCountryCode.length());
+//
+//            // Update the phone number hint dynamically
+//            int phoneNumberLength = getPhoneNumberLength(selectedCountryCode);
+//            TextInputLayout textInputLayout = findViewById(R.id.phoneInputLayout);
+//            textInputLayout.setHint(selectedCountryCode + " " + "X".repeat(phoneNumberLength));
+//
+//            // Update the maxLength dynamically
+//            BarberPhoneNumber.setFilters(new InputFilter[]{new InputFilter.LengthFilter(phoneNumberLength)});
+//        });
+
+
+//         Listen for country code change and update hint and maxLength accordingly
         countryCodePicker.setOnCountryChangeListener(() -> {
             String selectedCountryCode = countryCodePicker.getSelectedCountryCodeWithPlus();
-            int phoneNumberLength = getPhoneNumberLength(selectedCountryCode);
 
+            // Update the prefix field
+            BarberPhoneNumber.setText(selectedCountryCode + " ");
+            BarberPhoneNumber.setSelection(selectedCountryCode.length());
+
+            // Update the phone number length based on the selected country code
+            int phoneNumberLength = getPhoneNumberLength(selectedCountryCode);
             TextInputLayout textInputLayout = findViewById(R.id.phoneInputLayout);
             textInputLayout.setHint(selectedCountryCode + " " + "X".repeat(phoneNumberLength));
+
+            // Dynamically set the maximum length for the phone number input
+            BarberPhoneNumber.setFilters(new InputFilter[]{new InputFilter.LengthFilter(selectedCountryCode.length()+phoneNumberLength)});
         });
 
 
+//        countryCodePicker.setOnCountryChangeListener(() -> {
+//            String selectedCountryCode = countryCodePicker.getSelectedCountryCodeWithPlus();
+//
+//            // Update the BarberPhoneNumberPrefix field with the selected country code
+//            BarberPhoneNumberPrefix.setText(selectedCountryCode);
+//            BarberPhoneNumberPrefix.setSelection(selectedCountryCode.length());
+//
+//            // Handle the phone number editing logic
+//            BarberPhoneNumber.addTextChangedListener(new TextWatcher() {
+//                @Override
+//                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//                    // No changes needed here
+//                }
+//
+//                @Override
+//                public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                    if (s == null || !s.toString().startsWith(selectedCountryCode)) {
+//                        // When the prefix doesn't match the selected country code, reset it
+//                        BarberPhoneNumberPrefix.setText(selectedCountryCode);
+//                        BarberPhoneNumberPrefix.setSelection(selectedCountryCode.length());
+//                    }
+//                }
+//
+//                @Override
+//                public void afterTextChanged(Editable s) {
+//                    // No changes needed here
+//                }
+//            });
+//
+//            // Update the phone number length based on the selected country code
+//            int phoneNumberLength = getPhoneNumberLength(selectedCountryCode);
+//            TextInputLayout textInputLayout = findViewById(R.id.phoneInputLayout);
+//            textInputLayout.setHint(selectedCountryCode + " " + "X".repeat(phoneNumberLength));
+//
+//            // Dynamically set the maximum length for the phone number input
+//            BarberPhoneNumber.setFilters(new InputFilter[]{new InputFilter.LengthFilter(selectedCountryCode.length() + phoneNumberLength)});
+//        });
     }
 
     private void AddEditInfo() {
@@ -351,15 +432,6 @@ public class AddBarbersActivity extends AppCompatActivity {
 
 
 
-    private void updatePhoneHint() {
-        String countryCode = countryCodePicker.getSelectedCountryCodeWithPlus();
-        int phoneNumberLength = getPhoneNumberLength(countryCode);
-
-        // Generate hint dynamically
-        String hint = countryCode + " " + "X".repeat(phoneNumberLength);
-        BarberPhoneNumber.setHint(hint);
-    }
-
     // Function to get phone number length based on country
     private int getPhoneNumberLength(String countryCode) {
         PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
@@ -379,6 +451,8 @@ public class AddBarbersActivity extends AppCompatActivity {
 
         return 10; // Default length if unknown
     }
+
+
 
 
 }
