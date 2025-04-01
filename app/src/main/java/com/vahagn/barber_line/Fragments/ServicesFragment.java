@@ -1,5 +1,7 @@
 package com.vahagn.barber_line.Fragments;
 
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,6 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.vahagn.barber_line.Admin.AddBarbersActivity;
+import com.vahagn.barber_line.Classes.Barbers;
 import com.vahagn.barber_line.Classes.Services;
 import com.vahagn.barber_line.R;
 
@@ -66,6 +70,53 @@ public class ServicesFragment extends Fragment {
             Toast.makeText(getContext(), services.getName(), Toast.LENGTH_SHORT).show();
         });
 
+//        servicesView.setOnLongClickListener(v -> {
+//            showEditDeleteDialog(services);
+//            return true;
+//        });
+
         container.addView(servicesView);
     }
+
+//    private void showEditDeleteDialog(Services services) {
+//        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+//        builder.setTitle("Edit/Delete")
+//                .setMessage("What do you want to do?")
+//                .setPositiveButton("Edit", (dialog, which) -> editSpecialist(services))
+//                .setNegativeButton("Delete", (dialog, which) -> deleteSpecialist(services))
+//                .setNeutralButton("Cancel", (dialog, which) -> dialog.dismiss())
+//                .show();
+//    }
+
+//    private void editSpecialist(Services services) {
+//        Toast.makeText(getContext(), "Editing " + specialist.getName(), Toast.LENGTH_SHORT).show();
+//        Intent intent = new Intent(getContext(), AddBarbersActivity.class);
+//        Edit = true;
+//
+//        AddBarbersActivity.name = specialist.getName();
+////        AddBarbersActivity.phoneNumber = specialist.getPhone();    private String name;
+////    private String price;
+////    public String duration;
+//        AddBarbersActivity.ListServiceEdit = specialist.getServices();
+//
+//        startActivity(intent);
+//    }
+
+//    private void deleteSpecialist(Services services) {
+//        serviceslists.remove(services);
+//        displayServices();
+//        AddBarbersActivity.imageUrl = null;
+//        AddBarbersActivity.name = null;
+////        AddBarbersActivity.phoneNumber = null;
+//        AddBarbersActivity.ListServiceEdit = null;
+//        Toast.makeText(getContext(), "Deleted " + services.getName(), Toast.LENGTH_SHORT).show();
+//    }
+
+//    private void displayServices() {
+//        container.removeAllViews();
+//        for (Services services : serviceslists) {
+//            addSpecialist(specialist);
+//        }
+//    }
+
 }

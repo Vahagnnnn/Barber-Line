@@ -22,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.vahagn.barber_line.Activities.BarberShopsAboutActivity;
 import com.vahagn.barber_line.Activities.MainActivity;
+import com.vahagn.barber_line.Activities.SettingsActivity;
 import com.vahagn.barber_line.Classes.BarberShops;
 import com.vahagn.barber_line.Classes.Barbers;
 import com.vahagn.barber_line.Classes.Services;
@@ -209,7 +210,7 @@ public class SuperAdminModerationActivity extends AppCompatActivity {
         Intent intent = new Intent(this, targetActivity);
         startActivity(intent, options.toBundle());
     }
-    public void ToHome(View view) {
-        navigateTo(MainActivity.class);
+    public void ToSettings(View view) {
+        navigateTo(SettingsActivity.class);
     }
 }

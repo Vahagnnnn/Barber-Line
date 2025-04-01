@@ -151,20 +151,21 @@ public class AddBarbersActivity extends AppCompatActivity {
     }
 
     private void AddEditInfo() {
+        if (SpecialistsFragment.Edit) {
+            if (imageUrl != null) {
+                setImageFromBase64(imageUrl, BarberImage);
+            }
 
-        if (imageUrl != null) {
-            setImageFromBase64(imageUrl, BarberImage);
-        }
+            if (name != null) {
+                BarberName.setText(name);
+            }
 
-        if (name != null) {
-            BarberName.setText(name);
-        }
-
-        if (ListServiceEdit != null) {
-            ListServices.addAll(ListServiceEdit);
-            Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.info_container);
-            if (currentFragment instanceof ServicesFragment) {
-                ((ServicesFragment) currentFragment).updateServicesList(ListServices);
+            if (ListServiceEdit != null) {
+                ListServices.addAll(ListServiceEdit);
+                Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.info_container);
+                if (currentFragment instanceof ServicesFragment) {
+                    ((ServicesFragment) currentFragment).updateServicesList(ListServices);
+                }
             }
         }
     }
@@ -216,6 +217,12 @@ public class AddBarbersActivity extends AppCompatActivity {
         String BarberPhoneNumber_str = Objects.requireNonNull(countryCodeBarberPhoneNumber.getText()).toString().trim();
 
         // Validate phone number using the phone number library
+
+        if (BarberName_str.isEmpty()) {
+            Toast.makeText(this, "Please write Barber's name", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         if (!isValidPhoneNumber()) {
             Toast.makeText(this, "Invalid phone number format", Toast.LENGTH_SHORT).show();
             return;
@@ -255,7 +262,7 @@ public class AddBarbersActivity extends AppCompatActivity {
             } else {
                 CreateBarberShopActivity.ListSpecialist.add(updatedBarber);
             }
-
+            SpecialistsFragment.Edit = false;
         } else {
             CreateBarberShopActivity.ListSpecialist.add(new Barbers(String.valueOf(imageUri), BarberName_str, BarberPhoneNumber_str, ListServices));
             Toast.makeText(this, "The Barber has been added", Toast.LENGTH_SHORT).show();
@@ -360,18 +367,19 @@ public class AddBarbersActivity extends AppCompatActivity {
         TextInputEditText phoneNumberInput = findViewById(R.id.countryCodeBarberPhoneNumber);
         com.google.android.material.textfield.TextInputLayout phoneLayout = findViewById(R.id.phoneInputLayout);
 
-        String phoneNumber = phoneNumberInput.getText().toString().trim();
+        String phoneNumber = Objects.requireNonNull(phoneNumberInput.getText()).toString().trim();
         String countryCode = countryCodePicker.getSelectedCountryCode();
+
+        if (phoneNumber.length() <= countryCode.length() + 1) {
+            phoneLayout.setError("Phone number can't be empty");
+            return false;
+        }
+
         phoneNumber = phoneNumber.substring(countryCode.length() + 2);
 
         Log.d("PhoneValidation", "Phone number: " + phoneNumber);
         Log.d("PhoneValidation", "Country code: " + countryCode);
 
-        if (phoneNumber.isEmpty()) {
-            phoneLayout.setError("Phone number can't be empty");
-            Log.d("PhoneValidation", "Phone number is empty");
-            return false;
-        }
 
         PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
         try {
