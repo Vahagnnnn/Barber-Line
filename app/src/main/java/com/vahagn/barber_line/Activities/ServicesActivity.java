@@ -42,8 +42,17 @@ public class ServicesActivity extends AppCompatActivity {
         ServicePrice.setText(ServicesFragment.price);
         ServiceDuration.setText(ServicesFragment.duration);
 
+        List<Barbers> allBarbers = BarberShopsAboutActivity.ListSpecialist;
+        ListSpecialist.clear();
 
-
+        for (Barbers barber : allBarbers) {
+            for (Services service : barber.getServices()) {
+                if (service.getName().equals(ServicesFragment.name)) {
+                    ListSpecialist.add(barber);
+                    break;
+                }
+            }
+        }
         SpecialistsFragment specialistsFragment = new SpecialistsFragment(ListSpecialist);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.info_container, specialistsFragment);

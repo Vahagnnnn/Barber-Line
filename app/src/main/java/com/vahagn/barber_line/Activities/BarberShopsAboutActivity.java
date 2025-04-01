@@ -38,7 +38,7 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
     CategoryAdapter categoryAdapter;
     RecyclerView categoryRecycler;
     List<Category> categoryList = new ArrayList<>();
-    List<Barbers> ListSpecialist = new ArrayList<>();
+  public static   List<Barbers> ListSpecialist = new ArrayList<>();
     List<Services> ListService = new ArrayList<>();
 
     @Override
