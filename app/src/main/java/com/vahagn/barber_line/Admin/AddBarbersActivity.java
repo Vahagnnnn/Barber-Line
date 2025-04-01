@@ -208,7 +208,6 @@ public class AddBarbersActivity extends AppCompatActivity {
             ((ServicesFragment) servicesFragment).updateServicesList(ListServices);
         }
 
-        Log.i("imageUri", "imageUriFromAddService " + String.valueOf(BarberImage.getDrawable()));
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -228,7 +227,6 @@ public class AddBarbersActivity extends AppCompatActivity {
             return;
         }
 
-        Log.i("imageUri", "imageUriFromSaveBarber " + String.valueOf(BarberImage.getDrawable().getConstantState().equals(getResources().getDrawable(R.drawable.img_avatar).getConstantState())));
         if (BarberImage.getDrawable().getConstantState().equals(getResources().getDrawable(R.drawable.img_avatar).getConstantState())) {
             Toast.makeText(this, "Please upload the image", Toast.LENGTH_SHORT).show();
             return;
@@ -255,7 +253,7 @@ public class AddBarbersActivity extends AppCompatActivity {
                 }
             }
 
-            Barbers updatedBarber = new Barbers(String.valueOf(imageUri), BarberName_str, BarberPhoneNumber_str, ListServices);
+            Barbers updatedBarber = new Barbers(String.valueOf(imageUrl), BarberName_str, BarberPhoneNumber_str, ListServices);
 
             if (indexToUpdate != -1) {
                 CreateBarberShopActivity.ListSpecialist.set(indexToUpdate, updatedBarber);
