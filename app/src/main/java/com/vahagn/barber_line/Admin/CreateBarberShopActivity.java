@@ -209,7 +209,8 @@ public class CreateBarberShopActivity extends AppCompatActivity implements OnMap
 
         Log.d("FirebaseAuth", "Current user email: " + ownerEmail);
         String coordinates = latitude + " " + longitude;
-        BarberShops BarberShop = new BarberShops(ownerEmail, BarberShopName_str, address, coordinates, String.valueOf(BarberShopImageUri), String.valueOf(BarberShopLogoUri), "pending", AddBarbersActivity.ListServices, ListSpecialist);
+//        BarberShops BarberShop = new BarberShops(ownerEmail, BarberShopName_str, address, coordinates, String.valueOf(BarberShopImageUri), String.valueOf(BarberShopLogoUri), "pending", AddBarbersActivity.ListServices, ListSpecialist);
+        BarberShops BarberShop = new BarberShops(ownerEmail, BarberShopName_str, address, coordinates, String.valueOf(BarberShopImageUri), String.valueOf(BarberShopLogoUri), "pending", ListSpecialist);
         addBarberShop(BarberShop);
     }
 

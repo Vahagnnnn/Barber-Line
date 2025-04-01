@@ -67,11 +67,8 @@ public class AdminSettingsActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     BarberShops shop = snapshot.getValue(BarberShops.class);
                     if (shop != null && Objects.equals(shop.getOwnerEmail(), OwnerEmail)) {
-                        Log.i("getServices", shop.getServices().toString());
-                        addBarbershop(confirm_barbershops_container, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists(), shop.getServices());
+                        addBarbershop(confirm_barbershops_container, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists());
                     }
-//                    Log.i("getServices", shop.getServices().toString());
-//                    addBarbershop(secondActivityContainer, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists(), shop.getServices());
                 }
             }
 
@@ -87,11 +84,8 @@ public class AdminSettingsActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     BarberShops shop = snapshot.getValue(BarberShops.class);
                     if (shop != null && Objects.equals(shop.getOwnerEmail(), OwnerEmail)) {
-                        Log.i("getServices", shop.getServices().toString());
-                        addBarbershop(pending_barbershops_container, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists(), shop.getServices());
+                        addBarbershop(pending_barbershops_container, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists());
                     }
-//                    Log.i("getServices", shop.getServices().toString());
-//                    addBarbershop(secondActivityContainer, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists(), shop.getServices());
                 }
             }
 
@@ -107,8 +101,7 @@ public class AdminSettingsActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     BarberShops shop = snapshot.getValue(BarberShops.class);
                     if (shop != null && Objects.equals(shop.getOwnerEmail(), OwnerEmail)) {
-                        Log.i("getServices", shop.getServices().toString());
-                        addBarbershop(rejected_barbershops_container, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists(), shop.getServices(), shop.getReason());
+                        addBarbershop(rejected_barbershops_container, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists(), shop.getReason());
                     }
                 }
             }
@@ -121,7 +114,7 @@ public class AdminSettingsActivity extends AppCompatActivity {
 
     }
 
-    public void addBarbershop(LinearLayout container, String logo, String imageUrl, String name, double rating, String address, List<Barbers> ListSpecialist, List<Services> ListService) {
+    public void addBarbershop(LinearLayout container, String logo, String imageUrl, String name, double rating, String address, List<Barbers> ListSpecialist) {
         View barbershopView = LayoutInflater.from(this).inflate(R.layout.barbershops_gray, container, false);
         ImageView logoImageView = barbershopView.findViewById(R.id.logo);
 
@@ -138,20 +131,12 @@ public class AdminSettingsActivity extends AppCompatActivity {
 
         barbershopView.setOnClickListener(v -> {
             Intent intent = new Intent(this, AdminBarberShopsAboutActivity.class);
-//            intent.putExtra("from_where", "BarbersActivity");
-//            intent.putExtra("image", image);
-//            intent.putExtra("name", name);
-//            intent.putExtra("rating", String.valueOf(rating));
-//            intent.putExtra("address", address);
-//            intent.putExtra("ListSpecialist", (Serializable) ListSpecialist);
-//            intent.putExtra("ListService", (Serializable) ListService);
 
             AdminSettingsActivity.imageUrl = imageUrl;
             AdminSettingsActivity.name = name;
             AdminSettingsActivity.rating = String.valueOf(rating);
             AdminSettingsActivity.address = address;
             AdminSettingsActivity.ListSpecialist = ListSpecialist;
-            AdminSettingsActivity.ListService = ListService;
 
             ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
                     this,
@@ -163,7 +148,7 @@ public class AdminSettingsActivity extends AppCompatActivity {
         container.addView(barbershopView);
     }
 
-    public void addBarbershop(LinearLayout container, String logo, String imageUrl, String name, double rating, String address, List<Barbers> ListSpecialist, List<Services> ListService, String reason) {
+    public void addBarbershop(LinearLayout container, String logo, String imageUrl, String name, double rating, String address, List<Barbers> ListSpecialist, String reason) {
         View barbershopView = LayoutInflater.from(this).inflate(R.layout.barbershops_gray, container, false);
         ImageView logoImageView = barbershopView.findViewById(R.id.logo);
 
@@ -181,20 +166,12 @@ public class AdminSettingsActivity extends AppCompatActivity {
 
         barbershopView.setOnClickListener(v -> {
             Intent intent = new Intent(this, AdminBarberShopsAboutActivity.class);
-//            intent.putExtra("from_where", "BarbersActivity");
-//            intent.putExtra("image", imageUrl);
-//            intent.putExtra("name", name);
-//            intent.putExtra("rating", String.valueOf(rating));
-//            intent.putExtra("address", address);
-//            intent.putExtra("ListSpecialist", (Serializable) ListSpecialist);
-//            intent.putExtra("ListService", (Serializable) ListService);
 
             AdminSettingsActivity.imageUrl = imageUrl;
             AdminSettingsActivity.name = name;
             AdminSettingsActivity.rating = String.valueOf(rating);
             AdminSettingsActivity.address = address;
             AdminSettingsActivity.ListSpecialist = ListSpecialist;
-            AdminSettingsActivity.ListService = ListService;
 
             ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
                     this,

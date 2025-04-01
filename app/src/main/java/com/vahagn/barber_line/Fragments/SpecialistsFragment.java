@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.vahagn.barber_line.Activities.SettingsActivity;
+import com.vahagn.barber_line.Activities.SpecialistActivity;
 import com.vahagn.barber_line.Admin.AddBarbersActivity;
 import com.vahagn.barber_line.Admin.CreateBarberShopActivity;
 import com.vahagn.barber_line.Classes.Services;
@@ -39,6 +40,10 @@ public class SpecialistsFragment extends Fragment {
     private List<Barbers> specialists;
 
     public static boolean Edit;
+
+
+    public static String imageUrl ,name;
+    public static List<Services> ListServices= new ArrayList<>();
 
     public SpecialistsFragment() {
     }
@@ -78,7 +83,16 @@ public class SpecialistsFragment extends Fragment {
         specialistRating.setText(String.valueOf(specialist.getRating()));
 
         specialistView.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), SpecialistActivity.class);
+
+            imageUrl = specialist.getImage();
+            name = specialist.getName();
+            ListServices = specialist.getServices();
+
+            startActivity(intent);
+
             Toast.makeText(getContext(), specialist.getName(), Toast.LENGTH_SHORT).show();
+
         });
 
         if (CreateBarberShopActivity.isCreateBarberShopActivity) {

@@ -21,6 +21,12 @@
         android:theme="@style/Theme.BarberLine"
         tools:targetApi="31">
         <activity
+            android:name=".Activities.ServicesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.SpecialistActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activities.BooksActivity"
             android:exported="false" />
         <activity

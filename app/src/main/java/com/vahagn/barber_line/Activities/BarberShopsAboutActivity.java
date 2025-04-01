@@ -5,6 +5,7 @@ import static com.vahagn.barber_line.Activities.MainActivity.isLogin;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -45,6 +46,10 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_barber_shops_about);
         CreateBarberShopActivity.isCreateBarberShopActivity = false;
+        SpecialistActivity.SpecialistActivity = false;
+
+        Log.i("ASAA","BarberShopsAboutActivity " + SpecialistActivity.SpecialistActivity);
+
 
         image = findViewById(R.id.image);
         name = findViewById(R.id.name);

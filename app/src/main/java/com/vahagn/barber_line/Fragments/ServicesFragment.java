@@ -17,6 +17,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.vahagn.barber_line.Activities.ServicesActivity;
+import com.vahagn.barber_line.Activities.SpecialistActivity;
 import com.vahagn.barber_line.Admin.AddBarbersActivity;
 import com.vahagn.barber_line.Classes.Barbers;
 import com.vahagn.barber_line.Classes.Services;
@@ -28,6 +30,8 @@ import java.util.List;
 public class ServicesFragment extends Fragment {
     private LinearLayout servicesContainer;
     private List<Services> serviceslists;
+
+    public static String name ,price,duration;
 
     public ServicesFragment(List<Services> serviceslists) {
         this.serviceslists = serviceslists;
@@ -67,10 +71,27 @@ public class ServicesFragment extends Fragment {
         serviceDuration.setText(services.getDuration());
         servicePrice.setText(services.getPrice());
 
-        servicesView.setOnClickListener(v -> {
-            Toast.makeText(getContext(), services.getName(), Toast.LENGTH_SHORT).show();
-        });
+        Log.i("ASAA","SpecialistActivity "+ SpecialistActivity.SpecialistActivity);
+        if (SpecialistActivity.SpecialistActivity) {
+            servicesView.setOnClickListener(v -> {
+                Toast.makeText(getContext(), services.getName(), Toast.LENGTH_SHORT).show();
+            });
+        }
+        else
+        {
+            servicesView.setOnClickListener(v -> {
+                Intent intent = new Intent(getContext(), ServicesActivity.class);
 
+                name = services.getName();
+                price = services.getPrice();
+                duration = services.getDuration();
+
+                startActivity(intent);
+
+
+                Toast.makeText(getContext(), services.getName(), Toast.LENGTH_SHORT).show();
+            });
+        }
         servicesView.setOnLongClickListener(v -> {
             showEditDeleteDialog(services);
             return true;
@@ -88,44 +109,6 @@ public class ServicesFragment extends Fragment {
                 .setNeutralButton("Cancel", (dialog, which) -> dialog.dismiss())
                 .show();
     }
-
-//    private void editServices(Services services) {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-//
-//        EditText Service_Name_input = new EditText(getContext());
-//        Service_Name_input.setHint("Enter the name of the service");
-//        Service_Name_input.setText(services.getName());
-//
-//        EditText Service_Price_input = new EditText(getContext());
-//        Service_Price_input.setHint("Enter the price of the service");
-//        Service_Price_input.setText(services.getPrice());
-//
-//        EditText Service_Duration_input = new EditText(getContext());
-//        Service_Duration_input.setHint("Enter the duration of the service");
-//        Service_Duration_input.setText(services.getDuration());
-//
-//
-//        builder.setTitle("Edit Service")
-//                .setView(Service_Name_input)
-//                .setView(Service_Price_input)
-//                .setView(Service_Duration_input)
-//                .setPositiveButton("Save", (dialog, which) -> {
-//                    String newName = Service_Name_input.getText().toString();
-//                    String newPrice = Service_Price_input.getText().toString();
-//                    String newDuration = Service_Price_input.getText().toString();
-//
-//                    services.setName(newName);
-//                    services.setPrice(newPrice);
-//                    services.setDuration(newDuration);
-//
-//                    displayServices();
-//
-//                    Toast.makeText(getContext(), "Service updated", Toast.LENGTH_SHORT).show();
-//                })
-//                .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
-//
-//        builder.show();
-//    }
 
 
     private void editServices(Services services) {
