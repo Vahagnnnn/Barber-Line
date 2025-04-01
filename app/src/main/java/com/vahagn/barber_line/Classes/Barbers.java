@@ -22,6 +22,7 @@ public class Barbers implements Serializable {
         this.image = image;
         this.name = name;
         this.phone = phone;
+        this.services = services;
         this.rating = 5;
     }
 

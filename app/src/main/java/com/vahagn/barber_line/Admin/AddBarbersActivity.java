@@ -34,6 +34,7 @@ import com.hbb20.CountryCodePicker;
 import com.vahagn.barber_line.Classes.Barbers;
 import com.vahagn.barber_line.Classes.Services;
 import com.vahagn.barber_line.Fragments.ServicesFragment;
+import com.vahagn.barber_line.Fragments.SpecialistsFragment;
 import com.vahagn.barber_line.R;
 
 import java.io.ByteArrayOutputStream;
@@ -146,7 +147,6 @@ public class AddBarbersActivity extends AppCompatActivity {
             }
         });
 
-
         AddEditInfo();
     }
 
@@ -159,11 +159,6 @@ public class AddBarbersActivity extends AppCompatActivity {
         if (name != null) {
             BarberName.setText(name);
         }
-        if (ListServiceEdit != null) {
-            Log.i("ASA", "ServicesADD: " + ListServiceEdit.toString());
-        }
-        else
-            Log.i("ASA", "ServicesADD: Nixuya");
 
         if (ListServiceEdit != null) {
             ListServices.addAll(ListServiceEdit);
@@ -176,18 +171,14 @@ public class AddBarbersActivity extends AppCompatActivity {
 
 
     public void setImageFromBase64(String base64String, ImageView imageView) {
-        // Remove the prefix if it exists (for example, "data:image/jpeg;base64,")
         if (base64String.contains("base64,")) {
             base64String = base64String.split("base64,")[1];
         }
 
-        // Decode the Base64 string into a byte array
         byte[] decodedString = Base64.decode(base64String, Base64.DEFAULT);
 
-        // Convert the byte array to a Bitmap
         Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 
-        // Set the decoded Bitmap to the ImageView
         imageView.setImageBitmap(decodedBitmap);
     }
 
@@ -247,15 +238,28 @@ public class AddBarbersActivity extends AppCompatActivity {
             return;
         }
 
-        if (ListServices != null) {
-            Log.i("ASA", "ServicesUxarkeluc: " + ListServices);
+        if (SpecialistsFragment.Edit) {
+
+            int indexToUpdate = -1;
+            for (int i = 0; i < CreateBarberShopActivity.ListSpecialist.size(); i++) {
+                if (CreateBarberShopActivity.ListSpecialist.get(i).getName().equals(name)) {
+                    indexToUpdate = i;
+                    break;
+                }
+            }
+
+            Barbers updatedBarber = new Barbers(String.valueOf(imageUri), BarberName_str, BarberPhoneNumber_str, ListServices);
+
+            if (indexToUpdate != -1) {
+                CreateBarberShopActivity.ListSpecialist.set(indexToUpdate, updatedBarber);
+            } else {
+                CreateBarberShopActivity.ListSpecialist.add(updatedBarber);
+            }
+
+        } else {
+            CreateBarberShopActivity.ListSpecialist.add(new Barbers(String.valueOf(imageUri), BarberName_str, BarberPhoneNumber_str, ListServices));
+            Toast.makeText(this, "The Barber has been added", Toast.LENGTH_SHORT).show();
         }
-        else
-            Log.i("ASA", "ServicesUxarkeluc: Nixuya");
-
-
-        CreateBarberShopActivity.ListSpecialist.add(new Barbers(String.valueOf(imageUri), BarberName_str, BarberPhoneNumber_str, ListServices));
-        Toast.makeText(this, "The Barber has been added", Toast.LENGTH_SHORT).show();
         navigateTo(CreateBarberShopActivity.class);
     }
 
@@ -264,17 +268,6 @@ public class AddBarbersActivity extends AppCompatActivity {
         intent.setType("image/*");
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-//            imageUri = data.getData();
-//            String photoUrl = String.valueOf(imageUri);
-//
-//            BarberImage.setImageURI(imageUri);
-//        }
-//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -362,7 +355,6 @@ public class AddBarbersActivity extends AppCompatActivity {
         countryCodeBarberPhoneNumber.setFilters(new InputFilter[]{new InputFilter.LengthFilter(PREFIX.length() + phoneNumberLength)});
     }
 
-
     private boolean isValidPhoneNumber() {
         com.hbb20.CountryCodePicker countryCodePicker = findViewById(R.id.countryCodePicker);
         TextInputEditText phoneNumberInput = findViewById(R.id.countryCodeBarberPhoneNumber);
@@ -412,6 +404,4 @@ public class AddBarbersActivity extends AppCompatActivity {
             return false;
         }
     }
-
-
 }

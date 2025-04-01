@@ -38,6 +38,8 @@ public class SpecialistsFragment extends Fragment {
     private LinearLayout infoContainer;
     private List<Barbers> specialists;
 
+    public static boolean Edit;
+
     public SpecialistsFragment() {
     }
 
@@ -64,13 +66,7 @@ public class SpecialistsFragment extends Fragment {
         TextView specialistName = specialistView.findViewById(R.id.name);
         TextView specialistRating = specialistView.findViewById(R.id.rating);
 
-//        int specialistImageResId = getResources().getIdentifier(specialist.getImage(), "drawable", getContext().getPackageName());
-//        specialistImage.setImageResource(specialistImageResId);
-//        if (specialist.getPhotoUrl() != null && !specialist.getPhotoUrl().isEmpty() ) {
-//            Glide.with(this)
-//                    .load(specialist.getPhotoUrl())
-//                    .into(specialistImage);
-//        }
+
         if (specialist.getImage() != null && !specialist.getImage().isEmpty()) {
             Glide.with(SpecialistsFragment.this)
                     .load(specialist.getImage())
@@ -108,20 +104,12 @@ public class SpecialistsFragment extends Fragment {
     private void editSpecialist(Barbers specialist) {
         Toast.makeText(getContext(), "Editing " + specialist.getName(), Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(getContext(), AddBarbersActivity.class);
-
+        Edit = true;
 
         AddBarbersActivity.imageUrl = specialist.getImage();
         AddBarbersActivity.name = specialist.getName();
 //        AddBarbersActivity.phoneNumber = specialist.getPhone();
         AddBarbersActivity.ListServiceEdit = specialist.getServices();
-
-        if (AddBarbersActivity.ListServiceEdit != null) {
-            Log.i("ASA", "ServicesFragment: " + AddBarbersActivity.ListServiceEdit);
-        }
-        else
-            Log.i("ASA", "ServicesFragment: Nixuya");
-
-
 
         startActivity(intent);
     }

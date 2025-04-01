@@ -60,21 +60,14 @@ public class CreateBarberShopActivity extends AppCompatActivity implements OnMap
     private double longitude;
     private String address;
 
-    public static boolean isCreateBarberShopActivity  ;
+    public static boolean isCreateBarberShopActivity;
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_barber_shop);
         isCreateBarberShopActivity = true;
-
-
-        for (Barbers barber : ListSpecialist) {
-            Log.i("ASA" , "CreateBarberShopActivity = " + barber.getName());
-            Log.i("ASA" , "CreateBarberShopActivity = " + barber.getPhone());
-            Log.i("ASA" , "CreateBarberShopActivity = " + barber.getRating());
-            Log.i("ASA" , "CreateBarberShopActivity = " + barber.getServices().toString());
-        }
 
 
         barberShopsRef = FirebaseDatabase.getInstance().getReference("pending_barbershops");
@@ -84,7 +77,6 @@ public class CreateBarberShopActivity extends AppCompatActivity implements OnMap
         BarberShopLogo = findViewById(R.id.BarberShopLogo);
         BarberShopName = findViewById(R.id.BarberShopName);
         Address = findViewById(R.id.Address);
-//        BarberShopAddress = findViewById(R.id.BarberShopAddress);
 
         View mapOverlay = findViewById(R.id.map_overlay);
         mapOverlay.setOnClickListener(new View.OnClickListener() {
@@ -195,10 +187,6 @@ public class CreateBarberShopActivity extends AppCompatActivity implements OnMap
             Toast.makeText(this, "Please write Barber Shop's name", Toast.LENGTH_SHORT).show();
             return;
         }
-//        if (BarberShopAddress_str.isEmpty()) {
-//            Toast.makeText(this, "Please write Barber Shop's address", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
         if (ListSpecialist.isEmpty()) {
             Toast.makeText(this, "The Specialists list is empty", Toast.LENGTH_SHORT).show();
             return;
@@ -220,7 +208,6 @@ public class CreateBarberShopActivity extends AppCompatActivity implements OnMap
         }
 
         Log.d("FirebaseAuth", "Current user email: " + ownerEmail);
-//        BarberShops BarberShop = new BarberShops(ownerEmail, BarberShopName_str, BarberShopAddress_str, String.valueOf(BarberShopImageUri), String.valueOf(BarberShopLogoUri), "pending", AddBarbersActivity.ListServices, ListSpecialist);
         String coordinates = latitude + " " + longitude;
         BarberShops BarberShop = new BarberShops(ownerEmail, BarberShopName_str, address, coordinates, String.valueOf(BarberShopImageUri), String.valueOf(BarberShopLogoUri), "pending", AddBarbersActivity.ListServices, ListSpecialist);
         addBarberShop(BarberShop);
@@ -247,58 +234,11 @@ public class CreateBarberShopActivity extends AppCompatActivity implements OnMap
         });
     }
 
-
-//    public void addBarberShop( BarberShops BarberShop) {
-//        barberShopsRef.child(currentUser.getUid()).setValue(BarberShop)
-//                .addOnCompleteListener(task -> {
-//                    if (task.isSuccessful()) {
-//                        Toast.makeText(CreateBarberShopActivity.this, "Store successful", Toast.LENGTH_SHORT).show();
-//                        Intent intent = new Intent(CreateBarberShopActivity.this, AdminActivity.class);
-//                        startActivity(intent);
-//                        finish();
-//                    } else {
-//                        Toast.makeText(CreateBarberShopActivity.this, "Failed to store user data", Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//        Map<String, Object> barberShop = new HashMap<>();
-//        barberShop.put("name", name);
-//        barberShop.put("owner", owner);
-//        barberShop.put("location", location);
-//        barberShop.put("phone", phone);
-//        barberShop.put("status", "pending");
-//
-//        db.collection("pending_barbershops")
-//                .add(barberShop)
-//                .addOnSuccessListener(documentReference -> Log.d("Success", "Barber shop added for review"))
-//                .addOnFailureListener(e -> Log.e("Error", "Failed to add barber shop", e));
-//    }
-
     private void openGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/*");
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-//            Uri imageUri = data.getData();
-//            Log.i("imageUri", String.valueOf(imageUri));
-//            String photoUrl = String.valueOf(imageUri);
-//
-//            if (isLogoSelected) {
-//                BarberShopLogo.setImageURI(imageUri);
-//                BarberShopLogoUri = imageUri;
-//            } else {
-//                BarberShopImage.setImageURI(imageUri);
-//                BarberShopImageUri = imageUri;
-//            }
-//
-//        }
-//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -358,10 +298,6 @@ public class CreateBarberShopActivity extends AppCompatActivity implements OnMap
 
     public void ToAdmin(View view) {
         navigateTo(AdminActivity.class);
-    }
-
-    public void ToAddLocationActivity(View view) {
-        navigateTo(AddLocationActivity.class);
     }
 
     public void ToAddBarber(View view) {
