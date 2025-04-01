@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.vahagn.barber_line.Admin.AdminActivity;
+import com.vahagn.barber_line.Admin.AdminBooksActivity;
 import com.vahagn.barber_line.Classes.BarberShops;
 import com.vahagn.barber_line.R;
 import com.vahagn.barber_line.adapter.TopBarberShopsAdapter;
@@ -167,5 +168,8 @@ public class MainActivity extends AppCompatActivity {
             navigateTo(AdminActivity.class);
         else
             navigateTo(LoginActivity.class);
+    }
+    public void ToBooks(View view) {
+        navigateTo(BooksActivity.class);
     }
 }

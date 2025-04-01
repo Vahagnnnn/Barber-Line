@@ -125,6 +125,9 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
         else
             navigateTo(LoginActivity.class);
     }
+    public void ToBooks(View view) {
+        navigateTo(BooksActivity.class);
+    }
     private void navigateTo(Class<?> targetActivity) {
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
                 this,

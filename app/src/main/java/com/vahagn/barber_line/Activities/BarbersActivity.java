@@ -165,6 +165,21 @@ public class BarbersActivity extends AppCompatActivity {
             navigateTo(LoginActivity.class);
     }
 
+    public void To(View view) {
+        Log.i("isLogin", String.valueOf(isLogin));
+        if (isLogin) {
+            Log.i("isLogin", String.valueOf(isLogin));
+            navigateTo(SettingsActivity.class);
+        } else {
+            Log.i("isLogin", String.valueOf(isLogin));
+            navigateTo(LoginActivity.class);
+        }
+
+    }
+
+    public void ToBooks(View view) {
+        navigateTo(BooksActivity.class);
+    }
     private void navigateTo(Class<?> targetActivity) {
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
                 this,
