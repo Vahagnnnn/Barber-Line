@@ -73,6 +73,7 @@ public class SpecialistActivity extends AppCompatActivity {
 
     public void TobAboutBarberShop(View view) {
         SpecialistActivity = false;
+        ServicesActivity.ServicesActivity = false;
         onBackPressed();
     }
 }

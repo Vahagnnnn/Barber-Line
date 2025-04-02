@@ -15,6 +15,8 @@ import android.widget.LinearLayout;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
+import com.vahagn.barber_line.Activities.DateTimeActivity;
+import com.vahagn.barber_line.Activities.ServicesActivity;
 import com.vahagn.barber_line.Activities.SettingsActivity;
 import com.vahagn.barber_line.Activities.SpecialistActivity;
 import com.vahagn.barber_line.Admin.AddBarbersActivity;
@@ -82,19 +84,29 @@ public class SpecialistsFragment extends Fragment {
         specialistName.setText(specialist.getName());
         specialistRating.setText(String.valueOf(specialist.getRating()));
 
-        specialistView.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), SpecialistActivity.class);
+        Log.i("ASAA", "ServicesActivity " + ServicesActivity.ServicesActivity);
+        if (ServicesActivity.ServicesActivity) {
+            specialistView.setOnClickListener(v -> {
+                Intent intent = new Intent(getContext(), DateTimeActivity.class);
+                startActivity(intent);
 
-            imageUrl = specialist.getImage();
-            name = specialist.getName();
-            ListServices = specialist.getServices();
+                Toast.makeText(getContext(), specialist.getName(), Toast.LENGTH_SHORT).show();
+            });
+        }
+        else {
+            specialistView.setOnClickListener(v -> {
+                Intent intent = new Intent(getContext(), SpecialistActivity.class);
 
-            startActivity(intent);
+                imageUrl = specialist.getImage();
+                name = specialist.getName();
+                ListServices = specialist.getServices();
 
-            Toast.makeText(getContext(), specialist.getName(), Toast.LENGTH_SHORT).show();
+                startActivity(intent);
 
-        });
+                Toast.makeText(getContext(), specialist.getName(), Toast.LENGTH_SHORT).show();
 
+            });
+        }
         if (CreateBarberShopActivity.isCreateBarberShopActivity) {
             specialistView.setOnLongClickListener(v -> {
                 showEditDeleteDialog(specialist);

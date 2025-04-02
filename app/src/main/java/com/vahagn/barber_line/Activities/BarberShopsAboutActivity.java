@@ -38,7 +38,7 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
     CategoryAdapter categoryAdapter;
     RecyclerView categoryRecycler;
     List<Category> categoryList = new ArrayList<>();
-  public static   List<Barbers> ListSpecialist = new ArrayList<>();
+    public static List<Barbers> ListSpecialist = new ArrayList<>();
     List<Services> ListService = new ArrayList<>();
 
     @Override
@@ -47,8 +47,10 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
         setContentView(R.layout.activity_barber_shops_about);
         CreateBarberShopActivity.isCreateBarberShopActivity = false;
         SpecialistActivity.SpecialistActivity = false;
+        ServicesActivity.ServicesActivity = false;
 
-        Log.i("ASAA","BarberShopsAboutActivity " + SpecialistActivity.SpecialistActivity);
+        Log.i("ASAA", "BarberShopsAboutActivity " + SpecialistActivity.SpecialistActivity);
+        Log.i("ASAA", "BarberShopsAboutActivity " + ServicesActivity.ServicesActivity);
 
 
         image = findViewById(R.id.image);
@@ -71,7 +73,7 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
         rating.setText(BarbersActivity.rating);
         adress.setText(BarbersActivity.address);
 
-        ListSpecialist =BarbersActivity.ListSpecialist;
+        ListSpecialist = BarbersActivity.ListSpecialist;
         ListService = BarbersActivity.ListService;
 
         if (ListSpecialist != null) {
@@ -124,15 +126,18 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
     public void ToMap(View view) {
         navigateTo(MapActivity.class);
     }
+
     public void ToAdmin(View view) {
         if (isLogin)
             navigateTo(AdminActivity.class);
         else
             navigateTo(LoginActivity.class);
     }
+
     public void ToBooks(View view) {
         navigateTo(BooksActivity.class);
     }
+
     private void navigateTo(Class<?> targetActivity) {
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
                 this,

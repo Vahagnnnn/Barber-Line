@@ -27,10 +27,14 @@ public class ServicesActivity extends AppCompatActivity {
     TextView ServiceNameTop,ServiceName,ServicePrice,ServiceDuration;
     public static List<Barbers> ListSpecialist= new ArrayList<>();
 
+    public static boolean ServicesActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_services);
+
+        ServicesActivity = true;
 
         ServiceNameTop = findViewById(R.id.ServiceNameTop);
         ServiceName = findViewById(R.id.ServiceName);
@@ -60,6 +64,8 @@ public class ServicesActivity extends AppCompatActivity {
     }
 
     public void TobAboutBarberShop(View view) {
+        SpecialistActivity.SpecialistActivity = false;
+        ServicesActivity = false;
         onBackPressed();
     }
 }

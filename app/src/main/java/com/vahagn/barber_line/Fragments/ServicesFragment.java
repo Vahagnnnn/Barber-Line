@@ -17,9 +17,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.vahagn.barber_line.Activities.DateTimeActivity;
 import com.vahagn.barber_line.Activities.ServicesActivity;
 import com.vahagn.barber_line.Activities.SpecialistActivity;
 import com.vahagn.barber_line.Admin.AddBarbersActivity;
+import com.vahagn.barber_line.Admin.CreateBarberShopActivity;
 import com.vahagn.barber_line.Classes.Barbers;
 import com.vahagn.barber_line.Classes.Services;
 import com.vahagn.barber_line.R;
@@ -31,7 +33,7 @@ public class ServicesFragment extends Fragment {
     private LinearLayout servicesContainer;
     private List<Services> serviceslists;
 
-    public static String name ,price,duration;
+    public static String name, price, duration;
 
     public ServicesFragment(List<Services> serviceslists) {
         this.serviceslists = serviceslists;
@@ -71,14 +73,15 @@ public class ServicesFragment extends Fragment {
         serviceDuration.setText(services.getDuration());
         servicePrice.setText(services.getPrice());
 
-        Log.i("ASAA","SpecialistActivity "+ SpecialistActivity.SpecialistActivity);
+        Log.i("ASAA", "SpecialistActivity " + SpecialistActivity.SpecialistActivity);
         if (SpecialistActivity.SpecialistActivity) {
             servicesView.setOnClickListener(v -> {
+                Intent intent = new Intent(getContext(), DateTimeActivity.class);
+                startActivity(intent);
+
                 Toast.makeText(getContext(), services.getName(), Toast.LENGTH_SHORT).show();
             });
-        }
-        else
-        {
+        } else {
             servicesView.setOnClickListener(v -> {
                 Intent intent = new Intent(getContext(), ServicesActivity.class);
 
@@ -92,11 +95,12 @@ public class ServicesFragment extends Fragment {
                 Toast.makeText(getContext(), services.getName(), Toast.LENGTH_SHORT).show();
             });
         }
-        servicesView.setOnLongClickListener(v -> {
-            showEditDeleteDialog(services);
-            return true;
-        });
-
+        if (CreateBarberShopActivity.isCreateBarberShopActivity) {
+            servicesView.setOnLongClickListener(v -> {
+                showEditDeleteDialog(services);
+                return true;
+            });
+        }
         servicesContainer.addView(servicesView);
     }
 
