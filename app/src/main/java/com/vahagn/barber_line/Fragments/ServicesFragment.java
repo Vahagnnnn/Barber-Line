@@ -35,6 +35,8 @@ public class ServicesFragment extends Fragment {
 
     public static String name, price, duration;
 
+    public ServicesFragment() {
+    }
     public ServicesFragment(List<Services> serviceslists) {
         this.serviceslists = serviceslists;
     }
@@ -79,6 +81,8 @@ public class ServicesFragment extends Fragment {
                 Intent intent = new Intent(getContext(), DateTimeActivity.class);
                 startActivity(intent);
                 name = services.getName();
+                price = services.getPrice();
+                duration = services.getDuration();
 
 //                Toast.makeText(getContext(), services.getName(), Toast.LENGTH_SHORT).show();
             });

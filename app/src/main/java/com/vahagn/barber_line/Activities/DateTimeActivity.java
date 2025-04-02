@@ -8,8 +8,10 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,18 +20,32 @@ import com.vahagn.barber_line.Fragments.ServicesFragment;
 import com.vahagn.barber_line.Fragments.SpecialistsFragment;
 import com.vahagn.barber_line.R;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 public class DateTimeActivity extends AppCompatActivity {
-    private Button selectedButton = null;
+
+    CalendarView calendarView;
     TextView BarberName, ServiceName;
     Button continue_button;
+
+    Button selectedButton = null;
+
+    //    public static Map<String, String> MapForConfirm = new HashMap<>();
+     public String weekDay, monthName, dayOfMonth_str;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_date_time);
+
+        calendarView = findViewById(R.id.calendarView);
 
         BarberName = findViewById(R.id.BarberName);
         BarberName.setText(SpecialistsFragment.name);
@@ -84,11 +100,42 @@ public class DateTimeActivity extends AppCompatActivity {
             rowLayout.addView(button);
         }
 
+
+        CalendarView calendarView = findViewById(R.id.calendarView);
+
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
+                // Создаем объект Calendar и устанавливаем выбранную дату
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(year, month, dayOfMonth);
+
+                // Получаем день недели и название месяца
+                SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault()); // День недели (например, Понедельник)
+                SimpleDateFormat monthFormat = new SimpleDateFormat("MMMM", Locale.getDefault()); // Название месяца (например, Апрель)
+
+                weekDay = dayFormat.format(calendar.getTime());
+                monthName = monthFormat.format(calendar.getTime());
+                dayOfMonth_str=String.valueOf(dayOfMonth);
+
+                // Выводим в лог или в TextView
+                Log.d("SelectedDate", "День недели: " + weekDay + ", Месяц: " + monthName + ", День: " + dayOfMonth);
+                Toast.makeText(getApplicationContext(), "Выбрано: " + weekDay + ", " + dayOfMonth + " " + monthName, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
         continue_button.setOnClickListener(v -> {
             if (selectedButton != null) {
-                Log.i("Datee", (String) selectedButton.getText());
+                Log.i("SelectedDate", (String) selectedButton.getText());
             }
             Intent intent = new Intent(this, ConfirmActivity.class);
+
+//            MapForConfirm.put("BarberShopImage", "Text");
+//            MapForConfirm.put("BarberShopName", "Text");
+
+            intent.putExtra("weekDay_monthName_dayOfMonth", weekDay + " " + monthName + " " + dayOfMonth_str);
+            intent.putExtra("Time", (String) selectedButton.getText());
             startActivity(intent);
         });
     }

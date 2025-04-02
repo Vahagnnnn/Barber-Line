@@ -233,12 +233,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
                         paragonShops.forEach(shop -> {
                             intent.putExtra("from_where", "MapActivity");
-//                            intent.putExtra("image", shop.getImage());
-//                            intent.putExtra("name", shop.getName());
-//                            intent.putExtra("rating", String.valueOf(shop.getRating()));
-//                            intent.putExtra("address", shop.getAddress());
-//                            intent.putExtra("ListSpecialist", (Serializable) shop.getSpecialists());
-//                            intent.putExtra("ListService", (Serializable) shop.getServices());
 
                             BarbersActivity.imageUrl = shop.getImage();
                             BarbersActivity.name = shop.getName();
