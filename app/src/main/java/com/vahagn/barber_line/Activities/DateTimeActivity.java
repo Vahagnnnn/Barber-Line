@@ -1,5 +1,6 @@
 package com.vahagn.barber_line.Activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class DateTimeActivity extends AppCompatActivity {
+    TextView weekDay_monthName_dayOfMonth, Time;
 
     CalendarView calendarView;
     TextView BarberName, ServiceName;
@@ -36,11 +38,14 @@ public class DateTimeActivity extends AppCompatActivity {
 
     public String weekDay, monthName, dayOfMonth_str;
 
-
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_date_time);
+
+        weekDay_monthName_dayOfMonth = findViewById(R.id.weekDay_monthName_dayOfMonth);
+        Time = findViewById(R.id.Time);
 
         calendarView = findViewById(R.id.calendarView);
         BarberName = findViewById(R.id.BarberName);
@@ -92,6 +97,7 @@ public class DateTimeActivity extends AppCompatActivity {
 
                 button.setSelected(true);
                 selectedButton = button;
+                Time.setText(selectedButton.getText());
             });
 
             rowLayout.addView(button);
@@ -116,13 +122,13 @@ public class DateTimeActivity extends AppCompatActivity {
                 intent.putExtra("weekDay_monthName_dayOfMonth", weekDay + " " + monthName + " " + dayOfMonth_str);
                 intent.putExtra("Time", (String) selectedButton.getText());
                 startActivity(intent);
-            }
-            else
+            } else
                 Toast.makeText(getApplicationContext(), "No time selected", Toast.LENGTH_SHORT).show();
         });
     }
 
 
+    @SuppressLint("SetTextI18n")
     private void updateDateVariables(int year, int month, int dayOfMonth) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, dayOfMonth);
@@ -134,6 +140,7 @@ public class DateTimeActivity extends AppCompatActivity {
         monthName = monthFormat.format(calendar.getTime());
         dayOfMonth_str = String.valueOf(dayOfMonth);
 
+        weekDay_monthName_dayOfMonth.setText(weekDay + " " + monthName + " " + dayOfMonth_str);
         Log.d("DateTimeActivity", "Date updated: " + weekDay + ", " + dayOfMonth + " " + monthName);
     }
 

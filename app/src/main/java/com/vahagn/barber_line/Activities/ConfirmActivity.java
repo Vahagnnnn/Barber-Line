@@ -19,7 +19,6 @@ import com.vahagn.barber_line.Fragments.SpecialistsFragment;
 import com.vahagn.barber_line.R;
 
 public class ConfirmActivity extends AppCompatActivity {
-
     ImageView BarberShopImage,BarberImage;
     TextView BarberShopName, BarberShopAddress, weekDay_monthName_dayOfMonth, Time,BarberName,BarberRating, ServiceName, Duration, Price;
 
@@ -30,6 +29,7 @@ public class ConfirmActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
+        BarberShopImage = findViewById(R.id.BarberShopImage);
         BarberShopImage = findViewById(R.id.BarberShopImage);
         BarberShopName = findViewById(R.id.BarberShopName);
         BarberShopAddress = findViewById(R.id.BarberShopAddress);
