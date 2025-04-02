@@ -77,7 +77,7 @@ public class SpecialistsFragment extends Fragment {
         if (specialist.getImage() != null && !specialist.getImage().isEmpty()) {
             Glide.with(SpecialistsFragment.this)
                     .load(specialist.getImage())
-                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(100)))
+                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(60)))
                     .into(specialistImage);
         }
 

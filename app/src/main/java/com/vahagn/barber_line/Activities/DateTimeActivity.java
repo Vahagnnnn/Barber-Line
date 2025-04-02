@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import com.vahagn.barber_line.Fragments.ServicesFragment;
 import com.vahagn.barber_line.Fragments.SpecialistsFragment;
 import com.vahagn.barber_line.R;
 
@@ -21,7 +22,7 @@ import java.util.List;
 
 public class DateTimeActivity extends AppCompatActivity {
     private Button selectedButton = null;
-    TextView BarberName;
+    TextView BarberName,ServiceName;
     Button continue_button;
 
     @Override
@@ -31,6 +32,8 @@ public class DateTimeActivity extends AppCompatActivity {
 
         BarberName = findViewById(R.id.BarberName);
         BarberName.setText(SpecialistsFragment.name);
+        ServiceName = findViewById(R.id.ServiceName);
+        ServiceName.setText(ServicesFragment.name);
 
 
         LinearLayout timeContainer = findViewById(R.id.timeContainer);
@@ -38,11 +41,6 @@ public class DateTimeActivity extends AppCompatActivity {
 
         List<String> times = Arrays.asList("13:45", "14:00", "14:15", "14:30", "14:45",
                 "15:00", "15:15", "15:30", "15:45", "16:00",
-                "16:15", "16:30", "16:45", "15:45", "16:00",
-                "16:15", "16:30", "16:45", "15:45", "16:00",
-                "16:15", "16:30", "16:45", "15:45", "16:00",
-                "16:15", "16:30", "16:45", "15:45", "16:00",
-                "16:15", "16:30", "16:45", "15:45", "16:00",
                 "16:15", "16:30", "16:45", "15:45", "16:00",
                 "16:15", "16:30", "16:45", "15:45", "16:00",
                 "16:15", "16:30", "16:45");

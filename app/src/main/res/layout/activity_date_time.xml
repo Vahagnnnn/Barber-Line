@@ -28,15 +28,33 @@
             android:onClick="Back"
             android:src="@drawable/img_arrow_left" />
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginStart="16dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="15dp">
+
         <TextView
             android:id="@+id/BarberName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:text="Sargis"
             android:textColor="@color/white"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
+        <TextView
+            android:id="@+id/ServiceName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Haircut"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+    </LinearLayout>
     </LinearLayout>
 
     <!-- Date Selection -->
