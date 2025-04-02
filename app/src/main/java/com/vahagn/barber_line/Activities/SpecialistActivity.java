@@ -23,7 +23,7 @@ import com.vahagn.barber_line.Fragments.SpecialistsFragment;
 import com.vahagn.barber_line.R;
 
 public class SpecialistActivity extends AppCompatActivity {
-    TextView BarberNameTop,BarberName;
+    TextView BarberNameTop,BarberName,BarberRating;
     ImageView BarberImage;
 
     public static boolean SpecialistActivity;
@@ -37,21 +37,30 @@ public class SpecialistActivity extends AppCompatActivity {
         BarberNameTop = findViewById(R.id.BarberNameTop);
         BarberName = findViewById(R.id.BarberName);
         BarberImage = findViewById(R.id.BarberImage);
+        BarberRating = findViewById(R.id.BarberRating);
 
         BarberNameTop.setText(SpecialistsFragment.name);
         BarberName.setText(SpecialistsFragment.name);
+        BarberRating.setText(SpecialistsFragment.rating);
 
 //        if (SpecialistsFragment.imageUrl != null) {
 //            BarberImage.setImageResource();
 //            setImageFromBase64(SpecialistsFragment.imageUrl, BarberImage);
 //        }
 
+//        if (SpecialistsFragment.imageUrl != null && !SpecialistsFragment.imageUrl.isEmpty()) {
+//            Glide.with(SpecialistActivity.this)
+//                    .load(SpecialistsFragment.imageUrl)
+//                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(100)))
+//                    .into(BarberImage);
+//        }
+
         if (SpecialistsFragment.imageUrl != null && !SpecialistsFragment.imageUrl.isEmpty()) {
             Glide.with(SpecialistActivity.this)
                     .load(SpecialistsFragment.imageUrl)
-                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(100)))
                     .into(BarberImage);
         }
+
         ServicesFragment servicesFragment = new ServicesFragment(SpecialistsFragment.ListServices);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.info_container, servicesFragment);

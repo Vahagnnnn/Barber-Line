@@ -55,7 +55,7 @@
                 android:maxLines="1"
                 android:singleLine="true"
                 android:fontFamily="@font/plus_jakarta_sans_semibold"
-                android:text="@string/sargis_xachatryan"
+                android:text="@string/sargis"
                 android:textColor="#FF000000"
                 android:textSize="18sp" />
 

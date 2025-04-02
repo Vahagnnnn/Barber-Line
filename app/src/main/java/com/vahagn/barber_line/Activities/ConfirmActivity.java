@@ -15,12 +15,13 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.bumptech.glide.Glide;
 import com.vahagn.barber_line.Fragments.ServicesFragment;
+import com.vahagn.barber_line.Fragments.SpecialistsFragment;
 import com.vahagn.barber_line.R;
 
 public class ConfirmActivity extends AppCompatActivity {
 
-    ImageView BarberShopImage;
-    TextView BarberShopName, BarberShopAddress, weekDay_monthName_dayOfMonth, Time, ServiceName, Duration, Price;
+    ImageView BarberShopImage,BarberImage;
+    TextView BarberShopName, BarberShopAddress, weekDay_monthName_dayOfMonth, Time,BarberName,BarberRating, ServiceName, Duration, Price;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,9 @@ public class ConfirmActivity extends AppCompatActivity {
         BarberShopAddress = findViewById(R.id.BarberShopAddress);
         weekDay_monthName_dayOfMonth = findViewById(R.id.weekDay_monthName_dayOfMonth);
         Time = findViewById(R.id.Time);
+        BarberImage = findViewById(R.id.BarberImage);
+        BarberName = findViewById(R.id.BarberName);
+        BarberRating = findViewById(R.id.BarberRating);
         ServiceName = findViewById(R.id.ServiceName);
         Price = findViewById(R.id.Price);
         Duration = findViewById(R.id.Duration);
@@ -41,10 +45,16 @@ public class ConfirmActivity extends AppCompatActivity {
         Glide.with(this)
                 .load(BarbersActivity.imageUrl)
                 .into(BarberShopImage);
+        Glide.with(this)
+                .load(SpecialistsFragment.imageUrl)
+                .into(BarberImage);
+
         BarberShopName.setText(BarbersActivity.name);
         BarberShopAddress.setText(BarbersActivity.address);
         weekDay_monthName_dayOfMonth.setText(intent.getStringExtra("weekDay_monthName_dayOfMonth"));
         Time.setText(intent.getStringExtra("Time"));
+        BarberName.setText(SpecialistsFragment.name);
+        BarberRating.setText(SpecialistsFragment.rating);
         ServiceName.setText(ServicesFragment.name);
         Price.setText(ServicesFragment.price);
         Duration.setText(ServicesFragment.duration);

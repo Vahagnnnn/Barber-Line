@@ -44,7 +44,7 @@ public class SpecialistsFragment extends Fragment {
     public static boolean Edit;
 
 
-    public static String imageUrl ,name;
+    public static String imageUrl ,name,rating;
     public static List<Services> ListServices= new ArrayList<>();
 
     public SpecialistsFragment() {
@@ -90,6 +90,7 @@ public class SpecialistsFragment extends Fragment {
                 Intent intent = new Intent(getContext(), DateTimeActivity.class);
                 startActivity(intent);
                 name = specialist.getName();
+                rating = String.valueOf(specialist.getRating());
 
 //                Toast.makeText(getContext(), specialist.getName(), Toast.LENGTH_SHORT).show();
             });
@@ -100,6 +101,7 @@ public class SpecialistsFragment extends Fragment {
 
                 imageUrl = specialist.getImage();
                 name = specialist.getName();
+                rating = String.valueOf(specialist.getRating());
                 ListServices = specialist.getServices();
 
                 startActivity(intent);

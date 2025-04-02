@@ -95,7 +95,7 @@
                 android:includeFontPadding="false"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:text="@string/sargis_xachatryan"
+                android:text="@string/sargis"
                 android:textColor="#FF000000"
                 android:textSize="18sp" />
 
@@ -111,7 +111,7 @@
 
             <!-- Rating Text -->
             <TextView
-                android:id="@+id/rating"
+                android:id="@+id/BarberRating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|center_vertical"

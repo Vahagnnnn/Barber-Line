@@ -23,10 +23,8 @@ import com.vahagn.barber_line.R;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public class DateTimeActivity extends AppCompatActivity {
 
@@ -36,8 +34,7 @@ public class DateTimeActivity extends AppCompatActivity {
 
     Button selectedButton = null;
 
-    //    public static Map<String, String> MapForConfirm = new HashMap<>();
-     public String weekDay, monthName, dayOfMonth_str;
+    public String weekDay, monthName, dayOfMonth_str;
 
 
     @Override
@@ -46,12 +43,13 @@ public class DateTimeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_date_time);
 
         calendarView = findViewById(R.id.calendarView);
-
         BarberName = findViewById(R.id.BarberName);
         BarberName.setText(SpecialistsFragment.name);
         ServiceName = findViewById(R.id.ServiceName);
         ServiceName.setText(ServicesFragment.name);
 
+        Calendar calendar = Calendar.getInstance();
+        updateDateVariables(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 
         LinearLayout timeContainer = findViewById(R.id.timeContainer);
         continue_button = findViewById(R.id.continue_button);
@@ -96,48 +94,47 @@ public class DateTimeActivity extends AppCompatActivity {
                 selectedButton = button;
             });
 
-//            button.setId(View.generateViewId()); // Генерируем уникальный ID
             rowLayout.addView(button);
         }
 
 
-        CalendarView calendarView = findViewById(R.id.calendarView);
-
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-                // Создаем объект Calendar и устанавливаем выбранную дату
-                Calendar calendar = Calendar.getInstance();
-                calendar.set(year, month, dayOfMonth);
-
-                // Получаем день недели и название месяца
-                SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault()); // День недели (например, Понедельник)
-                SimpleDateFormat monthFormat = new SimpleDateFormat("MMMM", Locale.getDefault()); // Название месяца (например, Апрель)
-
-                weekDay = dayFormat.format(calendar.getTime());
-                monthName = monthFormat.format(calendar.getTime());
-                dayOfMonth_str=String.valueOf(dayOfMonth);
-
-                // Выводим в лог или в TextView
-                Log.d("SelectedDate", "День недели: " + weekDay + ", Месяц: " + monthName + ", День: " + dayOfMonth);
-                Toast.makeText(getApplicationContext(), "Выбрано: " + weekDay + ", " + dayOfMonth + " " + monthName, Toast.LENGTH_SHORT).show();
+                updateDateVariables(year, month, dayOfMonth);
+//                Toast.makeText(getApplicationContext(), "Выбрано: " + weekDay + ", " + dayOfMonth + " " + monthName, Toast.LENGTH_SHORT).show();
             }
         });
 
 
         continue_button.setOnClickListener(v -> {
+
             if (selectedButton != null) {
-                Log.i("SelectedDate", (String) selectedButton.getText());
+
+                Intent intent = new Intent(this, ConfirmActivity.class);
+
+                intent.putExtra("weekDay_monthName_dayOfMonth", weekDay + " " + monthName + " " + dayOfMonth_str);
+                intent.putExtra("Time", (String) selectedButton.getText());
+                startActivity(intent);
             }
-            Intent intent = new Intent(this, ConfirmActivity.class);
-
-//            MapForConfirm.put("BarberShopImage", "Text");
-//            MapForConfirm.put("BarberShopName", "Text");
-
-            intent.putExtra("weekDay_monthName_dayOfMonth", weekDay + " " + monthName + " " + dayOfMonth_str);
-            intent.putExtra("Time", (String) selectedButton.getText());
-            startActivity(intent);
+            else
+                Toast.makeText(getApplicationContext(), "No time selected", Toast.LENGTH_SHORT).show();
         });
+    }
+
+
+    private void updateDateVariables(int year, int month, int dayOfMonth) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, dayOfMonth);
+
+        SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
+        SimpleDateFormat monthFormat = new SimpleDateFormat("MMMM", Locale.getDefault());
+
+        weekDay = dayFormat.format(calendar.getTime());
+        monthName = monthFormat.format(calendar.getTime());
+        dayOfMonth_str = String.valueOf(dayOfMonth);
+
+        Log.d("DateTimeActivity", "Date updated: " + weekDay + ", " + dayOfMonth + " " + monthName);
     }
 
     public void Back(View view) {
