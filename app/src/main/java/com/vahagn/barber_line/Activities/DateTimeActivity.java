@@ -1,5 +1,6 @@
 package com.vahagn.barber_line.Activities;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,7 +23,7 @@ import java.util.List;
 
 public class DateTimeActivity extends AppCompatActivity {
     private Button selectedButton = null;
-    TextView BarberName,ServiceName;
+    TextView BarberName, ServiceName;
     Button continue_button;
 
     @Override
@@ -87,6 +88,8 @@ public class DateTimeActivity extends AppCompatActivity {
             if (selectedButton != null) {
                 Log.i("Datee", (String) selectedButton.getText());
             }
+            Intent intent = new Intent(this, ConfirmActivity.class);
+            startActivity(intent);
         });
     }
 

@@ -91,7 +91,7 @@ public class SpecialistsFragment extends Fragment {
                 startActivity(intent);
                 name = specialist.getName();
 
-                Toast.makeText(getContext(), specialist.getName(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), specialist.getName(), Toast.LENGTH_SHORT).show();
             });
         }
         else {
@@ -104,7 +104,7 @@ public class SpecialistsFragment extends Fragment {
 
                 startActivity(intent);
 
-                Toast.makeText(getContext(), specialist.getName(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), specialist.getName(), Toast.LENGTH_SHORT).show();
 
             });
         }

@@ -80,7 +80,7 @@ public class ServicesFragment extends Fragment {
                 startActivity(intent);
                 name = services.getName();
 
-                Toast.makeText(getContext(), services.getName(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), services.getName(), Toast.LENGTH_SHORT).show();
             });
         } else {
             servicesView.setOnClickListener(v -> {
@@ -92,8 +92,7 @@ public class ServicesFragment extends Fragment {
 
                 startActivity(intent);
 
-
-                Toast.makeText(getContext(), services.getName(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), services.getName(), Toast.LENGTH_SHORT).show();
             });
         }
         if (CreateBarberShopActivity.isCreateBarberShopActivity) {
