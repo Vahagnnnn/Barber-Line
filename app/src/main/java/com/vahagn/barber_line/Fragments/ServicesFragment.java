@@ -78,7 +78,6 @@ public class ServicesFragment extends Fragment {
             servicesView.setOnClickListener(v -> {
                 Intent intent = new Intent(getContext(), DateTimeActivity.class);
                 startActivity(intent);
-
                 Toast.makeText(getContext(), services.getName(), Toast.LENGTH_SHORT).show();
             });
         } else {

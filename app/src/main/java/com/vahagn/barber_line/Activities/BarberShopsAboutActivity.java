@@ -27,8 +27,10 @@ import com.vahagn.barber_line.adapter.CategoryAdapter;
 import com.vahagn.barber_line.model.Category;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 public class BarberShopsAboutActivity extends AppCompatActivity {
     FrameLayout back_section;
@@ -74,7 +76,28 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
         adress.setText(BarbersActivity.address);
 
         ListSpecialist = BarbersActivity.ListSpecialist;
-        ListService = BarbersActivity.ListService;
+
+
+        if (ListSpecialist != null) {
+            Set<String> existingServiceNames = new HashSet<>();
+
+            for (Services service : ListService) {
+                existingServiceNames.add(service.getName());
+            }
+
+            for (Barbers barbers : ListSpecialist) {
+                if (barbers.getServices() != null) {
+                    for (Services service : barbers.getServices()) {
+                        if (!existingServiceNames.contains(service.getName())) {
+                            ListService.add(service);
+                            existingServiceNames.add(service.getName());
+                        }
+                    }
+                }
+            }
+        }
+
+//        ListService = BarbersActivity.ListService;
 
         if (ListSpecialist != null) {
             SpecialistsFragment specialistsFragment = new SpecialistsFragment(ListSpecialist);

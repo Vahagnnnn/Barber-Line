@@ -120,20 +120,13 @@ public class BarbersActivity extends AppCompatActivity {
         barbershopView.setOnClickListener(v -> {
             Intent intent = new Intent(this, BarberShopsAboutActivity.class);
             intent.putExtra("from_where", "BarbersActivity");
-//            intent.putExtra("image", image);
-//            intent.putExtra("name", name);
-//            intent.putExtra("rating", String.valueOf(rating));
-//            intent.putExtra("address", address);
-//            intent.putExtra("ListSpecialist", (Serializable) ListSpecialist);
-//            intent.putExtra("ListService", (Serializable) ListService);
-
 
             BarbersActivity.imageUrl = imageUrl;
             BarbersActivity.name = name;
             BarbersActivity.rating = String.valueOf(rating);
             BarbersActivity.address = address;
             BarbersActivity.ListSpecialist = ListSpecialist;
-            BarbersActivity.ListService = ListService;
+//            BarbersActivity.ListService = ListService;
 
             ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
                     this,

@@ -8,10 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import com.vahagn.barber_line.Fragments.SpecialistsFragment;
 import com.vahagn.barber_line.R;
 
 import java.util.Arrays;
@@ -19,12 +21,17 @@ import java.util.List;
 
 public class DateTimeActivity extends AppCompatActivity {
     private Button selectedButton = null;
+    TextView BarberName;
     Button continue_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_date_time);
+
+        BarberName = findViewById(R.id.BarberName);
+        BarberName.setText(SpecialistsFragment.name);
+
 
         LinearLayout timeContainer = findViewById(R.id.timeContainer);
         continue_button = findViewById(R.id.continue_button);

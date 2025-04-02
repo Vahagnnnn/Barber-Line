@@ -89,6 +89,7 @@ public class SpecialistsFragment extends Fragment {
             specialistView.setOnClickListener(v -> {
                 Intent intent = new Intent(getContext(), DateTimeActivity.class);
                 startActivity(intent);
+                name = specialist.getName();
 
                 Toast.makeText(getContext(), specialist.getName(), Toast.LENGTH_SHORT).show();
             });

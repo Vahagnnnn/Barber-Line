@@ -94,22 +94,6 @@ public class AdminBarberShopsAboutActivity extends AppCompatActivity {
         }
 
 
-//        if (ListSpecialist != null) {
-//            for (Barbers barbers : ListSpecialist) {
-//                if (barbers.getServices() != null) {
-//                    ListService.addAll(barbers.getServices());
-//                }
-//            }
-//        }
-
-
-//        ListService = AdminSettingsActivity.ListService;
-
-//        for (Barbers barbers:ListSpecialist)
-//        {
-//            ListService.add(barbers.getServices());
-//        }
-
 
         if (ListSpecialist != null) {
             SpecialistsFragment specialistsFragment = new SpecialistsFragment(ListSpecialist);
