@@ -9,3 +9,9 @@ APK - https://drive.google.com/file/d/1L75MORvf_miQljXwkTQtnh3X6sudZ0Ta/view?usp
 ![Barber-Line-BarberShop_Specialists](https://github.com/user-attachments/assets/263651f2-e6c4-4220-a512-fa26da7e4919)
 ![Barber-Line-BarberShop_Services](https://github.com/user-attachments/assets/ce2aacc6-a5d2-4370-9ff8-e22314376f66)
 ![Barber-Line-Profile](https://github.com/user-attachments/assets/c60b09a7-c6e0-4cc6-9c34-2370d6b8ea4c)
+
+
+
+
+Gradle Version for me
+![image](https://github.com/user-attachments/assets/f217932d-7c23-4ed6-82eb-80943736681d)
