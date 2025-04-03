@@ -101,9 +101,10 @@ public class ConfirmActivity extends AppCompatActivity {
 
     public void ConfirmAppointment_InsertDatabase() {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        String UserName = "";
+        String UserEmail = "", UserName = "";
 
         if (currentUser != null) {
+            UserEmail = currentUser.getEmail();
             UserName = currentUser.getDisplayName();
             Log.d("FirebaseAuth", "Current user name: " + UserName);
         } else {
@@ -111,7 +112,7 @@ public class ConfirmActivity extends AppCompatActivity {
         }
 
         String message_or_requests_str = message_or_requests.getText().toString().trim();
-        Appointment Appointment = new Appointment(UserName, BarberShopImageUrl_str, BarberShopName_str,
+        Appointment Appointment = new Appointment(UserEmail, UserName, BarberShopImageUrl_str, BarberShopName_str,
                 BarberShopAddress_str, weekDay_monthName_dayOfMonth_str, Time_str, BarberImageUrl_str,
                 BarberName_str, BarberRating_str, ServiceName_str, ServicePrice_str, ServiceDuration_str, "Active", message_or_requests_str);
 

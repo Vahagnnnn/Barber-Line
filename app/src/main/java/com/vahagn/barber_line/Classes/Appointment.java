@@ -3,6 +3,7 @@ package com.vahagn.barber_line.Classes;
 import java.io.Serializable;
 
 public class Appointment implements Serializable {
+    public String userEmail;
     public String userName;
     public String barbershopImageUrl;
     public String barbershopName;
@@ -21,23 +22,8 @@ public class Appointment implements Serializable {
     public Appointment() {
     }
 
-    public Appointment(String userName, String barbershopImageUrl, String barbershopName, String barbershopAddress,String weekDay_monthName_dayOfMonth, String time, String barberImageUrl, String barberName, String barberRating,String serviceName,  String servicePrice,String serviceDuration,String status) {
-        this.userName = userName;
-        this.barbershopImageUrl = barbershopImageUrl;
-        this.barbershopName = barbershopName;
-        this.barbershopAddress = barbershopAddress;
-        this.weekDay_monthName_dayOfMonth = weekDay_monthName_dayOfMonth;
-        this.time = time;
-        this.barberImageUrl = barberImageUrl;
-        this.barberName = barberName;
-        this.barberRating = barberRating;
-        this.serviceName = serviceName;
-        this.servicePrice = servicePrice;
-        this.serviceDuration = serviceDuration;
-        this.status = status;
-    }
-
-    public Appointment(String userName, String barbershopImageUrl, String barbershopName, String barbershopAddress,String weekDay_monthName_dayOfMonth, String time, String barberImageUrl, String barberName, String barberRating,String serviceName,  String servicePrice,String serviceDuration,String status,String message_or_requests) {
+    public Appointment(String userEmail,String userName, String barbershopImageUrl, String barbershopName, String barbershopAddress,String weekDay_monthName_dayOfMonth, String time, String barberImageUrl, String barberName, String barberRating,String serviceName,  String servicePrice,String serviceDuration,String status,String message_or_requests) {
+        this.userEmail = userEmail;
         this.userName = userName;
         this.barbershopImageUrl = barbershopImageUrl;
         this.barbershopName = barbershopName;
@@ -52,6 +38,14 @@ public class Appointment implements Serializable {
         this.serviceDuration = serviceDuration;
         this.status = status;
         this.message_or_requests = message_or_requests;
+    }
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
     public String getUserName() {
