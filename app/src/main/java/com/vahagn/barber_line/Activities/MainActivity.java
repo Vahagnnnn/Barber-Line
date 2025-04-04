@@ -170,6 +170,9 @@ public class MainActivity extends AppCompatActivity {
             navigateTo(LoginActivity.class);
     }
     public void ToBooks(View view) {
-        navigateTo(BooksActivity.class);
+        if (isLogin)
+            navigateTo(BooksActivity.class);
+        else
+            navigateTo(LoginActivity.class);
     }
 }

@@ -158,7 +158,10 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
     }
 
     public void ToBooks(View view) {
-        navigateTo(BooksActivity.class);
+        if (isLogin)
+            navigateTo(BooksActivity.class);
+        else
+            navigateTo(LoginActivity.class);
     }
 
     private void navigateTo(Class<?> targetActivity) {

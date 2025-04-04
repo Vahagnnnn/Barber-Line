@@ -345,6 +345,6 @@
         android:backgroundTint="@color/black"
         android:text="Confirm"
         android:textColor="@color/white"
-        app:layout_constraintTop_toBottomOf="@+id/Comments" />
+        app:layout_constraintTop_toBottomOf="@+id/message_or_requests" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -59,6 +59,7 @@ public class BarbersActivity extends AppCompatActivity {
                     assert shop != null;
                     addBarbershop(secondActivityContainer, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists(), shop.getServices());
                     ListBarberShops.add(new BarberShops(shop.getName(), shop.getAddress(), shop.getCoordinates(), shop.getImage(), shop.getLogo(), shop.getRating(), shop.getReviews(), shop.getServices(), shop.getSpecialists()));
+//                    ListBarberShops.add(shop);
                 }
             }
 
@@ -172,7 +173,10 @@ public class BarbersActivity extends AppCompatActivity {
     }
 
     public void ToBooks(View view) {
-        navigateTo(BooksActivity.class);
+        if (isLogin)
+            navigateTo(BooksActivity.class);
+        else
+            navigateTo(LoginActivity.class);
     }
     private void navigateTo(Class<?> targetActivity) {
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(

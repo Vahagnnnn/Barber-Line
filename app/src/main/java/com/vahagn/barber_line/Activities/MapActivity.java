@@ -311,6 +311,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         navigateTo(BarbersActivity.class);
     }
     public void ToBooks(View view) {
-        navigateTo(BooksActivity.class);
+        if (isLogin)
+            navigateTo(BooksActivity.class);
+        else
+            navigateTo(LoginActivity.class);
     }
 }
