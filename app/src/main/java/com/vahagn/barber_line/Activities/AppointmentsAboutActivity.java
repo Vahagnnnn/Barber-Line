@@ -34,7 +34,7 @@ public class AppointmentsAboutActivity extends AppCompatActivity {
 
     ImageView BarberShopImage;
     TextView BarberShopName, weekDay_monthName_dayOfMonth, ServiceDuration, BarberShopAddress, ServiceName, ServiceDuration1;
-
+public  static String weekDay_monthName_dayOfMonth_str,Time_str,ServiceName_str;
     LinearLayout venue_details;
 
     @Override
@@ -55,10 +55,13 @@ public class AppointmentsAboutActivity extends AppCompatActivity {
                 .into(BarberShopImage);
 
         BarberShopName.setText(getIntent().getStringExtra("BarberShopName"));
-        weekDay_monthName_dayOfMonth.setText(getIntent().getStringExtra("weekDay_monthName_dayOfMonth"));
+        weekDay_monthName_dayOfMonth_str =getIntent().getStringExtra("weekDay_monthName_dayOfMonth");
+        weekDay_monthName_dayOfMonth.setText(weekDay_monthName_dayOfMonth_str);
+        Time_str = getIntent().getStringExtra("Time");
         ServiceDuration.setText(getIntent().getStringExtra("ServiceDuration"));
         BarberShopAddress.setText(getIntent().getStringExtra("BarberShopAddress"));
-        ServiceName.setText(getIntent().getStringExtra("ServiceName"));
+        ServiceName_str=getIntent().getStringExtra("ServiceName");
+        ServiceName.setText(ServiceName_str);
         ServiceDuration1.setText(getIntent().getStringExtra("ServiceDuration"));
 
         venue_details = findViewById(R.id.venue_details);

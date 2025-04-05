@@ -61,6 +61,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
                 BarbershopImageUrl = appointment.getBarbershopImageUrl();
                 intent.putExtra("BarberShopName", appointment.getBarbershopName());
                 intent.putExtra("weekDay_monthName_dayOfMonth", appointment.getWeekDay_monthName_dayOfMonth());
+                intent.putExtra("Time", appointment.getTime());
                 intent.putExtra("ServiceDuration", appointment.getServiceDuration());
                 intent.putExtra("BarberShopAddress", appointment.getBarbershopAddress());
                 intent.putExtra("ServiceName", appointment.getServiceName());

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -31,17 +32,35 @@ import java.util.Objects;
 
 public class ManageAppointmentActivity extends AppCompatActivity {
 
-    LinearLayout cancel_appointment;
+    @SuppressLint("StaticFieldLeak")
+    public static TextView appointmentDateAndTime;
+    TextView ServiceName;
 
+    public static boolean is_reschedule_appointment;
+    LinearLayout reschedule_appointment, cancel_appointment;
+
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_manage_appointment);
 
-        cancel_appointment = findViewById(R.id.cancel_appointment);
+        appointmentDateAndTime = findViewById(R.id.appointmentDateAndTime);
+        ServiceName = findViewById(R.id.ServiceName);
+        appointmentDateAndTime.setText(AppointmentsAboutActivity.weekDay_monthName_dayOfMonth_str + " at " + AppointmentsAboutActivity.Time_str);
+        ServiceName.setText(AppointmentsAboutActivity.ServiceName_str);
 
+        reschedule_appointment = findViewById(R.id.reschedule_appointment);
+        reschedule_appointment.setOnClickListener(v -> reschedule_appointment());
+
+        cancel_appointment = findViewById(R.id.cancel_appointment);
         cancel_appointment.setOnClickListener(v -> cancel_appointment());
+    }
+
+    private void reschedule_appointment() {
+        is_reschedule_appointment = true;
+        navigateTo(DateTimeActivity.class);
     }
 
 //    private void cancel_appointment() {

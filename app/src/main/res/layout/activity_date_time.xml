@@ -82,7 +82,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:text="Wednesday April 2"
+            android:text="@string/thursday_3_april"
             android:textColor="@color/white"
             android:textSize="16sp" />
 
