@@ -34,6 +34,7 @@
         android:layout_marginTop="15dp"
         android:clickable="true"
         android:focusable="true"
+        android:foreground="@drawable/ripple_dark"
         android:onClick="ToBooks"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -118,7 +119,9 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="15dp"
         android:layout_marginTop="40dp"
+        android:foreground="?attr/selectableItemBackground"
         android:orientation="horizontal"
+        android:padding="3dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ServiceDuration">
@@ -165,7 +168,9 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="15dp"
         android:layout_marginTop="10dp"
+        android:foreground="?attr/selectableItemBackground"
         android:orientation="horizontal"
+        android:padding="3dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/add_to_calendar">
@@ -213,8 +218,10 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="15dp"
         android:layout_marginTop="10dp"
+        android:foreground="?attr/selectableItemBackground"
         android:onClick="ToManageAppointment"
         android:orientation="horizontal"
+        android:padding="3dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/getting_there">
@@ -261,7 +268,9 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="15dp"
         android:layout_marginTop="10dp"
+        android:foreground="?attr/selectableItemBackground"
         android:orientation="horizontal"
+        android:padding="3dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/manage">

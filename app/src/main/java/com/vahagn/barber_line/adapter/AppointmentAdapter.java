@@ -64,6 +64,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
                 intent.putExtra("Time", appointment.getTime());
                 intent.putExtra("ServiceDuration", appointment.getServiceDuration());
                 intent.putExtra("BarberShopAddress", appointment.getBarbershopAddress());
+                intent.putExtra("BarbershopCoordinates", appointment.getBarbershopCoordinates());
                 intent.putExtra("ServiceName", appointment.getServiceName());
 
                 intent.putExtra("BarbershopRating", appointment.getBarbershopRating());

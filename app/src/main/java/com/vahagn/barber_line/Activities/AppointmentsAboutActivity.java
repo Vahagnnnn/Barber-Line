@@ -4,6 +4,7 @@ import static com.vahagn.barber_line.Activities.MainActivity.isLogin;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -29,18 +30,27 @@ import com.vahagn.barber_line.Classes.BarberShops;
 import com.vahagn.barber_line.R;
 import com.vahagn.barber_line.adapter.AppointmentAdapter;
 
+import java.util.Objects;
+
 public class AppointmentsAboutActivity extends AppCompatActivity {
     DatabaseReference barberShops = FirebaseDatabase.getInstance().getReference("barberShops");
 
     ImageView BarberShopImage;
     TextView BarberShopName, weekDay_monthName_dayOfMonth, ServiceDuration, BarberShopAddress, ServiceName, ServiceDuration1;
-public  static String weekDay_monthName_dayOfMonth_str,Time_str,ServiceName_str;
-    LinearLayout venue_details;
+    public static String weekDay_monthName_dayOfMonth_str, Time_str, ServiceName_str;
+    LinearLayout getting_there, venue_details;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appointments_about);
+
+        if (getIntent().getStringExtra("BarbershopCoordinates") != null) {
+            Log.i("BarbershopCoordinates_str","AppointmentsAboutActivity = " + getIntent().getStringExtra("BarbershopCoordinates"));
+        } else {
+            Log.i("BarbershopCoordinates_str", "AppointmentsAboutActivity = " +"Message is null");
+        }
+        String[] coords = Objects.requireNonNull(getIntent().getStringExtra("BarbershopCoordinates")).split(" ");
 
         BarberShopImage = findViewById(R.id.BarberShopImage);
         BarberShopName = findViewById(R.id.BarberShopName);
@@ -55,17 +65,45 @@ public  static String weekDay_monthName_dayOfMonth_str,Time_str,ServiceName_str;
                 .into(BarberShopImage);
 
         BarberShopName.setText(getIntent().getStringExtra("BarberShopName"));
-        weekDay_monthName_dayOfMonth_str =getIntent().getStringExtra("weekDay_monthName_dayOfMonth");
+        weekDay_monthName_dayOfMonth_str = getIntent().getStringExtra("weekDay_monthName_dayOfMonth");
         weekDay_monthName_dayOfMonth.setText(weekDay_monthName_dayOfMonth_str);
         Time_str = getIntent().getStringExtra("Time");
         ServiceDuration.setText(getIntent().getStringExtra("ServiceDuration"));
         BarberShopAddress.setText(getIntent().getStringExtra("BarberShopAddress"));
-        ServiceName_str=getIntent().getStringExtra("ServiceName");
+        ServiceName_str = getIntent().getStringExtra("ServiceName");
         ServiceName.setText(ServiceName_str);
         ServiceDuration1.setText(getIntent().getStringExtra("ServiceDuration"));
 
+        getting_there = findViewById(R.id.getting_there);
+        getting_there.setOnClickListener(v -> getting_there(coords));
+
         venue_details = findViewById(R.id.venue_details);
-        venue_details.setOnClickListener(v -> {
+        venue_details.setOnClickListener(v -> venue_details());
+    }
+
+    private void getting_there(String[] coords) {
+        String latitudeString = coords[0].replace(",", "").trim();
+        String longitudeString = coords[1].replace(",", "").trim();
+
+        double latitude = Double.parseDouble(latitudeString);
+        double longitude = Double.parseDouble(longitudeString);
+
+        finish();
+
+        openGoogleMapsForNavigation(latitude, longitude);
+    }
+
+    public void openGoogleMapsForNavigation(double latitude, double longitude) {
+        Uri gmmIntentUri = Uri.parse("google.navigation:q=" + latitude + "," + longitude);
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+
+        // Start Google Maps
+        startActivity(mapIntent);
+    }
+
+    private void venue_details() {
+        {
             Intent intent = new Intent(this, BarberShopsAboutActivity.class);
             intent.putExtra("from_where", "AppointmentsAboutActivity");
 
@@ -97,7 +135,7 @@ public  static String weekDay_monthName_dayOfMonth_str,Time_str,ServiceName_str;
                     findViewById(R.id.bottom_navigation),
                     "sharedImageTransition");
             startActivity(intent, options.toBundle());
-        });
+        }
     }
 
 

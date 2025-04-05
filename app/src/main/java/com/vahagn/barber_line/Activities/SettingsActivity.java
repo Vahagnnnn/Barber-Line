@@ -98,34 +98,34 @@ public class SettingsActivity extends AppCompatActivity {
             });
         }
 
-        View.OnTouchListener touchEffect = (v, event) -> {
-            GradientDrawable drawable = new GradientDrawable();
-            drawable.setColor(Color.parseColor("#C4C1C1"));
-            drawable.setCornerRadius(15);
-            v.setBackground(drawable);
+//        View.OnTouchListener touchEffect = (v, event) -> {
+//            GradientDrawable drawable = new GradientDrawable();
+//            drawable.setColor(Color.parseColor("#C4C1C1"));
+//            drawable.setCornerRadius(15);
+//            v.setBackground(drawable);
+//
+//            switch (event.getAction()) {
+//                case MotionEvent.ACTION_DOWN:
+//                    v.postDelayed(() -> {
+//                        drawable.setColor(Color.parseColor("#9e9e9e"));
+//                        v.setBackground(drawable);
+//                    }, 0);
+//                    return false;
+//                case MotionEvent.ACTION_UP:
+//                case MotionEvent.ACTION_CANCEL:
+//                    v.postDelayed(() -> {
+//                        drawable.setColor(Color.parseColor("#C4C1C1"));
+//                        v.setBackground(drawable);
+//                    }, 0);
+//                    break;
+//            }
+//            return false;
+//        };
 
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    v.postDelayed(() -> {
-                        drawable.setColor(Color.parseColor("#9e9e9e"));
-                        v.setBackground(drawable);
-                    }, 0);
-                    return false;
-                case MotionEvent.ACTION_UP:
-                case MotionEvent.ACTION_CANCEL:
-                    v.postDelayed(() -> {
-                        drawable.setColor(Color.parseColor("#C4C1C1"));
-                        v.setBackground(drawable);
-                    }, 0);
-                    break;
-            }
-            return false;
-        };
-
-        edit_profile.setOnTouchListener(touchEffect);
-        logout_button.setOnTouchListener(touchEffect);
-        remove_account.setOnTouchListener(touchEffect);
-        admin.setOnTouchListener(touchEffect);
+//        edit_profile.setOnTouchListener(touchEffect);
+//        logout_button.setOnTouchListener(touchEffect);
+//        remove_account.setOnTouchListener(touchEffect);
+//        admin.setOnTouchListener(touchEffect);
 
         logout_button.setOnClickListener(view -> logOut());
         remove_account.setOnClickListener(view -> remove_account());

@@ -72,6 +72,7 @@ public class TopBarberShopsAdapter extends RecyclerView.Adapter<TopBarberShopsAd
                 BarbersActivity.name = item.getName();
                 BarbersActivity.rating = String.valueOf(item.getRating());
                 BarbersActivity.address = item.getAddress();
+                BarbersActivity.coordinates = item.getCoordinates();
                 BarbersActivity.ListSpecialist = item.getSpecialists();
                 BarbersActivity.ListService = item.getServices();
 
