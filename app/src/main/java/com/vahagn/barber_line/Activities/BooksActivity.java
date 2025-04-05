@@ -65,46 +65,6 @@ public class BooksActivity extends AppCompatActivity {
 
         loadAppointments();
 
-
-
-//        DatabaseReference appointmentsRef = FirebaseDatabase.getInstance().getReference("Appointments");
-
-//        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-//        String userEmail = "";
-//
-//        if (currentUser != null) {
-//            userEmail = currentUser.getEmail();
-//            Log.d("FirebaseAuth", "Current user email: " + userEmail);
-//        } else {
-//            Log.e("FirebaseAuth", "No user is signed in");
-//        }
-//
-//        String UserEmail = userEmail;
-//        appointmentsRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//                    Appointment appointment = snapshot.getValue(Appointment.class);
-//                    if (appointment != null && Objects.equals(appointment.getUserEmail(), UserEmail)) {
-//                        AppointmentsList.add(new Appointment(snapshot.getName(), shop.getAddress(), shop.getCoordinates(), shop.getImage(), shop.getLogo(), shop.getRating(), shop.getReviews(), shop.getServices(), shop.getSpecialists()));
-//
-//
-//                        //                        Appointment Appointment = new Appointment(UserEmail, UserName, BarberShopImageUrl_str, BarberShopName_str,
-////                                BarberShopAddress_str, weekDay_monthName_dayOfMonth_str, Time_str, BarberImageUrl_str,
-////                                BarberName_str, BarberRating_str, ServiceName_str, ServicePrice_str, ServiceDuration_str, "Active", message_or_requests_str);
-//
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//                Log.w("Firebase", "Failed to read value.", databaseError.toException());
-//            }
-//        });
-//        AddAppointments(appointments_container,AppointmentsList);
-
-
     }
 
 
@@ -138,50 +98,6 @@ public class BooksActivity extends AppCompatActivity {
             }
         });
     }
-//    private void AddAppointments(LinearLayout container, List<Appointment> AppointmentsList) {
-//        View barbershopView = LayoutInflater.from(this).inflate(R.layout.barbershops_gray, container, false);
-//
-//        appointmentAdapter = new AppointmentAdapter(this, AppointmentsList);
-//
-//        container.addView(barbershopView);
-//
-//    }
-
-//    public void addBarbershop(LinearLayout container) {
-//        View appointmentView = LayoutInflater.from(this).inflate(R.layout.book_item, container, false);
-//
-
-        //        ImageView logoImageView = appointmentView.findViewById(R.id.logo);
-
-//        Glide.with(this)
-//                .load(logo)
-//                .into(logoImageView);
-//
-//        TextView nameTextView = barbershopView.findViewById(R.id.name);
-//        TextView addressTextView = barbershopView.findViewById(R.id.address);
-//
-//        nameTextView.setText(name);
-//        addressTextView.setText(address);
-
-//
-//        barbershopView.setOnClickListener(v -> {
-//            Intent intent = new Intent(this, AdminBarberShopsAboutActivity.class);
-//
-//            AdminSettingsActivity.imageUrl = imageUrl;
-//            AdminSettingsActivity.name = name;
-//            AdminSettingsActivity.rating = String.valueOf(rating);
-//            AdminSettingsActivity.address = address;
-//            AdminSettingsActivity.ListSpecialist = ListSpecialist;
-//
-//            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
-//                    this,
-//                    findViewById(R.id.bottom_navigation),
-//                    "sharedImageTransition");
-//            startActivity(intent, options.toBundle());
-//        });
-
-//        container.addView(appointmentView);
-//    }
 
 
     private void navigateTo(Class<?> targetActivity) {

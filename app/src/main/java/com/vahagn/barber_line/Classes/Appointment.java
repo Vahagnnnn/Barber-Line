@@ -8,6 +8,7 @@ public class Appointment implements Serializable {
     public String barbershopImageUrl;
     public String barbershopName;
     public String barbershopAddress;
+    public String barbershopRating;
     public String weekDay_monthName_dayOfMonth;
     public String time;
     public String barberImageUrl;
@@ -22,12 +23,13 @@ public class Appointment implements Serializable {
     public Appointment() {
     }
 
-    public Appointment(String userEmail,String userName, String barbershopImageUrl, String barbershopName, String barbershopAddress,String weekDay_monthName_dayOfMonth, String time, String barberImageUrl, String barberName, String barberRating,String serviceName,  String servicePrice,String serviceDuration,String status,String message_or_requests) {
+    public Appointment(String userEmail,String userName, String barbershopImageUrl, String barbershopName, String barbershopAddress,String barbershopRating,String weekDay_monthName_dayOfMonth, String time, String barberImageUrl, String barberName, String barberRating,String serviceName,  String servicePrice,String serviceDuration,String status,String message_or_requests) {
         this.userEmail = userEmail;
         this.userName = userName;
         this.barbershopImageUrl = barbershopImageUrl;
         this.barbershopName = barbershopName;
         this.barbershopAddress = barbershopAddress;
+        this.barbershopRating = barbershopRating;
         this.weekDay_monthName_dayOfMonth = weekDay_monthName_dayOfMonth;
         this.time = time;
         this.barberImageUrl = barberImageUrl;
@@ -80,6 +82,13 @@ public class Appointment implements Serializable {
         this.barbershopAddress = barbershopAddress;
     }
 
+    public String getBarbershopRating() {
+        return barbershopRating;
+    }
+
+    public void setBarbershopRating(String barbershopRating) {
+        this.barbershopRating = barbershopRating;
+    }
 
     public String getWeekDay_monthName_dayOfMonth() {
         return weekDay_monthName_dayOfMonth;

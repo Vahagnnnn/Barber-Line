@@ -5,25 +5,38 @@ import static com.vahagn.barber_line.Activities.MainActivity.isLogin;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.vahagn.barber_line.Admin.AdminActivity;
+import com.vahagn.barber_line.Classes.BarberShops;
 import com.vahagn.barber_line.R;
 import com.vahagn.barber_line.adapter.AppointmentAdapter;
 
 public class AppointmentsAboutActivity extends AppCompatActivity {
+    DatabaseReference barberShops = FirebaseDatabase.getInstance().getReference("barberShops");
 
     ImageView BarberShopImage;
-    TextView BarberShopName,weekDay_monthName_dayOfMonth,ServiceDuration,BarberShopAddress,ServiceName,ServiceDuration1;
+    TextView BarberShopName, weekDay_monthName_dayOfMonth, ServiceDuration, BarberShopAddress, ServiceName, ServiceDuration1;
+
+    LinearLayout venue_details;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,20 +60,56 @@ public class AppointmentsAboutActivity extends AppCompatActivity {
         BarberShopAddress.setText(getIntent().getStringExtra("BarberShopAddress"));
         ServiceName.setText(getIntent().getStringExtra("ServiceName"));
         ServiceDuration1.setText(getIntent().getStringExtra("ServiceDuration"));
+
+        venue_details = findViewById(R.id.venue_details);
+        venue_details.setOnClickListener(v -> {
+            Intent intent = new Intent(this, BarberShopsAboutActivity.class);
+            intent.putExtra("from_where", "AppointmentsAboutActivity");
+
+            BarbersActivity.imageUrl = AppointmentAdapter.BarbershopImageUrl;
+            BarbersActivity.name = getIntent().getStringExtra("BarberShopName");
+            BarbersActivity.rating = getIntent().getStringExtra("BarbershopRating");
+            BarbersActivity.address = getIntent().getStringExtra("BarberShopAddress");
+
+            barberShops.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        BarberShops shop = snapshot.getValue(BarberShops.class);
+                        if (shop != null && shop.getName().equals(BarbersActivity.name)) {
+                            BarbersActivity.ListSpecialist = shop.getSpecialists();
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.w("Firebase", "Failed to read value.", databaseError.toException());
+                }
+            });
+
+
+            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
+                    this,
+                    findViewById(R.id.bottom_navigation),
+                    "sharedImageTransition");
+            startActivity(intent, options.toBundle());
+        });
     }
-
-
 
 
     public void ToHome(View view) {
         navigateTo(MainActivity.class);
     }
+
     public void ToBarbers(View view) {
         navigateTo(BarbersActivity.class);
     }
+
     public void ToMap(View view) {
         navigateTo(MapActivity.class);
     }
+
     public void ToManageAppointment(View view) {
         navigateTo(ManageAppointmentActivity.class);
     }

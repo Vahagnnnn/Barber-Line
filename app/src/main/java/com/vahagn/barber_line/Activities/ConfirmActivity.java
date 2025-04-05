@@ -35,7 +35,7 @@ public class ConfirmActivity extends AppCompatActivity {
     ImageView BarberShopImage, BarberImage;
     TextView BarberShopName, BarberShopAddress, weekDay_monthName_dayOfMonth, Time, BarberName, BarberRating, ServiceName, ServiceDuration, ServicePrice;
 
-    String BarberShopImageUrl_str, BarberShopName_str, BarberShopAddress_str, weekDay_monthName_dayOfMonth_str, Time_str,
+    String BarberShopImageUrl_str, BarberShopName_str, BarberShopAddress_str,BarberShopRating_str, weekDay_monthName_dayOfMonth_str, Time_str,
             BarberImageUrl_str, BarberName_str, BarberRating_str, ServiceName_str, ServicePrice_str, ServiceDuration_str;
 
     Button confirm_button;
@@ -51,6 +51,7 @@ public class ConfirmActivity extends AppCompatActivity {
         BarberShopImageUrl_str = BarbersActivity.imageUrl;
         BarberShopName_str = BarbersActivity.name;
         BarberShopAddress_str = BarbersActivity.address;
+        BarberShopRating_str = BarbersActivity.rating;
         weekDay_monthName_dayOfMonth_str = intent.getStringExtra("weekDay_monthName_dayOfMonth");
         Time_str = intent.getStringExtra("Time");
         BarberImageUrl_str = SpecialistsFragment.imageUrl;
@@ -113,7 +114,7 @@ public class ConfirmActivity extends AppCompatActivity {
 
         String message_or_requests_str = message_or_requests.getText().toString().trim();
         Appointment Appointment = new Appointment(UserEmail, UserName, BarberShopImageUrl_str, BarberShopName_str,
-                BarberShopAddress_str, weekDay_monthName_dayOfMonth_str, Time_str, BarberImageUrl_str,
+                BarberShopAddress_str, BarberShopRating_str,weekDay_monthName_dayOfMonth_str, Time_str, BarberImageUrl_str,
                 BarberName_str, BarberRating_str, ServiceName_str, ServicePrice_str, ServiceDuration_str, "Active", message_or_requests_str);
 
         appointmentsRef.get().addOnCompleteListener(task -> {

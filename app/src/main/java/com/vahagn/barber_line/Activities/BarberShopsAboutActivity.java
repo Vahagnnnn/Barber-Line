@@ -114,6 +114,8 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
                     ToHome(v);
                 else if (Objects.equals(from_where, "MapActivity"))
                     ToMap(v);
+                else if (Objects.equals(from_where, "AppointmentsAboutActivity"))
+                    ToBooks(v);
                 else
                     ToHome(v);
             }
