@@ -1,129 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:background="#FFFFFF"
+    android:orientation="vertical"
+    android:padding="24dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <!-- Title -->
+    <TextView
+        android:id="@+id/manageAppointmentTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="24dp"
+        android:text="Manage appointment"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <!-- Appointment Info -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="24dp">
 
-        <!-- Title: Paragon -->
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Paragon"
-            android:textSize="28sp"
-            android:textStyle="bold"
-            android:textColor="#000000"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+        <ImageView
+            android:id="@+id/appointmentImage"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginEnd="16dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_launcher_foreground" />
 
-        <!-- Confirmed Badge -->
-        <TextView
-            android:id="@+id/status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="✔ Confirmed"
-            android:textColor="#6A3EFF"
-            android:backgroundTint="#E8E0FF"
-            android:padding="8dp"
-            android:background="@drawable/confirmed_bg"
-            android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@id/title"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="12dp" />
-
-        <!-- Time and Date -->
-        <TextView
-            android:id="@+id/time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tomorrow at 10:30 AM"
-            android:textSize="20sp"
-            android:textColor="#000000"
-            android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@id/status"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="24dp"/>
-
-        <TextView
-            android:id="@+id/duration"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="1 hr duration"
-            android:textSize="14sp"
-            android:textColor="#666666"
-            app:layout_constraintTop_toBottomOf="@id/time"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="4dp"/>
-
-        <!-- List Items -->
         <LinearLayout
-            android:id="@+id/item_list"
-            android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            app:layout_constraintTop_toBottomOf="@id/duration"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-            <!-- Add to calendar -->
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/appointmentDate"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="📅 Add to calendar\nSet yourself a reminder"
+                android:text="Tue, Apr 15, 2025 at 3:00 PM"
                 android:textSize="16sp"
-                android:paddingVertical="12dp"
-                android:textColor="#000000"/>
+                android:textStyle="bold" />
 
-            <!-- Getting there -->
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/appointmentLocation"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="📍 Getting there\n9 Ghazar Parpetsi St, Yerevan"
-                android:textSize="16sp"
-                android:paddingVertical="12dp"
-                android:textColor="#000000"/>
-
-            <!-- Manage appointment -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="📅 Manage appointment\nReschedule or cancel your appointment"
-                android:textSize="16sp"
-                android:paddingVertical="12dp"
-                android:textColor="#000000"/>
-
-            <!-- Venue details -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="🏢 Venue details\nParagon"
-                android:textSize="16sp"
-                android:paddingVertical="12dp"
-                android:textColor="#000000"/>
-
+                android:text="Se.rene hair  beauty"
+                android:textColor="#888888"
+                android:textSize="14sp" />
         </LinearLayout>
+    </LinearLayout>
 
-        <!-- Overview -->
+    <!-- Reschedule -->
+    <LinearLayout
+        android:id="@+id/rescheduleLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:orientation="horizontal"
+        android:paddingVertical="16dp">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_reschedule" />
+
         <TextView
-            android:id="@+id/overview"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Overview\nԿՏՐԱԾՔ ՄԿՐՈՒԹՅՈՒՆ / Haircut\n1 hr with Arev\nTotal  AMD 9,000"
-            android:textSize="16sp"
-            android:textColor="#000000"
-            android:layout_marginTop="24dp"
-            app:layout_constraintTop_toBottomOf="@id/item_list"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:layout_weight="1"
+            android:text="Reschedule appointment"
+            android:textSize="16sp" />
+    </LinearLayout>
 
+    <!-- Divider -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#DDDDDD" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Cancel -->
+    <LinearLayout
+        android:id="@+id/cancelLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:orientation="horizontal"
+        android:paddingVertical="16dp">
 
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_reschedule" />
 
-</ScrollView>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Cancel appointment"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+</LinearLayout>

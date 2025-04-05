@@ -61,6 +61,9 @@ public class AppointmentsAboutActivity extends AppCompatActivity {
     public void ToMap(View view) {
         navigateTo(MapActivity.class);
     }
+    public void ToManageAppointment(View view) {
+        navigateTo(ManageAppointmentActivity.class);
+    }
 
     public void ToBooks(View view) {
         if (isLogin)
