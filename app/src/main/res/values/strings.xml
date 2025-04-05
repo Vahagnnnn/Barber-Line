@@ -74,5 +74,12 @@
     <string name="new_password">New password</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="reservations">Reservations</string>
+    <string name="getting_there">Getting there</string>
+    <string name="add_to_calendar">Add to calendar</string>
+    <string name="set_yourself_a_reminder">Set yourself a reminder</string>
+    <string name="manage_appointment">Manage appointment</string>
+    <string name="reschedule_or_cancel_your_appointment">Reschedule or cancel your appointment</string>
+    <string name="venue_details">Venue details</string>
+    <string name="thursday_3_april">Thursday 3 April</string>
 
 </resources>

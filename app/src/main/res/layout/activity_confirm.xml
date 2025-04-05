@@ -124,7 +124,7 @@
             android:layout_height="wrap_content"
 
             android:layout_marginStart="10dp"
-            android:text="Thursday 3 April"
+            android:text="@string/thursday_3_april"
             android:textColor="@color/white"
             android:textSize="16sp"
             android:textStyle="bold" />

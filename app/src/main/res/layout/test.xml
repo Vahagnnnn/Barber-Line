@@ -1,178 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/paragonLayout"
-    android:layout_width="360dp"
-    android:layout_height="230dp"
-    android:layout_marginEnd="13dp"
-    android:background="@drawable/radius_16_dp"
-    android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
 
-    <LinearLayout
-        android:id="@+id/container_frame"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="230dp"
-        android:background="@drawable/gray_frame"
-        android:gravity="left|center_vertical"
-        android:orientation="vertical"
-        android:paddingLeft="16dp"
-        android:paddingTop="20dp"
-        android:paddingRight="16dp"
-        android:paddingBottom="20dp"
-        tools:ignore="RtlHardcoded">
+        android:layout_height="wrap_content"
+        android:padding="16dp">
 
-        <LinearLayout
-            android:id="@+id/container_frame1"
+        <!-- Title: Paragon -->
+        <TextView
+            android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:text="Paragon"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-            <androidx.cardview.widget.CardView
-                app:cardCornerRadius="10dp"
-                app:cardElevation="0dp"
-                android:layout_width="50dp"
-                android:layout_height="47dp">
+        <!-- Confirmed Badge -->
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="✔ Confirmed"
+            android:textColor="#6A3EFF"
+            android:backgroundTint="#E8E0FF"
+            android:padding="8dp"
+            android:background="@drawable/confirmed_bg"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/title"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="12dp" />
 
-                <ImageView
-                    android:id="@+id/BarberShopImage"
-                    android:layout_width="50dp"
-                    android:layout_height="47dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/img_paragon" />
-            </androidx.cardview.widget.CardView>
+        <!-- Time and Date -->
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tomorrow at 10:30 AM"
+            android:textSize="20sp"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/status"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="24dp"/>
 
-            <FrameLayout
-                android:id="@+id/container_frame4"
-                android:layout_width="220dp"
-                android:layout_height="53dp"
-                android:layout_marginStart="10dp">
+        <TextView
+            android:id="@+id/duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1 hr duration"
+            android:textSize="14sp"
+            android:textColor="#666666"
+            app:layout_constraintTop_toBottomOf="@id/time"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="4dp"/>
 
-                <TextView
-                    android:id="@+id/txt_sargis"
-                    android:layout_width="wrap_content"
-                    android:layout_height="24dp"
-                    android:gravity="left|center_vertical"
-                    android:text="Paragon"
-                    android:includeFontPadding="false"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:textColor="#FF0D1B34"
-                    android:textSize="16sp" />
+        <!-- List Items -->
+        <LinearLayout
+            android:id="@+id/item_list"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:layout_constraintTop_toBottomOf="@id/duration"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
-                <TextView
-                    android:id="@+id/txt_address"
-                    android:layout_width="match_parent"
-                    android:layout_height="21dp"
-                    android:layout_marginTop="24dp"
-                    android:gravity="left|center_vertical"
-                    android:includeFontPadding="false"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:text="@string/_9_ghazar_parpetsi_st_8"
-                    android:textColor="#FF000000"
-                    android:textSize="14sp" />
-            </FrameLayout>
+            <!-- Add to calendar -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="📅 Add to calendar\nSet yourself a reminder"
+                android:textSize="16sp"
+                android:paddingVertical="12dp"
+                android:textColor="#000000"/>
+
+            <!-- Getting there -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="📍 Getting there\n9 Ghazar Parpetsi St, Yerevan"
+                android:textSize="16sp"
+                android:paddingVertical="12dp"
+                android:textColor="#000000"/>
+
+            <!-- Manage appointment -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="📅 Manage appointment\nReschedule or cancel your appointment"
+                android:textSize="16sp"
+                android:paddingVertical="12dp"
+                android:textColor="#000000"/>
+
+            <!-- Venue details -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="🏢 Venue details\nParagon"
+                android:textSize="16sp"
+                android:paddingVertical="12dp"
+                android:textColor="#000000"/>
+
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/img_vector"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="20dp"
-            android:contentDescription="@string/app_name"
-            android:scaleType="centerCrop"
-            android:src="@drawable/img_vector" />
-
-        <LinearLayout
-            android:id="@+id/container_frame8"
+        <!-- Overview -->
+        <TextView
+            android:id="@+id/overview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:clipToPadding="false"
-            android:orientation="horizontal">
+            android:text="Overview\nԿՏՐԱԾՔ ՄԿՐՈՒԹՅՈՒՆ / Haircut\n1 hr with Arev\nTotal  AMD 9,000"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:layout_marginTop="24dp"
+            app:layout_constraintTop_toBottomOf="@id/item_list"
+            app:layout_constraintStart_toStartOf="parent" />
 
-            <ImageView
-                android:id="@+id/img_calendar"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:contentDescription="@string/app_name"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_calendar" />
 
-            <TextView
-                android:id="@+id/txt_calendar_date"
-                android:layout_width="wrap_content"
-                android:layout_height="18dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="8dp"
-                android:gravity="center"
-                android:includeFontPadding="false"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:text="Sunday, 12 June"
-                android:textColor="#FF000000"
-                android:textSize="12sp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="18dp"
-                android:layout_weight="1" />
 
-            <ImageView
-                android:id="@+id/img_clock"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_marginStart="12dp"
-                android:contentDescription="@string/app_name"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_clock" />
-
-            <TextView
-                android:id="@+id/txt_time"
-                android:layout_width="wrap_content"
-                android:layout_height="18dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="8dp"
-                android:gravity="center"
-                android:includeFontPadding="false"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:text="11:00 - 12:00 AM"
-                android:textColor="#FF000000"
-                android:textSize="12sp" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="18dp"
-                android:layout_weight="1" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/container_frame15"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/dark_blue_frame"
-            android:clipToPadding="false"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingLeft="32dp"
-            android:paddingTop="10.5dp"
-            android:paddingRight="32dp"
-            android:paddingBottom="10.5dp">
-
-            <TextView
-                android:id="@+id/txt_detail"
-                android:layout_width="wrap_content"
-                android:layout_height="18dp"
-                android:gravity="center"
-                android:includeFontPadding="false"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:text="Detail"
-                android:textColor="#FFFFFFFF"
-                android:textSize="14sp" />
-        </LinearLayout>
-    </LinearLayout>
-</LinearLayout>
+</ScrollView>

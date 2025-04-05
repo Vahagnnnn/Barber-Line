@@ -1,5 +1,6 @@
 package com.vahagn.barber_line.adapter;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,11 +10,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.vahagn.barber_line.Activities.AppointmentsAboutActivity;
+import com.vahagn.barber_line.Activities.BarberShopsAboutActivity;
+import com.vahagn.barber_line.Activities.BarbersActivity;
 import com.vahagn.barber_line.Classes.Appointment;
 import com.vahagn.barber_line.R;
 import java.util.List;
 
 public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.AppointmentViewHolder> {
+   public static String BarbershopImageUrl;
     private List<Appointment> appointments;
 
     public AppointmentAdapter(List<Appointment> appointments) {
@@ -45,6 +50,25 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
         holder.weekDay_monthName_dayOfMonth.setText(appointment.getWeekDay_monthName_dayOfMonth());
         holder.Time.setText(appointment.getTime());
+
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(holder.itemView.getContext(), AppointmentsAboutActivity.class);
+
+                BarbershopImageUrl = appointment.getBarbershopImageUrl();
+                intent.putExtra("BarberShopName", appointment.getBarbershopName());
+                intent.putExtra("weekDay_monthName_dayOfMonth", appointment.getWeekDay_monthName_dayOfMonth());
+                intent.putExtra("ServiceDuration", appointment.getServiceDuration());
+                intent.putExtra("BarberShopAddress", appointment.getBarbershopAddress());
+                intent.putExtra("ServiceName", appointment.getServiceName());
+
+                holder.itemView.getContext().startActivity(intent);
+
+            }
+        });
+
     }
 
     @Override
