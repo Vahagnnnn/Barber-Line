@@ -50,6 +50,7 @@ public class BooksActivity extends AppCompatActivity {
     List<Appointment> AppointmentsList = new ArrayList<>();
     AppointmentAdapter appointmentAdapter;
 
+    public static String uniqueID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +59,7 @@ public class BooksActivity extends AppCompatActivity {
 
 
         appointmentsRecyclerView = findViewById(R.id.appointments_recycler_view);
-        appointmentsRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false));
+        appointmentsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
         appointmentAdapter = new AppointmentAdapter(AppointmentsList);
         appointmentsRecyclerView.setAdapter(appointmentAdapter);

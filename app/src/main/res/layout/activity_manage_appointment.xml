@@ -148,7 +148,7 @@
 
     <!-- Cancel -->
     <LinearLayout
-        android:id="@+id/cancelLayout"
+        android:id="@+id/cancel_appointment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="15dp"

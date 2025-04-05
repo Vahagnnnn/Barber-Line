@@ -47,7 +47,6 @@ public class SuperAdminModerationActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     BarberShops shop = snapshot.getValue(BarberShops.class);
-                    Log.i("getServices", shop.getServices().toString());
                     addBarbershop(secondActivityContainer, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists(), shop.getServices(), snapshot.getKey());
                 }
             }
@@ -178,15 +177,6 @@ public class SuperAdminModerationActivity extends AppCompatActivity {
                             } catch (NumberFormatException ignored) {
                             }
                         }
-
-//                        rejectedRef.child(String.valueOf(nextId)).setValue(shop)
-//                                .addOnSuccessListener(aVoid -> {
-//                                    pendingRef.child(key).removeValue()
-//                                            .addOnSuccessListener(aVoid1 -> {
-//                                                container.removeView(barbershopView);
-//
-//                                            });
-//                                });
 
                         long finalNextId = nextId;
                         rejectedRef.child(String.valueOf(nextId)).setValue(shop)

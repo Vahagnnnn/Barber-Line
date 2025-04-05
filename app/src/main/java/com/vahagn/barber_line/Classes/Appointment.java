@@ -19,11 +19,15 @@ public class Appointment implements Serializable {
     public String serviceDuration;
     public String status;
     public String message_or_requests;
+    public String uniqueID;
 
     public Appointment() {
     }
 
-    public Appointment(String userEmail,String userName, String barbershopImageUrl, String barbershopName, String barbershopAddress,String barbershopRating,String weekDay_monthName_dayOfMonth, String time, String barberImageUrl, String barberName, String barberRating,String serviceName,  String servicePrice,String serviceDuration,String status,String message_or_requests) {
+    public Appointment(String userEmail,String userName, String barbershopImageUrl, String barbershopName,
+                       String barbershopAddress,String barbershopRating,String weekDay_monthName_dayOfMonth,
+                       String time, String barberImageUrl, String barberName, String barberRating,String serviceName,
+                       String servicePrice,String serviceDuration,String status,String message_or_requests,String uniqueID) {
         this.userEmail = userEmail;
         this.userName = userName;
         this.barbershopImageUrl = barbershopImageUrl;
@@ -40,6 +44,7 @@ public class Appointment implements Serializable {
         this.serviceDuration = serviceDuration;
         this.status = status;
         this.message_or_requests = message_or_requests;
+        this.uniqueID = uniqueID;
     }
 
     public String getUserEmail() {
@@ -168,5 +173,13 @@ public class Appointment implements Serializable {
 
     public void setMessage_or_requests(String message_or_requests) {
         this.message_or_requests = message_or_requests;
+    }
+
+    public String getUniqueID() {
+        return uniqueID;
+    }
+
+    public void setUniqueID(String uniqueID) {
+        this.uniqueID = uniqueID;
     }
 }

@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.vahagn.barber_line.Activities.AppointmentsAboutActivity;
 import com.vahagn.barber_line.Activities.BarberShopsAboutActivity;
 import com.vahagn.barber_line.Activities.BarbersActivity;
+import com.vahagn.barber_line.Activities.BooksActivity;
 import com.vahagn.barber_line.Classes.Appointment;
 import com.vahagn.barber_line.R;
 import java.util.List;
@@ -65,7 +66,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
                 intent.putExtra("ServiceName", appointment.getServiceName());
 
                 intent.putExtra("BarbershopRating", appointment.getBarbershopRating());
-
+                BooksActivity.uniqueID = appointment.getUniqueID();
                 holder.itemView.getContext().startActivity(intent);
 
             }

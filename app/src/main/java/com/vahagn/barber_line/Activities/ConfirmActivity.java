@@ -35,7 +35,7 @@ public class ConfirmActivity extends AppCompatActivity {
     ImageView BarberShopImage, BarberImage;
     TextView BarberShopName, BarberShopAddress, weekDay_monthName_dayOfMonth, Time, BarberName, BarberRating, ServiceName, ServiceDuration, ServicePrice;
 
-    String BarberShopImageUrl_str, BarberShopName_str, BarberShopAddress_str,BarberShopRating_str, weekDay_monthName_dayOfMonth_str, Time_str,
+    String BarberShopImageUrl_str, BarberShopName_str, BarberShopAddress_str, BarberShopRating_str, weekDay_monthName_dayOfMonth_str, Time_str,
             BarberImageUrl_str, BarberName_str, BarberRating_str, ServiceName_str, ServicePrice_str, ServiceDuration_str;
 
     Button confirm_button;
@@ -113,9 +113,11 @@ public class ConfirmActivity extends AppCompatActivity {
         }
 
         String message_or_requests_str = message_or_requests.getText().toString().trim();
+        String uniqueID = generateUniqueIDAndSave();
+        Log.i("uniqueID",uniqueID);
         Appointment Appointment = new Appointment(UserEmail, UserName, BarberShopImageUrl_str, BarberShopName_str,
-                BarberShopAddress_str, BarberShopRating_str,weekDay_monthName_dayOfMonth_str, Time_str, BarberImageUrl_str,
-                BarberName_str, BarberRating_str, ServiceName_str, ServicePrice_str, ServiceDuration_str, "Active", message_or_requests_str);
+                BarberShopAddress_str, BarberShopRating_str, weekDay_monthName_dayOfMonth_str, Time_str, BarberImageUrl_str,
+                BarberName_str, BarberRating_str, ServiceName_str, ServicePrice_str, ServiceDuration_str, "Active", message_or_requests_str, uniqueID);
 
         appointmentsRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
@@ -137,6 +139,37 @@ public class ConfirmActivity extends AppCompatActivity {
         });
 
     }
+
+
+    private String generate6CharID() {
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        StringBuilder id = new StringBuilder();
+        java.util.Random random = new java.util.Random();
+
+        for (int i = 0; i < 6; i++) {
+            int index = random.nextInt(characters.length());
+            id.append(characters.charAt(index));
+        }
+
+        return id.toString();
+    }
+
+
+    public String generateUniqueIDAndSave() {
+        String generatedID = generate6CharID();
+
+        appointmentsRef.child(generatedID).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                if (task.getResult().exists()) {
+                    generateUniqueIDAndSave();
+                }
+            } else {
+                Toast.makeText(ConfirmActivity.this, "Failed to check ID uniqueness", Toast.LENGTH_SHORT).show();
+            }
+        });
+        return generatedID;
+    }
+
 
     public void Back(View view) {
         onBackPressed();

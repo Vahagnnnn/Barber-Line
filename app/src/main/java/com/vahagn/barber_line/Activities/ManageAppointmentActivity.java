@@ -2,21 +2,36 @@ package com.vahagn.barber_line.Activities;
 
 import static com.vahagn.barber_line.Activities.MainActivity.isLogin;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.vahagn.barber_line.Admin.AdminActivity;
+import com.vahagn.barber_line.Classes.Appointment;
+import com.vahagn.barber_line.Classes.BarberShops;
 import com.vahagn.barber_line.R;
 
+import java.util.Objects;
+
 public class ManageAppointmentActivity extends AppCompatActivity {
+
+    LinearLayout cancel_appointment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,14 +39,118 @@ public class ManageAppointmentActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_manage_appointment);
 
+        cancel_appointment = findViewById(R.id.cancel_appointment);
+
+        cancel_appointment.setOnClickListener(v -> cancel_appointment());
     }
+
+//    private void cancel_appointment() {
+//        DatabaseReference appointmentsRef = FirebaseDatabase.getInstance().getReference("Appointments");
+//        DatabaseReference canceled_appointmentsRef = FirebaseDatabase.getInstance().getReference("Canceled_Appointments");
+//
+//
+//        appointmentsRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                    Appointment appointment = snapshot.getValue(Appointment.class);
+//                    if (appointment != null && appointment.getUniqueID().equals(BooksActivity.uniqueID)) {
+//                        Log.i("uniqueID", BooksActivity.uniqueID);
+//                        canceled_appointmentsRef.get().addOnSuccessListener(snapshot1 -> {
+//                            long nextId = 0;
+//
+//                            for (DataSnapshot child : snapshot.getChildren()) {
+//                                try {
+//                                    long id = Long.parseLong(Objects.requireNonNull(child.getKey()));
+//                                    if (id >= nextId) {
+//                                        nextId = id + 1;
+//                                    }
+//                                } catch (NumberFormatException ignored) {
+//                                }
+//                            }
+//                            appointment.setStatus("Canceled");
+//                            canceled_appointmentsRef.child(String.valueOf(nextId)).setValue(appointment)
+//                                    .addOnSuccessListener(aVoid -> {
+//                                        snapshot.getRef().removeValue();
+//                                    });
+//                        });
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                Log.w("Firebase", "Failed to read value.", databaseError.toException());
+//            }
+//        });
+//
+//        navigateTo(BooksActivity.class);
+//    }
+
+    private void cancel_appointment() {
+        DatabaseReference appointmentsRef = FirebaseDatabase.getInstance().getReference("Appointments");
+        DatabaseReference canceled_appointmentsRef = FirebaseDatabase.getInstance().getReference("Canceled_Appointments");
+
+        appointmentsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Appointment appointment = snapshot.getValue(Appointment.class);
+                    if (appointment != null && appointment.getUniqueID().equals(BooksActivity.uniqueID)) {
+                        Log.i("uniqueID", BooksActivity.uniqueID);
+
+                        // Получаем все отмененные записи, чтобы вычислить nextId
+                        canceled_appointmentsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot canceledSnapshot) {
+                                long nextId = 0;
+
+                                for (DataSnapshot child : canceledSnapshot.getChildren()) {
+                                    try {
+                                        long id = Long.parseLong(Objects.requireNonNull(child.getKey()));
+                                        if (id >= nextId) {
+                                            nextId = id + 1;
+                                        }
+                                    } catch (NumberFormatException ignored) {
+                                    }
+                                }
+
+                                appointment.setStatus("Canceled");
+                                canceled_appointmentsRef.child(String.valueOf(nextId)).setValue(appointment)
+                                        .addOnSuccessListener(aVoid -> {
+                                            snapshot.getRef().removeValue();
+                                        });
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                Log.w("Firebase", "Failed to read canceled appointments.", error.toException());
+                            }
+                        });
+
+                        break; // Можно выйти из цикла, если найден нужный appointment
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.w("Firebase", "Failed to read appointments.", databaseError.toException());
+            }
+        });
+
+        navigateTo(BooksActivity.class);
+    }
+
 
     public void ToHome(View view) {
         navigateTo(MainActivity.class);
     }
+
     public void ToBarbers(View view) {
         navigateTo(BarbersActivity.class);
     }
+
     public void ToMap(View view) {
         navigateTo(MapActivity.class);
     }
