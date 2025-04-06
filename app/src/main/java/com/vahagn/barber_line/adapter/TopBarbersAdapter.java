@@ -2,6 +2,7 @@ package com.vahagn.barber_line.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.vahagn.barber_line.Activities.SpecialistActivity;
 import com.vahagn.barber_line.Classes.Barbers;
 import com.vahagn.barber_line.Fragments.SpecialistsFragment;
 import com.vahagn.barber_line.R;
@@ -112,12 +114,24 @@ public class TopBarbersAdapter extends RecyclerView.Adapter<TopBarbersAdapter.To
 //        holder.phone.setText("Phone");
 
         holder.name.setText(item.getName());
-        holder.phone.setText(item.getPhoneNumber());
+        holder.workPlace.setText(item.getWorkPlace());
 //        holder.barber_image.setImageResource(item.getImage());
 
         Glide.with(holder.itemView.getContext())
                 .load(item.getImage())
                 .into(holder.barber_image);
+
+
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, SpecialistActivity.class);
+
+            SpecialistsFragment.imageUrl = item.getImage();
+            SpecialistsFragment.name = item.getName();
+            SpecialistsFragment.rating = String.valueOf(item.getRating());
+            SpecialistsFragment.ListServices = item.getServices();
+
+            context.startActivity(intent);
+        });
     }
     @Override
     public int getItemCount() {
@@ -126,14 +140,14 @@ public class TopBarbersAdapter extends RecyclerView.Adapter<TopBarbersAdapter.To
 
     public static final class TopBarbersViewHolder extends RecyclerView.ViewHolder {
         ImageView barber_image;
-        TextView name, phone;
+        TextView name, workPlace;
 
         public TopBarbersViewHolder(@NonNull View itemView) {
             super(itemView);
 
             barber_image = itemView.findViewById(R.id.barber_image);
             name = itemView.findViewById(R.id.name);
-            phone = itemView.findViewById(R.id.phone);
+            workPlace = itemView.findViewById(R.id.workPlace);
         }
     }
 }
