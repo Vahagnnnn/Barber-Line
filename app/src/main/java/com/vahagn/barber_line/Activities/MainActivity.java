@@ -21,6 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.vahagn.barber_line.Admin.AdminActivity;
 import com.vahagn.barber_line.Admin.AdminBooksActivity;
 import com.vahagn.barber_line.Classes.BarberShops;
+import com.vahagn.barber_line.Classes.Barbers;
 import com.vahagn.barber_line.R;
 import com.vahagn.barber_line.adapter.TopBarberShopsAdapter;
 import com.vahagn.barber_line.adapter.TopBarbersAdapter;
@@ -41,10 +42,11 @@ public class MainActivity extends AppCompatActivity {
     TopHaircutsAdapter tophaircutsAdapter;
 
     public static List<BarberShops> TopBarberShopsList = new ArrayList<>();
-    List<TopBarbers> TopBarbersList = new ArrayList<>();
+    List<Barbers> TopBarbersList = new ArrayList<>();
     List<TopHaircuts> TopHaircutsList = new ArrayList<>();
 
     DatabaseReference myRef = FirebaseDatabase.getInstance().getReference().child("barberShops");
+    DatabaseReference TopBarbers = FirebaseDatabase.getInstance().getReference().child("TopBarbers");
 
     private FirebaseAuth mAuth;
 
@@ -71,10 +73,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        TopBarbersList.add(new TopBarbers(R.drawable.img_sargis_paragon, "Sargis", "077-77-77-77"));
-        TopBarbersList.add(new TopBarbers(R.drawable.img_narine_paragon, "Narine", "099-99-99-99"));
-        TopBarbersList.add(new TopBarbers(R.drawable.img_narine_paragon, "Narine", "099-99-99-99"));
-        setTopBarbersRecycler(TopBarbersList);
+        SetTopBarbers();
+//        TopBarbersList.add(new TopBarbers(R.drawable.img_sargis_paragon, "Sargis", "077-77-77-77"));
+//        TopBarbersList.add(new TopBarbers(R.drawable.img_narine_paragon, "Narine", "099-99-99-99"));
+//        TopBarbersList.add(new TopBarbers(R.drawable.img_narine_paragon, "Narine", "099-99-99-99"));
+//        setTopBarbersRecycler(TopBarbersList);
 
         TopHaircutsList.add(new TopHaircuts(R.drawable.img_haircut, "The Textured Crop"));
         TopHaircutsList.add(new TopHaircuts(R.drawable.img_haircut, "The Textured Crop"));
@@ -94,6 +97,25 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void SetTopBarbers() {
+        TopBarbers.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                TopBarbersList.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Barbers barbers = snapshot.getValue(Barbers.class);
+                    TopBarbersList.add(barbers);
+                }
+                setTopBarbersRecycler(TopBarbersList);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w("Firebase", "Failed to read value.", databaseError.toException());
+            }
+        });
+    }
+
     private void setTopBarberShopsRecycler(List<BarberShops> topBarberShopsList) {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
 
@@ -105,11 +127,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void setTopBarbersRecycler(List<TopBarbers> topBarbersList) {
+
+    private void setTopBarbersRecycler(List<Barbers> topBarbersList) {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
 
         topbarbersRecycler = findViewById(R.id.top_barbers_Recycler);
         topbarbersRecycler.setLayoutManager(layoutManager);
+
+//        for (Barbers barbers : topBarbersList) {
+//            Log.i("getBarberById", "topBarbersListBarberId " + barbers.getBarberId());
+//            Log.i("getBarberById", "topBarbersListBarberShopsId " + barbers.getBarberShopsId());
+//        }
 
         topbarbersAdapter = new TopBarbersAdapter(this, topBarbersList);
         topbarbersRecycler.setAdapter(topbarbersAdapter);

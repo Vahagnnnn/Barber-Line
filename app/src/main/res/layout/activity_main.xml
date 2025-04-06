@@ -163,6 +163,7 @@
                     android:id="@+id/textSeeMoreBarberShops"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:foreground="?attr/selectableItemBackground"
                     android:text="@string/see_more"
                     android:onClick="ToBarbers"
                     android:fontFamily="@font/lato"
@@ -213,6 +214,7 @@
                 <TextView
                     android:id="@+id/textSeeMoreBarbers"
                     android:layout_width="wrap_content"
+                    android:foreground="?attr/selectableItemBackground"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/lato"
                     android:text="@string/see_more"

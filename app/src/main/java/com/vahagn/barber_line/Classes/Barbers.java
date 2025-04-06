@@ -4,9 +4,13 @@ import java.io.Serializable;
 import java.util.List;
 
 public class Barbers implements Serializable {
-    private int ID;
+    private int barberId;
+    private int barberShopsId;
+
+
+//    private int ID;
     private String name;
-    private String phone;
+    private String phoneNumber;
     private String image;
     private String workPlace;
     private double rating;
@@ -18,18 +22,23 @@ public class Barbers implements Serializable {
     public Barbers() {
     }
 
-    public Barbers(String image, String name, String phone,List<Services> services) {
+    public Barbers(int barberId, int barberShopsId) {
+        this.barberId = barberId;
+        this.barberShopsId = barberShopsId;
+
+    }
+
+    public Barbers(String image, String name, String phoneNumber,List<Services> services) {
         this.image = image;
         this.name = name;
-        this.phone = phone;
+        this.phoneNumber = phoneNumber;
         this.services = services;
         this.rating = 5;
     }
 
-    public Barbers(int ID, String name, String phone, String image, String workPlace, double rating, List<Services> services, List<Reviews> reviews, List<Appointment> appointments) {
-        this.ID = ID;
+    public Barbers(String name, String phoneNumber, String image, String workPlace, double rating, List<Services> services, List<Reviews> reviews, List<Appointment> appointments) {
         this.name = name;
-        this.phone = phone;
+        this.phoneNumber = phoneNumber;
         this.image = image;
         this.workPlace = workPlace;
         this.rating = rating;
@@ -38,12 +47,20 @@ public class Barbers implements Serializable {
         this.appointments = appointments;
     }
 
-    public int getID() {
-        return ID;
+    public int getBarberId() {
+        return barberId;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setBarberId(int barberId) {
+        this.barberId = barberId;
+    }
+
+    public int getBarberShopsId() {
+        return barberShopsId;
+    }
+
+    public void setBarberShopsId(int barberShopsId) {
+        this.barberShopsId = barberShopsId;
     }
 
     public String getName() {
@@ -54,12 +71,12 @@ public class Barbers implements Serializable {
         this.name = name;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getImage() {
