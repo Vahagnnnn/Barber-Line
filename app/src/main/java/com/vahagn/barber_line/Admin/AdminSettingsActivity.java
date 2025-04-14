@@ -45,8 +45,6 @@ public class AdminSettingsActivity extends AppCompatActivity {
     public static List<Services> ListService = new ArrayList<>();
 
     TextView Confirm_List_TextView, Wait_List_TextView, Rejected_List_TextView;
-    boolean Confirm_List_TextView_Full = false, Wait_List_TextView_Full = false, Rejected_List_TextView_Full = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +57,10 @@ public class AdminSettingsActivity extends AppCompatActivity {
         Confirm_List_TextView = findViewById(R.id.Confirm_List_TextView);
         Wait_List_TextView = findViewById(R.id.Wait_List_TextView);
         Rejected_List_TextView = findViewById(R.id.Rejected_List_TextView);
+
+        Confirm_List_TextView.setVisibility(GONE);
+        Wait_List_TextView.setVisibility(GONE);
+        Rejected_List_TextView.setVisibility(GONE);
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         String ownerEmail = "";
@@ -78,8 +80,6 @@ public class AdminSettingsActivity extends AppCompatActivity {
                     BarberShops shop = snapshot.getValue(BarberShops.class);
                     if (shop != null && Objects.equals(shop.getOwnerEmail(), OwnerEmail)) {
                         addBarbershop(confirm_barbershops_container, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists());
-                        Confirm_List_TextView_Full = true;
-                        Log.i("Confirm_List_TextView", "Confirm_List_TextView_Full=true");
                         Confirm_List_TextView.setVisibility(VISIBLE);
                     }
                 }
@@ -98,8 +98,6 @@ public class AdminSettingsActivity extends AppCompatActivity {
                     BarberShops shop = snapshot.getValue(BarberShops.class);
                     if (shop != null && Objects.equals(shop.getOwnerEmail(), OwnerEmail)) {
                         addBarbershop(pending_barbershops_container, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists());
-                        Wait_List_TextView_Full = true;
-                        Log.i("Confirm_List_TextView", "Wait_List_TextView_Full=true");
                         Wait_List_TextView.setVisibility(VISIBLE);
                     }
                 }
@@ -118,8 +116,6 @@ public class AdminSettingsActivity extends AppCompatActivity {
                     BarberShops shop = snapshot.getValue(BarberShops.class);
                     if (shop != null && Objects.equals(shop.getOwnerEmail(), OwnerEmail)) {
                         addBarbershop(rejected_barbershops_container, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists(), shop.getReason());
-                        Rejected_List_TextView_Full = true;
-                        Log.i("Confirm_List_TextView", "Rejected_List_TextView_Full=true");
                         Rejected_List_TextView.setVisibility(VISIBLE);
                     }
                 }
@@ -130,19 +126,6 @@ public class AdminSettingsActivity extends AppCompatActivity {
                 Log.w("Firebase", "Failed to read value.", databaseError.toException());
             }
         });
-
-        if (!Confirm_List_TextView_Full) {
-            Log.i("Confirm_List_TextView", "Confirm_List_TextView_Full = " + Confirm_List_TextView_Full);
-            Confirm_List_TextView.setVisibility(GONE);
-        }
-        if (!Wait_List_TextView_Full) {
-            Log.i("Confirm_List_TextView", "Wait_List_TextView_Full = " + Wait_List_TextView_Full);
-            Wait_List_TextView.setVisibility(GONE);
-        }
-        if (!Rejected_List_TextView_Full) {
-            Log.i("Confirm_List_TextView", "Rejected_List_TextView_Full = " + Rejected_List_TextView_Full);
-            Rejected_List_TextView.setVisibility(GONE);
-        }
     }
 
     public void addBarbershop(LinearLayout container, String logo, String imageUrl, String name, double rating, String address, List<Barbers> ListSpecialist) {
