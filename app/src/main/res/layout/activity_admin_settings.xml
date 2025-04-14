@@ -53,16 +53,18 @@
 
 
             <TextView
+                android:id="@+id/Confirm_List_TextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginTop="20dp"
                 android:fontFamily="@font/poppins_bold"
                 android:gravity="center"
-                android:layout_marginTop="20dp"
                 android:singleLine="true"
                 android:text="Confirm List"
                 android:textColor="#FFFFFFFF"
                 android:textSize="16sp" />
+
             <LinearLayout
                 android:id="@+id/confirm_barbershops_list"
                 android:layout_width="match_parent"
@@ -73,16 +75,18 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/Wait_List_TextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginTop="20dp"
                 android:fontFamily="@font/poppins_bold"
                 android:gravity="center"
-                android:layout_marginTop="20dp"
                 android:singleLine="true"
                 android:text="Wait List"
                 android:textColor="#FFFFFFFF"
                 android:textSize="16sp" />
+
             <LinearLayout
                 android:id="@+id/pending_barbershops_list"
                 android:layout_width="match_parent"
@@ -91,17 +95,20 @@
                 android:orientation="vertical">
 
             </LinearLayout>
+
             <TextView
+                android:id="@+id/Rejected_List_TextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginTop="25dp"
                 android:fontFamily="@font/poppins_bold"
                 android:gravity="center"
-                android:layout_marginTop="25dp"
                 android:singleLine="true"
                 android:text="Rejected List"
                 android:textColor="#FFFFFFFF"
                 android:textSize="16sp" />
+
             <LinearLayout
                 android:id="@+id/rejected_barbershops_list"
                 android:layout_width="match_parent"
