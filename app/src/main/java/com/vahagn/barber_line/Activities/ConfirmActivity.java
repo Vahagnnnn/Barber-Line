@@ -35,7 +35,7 @@ public class ConfirmActivity extends AppCompatActivity {
     ImageView BarberShopImage, BarberImage;
     TextView BarberShopName, BarberShopAddress, weekDay_monthName_dayOfMonth, Time, BarberName, BarberRating, ServiceName, ServiceDuration, ServicePrice;
 
-    String BarberShopImageUrl_str, BarberShopName_str, BarberShopAddress_str,BarbershopCoordinates_str, BarberShopRating_str, weekDay_monthName_dayOfMonth_str, Time_str,
+    String BarberShopImageUrl_str, BarberShopName_str, BarberShopAddress_str,BarbershopCoordinates_str, BarberShopRating_str,BarberShopOwnerEmail_str, weekDay_monthName_dayOfMonth_str, Time_str,
             BarberImageUrl_str, BarberName_str, BarberRating_str, ServiceName_str, ServicePrice_str, ServiceDuration_str;
 
     Button confirm_button;
@@ -59,6 +59,7 @@ public class ConfirmActivity extends AppCompatActivity {
         }
         BarbershopCoordinates_str = BarbersActivity.coordinates;
         BarberShopRating_str = BarbersActivity.rating;
+        BarberShopOwnerEmail_str = BarbersActivity.OwnerEmail;
         weekDay_monthName_dayOfMonth_str = intent.getStringExtra("weekDay_monthName_dayOfMonth");
         Time_str = intent.getStringExtra("Time");
         BarberImageUrl_str = SpecialistsFragment.imageUrl;
@@ -129,10 +130,15 @@ public class ConfirmActivity extends AppCompatActivity {
         }
 
 
-//        Log.i("BarbershopCoordinates_str",BarbershopCoordinates_str);
+//        if (BarberShopOwnerEmail_str!=null)
+//        {
+//            Log.i("BarberShopOwnerEmail_str",BarberShopOwnerEmail_str);
+//        }
+//        else
+//            Log.i("BarberShopOwnerEmail_str","Null");
 
         Appointment Appointment = new Appointment(UserEmail, UserName, BarberShopImageUrl_str, BarberShopName_str,
-                BarberShopAddress_str,BarbershopCoordinates_str, BarberShopRating_str, weekDay_monthName_dayOfMonth_str, Time_str, BarberImageUrl_str,
+                BarberShopAddress_str,BarbershopCoordinates_str, BarberShopRating_str,BarberShopOwnerEmail_str, weekDay_monthName_dayOfMonth_str, Time_str, BarberImageUrl_str,
                 BarberName_str, BarberRating_str, ServiceName_str, ServicePrice_str, ServiceDuration_str, "Active", message_or_requests_str, uniqueID);
 
         appointmentsRef.get().addOnCompleteListener(task -> {

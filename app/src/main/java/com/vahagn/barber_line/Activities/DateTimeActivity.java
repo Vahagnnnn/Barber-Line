@@ -1,5 +1,8 @@
 package com.vahagn.barber_line.Activities;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
@@ -41,11 +44,12 @@ public class DateTimeActivity extends AppCompatActivity {
 
     CalendarView calendarView;
     TextView BarberName, ServiceName;
-    Button continue_button;
+    Button continue_button,close;
 
     Button selectedButton = null;
 
     public String weekDay, monthName, dayOfMonth_str;
+    boolean isClose = false;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -123,6 +127,21 @@ public class DateTimeActivity extends AppCompatActivity {
 
 
         continue_button.setOnClickListener(v -> ContinueButton());
+
+        close = findViewById(R.id.close);
+        close.setOnClickListener(v -> closeButton());
+
+    }
+
+    private void closeButton() {
+        if (isClose) {
+            calendarView.setVisibility(VISIBLE);
+            isClose = false;
+        } else {
+            calendarView.setVisibility(GONE);
+            isClose = true;
+        }
+
 
     }
 

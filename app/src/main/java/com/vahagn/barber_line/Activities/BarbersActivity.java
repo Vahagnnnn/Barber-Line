@@ -38,7 +38,7 @@ public class BarbersActivity extends AppCompatActivity {
     DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("barberShops");
     LinearLayout secondActivityContainer;
 
-    public static String imageUrl, name, rating, address, coordinates;
+    public static String imageUrl, name, rating,OwnerEmail, address, coordinates;
     public static List<Barbers> ListSpecialist = new ArrayList<>();
     public static List<Services> ListService = new ArrayList<>();
 
@@ -57,8 +57,8 @@ public class BarbersActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     BarberShops shop = snapshot.getValue(BarberShops.class);
                     assert shop != null;
-                    addBarbershop(secondActivityContainer, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getCoordinates(), shop.getSpecialists(), shop.getServices());
-                    ListBarberShops.add(new BarberShops(shop.getName(), shop.getAddress(), shop.getCoordinates(), shop.getImage(), shop.getLogo(), shop.getRating(), shop.getReviews(), shop.getServices(), shop.getSpecialists()));
+                    addBarbershop(secondActivityContainer, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(),shop.getOwnerEmail(), shop.getCoordinates(), shop.getSpecialists(), shop.getServices());
+                    ListBarberShops.add(new BarberShops(shop.getOwnerEmail(), shop.getName(), shop.getAddress(), shop.getCoordinates(), shop.getImage(), shop.getLogo(), shop.getRating(), shop.getReviews(), shop.getServices(), shop.getSpecialists()));
 //                    ListBarberShops.add(shop);
                 }
             }
@@ -95,12 +95,12 @@ public class BarbersActivity extends AppCompatActivity {
         }
         secondActivityContainer.removeAllViews();
         for (BarberShops shop : filteredList) {
-            addBarbershop(secondActivityContainer, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getCoordinates(), shop.getSpecialists(), shop.getServices());
+            addBarbershop(secondActivityContainer, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getOwnerEmail(), shop.getCoordinates(), shop.getSpecialists(), shop.getServices());
         }
     }
 
 
-    public void addBarbershop(LinearLayout container, String logo, String imageUrl, String name, double rating, String address, String coordinates, List<Barbers> ListSpecialist, List<Services> ListService) {
+    public void addBarbershop(LinearLayout container, String logo, String imageUrl, String name, double rating, String address, String OwnerEmail,String coordinates, List<Barbers> ListSpecialist, List<Services> ListService) {
         View barbershopView = LayoutInflater.from(this).inflate(R.layout.barbershops_gray, container, false);
 
         ImageView logoImageView = barbershopView.findViewById(R.id.logo);
@@ -126,6 +126,15 @@ public class BarbersActivity extends AppCompatActivity {
             BarbersActivity.imageUrl = imageUrl;
             BarbersActivity.name = name;
             BarbersActivity.rating = String.valueOf(rating);
+
+            if (OwnerEmail!=null)
+            {
+                Log.i("OwnerEmail",OwnerEmail);
+            }
+            else
+                Log.i("OwnerEmail","Null");
+
+            BarbersActivity.OwnerEmail = OwnerEmail;
             BarbersActivity.address = address;
 
             if (coordinates != null) {

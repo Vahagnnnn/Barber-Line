@@ -21,13 +21,16 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.vahagn.barber_line.Activities.BarbersActivity;
 import com.vahagn.barber_line.Activities.SpecialistActivity;
+import com.vahagn.barber_line.Classes.BarberShops;
 import com.vahagn.barber_line.Classes.Barbers;
 import com.vahagn.barber_line.Fragments.SpecialistsFragment;
 import com.vahagn.barber_line.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import com.vahagn.barber_line.model.TopBarbers;
 
@@ -73,7 +76,7 @@ public class TopBarbersAdapter extends RecyclerView.Adapter<TopBarbersAdapter.To
 //                    Log.i("getBarberById", "BarberPhoneNumberFOR " + barber.getPhone());
                     if (barber != null && barberId == barber.getBarberId()) {
 //                        Log.i("getBarberById", "IF " );
-                        Log.i("getBarberById", "BarberNameIF = " + barber.getName()+" BarberShopsId = "+ barber.getBarberShopsId()+" BarberId = "+ barber.getBarberId());
+                        Log.i("getBarberById", "BarberNameIF = " + barber.getName() + " BarberShopsId = " + barber.getBarberShopsId() + " BarberId = " + barber.getBarberId());
                         TopBarbers.add(barber);
 //                        Log.i("getBarberById", "ADD " );
                         notifyDataSetChanged();
@@ -98,7 +101,7 @@ public class TopBarbersAdapter extends RecyclerView.Adapter<TopBarbersAdapter.To
 
     @Override
     public void onBindViewHolder(@NonNull TopBarbersAdapter.TopBarbersViewHolder holder, int position) {
-        Log.i("getBarberById", "onBindViewHolder " );
+        Log.i("getBarberById", "onBindViewHolder ");
 
         for (Barbers barbers : TopBarbers) {
             Log.i("getBarberById", "BarberName " + barbers.getName());
@@ -125,14 +128,53 @@ public class TopBarbersAdapter extends RecyclerView.Adapter<TopBarbersAdapter.To
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, SpecialistActivity.class);
 
+//            SpecialistsFragment.imageUrl = item.getImage();
+//            SpecialistsFragment.name = item.getName();
+//            SpecialistsFragment.rating = String.valueOf(item.getRating());
+//            SpecialistsFragment.ListServices = item.getServices();
+
+
             SpecialistsFragment.imageUrl = item.getImage();
             SpecialistsFragment.name = item.getName();
             SpecialistsFragment.rating = String.valueOf(item.getRating());
             SpecialistsFragment.ListServices = item.getServices();
 
+            DatabaseReference barberShopsRef = FirebaseDatabase.getInstance().getReference("barberShops");
+            barberShopsRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        BarberShops shop = snapshot.getValue(BarberShops.class);
+                        if (shop != null && Objects.equals(shop.getName(), item.getWorkPlace())) {
+                            BarbersActivity.imageUrl = shop.getImage();
+                            BarbersActivity.name = shop.getName();
+                            BarbersActivity.rating = String.valueOf(shop.getRating());
+
+                            if (shop.getOwnerEmail()!=null)
+                            {
+                                Log.i("OwnerEmail",shop.getOwnerEmail());
+                            }
+                            else
+                                Log.i("OwnerEmail","Null");
+
+                            BarbersActivity.OwnerEmail = shop.getOwnerEmail();
+                            BarbersActivity.address = shop.getAddress();
+                            BarbersActivity.coordinates = shop.getCoordinates();
+                            BarbersActivity.ListSpecialist = shop.getSpecialists();
+                            BarbersActivity.ListService = item.getServices();
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.w("Firebase", "Failed to read value.", databaseError.toException());
+                }
+            });
             context.startActivity(intent);
         });
     }
+
     @Override
     public int getItemCount() {
         return TopBarbers.size();

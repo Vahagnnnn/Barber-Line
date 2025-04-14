@@ -71,6 +71,18 @@ public class TopBarberShopsAdapter extends RecyclerView.Adapter<TopBarberShopsAd
                 BarbersActivity.imageUrl = item.getImage();
                 BarbersActivity.name = item.getName();
                 BarbersActivity.rating = String.valueOf(item.getRating());
+
+                BarbersActivity.OwnerEmail = item.getOwnerEmail();
+
+
+                if (item.getOwnerEmail()!=null)
+                {
+                    Log.i("OwnerEmail",item.getOwnerEmail());
+                }
+                else {
+                    Log.i("OwnerEmail", "Null");
+                }
+
                 BarbersActivity.address = item.getAddress();
                 BarbersActivity.coordinates = item.getCoordinates();
                 BarbersActivity.ListSpecialist = item.getSpecialists();

@@ -49,8 +49,9 @@ public class BarberShops {
         this.specialists = specialists;
     }
 
-    public BarberShops(String name, String address, String coordinates, String image, String logo, double rating,
+    public BarberShops(String ownerEmail,String name, String address, String coordinates, String image, String logo, double rating,
                        List<Reviews> reviews, List<Services> services, List<Barbers> specialists) {
+        this.ownerEmail = ownerEmail;
         this.name = name;
         this.address = address;
         this.coordinates = coordinates;
