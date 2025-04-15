@@ -41,7 +41,7 @@ public class BarbersActivity extends AppCompatActivity {
     DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("barberShops");
     LinearLayout secondActivityContainer;
 
-    public static String imageUrl, name, rating,OwnerEmail, address, coordinates;
+    public static String logo,imageUrl, name, rating,OwnerEmail, address, coordinates;
     public static List<Barbers> ListSpecialist = new ArrayList<>();
     public static List<Services> ListService = new ArrayList<>();
     public static Map<String, TimeRange> openingTimes = new HashMap<>();
@@ -148,6 +148,7 @@ public class BarbersActivity extends AppCompatActivity {
             intent.putExtra("from_where", "BarbersActivity");
 
             BarbersActivity.imageUrl = imageUrl;
+            BarbersActivity.logo = logo;
             BarbersActivity.name = name;
             BarbersActivity.rating = String.valueOf(rating);
 
@@ -160,6 +161,7 @@ public class BarbersActivity extends AppCompatActivity {
 
             BarbersActivity.OwnerEmail = OwnerEmail;
             BarbersActivity.address = address;
+            BarbersActivity.coordinates = coordinates;
 
             if (coordinates != null) {
                 Log.i("BarbershopCoordinates_str", "BarbersActivity = " + coordinates);

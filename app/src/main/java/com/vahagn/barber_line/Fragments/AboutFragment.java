@@ -2,10 +2,8 @@ package com.vahagn.barber_line.Fragments;
 
 import static com.vahagn.barber_line.Activities.MainActivity.TopBarberShopsList;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,25 +15,18 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
 import android.graphics.Shader;
-import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -46,41 +37,22 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.card.MaterialCardView;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.vahagn.barber_line.Activities.BarberShopsAboutActivity;
 import com.vahagn.barber_line.Activities.BarbersActivity;
-import com.vahagn.barber_line.Activities.MapActivity;
 import com.vahagn.barber_line.Classes.BarberShops;
-import com.vahagn.barber_line.Classes.OpeningTime;
-import com.vahagn.barber_line.Classes.Services;
 import com.vahagn.barber_line.Classes.TimeRange;
 import com.vahagn.barber_line.R;
-import com.google.firebase.database.DatabaseReference;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.Executor;
 import java.util.stream.Collectors;
 
-
-public class AboutFragment extends Fragment  implements OnMapReadyCallback {
+public class AboutFragment extends Fragment implements OnMapReadyCallback {
     private MaterialCardView mondayCircle, tuesdayCircle, wednesdayCircle, thursdayCircle, fridayCircle, saturdayCircle, sundayCircle;
-
-    private TextView mondayText, tuesdayText, wednesdayText, thursdayText,
-            fridayText, saturdayText, sundayText;
-
-    Map<String, TimeRange> openingTimes;
-
-
-    private FusedLocationProviderClient fusedLocationClient;
-    private Marker currentLocationMarker;
+    private TextView mondayText, tuesdayText, wednesdayText, thursdayText, fridayText, saturdayText, sundayText;
+    private Map<String, TimeRange> openingTimes;
     private GoogleMap gMap;
-
-    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
 
     public AboutFragment() {
     }
@@ -89,28 +61,20 @@ public class AboutFragment extends Fragment  implements OnMapReadyCallback {
         this.openingTimes = openingTimes;
     }
 
-
-    @SuppressLint("SetTextI18n")
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_about, container, false);
 
         findViewById_setText(view);
 
-//        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
 
-//        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext());
         return view;
     }
 
-
-    private void findViewById_setText(View view){
+    private void findViewById_setText(View view) {
         mondayCircle = view.findViewById(R.id.mondayCircle);
         tuesdayCircle = view.findViewById(R.id.tuesdayCircle);
         wednesdayCircle = view.findViewById(R.id.wednesdayCircle);
@@ -118,7 +82,6 @@ public class AboutFragment extends Fragment  implements OnMapReadyCallback {
         fridayCircle = view.findViewById(R.id.fridayCircle);
         saturdayCircle = view.findViewById(R.id.saturdayCircle);
         sundayCircle = view.findViewById(R.id.sundayCircle);
-
 
         mondayText = view.findViewById(R.id.mondayText);
         tuesdayText = view.findViewById(R.id.tuesdayText);
@@ -128,7 +91,6 @@ public class AboutFragment extends Fragment  implements OnMapReadyCallback {
         saturdayText = view.findViewById(R.id.saturdayText);
         sundayText = view.findViewById(R.id.sundayText);
 
-
         mondayText.setText(getTime("Monday"));
         tuesdayText.setText(getTime("Tuesday"));
         wednesdayText.setText(getTime("Wednesday"));
@@ -137,6 +99,7 @@ public class AboutFragment extends Fragment  implements OnMapReadyCallback {
         saturdayText.setText(getTime("Saturday"));
         sundayText.setText(getTime("Sunday"));
     }
+
     private String getTime(String day) {
         String open = Objects.requireNonNull(openingTimes.get(day)).getOpen();
         String close = Objects.requireNonNull(openingTimes.get(day)).getClose();
@@ -174,80 +137,37 @@ public class AboutFragment extends Fragment  implements OnMapReadyCallback {
         }
     }
 
-
-
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         gMap = googleMap;
 
-        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            updateLocation();
+        gMap.getUiSettings().setAllGesturesEnabled(false); // Disables all gestures (pan, zoom, tilt, rotate)
+        gMap.getUiSettings().setZoomControlsEnabled(false); // Hides zoom controls
+        gMap.getUiSettings().setScrollGesturesEnabled(false); // Explicitly disables scrolling
+        gMap.getUiSettings().setZoomGesturesEnabled(false); // Explicitly disables zooming
+        gMap.getUiSettings().setTiltGesturesEnabled(false); // Explicitly disables tilting
+        gMap.getUiSettings().setRotateGesturesEnabled(false); // Explicitly disables rotation
 
-            for (BarberShops barberShop : TopBarberShopsList) {
-                String[] coords = barberShop.getCoordinates().split(" ");
-                String latitudeString = coords[0].replace(",", "").trim();
-                String longitudeString = coords[1].replace(",", "").trim();
+        String[] coords = BarbersActivity.coordinates.split(" ");
+        String latitudeString = coords[0].replace(",", "").trim();
+        String longitudeString = coords[1].replace(",", "").trim();
 
-                try {
-                    double latitude = Double.parseDouble(latitudeString);
-                    double longitude = Double.parseDouble(longitudeString);
+        try {
+            double latitude = Double.parseDouble(latitudeString);
+            double longitude = Double.parseDouble(longitudeString);
+            LatLng location = new LatLng(latitude, longitude);
 
-                    LatLng location = new LatLng(latitude, longitude);
-
-                    Log.i("img" , barberShop.getLogo());
-                    addCustomMarker(location, barberShop.getName(), barberShop.getLogo());
-                } catch (NumberFormatException e) {
-                    Log.i("coords", "Error parsing coordinates: " + e.getMessage());
-                }
-            }
-        } else {
-//            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
-            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
-        }
-
-        LatLng defaultLocation = new LatLng(40.17763162763801, 44.512459783931945);
-        gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, 45));
-    }
-
-    private void updateLocation() {
-        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            Executor executor = ContextCompat.getMainExecutor(getContext());
-            fusedLocationClient.getLastLocation()
-                    .addOnSuccessListener(executor, new com.google.android.gms.tasks.OnSuccessListener<Location>() {
-                        @Override
-                        public void onSuccess(Location location) {
-                            if (location != null) {
-                                LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-
-                                if (currentLocationMarker != null) {
-                                    currentLocationMarker.setPosition(currentLatLng);
-                                } else {
-                                    currentLocationMarker = gMap.addMarker(new MarkerOptions().position(currentLatLng).title("Current Location"));
-                                }
-
-                                gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15));
-                            }
-                        }
-                    });
+            addCustomMarker(location, BarbersActivity.name, BarbersActivity.logo);
+            gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15)); // Zoom into marker
+        } catch (NumberFormatException e) {
+            Log.i("coords", "Error parsing coordinates: " + e.getMessage());
+            LatLng defaultLocation = new LatLng(40.17763162763801, 44.512459783931945);
+            gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, 15));
         }
     }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                updateLocation();
-            } else {
-                Toast.makeText(requireContext(), "Location permission is required to show your current location on the map.", Toast.LENGTH_LONG).show();
-            }
-        }
-    }
-
 
     private void addCustomMarker(LatLng location, String Name, String logo) {
-        new AboutFragment.LoadImageTask(location, Name).execute(logo);
+        new LoadImageTask(location, Name).execute(logo);
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -259,7 +179,6 @@ public class AboutFragment extends Fragment  implements OnMapReadyCallback {
             this.location = location;
             this.Name = Name;
         }
-
 
         @Override
         protected Bitmap doInBackground(String... params) {
@@ -308,46 +227,43 @@ public class AboutFragment extends Fragment  implements OnMapReadyCallback {
                     .title(bitmap != null ? Name : "Default Marker");
 
             gMap.addMarker(markerOptions);
-            gMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                @Override
-                public boolean onMarkerClick(Marker marker) {
-                    if (marker.equals(marker)) {
-                        Intent intent = new Intent(requireContext(), BarberShopsAboutActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-
-                        List<BarberShops> paragonShops = TopBarberShopsList.stream()
-                                .filter(shop -> marker.getTitle().equals(shop.getName()))
-                                .collect(Collectors.toList());
-
-                        paragonShops.forEach(shop -> {
-                            intent.putExtra("from_where", "MapActivity");
-
-                            BarbersActivity.imageUrl = shop.getImage();
-                            BarbersActivity.name = shop.getName();
-                            BarbersActivity.rating = String.valueOf(shop.getRating());
-
-                            if (shop.getOwnerEmail()!=null)
-                            {
-                                Log.i("OwnerEmail",shop.getOwnerEmail());
-                            }
-                            else
-                                Log.i("OwnerEmail","Null");
-                            BarbersActivity.OwnerEmail = shop.getOwnerEmail();
-
-                            BarbersActivity.address = shop.getAddress();
-                            BarbersActivity.ListSpecialist = shop.getSpecialists();
-                            BarbersActivity.ListService = shop.getServices();
-                        });
-
-                        requireContext().startActivity(intent);
-
-                        return true;
-                    }
-                    return false;
-                }
-
-            });
+//            gMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+//                @Override
+//                public boolean onMarkerClick(Marker marker) {
+//                    if (marker.equals(marker)) {
+//                        Intent intent = new Intent(requireContext(), BarberShopsAboutActivity.class);
+//                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//
+//                        List<BarberShops> paragonShops = TopBarberShopsList.stream()
+//                                .filter(shop -> marker.getTitle().equals(shop.getName()))
+//                                .collect(Collectors.toList());
+//
+//                        paragonShops.forEach(shop -> {
+//                            intent.putExtra("from_where", "MapActivity");
+//
+//                            BarbersActivity.imageUrl = shop.getImage();
+//                            BarbersActivity.name = shop.getName();
+//                            BarbersActivity.rating = String.valueOf(shop.getRating());
+//
+//                            if (shop.getOwnerEmail() != null) {
+//                                Log.i("OwnerEmail", shop.getOwnerEmail());
+//                            } else {
+//                                Log.i("OwnerEmail", "Null");
+//                            }
+//                            BarbersActivity.OwnerEmail = shop.getOwnerEmail();
+//
+//                            BarbersActivity.address = shop.getAddress();
+//                            BarbersActivity.ListSpecialist = shop.getSpecialists();
+//                            BarbersActivity.ListService = shop.getServices();
+//                        });
+//
+//                        requireContext().startActivity(intent);
+//
+//                        return true;
+//                    }
+//                    return false;
+//                }
+//            });
         }
 
         private Bitmap addRoundedCornersAndBorder(Bitmap bitmap, int cornerRadius, int borderWidth) {
@@ -385,5 +301,4 @@ public class AboutFragment extends Fragment  implements OnMapReadyCallback {
             return output;
         }
     }
-
 }

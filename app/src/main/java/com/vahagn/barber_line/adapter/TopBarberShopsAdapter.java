@@ -101,6 +101,7 @@ public class TopBarberShopsAdapter extends RecyclerView.Adapter<TopBarberShopsAd
                 }
 
                 BarbersActivity.address = item.getAddress();
+                BarbersActivity.logo = item.getLogo();
                 BarbersActivity.coordinates = item.getCoordinates();
                 BarbersActivity.ListSpecialist = item.getSpecialists();
                 BarbersActivity.ListSpecialist = item.getSpecialists();
