@@ -81,5 +81,6 @@
     <string name="reschedule_or_cancel_your_appointment">Reschedule or cancel your appointment</string>
     <string name="venue_details">Venue details</string>
     <string name="thursday_3_april">Thursday 3 April</string>
+    <string name="_10_00_am_9_00_pm">10:00 AM- 9:00 PM</string>
 
 </resources>

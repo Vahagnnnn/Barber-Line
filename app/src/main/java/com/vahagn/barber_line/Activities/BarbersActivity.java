@@ -60,20 +60,20 @@ public class BarbersActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     BarberShops shop = snapshot.getValue(BarberShops.class);
-                    assert shop != null;
-
-                    if (shop.getOpeningTimes() != null) {
-                        Log.d("MapiBarbersActivity", "Map is: " + shop.getOpeningTimes().get("Monday").getOpen()+ " - "+shop.getOpeningTimes().get("Monday").getClose());
-                        Log.d("MapiBarbersActivity", "Map is: " + shop.getOpeningTimes().get("Tuesday").getOpen()+ " - "+shop.getOpeningTimes().get("Monday").getClose());
-                        Log.d("MapiBarbersActivity", "Map is: " + shop.getOpeningTimes().get("Wednesday").getOpen()+ " - "+shop.getOpeningTimes().get("Monday").getClose());
-                        Log.d("MapiBarbersActivity", "Map is: " + shop.getOpeningTimes().get("Thursday").getOpen()+ " - "+shop.getOpeningTimes().get("Monday").getClose());
-                        Log.d("MapiBarbersActivity", "Map is: " + shop.getOpeningTimes().get("Friday").getOpen()+ " - "+shop.getOpeningTimes().get("Monday").getClose());
-                        Log.d("MapiBarbersActivity", "Map is: " + shop.getOpeningTimes().get("Saturday").getOpen()+ " - "+shop.getOpeningTimes().get("Monday").getClose());
-                        Log.d("MapiBarbersActivity", "Map is: " + shop.getOpeningTimes().get("Sunday").getOpen()+ " - "+shop.getOpeningTimes().get("Monday").getClose());
-                    } else {
-                        Log.d("MapiBarbersActivity", "Map is: Null");
-
-                    }
+//                    assert shop != null;
+//
+//                    if (shop.getOpeningTimes() != null) {
+//                        Log.d("MapiBarbersActivity", "Map is: " + shop.getOpeningTimes().get("Monday").getOpen()+ " - "+shop.getOpeningTimes().get("Monday").getClose());
+//                        Log.d("MapiBarbersActivity", "Map is: " + shop.getOpeningTimes().get("Tuesday").getOpen()+ " - "+shop.getOpeningTimes().get("Monday").getClose());
+//                        Log.d("MapiBarbersActivity", "Map is: " + shop.getOpeningTimes().get("Wednesday").getOpen()+ " - "+shop.getOpeningTimes().get("Monday").getClose());
+//                        Log.d("MapiBarbersActivity", "Map is: " + shop.getOpeningTimes().get("Thursday").getOpen()+ " - "+shop.getOpeningTimes().get("Monday").getClose());
+//                        Log.d("MapiBarbersActivity", "Map is: " + shop.getOpeningTimes().get("Friday").getOpen()+ " - "+shop.getOpeningTimes().get("Monday").getClose());
+//                        Log.d("MapiBarbersActivity", "Map is: " + shop.getOpeningTimes().get("Saturday").getOpen()+ " - "+shop.getOpeningTimes().get("Monday").getClose());
+//                        Log.d("MapiBarbersActivity", "Map is: " + shop.getOpeningTimes().get("Sunday").getOpen()+ " - "+shop.getOpeningTimes().get("Monday").getClose());
+//                    } else {
+//                        Log.d("MapiBarbersActivity", "Map is: Null");
+//
+//                    }
 
                     addBarbershop(secondActivityContainer, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(),shop.getOwnerEmail(), shop.getCoordinates(), shop.getSpecialists(),shop.getOpeningTimes(), shop.getServices());
                     ListBarberShops.add(new BarberShops(shop.getOwnerEmail(), shop.getName(), shop.getAddress(), shop.getCoordinates(), shop.getImage(), shop.getLogo(), shop.getRating(), shop.getReviews(), shop.getServices(), shop.getSpecialists(),shop.getOpeningTimes()));

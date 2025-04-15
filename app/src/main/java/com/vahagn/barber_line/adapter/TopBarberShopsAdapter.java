@@ -105,12 +105,12 @@ public class TopBarberShopsAdapter extends RecyclerView.Adapter<TopBarberShopsAd
                 BarbersActivity.ListSpecialist = item.getSpecialists();
                 BarbersActivity.ListSpecialist = item.getSpecialists();
 
-                if (item.getOpeningTimes() != null) {
-                    Log.d("MapiTopBarberShopsAdapter", "Map is: " + item.getOpeningTimes().get("Monday").getOpen()+ " - "+item.getOpeningTimes().get("Monday").getClose());
-                } else {
-                    Log.d("MapiTopBarberShopsAdapter", "Map is: Null");
-
-                }
+//                if (item.getOpeningTimes() != null) {
+//                    Log.d("MapiTopBarberShopsAdapter", "Map is: " + item.getOpeningTimes().get("Monday").getOpen()+ " - "+item.getOpeningTimes().get("Monday").getClose());
+//                } else {
+//                    Log.d("MapiTopBarberShopsAdapter", "Map is: Null");
+//
+//                }
                 BarbersActivity.openingTimes = item.getOpeningTimes();
 
                 context.startActivity(intent);
