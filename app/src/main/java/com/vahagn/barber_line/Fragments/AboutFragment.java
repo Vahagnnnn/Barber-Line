@@ -78,45 +78,6 @@ public class AboutFragment extends Fragment {
         saturdayText.setText(getTime("Saturday"));
         sundayText.setText(getTime("Sunday"));
 
-
-//        DatabaseReference opening_timesRef = FirebaseDatabase.getInstance().getReference().child("opening_times");
-//        DatabaseReference myRef =            FirebaseDatabase.getInstance().getReference().child("barberShops");
-
-//        opening_timesRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @SuppressLint("SetTextI18n")
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                mondayText.setText("Monday: " + getTime(snapshot, "Monday"));
-//                tuesdayText.setText("Tuesday: " + getTime(snapshot, "Tuesday"));
-//                wednesdayText.setText("Wednesday: " + getTime(snapshot, "Wednesday"));
-//                thursdayText.setText("Thursday: " + getTime(snapshot, "Thursday"));
-//                fridayText.setText("Friday: " + getTime(snapshot, "Friday"));
-//                saturdayText.setText("Saturday: " + getTime(snapshot, "Saturday"));
-//                sundayText.setText("Sunday: " + getTime(snapshot, "Sunday"));
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//            }
-//
-//            private String getTime(DataSnapshot snapshot, String day) {
-//                DataSnapshot daySnapshot = snapshot.child(day);
-//                String open = daySnapshot.child("open").getValue(String.class);
-//                String close = daySnapshot.child("close").getValue(String.class);
-//                Log.d("Monday", daySnapshot.toString());
-//                assert open != null;
-//                Log.d("Monday", open);
-//                assert close != null;
-//                Log.d("Monday", close);
-//
-//                if (open != null && close != null) {
-//                    return open + " - " + close;
-//                } else {
-//                    return "Closed";
-//                }
-//            }
-//
-//        });
         return view;
     }
 
@@ -138,7 +99,7 @@ public class AboutFragment extends Fragment {
                 case "Wednesday":
                     tuesdayCircle.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FF0000")));
                     wednesdayCircle.setCardBackgroundColor(Color.parseColor("#ff0000"));
-                    Log.i("circle","wednesdayCircle");
+                    Log.i("circle", "wednesdayCircle");
                     break;
                 case "Thursday":
                     thursdayCircle.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FF0000")));
@@ -153,7 +114,7 @@ public class AboutFragment extends Fragment {
                     sundayCircle.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FF0000")));
                     break;
                 default:
-                    Log.i("circle","Invalid");
+                    Log.i("circle", "Invalid");
                     break;
             }
             return "Closed";

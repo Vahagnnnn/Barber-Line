@@ -153,24 +153,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             this.Name = Name;
         }
 
-//        @Override
-//        protected Bitmap doInBackground(String... params) {
-//            try {
-//                Bitmap originalBitmap = BitmapFactory.decodeStream(new java.net.URL(params[0]).openStream());
-//
-//                if (originalBitmap != null) {
-//                    int width = 130;
-//                    int height = 130;
-//                    Bitmap resizedBitmap = Bitmap.createScaledBitmap(originalBitmap, width, height, false);
-//
-//                    Bitmap finalBitmap = addRoundedCornersAndBorder(resizedBitmap, 15, 10);
-//                    return finalBitmap;
-//                }
-//            } catch (Exception e) {
-//                Log.e("coords", "Error loading image: " + e.getMessage());
-//            }
-//            return null;
-//        }
 
         @Override
         protected Bitmap doInBackground(String... params) {
