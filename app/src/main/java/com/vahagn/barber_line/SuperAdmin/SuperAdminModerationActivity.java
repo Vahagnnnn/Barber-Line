@@ -195,7 +195,7 @@ public class SuperAdminModerationActivity extends AppCompatActivity {
     private void navigateTo(Class<?> targetActivity) {
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
                 this,
-                findViewById(R.id.bottom_navigation),
+                findViewById(R.id.main),
                 "sharedImageTransition");
         Intent intent = new Intent(this, targetActivity);
         startActivity(intent, options.toBundle());

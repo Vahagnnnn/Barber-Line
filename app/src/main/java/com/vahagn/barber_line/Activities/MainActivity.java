@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     BarberShops shop = snapshot.getValue(BarberShops.class);
                     assert shop != null;
-                    TopBarberShopsList.add(new BarberShops(shop.getOwnerEmail(),shop.getName(), shop.getAddress(), shop.getCoordinates(), shop.getImage(), shop.getLogo(), shop.getRating(), shop.getReviews(), shop.getServices(), shop.getSpecialists()));
+                    TopBarberShopsList.add(new BarberShops(shop.getOwnerEmail(),shop.getName(), shop.getAddress(), shop.getCoordinates(), shop.getImage(), shop.getLogo(), shop.getRating(), shop.getReviews(), shop.getServices(), shop.getSpecialists(),shop.getOpeningTimes()));
                 }
                 setTopBarberShopsRecycler(TopBarberShopsList);
             }

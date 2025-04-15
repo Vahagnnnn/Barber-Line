@@ -21,12 +21,15 @@ import com.vahagn.barber_line.Activities.BarbersActivity;
 import com.vahagn.barber_line.Activities.MainActivity;
 import com.vahagn.barber_line.Classes.Barbers;
 import com.vahagn.barber_line.Classes.Services;
+import com.vahagn.barber_line.Classes.TimeRange;
 import com.vahagn.barber_line.R;
 import com.vahagn.barber_line.Classes.BarberShops;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class TopBarberShopsAdapter extends RecyclerView.Adapter<TopBarberShopsAdapter.TopBarberShopsViewHolder> {
@@ -75,6 +78,20 @@ public class TopBarberShopsAdapter extends RecyclerView.Adapter<TopBarberShopsAd
                 BarbersActivity.OwnerEmail = item.getOwnerEmail();
 
 
+//                Map<String, TimeRange> openingTimes = new HashMap<>();
+//
+//                String[] days = { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
+//
+//                for (String day : days) {
+//                    TimeRange times = new TimeRange() ;
+//                    times.setOpen("10:00 AM");
+//                    times.setClose("9:00 AM");
+//                    openingTimes.put(day, times);
+//                }
+//
+//                item.setOpeningTimes(openingTimes);
+
+
                 if (item.getOwnerEmail()!=null)
                 {
                     Log.i("OwnerEmail",item.getOwnerEmail());
@@ -86,7 +103,15 @@ public class TopBarberShopsAdapter extends RecyclerView.Adapter<TopBarberShopsAd
                 BarbersActivity.address = item.getAddress();
                 BarbersActivity.coordinates = item.getCoordinates();
                 BarbersActivity.ListSpecialist = item.getSpecialists();
-                BarbersActivity.ListService = item.getServices();
+                BarbersActivity.ListSpecialist = item.getSpecialists();
+
+                if (item.getOpeningTimes() != null) {
+                    Log.d("MapiTopBarberShopsAdapter", "Map is: " + item.getOpeningTimes().get("Monday").getOpen()+ " - "+item.getOpeningTimes().get("Monday").getClose());
+                } else {
+                    Log.d("MapiTopBarberShopsAdapter", "Map is: Null");
+
+                }
+                BarbersActivity.openingTimes = item.getOpeningTimes();
 
                 context.startActivity(intent);
 

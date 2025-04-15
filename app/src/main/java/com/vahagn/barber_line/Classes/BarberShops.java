@@ -2,7 +2,9 @@ package com.vahagn.barber_line.Classes;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @IgnoreExtraProperties
 public class BarberShops {
@@ -17,6 +19,10 @@ public class BarberShops {
     private List<Reviews> reviews;
     private List<Services> services;
     private List<Barbers> specialists;
+//    private Map<String, Map<String, String>> opening_times = new HashMap<>();
+
+    private Map<String, TimeRange> openingTimes;
+
     private String reason;
 
     public BarberShops() {
@@ -49,8 +55,8 @@ public class BarberShops {
         this.specialists = specialists;
     }
 
-    public BarberShops(String ownerEmail,String name, String address, String coordinates, String image, String logo, double rating,
-                       List<Reviews> reviews, List<Services> services, List<Barbers> specialists) {
+    public BarberShops(String ownerEmail, String name, String address, String coordinates, String image, String logo, double rating,
+                       List<Reviews> reviews, List<Services> services, List<Barbers> specialists, Map<String, TimeRange> openingTimes) {
         this.ownerEmail = ownerEmail;
         this.name = name;
         this.address = address;
@@ -61,6 +67,7 @@ public class BarberShops {
         this.reviews = reviews;
         this.services = services;
         this.specialists = specialists;
+        this.openingTimes = openingTimes;
     }
 
     public String getOwnerEmail() {
@@ -150,5 +157,12 @@ public class BarberShops {
     public void setReason(String reason) {
         this.reason = reason;
     }
-}
 
+    public Map<String, TimeRange> getOpeningTimes() {
+        return openingTimes;
+    }
+
+    public void setOpeningTimes(Map<String, TimeRange> openingTimes) {
+        this.openingTimes = openingTimes;
+    }
+}

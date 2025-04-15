@@ -27,11 +27,14 @@ import com.vahagn.barber_line.Admin.AdminSettingsActivity;
 import com.vahagn.barber_line.Classes.BarberShops;
 import com.vahagn.barber_line.Classes.Barbers;
 import com.vahagn.barber_line.Classes.Services;
+import com.vahagn.barber_line.Classes.TimeRange;
 import com.vahagn.barber_line.R;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BarbersActivity extends AppCompatActivity {
 
@@ -41,6 +44,7 @@ public class BarbersActivity extends AppCompatActivity {
     public static String imageUrl, name, rating,OwnerEmail, address, coordinates;
     public static List<Barbers> ListSpecialist = new ArrayList<>();
     public static List<Services> ListService = new ArrayList<>();
+    public static Map<String, TimeRange> openingTimes = new HashMap<>();
 
     private List<BarberShops> ListBarberShops = new ArrayList<>();
     private List<BarberShops> filteredList = new ArrayList<>();
@@ -57,8 +61,22 @@ public class BarbersActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     BarberShops shop = snapshot.getValue(BarberShops.class);
                     assert shop != null;
-                    addBarbershop(secondActivityContainer, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(),shop.getOwnerEmail(), shop.getCoordinates(), shop.getSpecialists(), shop.getServices());
-                    ListBarberShops.add(new BarberShops(shop.getOwnerEmail(), shop.getName(), shop.getAddress(), shop.getCoordinates(), shop.getImage(), shop.getLogo(), shop.getRating(), shop.getReviews(), shop.getServices(), shop.getSpecialists()));
+
+                    if (shop.getOpeningTimes() != null) {
+                        Log.d("MapiBarbersActivity", "Map is: " + shop.getOpeningTimes().get("Monday").getOpen()+ " - "+shop.getOpeningTimes().get("Monday").getClose());
+                        Log.d("MapiBarbersActivity", "Map is: " + shop.getOpeningTimes().get("Tuesday").getOpen()+ " - "+shop.getOpeningTimes().get("Monday").getClose());
+                        Log.d("MapiBarbersActivity", "Map is: " + shop.getOpeningTimes().get("Wednesday").getOpen()+ " - "+shop.getOpeningTimes().get("Monday").getClose());
+                        Log.d("MapiBarbersActivity", "Map is: " + shop.getOpeningTimes().get("Thursday").getOpen()+ " - "+shop.getOpeningTimes().get("Monday").getClose());
+                        Log.d("MapiBarbersActivity", "Map is: " + shop.getOpeningTimes().get("Friday").getOpen()+ " - "+shop.getOpeningTimes().get("Monday").getClose());
+                        Log.d("MapiBarbersActivity", "Map is: " + shop.getOpeningTimes().get("Saturday").getOpen()+ " - "+shop.getOpeningTimes().get("Monday").getClose());
+                        Log.d("MapiBarbersActivity", "Map is: " + shop.getOpeningTimes().get("Sunday").getOpen()+ " - "+shop.getOpeningTimes().get("Monday").getClose());
+                    } else {
+                        Log.d("MapiBarbersActivity", "Map is: Null");
+
+                    }
+
+                    addBarbershop(secondActivityContainer, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(),shop.getOwnerEmail(), shop.getCoordinates(), shop.getSpecialists(),shop.getOpeningTimes(), shop.getServices());
+                    ListBarberShops.add(new BarberShops(shop.getOwnerEmail(), shop.getName(), shop.getAddress(), shop.getCoordinates(), shop.getImage(), shop.getLogo(), shop.getRating(), shop.getReviews(), shop.getServices(), shop.getSpecialists(),shop.getOpeningTimes()));
 //                    ListBarberShops.add(shop);
                 }
             }
@@ -95,12 +113,18 @@ public class BarbersActivity extends AppCompatActivity {
         }
         secondActivityContainer.removeAllViews();
         for (BarberShops shop : filteredList) {
-            addBarbershop(secondActivityContainer, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getOwnerEmail(), shop.getCoordinates(), shop.getSpecialists(), shop.getServices());
+//            if (shop.getOpeningTimes() != null) {
+//                Log.d("Mapi", "Map is: " + shop.getOpeningTimes().get("Monday"));
+//            } else {
+//                Log.d("Mapi", "Map is: Null");
+//
+//            }
+            addBarbershop(secondActivityContainer, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getOwnerEmail(), shop.getCoordinates(), shop.getSpecialists(),shop.getOpeningTimes(), shop.getServices());
         }
     }
 
 
-    public void addBarbershop(LinearLayout container, String logo, String imageUrl, String name, double rating, String address, String OwnerEmail,String coordinates, List<Barbers> ListSpecialist, List<Services> ListService) {
+    public void addBarbershop(LinearLayout container, String logo, String imageUrl, String name, double rating, String address, String OwnerEmail, String coordinates, List<Barbers> ListSpecialist, Map<String, TimeRange> openingTimes, List<Services> ListService) {
         View barbershopView = LayoutInflater.from(this).inflate(R.layout.barbershops_gray, container, false);
 
         ImageView logoImageView = barbershopView.findViewById(R.id.logo);
@@ -127,12 +151,12 @@ public class BarbersActivity extends AppCompatActivity {
             BarbersActivity.name = name;
             BarbersActivity.rating = String.valueOf(rating);
 
-            if (OwnerEmail!=null)
-            {
-                Log.i("OwnerEmail",OwnerEmail);
-            }
-            else
-                Log.i("OwnerEmail","Null");
+//            if (OwnerEmail!=null)
+//            {
+//                Log.i("OwnerEmail",OwnerEmail);
+//            }
+//            else
+//                Log.i("OwnerEmail","Null");
 
             BarbersActivity.OwnerEmail = OwnerEmail;
             BarbersActivity.address = address;
@@ -145,6 +169,16 @@ public class BarbersActivity extends AppCompatActivity {
 
             BarbersActivity.coordinates = coordinates;
             BarbersActivity.ListSpecialist = ListSpecialist;
+
+
+//            if (openingTimes != null) {
+//                Log.d("Mapi", "Map is: " +openingTimes.get("Monday"));
+//            } else {
+//                Log.d("Mapi", "Map is: Null");
+//
+//            }
+
+            BarbersActivity.openingTimes = openingTimes;
 //            BarbersActivity.ListService = ListService;
 
             ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(

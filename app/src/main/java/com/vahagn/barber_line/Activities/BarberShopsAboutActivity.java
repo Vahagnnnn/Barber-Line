@@ -20,7 +20,9 @@ import com.bumptech.glide.Glide;
 import com.vahagn.barber_line.Admin.AdminActivity;
 import com.vahagn.barber_line.Admin.CreateBarberShopActivity;
 import com.vahagn.barber_line.Classes.Barbers;
+import com.vahagn.barber_line.Classes.OpeningTime;
 import com.vahagn.barber_line.Classes.Services;
+import com.vahagn.barber_line.Classes.TimeRange;
 import com.vahagn.barber_line.Fragments.SpecialistsFragment;
 import com.vahagn.barber_line.R;
 import com.vahagn.barber_line.adapter.CategoryAdapter;
@@ -29,6 +31,7 @@ import com.vahagn.barber_line.model.Category;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -42,6 +45,7 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
     List<Category> categoryList = new ArrayList<>();
     public static List<Barbers> ListSpecialist = new ArrayList<>();
     List<Services> ListService = new ArrayList<>();
+    Map<String, TimeRange>  openingTimes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +80,7 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
         adress.setText(BarbersActivity.address);
 
         ListSpecialist = BarbersActivity.ListSpecialist;
+        openingTimes = BarbersActivity.openingTimes;
 
 
         if (ListSpecialist != null) {
@@ -123,6 +128,7 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
         categoryList.add(new Category(1, "Specialists", R.drawable.specialists, "#EDEFFB"));
         categoryList.add(new Category(2, "Services", R.drawable.scissors, "#242C3B"));
         categoryList.add(new Category(3, "Reviews", R.drawable.star_xml, "#242C3B"));
+        categoryList.add(new Category(4, "About", R.drawable.ic_about, "#242C3B"));
         setCategoryRecycler(categoryList);
     }
 
@@ -132,7 +138,14 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
         categoryRecycler = findViewById(R.id.category);
         categoryRecycler.setLayoutManager(layoutManager);
 
-        categoryAdapter = new CategoryAdapter(this, categoryList, ListSpecialist, ListService, getSupportFragmentManager());
+//        if (openingTimes != null) {
+//            Log.d("Mapi", "Map is: " + openingTimes.get("Monday"));
+//        } else {
+//            Log.d("Mapi", "Map is: Null");
+//
+//        }
+
+        categoryAdapter = new CategoryAdapter(this, categoryList, ListSpecialist, ListService,openingTimes, getSupportFragmentManager());
         categoryRecycler.setAdapter(categoryAdapter);
     }
 

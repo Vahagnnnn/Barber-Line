@@ -21,7 +21,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.vahagn.barber_line.Activities.BarberShopsAboutActivity;
 import com.vahagn.barber_line.Classes.Barbers;
+import com.vahagn.barber_line.Classes.OpeningTime;
 import com.vahagn.barber_line.Classes.Services;
+import com.vahagn.barber_line.Classes.TimeRange;
+import com.vahagn.barber_line.Fragments.AboutFragment;
 import com.vahagn.barber_line.Fragments.ReviewsFragment;
 import com.vahagn.barber_line.Fragments.ServicesFragment;
 import com.vahagn.barber_line.Fragments.SpecialistsFragment;
@@ -29,6 +32,7 @@ import com.vahagn.barber_line.R;
 import com.vahagn.barber_line.model.Category;
 
 import java.util.List;
+import java.util.Map;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
 
@@ -36,8 +40,25 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     private List<Category> categories;
     private List<Barbers> ListSpecialist;
     private List<Services> ListService;
+    private  Map<String, TimeRange> openingTimes;
     private FragmentManager fragmentManager;
 
+    public CategoryAdapter(Context context, List<Category> categories, List<Barbers> ListSpecialist, List<Services> ListService, Map<String, TimeRange> openingTimes, FragmentManager fragmentManager) {
+        this.context = context;
+        this.categories = categories;
+        this.ListSpecialist = ListSpecialist;
+        this.ListService = ListService;
+        this.openingTimes = openingTimes;
+
+//        if (openingTimes != null) {
+//            Log.d("Mapi", "Map is: " + openingTimes.get("Monday"));
+//        } else {
+//            Log.d("Mapi", "Map is: Null");
+//
+//        }
+
+        this.fragmentManager = fragmentManager;
+    }
     public CategoryAdapter(Context context, List<Category> categories, List<Barbers> ListSpecialist, List<Services> ListService, FragmentManager fragmentManager) {
         this.context = context;
         this.categories = categories;
@@ -45,7 +66,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         this.ListService = ListService;
         this.fragmentManager = fragmentManager;
     }
-
     @NonNull
     @Override
     public CategoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -89,6 +109,18 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
                     case "Reviews":
                         Fragment reviewsFragment = new ReviewsFragment();
                         transaction.replace(R.id.info_container, reviewsFragment);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+                        break;
+                    case "About":
+                        if (openingTimes != null) {
+                            Log.d("Mapi", "Map is: " + openingTimes.get("Monday"));
+                        } else {
+                            Log.d("Mapi", "Map is: Null");
+
+                        }
+                        Fragment aboutFragment = new AboutFragment(openingTimes);
+                        transaction.replace(R.id.info_container, aboutFragment);
                         transaction.addToBackStack(null);
                         transaction.commit();
                         break;
