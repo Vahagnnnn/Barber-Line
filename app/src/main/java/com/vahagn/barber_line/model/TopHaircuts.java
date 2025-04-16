@@ -1,19 +1,30 @@
 package com.vahagn.barber_line.model;
 
 public class TopHaircuts {
-    private final int imageView;
-    private final String name;
+    private String image;
+    private String name;
 
-    public TopHaircuts(int imageView, String name) {
-        this.imageView = imageView;
+    public TopHaircuts() {
+    }
+
+    public TopHaircuts(String image, String name) {
+        this.image = image;
         this.name = name;
     }
 
-    public int getImageView() {
-        return imageView;
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

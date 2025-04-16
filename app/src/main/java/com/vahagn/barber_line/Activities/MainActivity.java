@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
     DatabaseReference myRef = FirebaseDatabase.getInstance().getReference().child("barberShops");
     DatabaseReference TopBarbers = FirebaseDatabase.getInstance().getReference().child("TopBarbers");
+    DatabaseReference TopHaircuts = FirebaseDatabase.getInstance().getReference().child("TopHaircuts");
 
     private FirebaseAuth mAuth;
 
@@ -55,6 +56,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        SetTopBarberShops();
+        SetTopBarbers();
+        SetTopHaircuts();
+
+//        TopHaircutsList.add(new TopHaircuts(R.drawable.img_haircut, "The Textured Crop"));
+//        TopHaircutsList.add(new TopHaircuts(R.drawable.img_haircut, "The Textured Crop"));
+//        TopHaircutsList.add(new TopHaircuts(R.drawable.img_haircut, "The Textured Crop"));
+//        TopHaircutsList.add(new TopHaircuts(R.drawable.img_haircut, "The Textured Crop"));
+//        setTopHaircutsRecycler(TopHaircutsList);
+
+
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            MainActivity.isLogin = true;
+        }
+    }
+
+    private void SetTopBarberShops() {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -72,30 +92,6 @@ public class MainActivity extends AppCompatActivity {
                 Log.w("Firebase", "Failed to read value.", databaseError.toException());
             }
         });
-
-
-        SetTopBarbers();
-//        TopBarbersList.add(new TopBarbers(R.drawable.img_sargis_paragon, "Sargis", "077-77-77-77"));
-//        TopBarbersList.add(new TopBarbers(R.drawable.img_narine_paragon, "Narine", "099-99-99-99"));
-//        TopBarbersList.add(new TopBarbers(R.drawable.img_narine_paragon, "Narine", "099-99-99-99"));
-//        setTopBarbersRecycler(TopBarbersList);
-
-        TopHaircutsList.add(new TopHaircuts(R.drawable.img_haircut, "The Textured Crop"));
-        TopHaircutsList.add(new TopHaircuts(R.drawable.img_haircut, "The Textured Crop"));
-        TopHaircutsList.add(new TopHaircuts(R.drawable.img_haircut, "The Textured Crop"));
-        TopHaircutsList.add(new TopHaircuts(R.drawable.img_haircut, "The Textured Crop"));
-        setTopHaircutsRecycler(TopHaircutsList);
-
-
-        mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) {
-            Log.i("currentUser", "Log In " + isLogin);
-            MainActivity.isLogin = true;
-        } else {
-            Log.i("currentUser", "Dont Log In " + isLogin);
-        }
-
     }
 
     private void SetTopBarbers() {
@@ -116,6 +112,27 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void SetTopHaircuts() {
+        TopHaircuts.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                TopHaircutsList.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    TopHaircuts haircuts = snapshot.getValue(TopHaircuts.class);
+                    assert haircuts != null;
+                    TopHaircutsList.add(new TopHaircuts(haircuts.getImage(),haircuts.getName()));
+                }
+                setTopHaircutsRecycler(TopHaircutsList);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w("Firebase", "Failed to read value.", databaseError.toException());
+            }
+        });
+    }
+
 
     private void setTopBarberShopsRecycler(List<BarberShops> topBarberShopsList) {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);

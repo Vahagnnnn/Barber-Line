@@ -10,6 +10,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
+import com.vahagn.barber_line.Fragments.ReviewsFragment;
 import com.vahagn.barber_line.R;
 import com.vahagn.barber_line.model.TopHaircuts;
 
@@ -36,7 +40,17 @@ public class TopHaircutsAdapter extends RecyclerView.Adapter<TopHaircutsAdapter.
     public void onBindViewHolder(@NonNull TopHaircutsAdapter.TopHaircutsViewHolder holder, int position) {
         TopHaircuts item = tophaircuts.get(position);
         holder.name.setText(item.getName());
-        holder.haircut_image.setImageResource(item.getImageView());
+
+
+        if (item.getImage() != null && !item.getImage().isEmpty()) {
+            Glide.with(holder.itemView.getContext())
+                    .load(item.getImage())
+                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(60)))
+                    .into(holder.haircut_image);
+        }
+
+
+//        holder.haircut_image.setImageResource(item.getImage());
     }
 
     @Override
