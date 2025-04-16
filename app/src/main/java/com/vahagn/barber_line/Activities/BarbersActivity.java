@@ -26,6 +26,7 @@ import com.vahagn.barber_line.Admin.AdminActivity;
 import com.vahagn.barber_line.Admin.AdminSettingsActivity;
 import com.vahagn.barber_line.Classes.BarberShops;
 import com.vahagn.barber_line.Classes.Barbers;
+import com.vahagn.barber_line.Classes.Reviews;
 import com.vahagn.barber_line.Classes.Services;
 import com.vahagn.barber_line.Classes.TimeRange;
 import com.vahagn.barber_line.R;
@@ -41,9 +42,10 @@ public class BarbersActivity extends AppCompatActivity {
     DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("barberShops");
     LinearLayout secondActivityContainer;
 
-    public static String logo,imageUrl, name, rating,OwnerEmail, address, coordinates;
+    public static String logo, imageUrl, name, rating, OwnerEmail, address, coordinates;
     public static List<Barbers> ListSpecialist = new ArrayList<>();
     public static List<Services> ListService = new ArrayList<>();
+    public static List<Reviews> ListReviews = new ArrayList<>();
     public static Map<String, TimeRange> openingTimes = new HashMap<>();
 
     private List<BarberShops> ListBarberShops = new ArrayList<>();
@@ -75,8 +77,8 @@ public class BarbersActivity extends AppCompatActivity {
 //
 //                    }
 
-                    addBarbershop(secondActivityContainer, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(),shop.getOwnerEmail(), shop.getCoordinates(), shop.getSpecialists(),shop.getOpeningTimes(), shop.getServices());
-                    ListBarberShops.add(new BarberShops(shop.getOwnerEmail(), shop.getName(), shop.getAddress(), shop.getCoordinates(), shop.getImage(), shop.getLogo(), shop.getRating(), shop.getReviews(), shop.getServices(), shop.getSpecialists(),shop.getOpeningTimes()));
+                    addBarbershop(secondActivityContainer, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getOwnerEmail(), shop.getCoordinates(), shop.getSpecialists(),shop.getReviews(), shop.getOpeningTimes(), shop.getServices());
+                    ListBarberShops.add(new BarberShops(shop.getOwnerEmail(), shop.getName(), shop.getAddress(), shop.getCoordinates(), shop.getImage(), shop.getLogo(), shop.getRating(), shop.getReviews(), shop.getServices(), shop.getSpecialists(), shop.getOpeningTimes()));
 //                    ListBarberShops.add(shop);
                 }
             }
@@ -119,12 +121,12 @@ public class BarbersActivity extends AppCompatActivity {
 //                Log.d("Mapi", "Map is: Null");
 //
 //            }
-            addBarbershop(secondActivityContainer, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getOwnerEmail(), shop.getCoordinates(), shop.getSpecialists(),shop.getOpeningTimes(), shop.getServices());
+            addBarbershop(secondActivityContainer, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getOwnerEmail(), shop.getCoordinates(), shop.getSpecialists(), shop.getReviews(),shop.getOpeningTimes(), shop.getServices());
         }
     }
 
 
-    public void addBarbershop(LinearLayout container, String logo, String imageUrl, String name, double rating, String address, String OwnerEmail, String coordinates, List<Barbers> ListSpecialist, Map<String, TimeRange> openingTimes, List<Services> ListService) {
+    public void addBarbershop(LinearLayout container, String logo, String imageUrl, String name, double rating, String address, String OwnerEmail, String coordinates, List<Barbers> ListSpecialist, List<Reviews> ListReviews, Map<String, TimeRange> openingTimes, List<Services> ListService) {
         View barbershopView = LayoutInflater.from(this).inflate(R.layout.barbershops_gray, container, false);
 
         ImageView logoImageView = barbershopView.findViewById(R.id.logo);
@@ -151,37 +153,12 @@ public class BarbersActivity extends AppCompatActivity {
             BarbersActivity.logo = logo;
             BarbersActivity.name = name;
             BarbersActivity.rating = String.valueOf(rating);
-
-//            if (OwnerEmail!=null)
-//            {
-//                Log.i("OwnerEmail",OwnerEmail);
-//            }
-//            else
-//                Log.i("OwnerEmail","Null");
-
             BarbersActivity.OwnerEmail = OwnerEmail;
             BarbersActivity.address = address;
             BarbersActivity.coordinates = coordinates;
-
-            if (coordinates != null) {
-                Log.i("BarbershopCoordinates_str", "BarbersActivity = " + coordinates);
-            } else {
-                Log.i("BarbershopCoordinates_str", "BarbersActivity = " +"Message is null");
-            }
-
-            BarbersActivity.coordinates = coordinates;
             BarbersActivity.ListSpecialist = ListSpecialist;
-
-
-//            if (openingTimes != null) {
-//                Log.d("Mapi", "Map is: " +openingTimes.get("Monday"));
-//            } else {
-//                Log.d("Mapi", "Map is: Null");
-//
-//            }
-
+            BarbersActivity.ListReviews = ListReviews;
             BarbersActivity.openingTimes = openingTimes;
-//            BarbersActivity.ListService = ListService;
 
             ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
                     this,

@@ -1,43 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="#242C3B"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Fragments.SpecialistsFragment">
+    android:background="#242C3B"
+    android:transitionName="specialistView"
+    app:circularflow_radiusInDP="30dp"
+    tools:context=".Fragments.ReviewsFragment">
 
+    <TextView
+        android:id="@+id/specialist_text"
+        android:layout_width="wrap_content"
+        android:layout_height="21dp"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/plus_jakarta_sans_semibold"
+        android:gravity="start"
+        android:includeFontPadding="false"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:text="@string/reviews"
+        android:textColor="#FFFFFFFF"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
 
-    <FrameLayout
-        android:id="@+id/specialists"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/category">
+        app:layout_constraintTop_toBottomOf="@id/specialist_text">
 
-        <LinearLayout
-            android:id="@+id/specialists_container"
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nested_scroll_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clipToPadding="false"
-            android:orientation="vertical"
-            android:paddingTop="0.5dp">
+            android:fillViewport="true"
+            tools:ignore="MissingConstraints">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="21dp"
-                android:fontFamily="@font/plus_jakarta_sans_semibold"
-                android:includeFontPadding="false"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:text="@string/reviews"
-                android:textColor="#FFFFFFFF"
-                android:textSize="16sp" />
+            <LinearLayout
+                android:id="@+id/info_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="30dp" />
 
-        </LinearLayout>
-    </FrameLayout>
+        </androidx.core.widget.NestedScrollView>
 
-
-
-</FrameLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

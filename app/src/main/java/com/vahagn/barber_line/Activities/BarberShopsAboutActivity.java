@@ -21,6 +21,7 @@ import com.vahagn.barber_line.Admin.AdminActivity;
 import com.vahagn.barber_line.Admin.CreateBarberShopActivity;
 import com.vahagn.barber_line.Classes.Barbers;
 import com.vahagn.barber_line.Classes.OpeningTime;
+import com.vahagn.barber_line.Classes.Reviews;
 import com.vahagn.barber_line.Classes.Services;
 import com.vahagn.barber_line.Classes.TimeRange;
 import com.vahagn.barber_line.Fragments.SpecialistsFragment;
@@ -45,7 +46,8 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
     List<Category> categoryList = new ArrayList<>();
     public static List<Barbers> ListSpecialist = new ArrayList<>();
     List<Services> ListService = new ArrayList<>();
-    Map<String, TimeRange>  openingTimes;
+    List<Reviews> ListReviews = new ArrayList<>();
+    Map<String, TimeRange> openingTimes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +82,7 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
         adress.setText(BarbersActivity.address);
 
         ListSpecialist = BarbersActivity.ListSpecialist;
+        ListReviews = BarbersActivity.ListReviews;
         openingTimes = BarbersActivity.openingTimes;
 
 
@@ -138,14 +141,7 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
         categoryRecycler = findViewById(R.id.category);
         categoryRecycler.setLayoutManager(layoutManager);
 
-//        if (openingTimes != null) {
-//            Log.d("Mapi", "Map is: " + openingTimes.get("Monday"));
-//        } else {
-//            Log.d("Mapi", "Map is: Null");
-//
-//        }
-
-        categoryAdapter = new CategoryAdapter(this, categoryList, ListSpecialist, ListService,openingTimes, getSupportFragmentManager());
+        categoryAdapter = new CategoryAdapter(this, categoryList, ListSpecialist, ListService, ListReviews, openingTimes, getSupportFragmentManager());
         categoryRecycler.setAdapter(categoryAdapter);
     }
 

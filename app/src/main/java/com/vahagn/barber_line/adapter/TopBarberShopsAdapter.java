@@ -104,7 +104,7 @@ public class TopBarberShopsAdapter extends RecyclerView.Adapter<TopBarberShopsAd
                 BarbersActivity.logo = item.getLogo();
                 BarbersActivity.coordinates = item.getCoordinates();
                 BarbersActivity.ListSpecialist = item.getSpecialists();
-                BarbersActivity.ListSpecialist = item.getSpecialists();
+                BarbersActivity.ListReviews = item.getReviews();
 
 //                if (item.getOpeningTimes() != null) {
 //                    Log.d("MapiTopBarberShopsAdapter", "Map is: " + item.getOpeningTimes().get("Monday").getOpen()+ " - "+item.getOpeningTimes().get("Monday").getClose());

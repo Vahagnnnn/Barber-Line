@@ -1,51 +1,53 @@
 package com.vahagn.barber_line.Classes;
 
+import android.widget.ImageView;
+
 import java.io.Serializable;
 
 public class Reviews implements Serializable {
-    private String userName;
-    private String reviewText;
-    private double rating;
-    private String date;
+    private String CustomerImage;
+    private String CustomerName;
+    private String ReviewText;
+    private double Rating;
 
     public Reviews() {}
 
-    public Reviews(String userName, String reviewText, double rating, String date) {
-        this.userName = userName;
-        this.reviewText = reviewText;
-        this.rating = rating;
-        this.date = date;
+    public Reviews(String CustomerImage,String CustomerName, String ReviewText, double Rating) {
+        this.CustomerImage = CustomerImage;
+        this.CustomerName = CustomerName;
+        this.ReviewText = ReviewText;
+        this.Rating = Rating;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getCustomerImage() {
+        return CustomerImage;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setCustomerImage(String customerImage) {
+        CustomerImage = customerImage;
+    }
+
+    public String getCustomerName() {
+        return CustomerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        CustomerName = customerName;
     }
 
     public String getReviewText() {
-        return reviewText;
+        return ReviewText;
     }
 
     public void setReviewText(String reviewText) {
-        this.reviewText = reviewText;
+        ReviewText = reviewText;
     }
 
     public double getRating() {
-        return rating;
+        return Rating;
     }
 
     public void setRating(double rating) {
-        this.rating = rating;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
+        Rating = rating;
     }
 }
