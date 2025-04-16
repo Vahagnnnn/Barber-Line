@@ -16,9 +16,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.vahagn.barber_line.Activities.BarbersActivity;
 import com.vahagn.barber_line.Activities.LoginActivity;
 import com.vahagn.barber_line.Classes.Barbers;
+import com.vahagn.barber_line.Classes.Reviews;
 import com.vahagn.barber_line.Classes.Services;
+import com.vahagn.barber_line.Classes.TimeRange;
 import com.vahagn.barber_line.Fragments.SpecialistsFragment;
 import com.vahagn.barber_line.R;
 import com.vahagn.barber_line.adapter.CategoryAdapter;
@@ -27,6 +30,7 @@ import com.vahagn.barber_line.model.Category;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class AdminBarberShopsAboutActivity extends AppCompatActivity {
@@ -39,7 +43,8 @@ public class AdminBarberShopsAboutActivity extends AppCompatActivity {
     List<Category> categoryList = new ArrayList<>();
     List<Barbers> ListSpecialist = new ArrayList<>();
     List<Services> ListService = new ArrayList<>();
-
+    List<Reviews> ListReviews = new ArrayList<>();
+    Map<String, TimeRange> openingTimes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +76,8 @@ public class AdminBarberShopsAboutActivity extends AppCompatActivity {
         adress.setText(AdminSettingsActivity.address);
 
         ListSpecialist = AdminSettingsActivity.ListSpecialist;
-
+        ListReviews = AdminSettingsActivity.ListReviews;
+        openingTimes = AdminSettingsActivity.openingTimes;
 
 
         if (ListSpecialist != null) {
@@ -115,7 +121,8 @@ public class AdminBarberShopsAboutActivity extends AppCompatActivity {
         categoryRecycler = findViewById(R.id.category);
         categoryRecycler.setLayoutManager(layoutManager);
 
-        categoryAdapter = new CategoryAdapter(this, categoryList, ListSpecialist, ListService, getSupportFragmentManager());
+        categoryAdapter = new CategoryAdapter(this, categoryList, ListSpecialist, ListService, ListReviews, openingTimes, getSupportFragmentManager());
+//        categoryAdapter = new CategoryAdapter(this, categoryList, ListSpecialist, ListService, getSupportFragmentManager());
         categoryRecycler.setAdapter(categoryAdapter);
     }
 

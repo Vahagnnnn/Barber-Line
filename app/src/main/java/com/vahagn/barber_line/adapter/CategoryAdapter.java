@@ -54,13 +54,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         this.openingTimes = openingTimes;
         this.fragmentManager = fragmentManager;
     }
-    public CategoryAdapter(Context context, List<Category> categories, List<Barbers> ListSpecialist, List<Services> ListService, FragmentManager fragmentManager) {
-        this.context = context;
-        this.categories = categories;
-        this.ListSpecialist = ListSpecialist;
-        this.ListService = ListService;
-        this.fragmentManager = fragmentManager;
-    }
+//    public CategoryAdapter(Context context, List<Category> categories, List<Barbers> ListSpecialist, List<Services> ListService, FragmentManager fragmentManager) {
+//        this.context = context;
+//        this.categories = categories;
+//        this.ListSpecialist = ListSpecialist;
+//        this.ListService = ListService;
+//        this.fragmentManager = fragmentManager;
+//    }
     @NonNull
     @Override
     public CategoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

@@ -23,14 +23,19 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.vahagn.barber_line.Activities.BarbersActivity;
 import com.vahagn.barber_line.Classes.BarberShops;
 import com.vahagn.barber_line.Classes.Barbers;
+import com.vahagn.barber_line.Classes.Reviews;
 import com.vahagn.barber_line.Classes.Services;
+import com.vahagn.barber_line.Classes.TimeRange;
 import com.vahagn.barber_line.R;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class AdminSettingsActivity extends AppCompatActivity {
@@ -42,7 +47,8 @@ public class AdminSettingsActivity extends AppCompatActivity {
 
     public static String imageUrl, name, rating, address;
     public static List<Barbers> ListSpecialist = new ArrayList<>();
-    public static List<Services> ListService = new ArrayList<>();
+    public static List<Reviews> ListReviews = new ArrayList<>();
+    public static Map<String, TimeRange> openingTimes = new HashMap<>();
 
     TextView Confirm_List_TextView, Wait_List_TextView, Rejected_List_TextView;
     @Override
@@ -79,7 +85,7 @@ public class AdminSettingsActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     BarberShops shop = snapshot.getValue(BarberShops.class);
                     if (shop != null && Objects.equals(shop.getOwnerEmail(), OwnerEmail)) {
-                        addBarbershop(confirm_barbershops_container, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists());
+                        addBarbershop(confirm_barbershops_container, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists(),shop.getReviews(),shop.getOpeningTimes());
                         Confirm_List_TextView.setVisibility(VISIBLE);
                     }
                 }
@@ -97,7 +103,7 @@ public class AdminSettingsActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     BarberShops shop = snapshot.getValue(BarberShops.class);
                     if (shop != null && Objects.equals(shop.getOwnerEmail(), OwnerEmail)) {
-                        addBarbershop(pending_barbershops_container, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists());
+                        addBarbershop(pending_barbershops_container, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists(),shop.getReviews(),shop.getOpeningTimes());
                         Wait_List_TextView.setVisibility(VISIBLE);
                     }
                 }
@@ -115,7 +121,7 @@ public class AdminSettingsActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     BarberShops shop = snapshot.getValue(BarberShops.class);
                     if (shop != null && Objects.equals(shop.getOwnerEmail(), OwnerEmail)) {
-                        addBarbershop(rejected_barbershops_container, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists(), shop.getReason());
+                        addBarbershop(rejected_barbershops_container, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists(), shop.getReviews(),shop.getOpeningTimes(), shop.getReason());
                         Rejected_List_TextView.setVisibility(VISIBLE);
                     }
                 }
@@ -128,7 +134,7 @@ public class AdminSettingsActivity extends AppCompatActivity {
         });
     }
 
-    public void addBarbershop(LinearLayout container, String logo, String imageUrl, String name, double rating, String address, List<Barbers> ListSpecialist) {
+    public void addBarbershop(LinearLayout container, String logo, String imageUrl, String name, double rating, String address, List<Barbers> ListSpecialist, List<Reviews> ListReviews, Map<String, TimeRange> openingTimes) {
         View barbershopView = LayoutInflater.from(this).inflate(R.layout.barbershops_gray, container, false);
         ImageView logoImageView = barbershopView.findViewById(R.id.logo);
 
@@ -151,6 +157,8 @@ public class AdminSettingsActivity extends AppCompatActivity {
             AdminSettingsActivity.rating = String.valueOf(rating);
             AdminSettingsActivity.address = address;
             AdminSettingsActivity.ListSpecialist = ListSpecialist;
+            AdminSettingsActivity.ListReviews = ListReviews;
+            AdminSettingsActivity.openingTimes = openingTimes;
 
             ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
                     this,
@@ -162,7 +170,7 @@ public class AdminSettingsActivity extends AppCompatActivity {
         container.addView(barbershopView);
     }
 
-    public void addBarbershop(LinearLayout container, String logo, String imageUrl, String name, double rating, String address, List<Barbers> ListSpecialist, String reason) {
+    public void addBarbershop(LinearLayout container, String logo, String imageUrl, String name, double rating, String address, List<Barbers> ListSpecialist,List<Reviews> ListReviews, Map<String, TimeRange> openingTimes, String reason) {
         View barbershopView = LayoutInflater.from(this).inflate(R.layout.barbershops_gray, container, false);
         ImageView logoImageView = barbershopView.findViewById(R.id.logo);
 
