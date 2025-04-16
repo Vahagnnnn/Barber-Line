@@ -24,21 +24,21 @@ public class AdminActivity extends AppCompatActivity {
         FrameLayout createBarberShop = findViewById(R.id.createBarberShop);
         FrameLayout joinToBarberShop = findViewById(R.id.joinToBarberShop);
 
-        View.OnTouchListener touchEffect = (v, event) -> {
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    v.animate().alpha(0.8f).setDuration(50).start();
-                    return false;
-                case MotionEvent.ACTION_UP:
-                case MotionEvent.ACTION_CANCEL:
-                    v.animate().alpha(1.0f).setDuration(50).start();
-                    break;
-            }
-            return false;
-        };
+//        View.OnTouchListener touchEffect = (v, event) -> {
+//            switch (event.getAction()) {
+//                case MotionEvent.ACTION_DOWN:
+//                    v.animate().alpha(0.8f).setDuration(50).start();
+//                    return false;
+//                case MotionEvent.ACTION_UP:
+//                case MotionEvent.ACTION_CANCEL:
+//                    v.animate().alpha(1.0f).setDuration(50).start();
+//                    break;
+//            }
+//            return false;
+//        };
 
-        createBarberShop.setOnTouchListener(touchEffect);
-        joinToBarberShop.setOnTouchListener(touchEffect);
+//        createBarberShop.setOnTouchListener(touchEffect);
+//        joinToBarberShop.setOnTouchListener(touchEffect);
 
         createBarberShop.setOnClickListener(view -> navigateTo(CreateBarberShopActivity.class));
     }

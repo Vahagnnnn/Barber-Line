@@ -12,9 +12,13 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,6 +66,17 @@ public class CreateBarberShopActivity extends AppCompatActivity implements OnMap
 
     public static boolean isCreateBarberShopActivity;
 
+
+    private String[] timeOptions = {
+            "Closed",
+            "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM",
+            "12:00 PM", "12:30 PM", "01:00 PM", "01:30 PM",
+            "02:00 PM", "02:30 PM", "03:00 PM", "03:30 PM",
+            "04:00 PM", "04:30 PM", "05:00 PM", "05:30 PM",
+            "06:00 PM", "06:30 PM", "07:00 PM", "07:30 PM",
+            "08:00 PM", "08:30 PM", "09:00 PM"
+    };
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,31 +105,31 @@ public class CreateBarberShopActivity extends AppCompatActivity implements OnMap
 //        ListSpecialist.add(new Barbers(R.drawable.img_sargis_paragon, "Sargis", "77777777"));
 //        ListSpecialist.add(new Barbers(R.drawable.img_sargis_paragon, "Sargis", "77777777"));
 
-        View.OnTouchListener touchEffect = (v, event) -> {
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    v.animate().alpha(0.8f).setDuration(50).start();
-                    return false;
-                case MotionEvent.ACTION_UP:
-                case MotionEvent.ACTION_CANCEL:
-                    v.animate().alpha(1.0f).setDuration(50).start();
-                    break;
-            }
-            return false;
-        };
+//        View.OnTouchListener touchEffect = (v, event) -> {
+//            switch (event.getAction()) {
+//                case MotionEvent.ACTION_DOWN:
+//                    v.animate().alpha(0.8f).setDuration(50).start();
+//                    return false;
+//                case MotionEvent.ACTION_UP:
+//                case MotionEvent.ACTION_CANCEL:
+//                    v.animate().alpha(1.0f).setDuration(50).start();
+//                    break;
+//            }
+//            return false;
+//        };
 
-        View.OnTouchListener touchEffectForImages = (v, event) -> {
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    v.animate().alpha(0.6f).setDuration(50).start();
-                    return false;
-                case MotionEvent.ACTION_UP:
-                case MotionEvent.ACTION_CANCEL:
-                    v.animate().alpha(1.0f).setDuration(50).start();
-                    break;
-            }
-            return false;
-        };
+//        View.OnTouchListener touchEffectForImages = (v, event) -> {
+//            switch (event.getAction()) {
+//                case MotionEvent.ACTION_DOWN:
+//                    v.animate().alpha(0.6f).setDuration(50).start();
+//                    return false;
+//                case MotionEvent.ACTION_UP:
+//                case MotionEvent.ACTION_CANCEL:
+//                    v.animate().alpha(1.0f).setDuration(50).start();
+//                    break;
+//            }
+//            return false;
+//        };
         if (ListSpecialist != null) {
             SpecialistsFragment specialistsFragment = new SpecialistsFragment(ListSpecialist);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -122,17 +137,16 @@ public class CreateBarberShopActivity extends AppCompatActivity implements OnMap
             transaction.commit();
         }
 
-        Send_for_moderation.setOnTouchListener(touchEffect);
+//        Send_for_moderation.setOnTouchListener(touchEffect);
         Send_for_moderation.setOnClickListener(v -> Send_for_moderation());
 
-        BarberShopImage.setOnTouchListener(touchEffectForImages);
-        BarberShopLogo.setOnTouchListener(touchEffectForImages);
+//        BarberShopImage.setOnTouchListener(touchEffectForImages);
+//        BarberShopLogo.setOnTouchListener(touchEffectForImages);
 
         BarberShopImage.setOnClickListener(v -> {
             isLogoSelected = false;
             openGallery();
         });
-
         BarberShopLogo.setOnClickListener(v -> {
             isLogoSelected = true;
             openGallery();
@@ -142,9 +156,6 @@ public class CreateBarberShopActivity extends AppCompatActivity implements OnMap
         latitude = intent.getDoubleExtra("latitude", 0.0);
         longitude = intent.getDoubleExtra("longitude", 0.0);
         address = intent.getStringExtra("address");
-
-        Log.i("BarberShopp", "Lat: " + latitude + ", Lng: " + longitude);
-        Log.i("BarberShopp", "Address: " + address);
         Address.setText(address);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -152,6 +163,60 @@ public class CreateBarberShopActivity extends AppCompatActivity implements OnMap
         if (mapFragment != null) {
             mapFragment.getMapAsync(this);
         }
+
+
+        setupDay("monday");
+        setupDay("tuesday");
+        setupDay("wednesday");
+        setupDay("thursday");
+        setupDay("friday");
+        setupDay("saturday");
+        setupDay("sunday");
+
+    }
+
+
+    private void setupDay(String day) {
+        int startId = getResources().getIdentifier(day + "_start_spinner", "id", getPackageName());
+        int endId = getResources().getIdentifier(day + "_end_spinner", "id", getPackageName());
+
+        Spinner startSpinner = findViewById(startId);
+        Spinner endSpinner = findViewById(endId);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, timeOptions);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        startSpinner.setAdapter(adapter);
+        endSpinner.setAdapter(adapter);
+
+
+        startSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                String selectedTime = (String) parentView.getItemAtPosition(position);
+                if ("Closed".equals(selectedTime)) {
+                    endSpinner.setSelection(0);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+            }
+        });
+
+        endSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                String selectedTime = (String) parentView.getItemAtPosition(position);
+                if ("Closed".equals(selectedTime)) {
+                    startSpinner.setSelection(0);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+            }
+        });
 
     }
 
