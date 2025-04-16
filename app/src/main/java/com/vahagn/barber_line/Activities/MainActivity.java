@@ -208,6 +208,9 @@ public class MainActivity extends AppCompatActivity {
     public void ToMap(View view) {
         navigateTo(MapActivity.class);
     }
+    public void ToHairCuts(View view) {
+        navigateTo(HairCutsActivity.class);
+    }
 
     public void ToAdmin(View view) {
         if (isLogin)
