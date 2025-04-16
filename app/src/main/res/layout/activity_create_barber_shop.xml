@@ -203,7 +203,7 @@
                             android:textStyle="bold" />
 
                         <Spinner
-                            android:id="@+id/monday_start_spinner"
+                            android:id="@+id/Monday_start_spinner"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
@@ -214,7 +214,7 @@
                             android:textColor="@color/white" />
 
                         <Spinner
-                            android:id="@+id/monday_end_spinner"
+                            android:id="@+id/Monday_end_spinner"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp" />
@@ -238,7 +238,7 @@
                             android:textStyle="bold" />
 
                         <Spinner
-                            android:id="@+id/tuesday_start_spinner"
+                            android:id="@+id/Tuesday_start_spinner"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
@@ -249,7 +249,7 @@
                             android:textColor="@color/white" />
 
                         <Spinner
-                            android:id="@+id/tuesday_end_spinner"
+                            android:id="@+id/Tuesday_end_spinner"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp" />
@@ -273,7 +273,7 @@
                             android:textStyle="bold" />
 
                         <Spinner
-                            android:id="@+id/wednesday_start_spinner"
+                            android:id="@+id/Wednesday_start_spinner"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
@@ -284,7 +284,7 @@
                             android:textColor="@color/white" />
 
                         <Spinner
-                            android:id="@+id/wednesday_end_spinner"
+                            android:id="@+id/Wednesday_end_spinner"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp" />
@@ -308,7 +308,7 @@
                             android:textStyle="bold" />
 
                         <Spinner
-                            android:id="@+id/thursday_start_spinner"
+                            android:id="@+id/Thursday_start_spinner"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
@@ -319,7 +319,7 @@
                             android:textColor="@color/white" />
 
                         <Spinner
-                            android:id="@+id/thursday_end_spinner"
+                            android:id="@+id/Thursday_end_spinner"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp" />
@@ -343,7 +343,7 @@
                             android:textStyle="bold" />
 
                         <Spinner
-                            android:id="@+id/friday_start_spinner"
+                            android:id="@+id/Friday_start_spinner"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
@@ -354,7 +354,7 @@
                             android:textColor="@color/white" />
 
                         <Spinner
-                            android:id="@+id/friday_end_spinner"
+                            android:id="@+id/Friday_end_spinner"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp" />
@@ -378,7 +378,7 @@
                             android:textStyle="bold" />
 
                         <Spinner
-                            android:id="@+id/saturday_start_spinner"
+                            android:id="@+id/Saturday_start_spinner"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
@@ -389,7 +389,7 @@
                             android:textColor="@color/white" />
 
                         <Spinner
-                            android:id="@+id/saturday_end_spinner"
+                            android:id="@+id/Saturday_end_spinner"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp" />
@@ -413,7 +413,7 @@
                             android:textStyle="bold" />
 
                         <Spinner
-                            android:id="@+id/sunday_start_spinner"
+                            android:id="@+id/Sunday_start_spinner"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
@@ -424,7 +424,7 @@
                             android:textColor="@color/white" />
 
                         <Spinner
-                            android:id="@+id/sunday_end_spinner"
+                            android:id="@+id/Sunday_end_spinner"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp" />

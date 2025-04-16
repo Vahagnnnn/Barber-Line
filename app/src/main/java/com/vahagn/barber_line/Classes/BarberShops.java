@@ -19,10 +19,7 @@ public class BarberShops {
     private List<Reviews> reviews;
     private List<Services> services;
     private List<Barbers> specialists;
-//    private Map<String, Map<String, String>> opening_times = new HashMap<>();
-
     private Map<String, TimeRange> openingTimes;
-
     private String reason;
 
     public BarberShops() {
@@ -43,16 +40,17 @@ public class BarberShops {
 //    }
 
     public BarberShops(String ownerEmail, String name, String address, String coordinates, String image, String logo, String status,
-                       List<Barbers> specialists) {
+                       List<Barbers> specialists,Map<String, TimeRange> openingTimes) {
         this.ownerEmail = ownerEmail;
         this.name = name;
         this.address = address;
         this.coordinates = coordinates;
         this.image = image;
-        this.status = status;
         this.logo = logo;
         this.rating = 5;
+        this.status = status;
         this.specialists = specialists;
+        this.openingTimes = openingTimes;
     }
 
     public BarberShops(String ownerEmail, String name, String address, String coordinates, String image, String logo, double rating,

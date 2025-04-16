@@ -4,6 +4,12 @@ public class TimeRange {
     private String open;
     private String close;
 
+
+public  TimeRange()
+{
+    this.open = "Closed";
+    this.close = "Closed";
+}
     public String getOpen() {
         return open;
     }

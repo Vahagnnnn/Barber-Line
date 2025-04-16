@@ -38,14 +38,19 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.vahagn.barber_line.Activities.MainActivity;
 import com.vahagn.barber_line.Classes.BarberShops;
 import com.vahagn.barber_line.Classes.Barbers;
+import com.vahagn.barber_line.Classes.TimeRange;
 import com.vahagn.barber_line.Fragments.SpecialistsFragment;
 import com.vahagn.barber_line.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public class CreateBarberShopActivity extends AppCompatActivity implements OnMapReadyCallback {
     private static final int PICK_IMAGE_REQUEST = 1;
@@ -67,7 +72,7 @@ public class CreateBarberShopActivity extends AppCompatActivity implements OnMap
     public static boolean isCreateBarberShopActivity;
 
 
-    private String[] timeOptions = {
+    private final String[] timeOptions = {
             "Closed",
             "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM",
             "12:00 PM", "12:30 PM", "01:00 PM", "01:30 PM",
@@ -76,6 +81,11 @@ public class CreateBarberShopActivity extends AppCompatActivity implements OnMap
             "06:00 PM", "06:30 PM", "07:00 PM", "07:30 PM",
             "08:00 PM", "08:30 PM", "09:00 PM"
     };
+    private  final List<String> daysOfWeek = Arrays.asList(
+            "Monday", "Tuesday", "Wednesday", "Thursday",
+            "Friday", "Saturday", "Sunday"
+    );
+    private Map<String, TimeRange> openingTimes = new HashMap<>();
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -94,54 +104,18 @@ public class CreateBarberShopActivity extends AppCompatActivity implements OnMap
         Address = findViewById(R.id.Address);
 
         View mapOverlay = findViewById(R.id.map_overlay);
-        mapOverlay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navigateTo(AddLocationActivity.class);
-            }
-        });
+        mapOverlay.setOnClickListener(v -> navigateTo(AddLocationActivity.class));
 
 //        ListSpecialist.add(new Barbers(R.drawable.img_sargis_paragon, "Sargis", "77777777"));
 //        ListSpecialist.add(new Barbers(R.drawable.img_sargis_paragon, "Sargis", "77777777"));
 //        ListSpecialist.add(new Barbers(R.drawable.img_sargis_paragon, "Sargis", "77777777"));
 
-//        View.OnTouchListener touchEffect = (v, event) -> {
-//            switch (event.getAction()) {
-//                case MotionEvent.ACTION_DOWN:
-//                    v.animate().alpha(0.8f).setDuration(50).start();
-//                    return false;
-//                case MotionEvent.ACTION_UP:
-//                case MotionEvent.ACTION_CANCEL:
-//                    v.animate().alpha(1.0f).setDuration(50).start();
-//                    break;
-//            }
-//            return false;
-//        };
-
-//        View.OnTouchListener touchEffectForImages = (v, event) -> {
-//            switch (event.getAction()) {
-//                case MotionEvent.ACTION_DOWN:
-//                    v.animate().alpha(0.6f).setDuration(50).start();
-//                    return false;
-//                case MotionEvent.ACTION_UP:
-//                case MotionEvent.ACTION_CANCEL:
-//                    v.animate().alpha(1.0f).setDuration(50).start();
-//                    break;
-//            }
-//            return false;
-//        };
         if (ListSpecialist != null) {
             SpecialistsFragment specialistsFragment = new SpecialistsFragment(ListSpecialist);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.info_container, specialistsFragment);
             transaction.commit();
         }
-
-//        Send_for_moderation.setOnTouchListener(touchEffect);
-        Send_for_moderation.setOnClickListener(v -> Send_for_moderation());
-
-//        BarberShopImage.setOnTouchListener(touchEffectForImages);
-//        BarberShopLogo.setOnTouchListener(touchEffectForImages);
 
         BarberShopImage.setOnClickListener(v -> {
             isLogoSelected = false;
@@ -164,38 +138,112 @@ public class CreateBarberShopActivity extends AppCompatActivity implements OnMap
             mapFragment.getMapAsync(this);
         }
 
+//        setupDay("Monday");
+//        setupDay("Tuesday");
+//        setupDay("Wednesday");
+//        setupDay("Thursday");
+//        setupDay("Friday");
+//        setupDay("Saturday");
+//        setupDay("Sunday");
 
-        setupDay("monday");
-        setupDay("tuesday");
-        setupDay("wednesday");
-        setupDay("thursday");
-        setupDay("friday");
-        setupDay("saturday");
-        setupDay("sunday");
+        for (String day : daysOfWeek) {
+            setupDay(day);
+        }
+
+        Send_for_moderation.setOnClickListener(v -> Send_for_moderation());
 
     }
 
+
+//    private void setupDay(String day) {
+//        int startId = getResources().getIdentifier(day + "_start_spinner", "id", getPackageName());
+//        int endId = getResources().getIdentifier(day + "_end_spinner", "id", getPackageName());
+//
+//        Spinner openSpinner = findViewById(startId);
+//        Spinner closeSpinner = findViewById(endId);
+//
+//        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, timeOptions);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//
+//        openSpinner.setAdapter(adapter);
+//        closeSpinner.setAdapter(adapter);
+//
+//
+//        openSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+//                String selectedTime = (String) parentView.getItemAtPosition(position);
+//                if ("Closed".equals(selectedTime)) {
+//                    closeSpinner.setSelection(0);
+//                }
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parentView) {
+//            }
+//        });
+//
+//        closeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+//                String selectedTime = (String) parentView.getItemAtPosition(position);
+//                if ("Closed".equals(selectedTime)) {
+//                    openSpinner.setSelection(0);
+//                }
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parentView) {
+//            }
+//        });
+//
+//    }
 
     private void setupDay(String day) {
         int startId = getResources().getIdentifier(day + "_start_spinner", "id", getPackageName());
         int endId = getResources().getIdentifier(day + "_end_spinner", "id", getPackageName());
 
-        Spinner startSpinner = findViewById(startId);
-        Spinner endSpinner = findViewById(endId);
+        Spinner openSpinner = findViewById(startId);
+        Spinner closeSpinner = findViewById(endId);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, timeOptions);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        startSpinner.setAdapter(adapter);
-        endSpinner.setAdapter(adapter);
+        openSpinner.setAdapter(adapter);
+        closeSpinner.setAdapter(adapter);
 
-
-        startSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        openSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 String selectedTime = (String) parentView.getItemAtPosition(position);
                 if ("Closed".equals(selectedTime)) {
-                    endSpinner.setSelection(0);
+                    closeSpinner.setSelection(0);
+                }
+
+//                // Update the opening time for the day
+//                TimeRange timeRange = openingTimes.get(day);
+//                if (timeRange == null) {
+//                    Log.i("timeRange","getOpen = "+timeRange.getOpen()+"getClose = "+timeRange.getClose());
+//                    timeRange = new TimeRange();
+//                    openingTimes.put(day, timeRange);
+//                }
+//                timeRange.setOpen(selectedTime);
+
+                else {
+                    TimeRange timeRange = openingTimes.get(day);
+                    if (timeRange == null) {
+                        timeRange = new TimeRange();
+                        openingTimes.put(day, timeRange);
+                    }
+//                    TimeRange timeRange = new TimeRange();
+                    timeRange.setOpen(selectedTime);
+                    Log.i("timeRange", "getOpen = " + timeRange.getOpen());
+                    Log.i("timeRange", "getClose = " + timeRange.getClose());
+
+                    if (!Objects.equals(timeRange.getClose(), "Closed")) {
+                        Log.i("timeRange", "getOpen = " + timeRange.getOpen() + " getClose = " + timeRange.getClose());
+                        openingTimes.put(day, timeRange);
+                    }
                 }
             }
 
@@ -204,12 +252,37 @@ public class CreateBarberShopActivity extends AppCompatActivity implements OnMap
             }
         });
 
-        endSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        closeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 String selectedTime = (String) parentView.getItemAtPosition(position);
                 if ("Closed".equals(selectedTime)) {
-                    startSpinner.setSelection(0);
+                    openSpinner.setSelection(0);
+                }
+
+                // Update the closing time for the day
+//                TimeRange timeRange = openingTimes.get(day);
+//                if (timeRange == null) {
+//                    Log.i("timeRange", "getOpen = " + timeRange.getOpen() + "getClose = " + timeRange.getClose());
+//                    timeRange = new TimeRange();
+//                    openingTimes.put(day, timeRange);
+//                }
+//                timeRange.setClose(selectedTime);
+
+                else {
+                    TimeRange timeRange = openingTimes.get(day);
+                    if (timeRange == null) {
+                        timeRange = new TimeRange();
+                        openingTimes.put(day, timeRange);
+                    }
+                    timeRange.setClose(selectedTime);
+                    Log.i("timeRange", "getClose = " + timeRange.getClose());
+                    Log.i("timeRange", "getOpen = " + timeRange.getOpen());
+
+                    if (!Objects.equals(timeRange.getOpen(), "Closed") ) {
+                        Log.i("timeRange", "getOpen = " + timeRange.getOpen() + " getClose = " + timeRange.getClose());
+                        openingTimes.put(day, timeRange);
+                    }
                 }
             }
 
@@ -217,8 +290,8 @@ public class CreateBarberShopActivity extends AppCompatActivity implements OnMap
             public void onNothingSelected(AdapterView<?> parentView) {
             }
         });
-
     }
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -275,7 +348,14 @@ public class CreateBarberShopActivity extends AppCompatActivity implements OnMap
         Log.d("FirebaseAuth", "Current user email: " + ownerEmail);
         String coordinates = latitude + " " + longitude;
 //        BarberShops BarberShop = new BarberShops(ownerEmail, BarberShopName_str, address, coordinates, String.valueOf(BarberShopImageUri), String.valueOf(BarberShopLogoUri), "pending", AddBarbersActivity.ListServices, ListSpecialist);
-        BarberShops BarberShop = new BarberShops(ownerEmail, BarberShopName_str, address, coordinates, String.valueOf(BarberShopImageUri), String.valueOf(BarberShopLogoUri), "pending", ListSpecialist);
+
+        for (String day : daysOfWeek) {
+            if (!openingTimes.containsKey(day)) {
+                openingTimes.put(day, new TimeRange());
+            }
+        }
+
+        BarberShops BarberShop = new BarberShops(ownerEmail, BarberShopName_str, address, coordinates, String.valueOf(BarberShopImageUri), String.valueOf(BarberShopLogoUri), "pending", ListSpecialist, openingTimes);
         addBarberShop(BarberShop);
     }
 

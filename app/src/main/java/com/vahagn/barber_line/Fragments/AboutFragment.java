@@ -104,129 +104,132 @@ public class AboutFragment extends Fragment implements OnMapReadyCallback {
         String open = Objects.requireNonNull(openingTimes.get(day)).getOpen();
         String close = Objects.requireNonNull(openingTimes.get(day)).getClose();
 
-        if (!open.isEmpty() && !close.isEmpty()) {
-            return open + " - " + close;
-        } else {
-            switch (day) {
-                case "Monday":
-                    mondayCircle.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FF0000")));
-                    break;
-                case "Tuesday":
-                    tuesdayCircle.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FF0000")));
-                    break;
-                case "Wednesday":
-                    wednesdayCircle.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FF0000")));
-                    break;
-                case "Thursday":
-                    thursdayCircle.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FF0000")));
-                    break;
-                case "Friday":
-                    fridayCircle.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FF0000")));
-                    break;
-                case "Saturday":
-                    saturdayCircle.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FF0000")));
-                    break;
-                case "Sunday":
-                    sundayCircle.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FF0000")));
-                    break;
-                default:
-                    Log.i("circle", "Invalid");
-                    break;
+//        if (!open.isEmpty() && !close.isEmpty()) {
+        Log.i("equals",open);
+        Log.i("equals",close);
+            if (!Objects.equals(open, "Closed") && !Objects.equals(close, "Closed")) {
+                return open + " - " + close;
+            } else {
+                switch (day) {
+                    case "Monday":
+                        mondayCircle.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FF0000")));
+                        break;
+                    case "Tuesday":
+                        tuesdayCircle.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FF0000")));
+                        break;
+                    case "Wednesday":
+                        wednesdayCircle.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FF0000")));
+                        break;
+                    case "Thursday":
+                        thursdayCircle.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FF0000")));
+                        break;
+                    case "Friday":
+                        fridayCircle.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FF0000")));
+                        break;
+                    case "Saturday":
+                        saturdayCircle.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FF0000")));
+                        break;
+                    case "Sunday":
+                        sundayCircle.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FF0000")));
+                        break;
+                    default:
+                        Log.i("circle", "Invalid");
+                        break;
+                }
+                return "Closed";
             }
-            return "Closed";
-        }
-    }
-
-    @Override
-    public void onMapReady(@NonNull GoogleMap googleMap) {
-        gMap = googleMap;
-
-        gMap.getUiSettings().setAllGesturesEnabled(false); // Disables all gestures (pan, zoom, tilt, rotate)
-        gMap.getUiSettings().setZoomControlsEnabled(false); // Hides zoom controls
-        gMap.getUiSettings().setScrollGesturesEnabled(false); // Explicitly disables scrolling
-        gMap.getUiSettings().setZoomGesturesEnabled(false); // Explicitly disables zooming
-        gMap.getUiSettings().setTiltGesturesEnabled(false); // Explicitly disables tilting
-        gMap.getUiSettings().setRotateGesturesEnabled(false); // Explicitly disables rotation
-
-        String[] coords = BarbersActivity.coordinates.split(" ");
-        String latitudeString = coords[0].replace(",", "").trim();
-        String longitudeString = coords[1].replace(",", "").trim();
-
-        try {
-            double latitude = Double.parseDouble(latitudeString);
-            double longitude = Double.parseDouble(longitudeString);
-            LatLng location = new LatLng(latitude, longitude);
-
-            addCustomMarker(location, BarbersActivity.name, BarbersActivity.logo);
-            gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15)); // Zoom into marker
-        } catch (NumberFormatException e) {
-            Log.i("coords", "Error parsing coordinates: " + e.getMessage());
-            LatLng defaultLocation = new LatLng(40.17763162763801, 44.512459783931945);
-            gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, 15));
-        }
-    }
-
-    private void addCustomMarker(LatLng location, String Name, String logo) {
-        new LoadImageTask(location, Name).execute(logo);
-    }
-
-    @SuppressLint("StaticFieldLeak")
-    private class LoadImageTask extends AsyncTask<String, Void, Bitmap> {
-        private final LatLng location;
-        private String Name;
-
-        public LoadImageTask(LatLng location, String Name) {
-            this.location = location;
-            this.Name = Name;
         }
 
         @Override
-        protected Bitmap doInBackground(String... params) {
-            String logoData = params[0];
-            Bitmap originalBitmap = null;
+        public void onMapReady (@NonNull GoogleMap googleMap){
+            gMap = googleMap;
+
+            gMap.getUiSettings().setAllGesturesEnabled(false); // Disables all gestures (pan, zoom, tilt, rotate)
+            gMap.getUiSettings().setZoomControlsEnabled(false); // Hides zoom controls
+            gMap.getUiSettings().setScrollGesturesEnabled(false); // Explicitly disables scrolling
+            gMap.getUiSettings().setZoomGesturesEnabled(false); // Explicitly disables zooming
+            gMap.getUiSettings().setTiltGesturesEnabled(false); // Explicitly disables tilting
+            gMap.getUiSettings().setRotateGesturesEnabled(false); // Explicitly disables rotation
+
+            String[] coords = BarbersActivity.coordinates.split(" ");
+            String latitudeString = coords[0].replace(",", "").trim();
+            String longitudeString = coords[1].replace(",", "").trim();
 
             try {
-                if (logoData != null && logoData.startsWith("data:image")) {
-                    String base64String = logoData.split(",")[1];
-                    byte[] decodedBytes = Base64.decode(base64String, Base64.DEFAULT);
-                    originalBitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
-                } else if (logoData != null && !logoData.isEmpty()) {
-                    originalBitmap = BitmapFactory.decodeStream(new java.net.URL(logoData).openStream());
-                }
+                double latitude = Double.parseDouble(latitudeString);
+                double longitude = Double.parseDouble(longitudeString);
+                LatLng location = new LatLng(latitude, longitude);
 
-                if (originalBitmap != null) {
-                    int width = 130;
-                    int height = 130;
-                    Bitmap resizedBitmap = Bitmap.createScaledBitmap(originalBitmap, width, height, false);
-                    return addRoundedCornersAndBorder(resizedBitmap, 15, 10);
-                } else {
+                addCustomMarker(location, BarbersActivity.name, BarbersActivity.logo);
+                gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15)); // Zoom into marker
+            } catch (NumberFormatException e) {
+                Log.i("coords", "Error parsing coordinates: " + e.getMessage());
+                LatLng defaultLocation = new LatLng(40.17763162763801, 44.512459783931945);
+                gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, 15));
+            }
+        }
+
+        private void addCustomMarker (LatLng location, String Name, String logo){
+            new LoadImageTask(location, Name).execute(logo);
+        }
+
+        @SuppressLint("StaticFieldLeak")
+        private class LoadImageTask extends AsyncTask<String, Void, Bitmap> {
+            private final LatLng location;
+            private String Name;
+
+            public LoadImageTask(LatLng location, String Name) {
+                this.location = location;
+                this.Name = Name;
+            }
+
+            @Override
+            protected Bitmap doInBackground(String... params) {
+                String logoData = params[0];
+                Bitmap originalBitmap = null;
+
+                try {
+                    if (logoData != null && logoData.startsWith("data:image")) {
+                        String base64String = logoData.split(",")[1];
+                        byte[] decodedBytes = Base64.decode(base64String, Base64.DEFAULT);
+                        originalBitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+                    } else if (logoData != null && !logoData.isEmpty()) {
+                        originalBitmap = BitmapFactory.decodeStream(new java.net.URL(logoData).openStream());
+                    }
+
+                    if (originalBitmap != null) {
+                        int width = 130;
+                        int height = 130;
+                        Bitmap resizedBitmap = Bitmap.createScaledBitmap(originalBitmap, width, height, false);
+                        return addRoundedCornersAndBorder(resizedBitmap, 15, 10);
+                    } else {
+                        originalBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.img_avatar);
+                        Bitmap resizedBitmap = Bitmap.createScaledBitmap(originalBitmap, 130, 130, false);
+                        return addRoundedCornersAndBorder(resizedBitmap, 15, 10);
+                    }
+                } catch (Exception e) {
+                    Log.e("imageEror", "Error loading image: " + e.getMessage());
                     originalBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.img_avatar);
                     Bitmap resizedBitmap = Bitmap.createScaledBitmap(originalBitmap, 130, 130, false);
                     return addRoundedCornersAndBorder(resizedBitmap, 15, 10);
                 }
-            } catch (Exception e) {
-                Log.e("imageEror", "Error loading image: " + e.getMessage());
-                originalBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.img_avatar);
-                Bitmap resizedBitmap = Bitmap.createScaledBitmap(originalBitmap, 130, 130, false);
-                return addRoundedCornersAndBorder(resizedBitmap, 15, 10);
-            }
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap bitmap) {
-            BitmapDescriptor icon;
-            if (bitmap != null) {
-                icon = BitmapDescriptorFactory.fromBitmap(bitmap);
-            } else {
-                icon = BitmapDescriptorFactory.defaultMarker();
             }
 
-            MarkerOptions markerOptions = new MarkerOptions()
-                    .position(location)
-                    .icon(icon)
-                    .title(bitmap != null ? Name : "Default Marker");
+            @Override
+            protected void onPostExecute(Bitmap bitmap) {
+                BitmapDescriptor icon;
+                if (bitmap != null) {
+                    icon = BitmapDescriptorFactory.fromBitmap(bitmap);
+                } else {
+                    icon = BitmapDescriptorFactory.defaultMarker();
+                }
 
-            gMap.addMarker(markerOptions);
+                MarkerOptions markerOptions = new MarkerOptions()
+                        .position(location)
+                        .icon(icon)
+                        .title(bitmap != null ? Name : "Default Marker");
+
+                gMap.addMarker(markerOptions);
 //            gMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
 //                @Override
 //                public boolean onMarkerClick(Marker marker) {
@@ -264,41 +267,41 @@ public class AboutFragment extends Fragment implements OnMapReadyCallback {
 //                    return false;
 //                }
 //            });
-        }
+            }
 
-        private Bitmap addRoundedCornersAndBorder(Bitmap bitmap, int cornerRadius, int borderWidth) {
-            int width = bitmap.getWidth();
-            int height = bitmap.getHeight();
+            private Bitmap addRoundedCornersAndBorder(Bitmap bitmap, int cornerRadius, int borderWidth) {
+                int width = bitmap.getWidth();
+                int height = bitmap.getHeight();
 
-            Bitmap newBitmap = Bitmap.createBitmap(width + 2 * borderWidth, height + 2 * borderWidth, Bitmap.Config.ARGB_8888);
-            Canvas canvas = new Canvas(newBitmap);
-            Paint paint = new Paint();
-            paint.setAntiAlias(true);
-            paint.setColor(Color.WHITE);
+                Bitmap newBitmap = Bitmap.createBitmap(width + 2 * borderWidth, height + 2 * borderWidth, Bitmap.Config.ARGB_8888);
+                Canvas canvas = new Canvas(newBitmap);
+                Paint paint = new Paint();
+                paint.setAntiAlias(true);
+                paint.setColor(Color.WHITE);
 
-            paint.setShader(new LinearGradient(0, 0, width + 2 * borderWidth, height + 2 * borderWidth,
-                    Color.DKGRAY, Color.LTGRAY, Shader.TileMode.CLAMP));
-            RectF rectF = new RectF(0, 0, width + 2 * borderWidth, height + 2 * borderWidth);
-            canvas.drawRoundRect(rectF, cornerRadius, cornerRadius, paint);
+                paint.setShader(new LinearGradient(0, 0, width + 2 * borderWidth, height + 2 * borderWidth,
+                        Color.DKGRAY, Color.LTGRAY, Shader.TileMode.CLAMP));
+                RectF rectF = new RectF(0, 0, width + 2 * borderWidth, height + 2 * borderWidth);
+                canvas.drawRoundRect(rectF, cornerRadius, cornerRadius, paint);
 
-            paint.setShader(null);
-            Bitmap roundedBitmap = getRoundedBitmap(bitmap, cornerRadius);
-            canvas.drawBitmap(roundedBitmap, borderWidth, borderWidth, null);
-            return newBitmap;
-        }
+                paint.setShader(null);
+                Bitmap roundedBitmap = getRoundedBitmap(bitmap, cornerRadius);
+                canvas.drawBitmap(roundedBitmap, borderWidth, borderWidth, null);
+                return newBitmap;
+            }
 
-        private Bitmap getRoundedBitmap(Bitmap bitmap, int cornerRadius) {
-            Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
-            Canvas canvas = new Canvas(output);
-            Paint paint = new Paint();
-            paint.setAntiAlias(true);
-            paint.setColor(Color.BLACK);
+            private Bitmap getRoundedBitmap(Bitmap bitmap, int cornerRadius) {
+                Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+                Canvas canvas = new Canvas(output);
+                Paint paint = new Paint();
+                paint.setAntiAlias(true);
+                paint.setColor(Color.BLACK);
 
-            RectF rectF = new RectF(0, 0, bitmap.getWidth(), bitmap.getHeight());
-            canvas.drawRoundRect(rectF, cornerRadius, cornerRadius, paint);
-            paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-            canvas.drawBitmap(bitmap, 0, 0, paint);
-            return output;
+                RectF rectF = new RectF(0, 0, bitmap.getWidth(), bitmap.getHeight());
+                canvas.drawRoundRect(rectF, cornerRadius, cornerRadius, paint);
+                paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+                canvas.drawBitmap(bitmap, 0, 0, paint);
+                return output;
+            }
         }
     }
-}
