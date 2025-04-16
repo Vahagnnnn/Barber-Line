@@ -229,8 +229,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                             BarbersActivity.OwnerEmail = shop.getOwnerEmail();
 
                             BarbersActivity.address = shop.getAddress();
+                            BarbersActivity.logo = shop.getLogo();
+                            BarbersActivity.coordinates = shop.getCoordinates();
                             BarbersActivity.ListSpecialist = shop.getSpecialists();
-                            BarbersActivity.ListService = shop.getServices();
+                            BarbersActivity.ListReviews = shop.getReviews();
+                            BarbersActivity.openingTimes = shop.getOpeningTimes();
+//                            BarbersActivity.ListService = shop.getServices();
                         });
 
                         getApplicationContext().startActivity(intent);
