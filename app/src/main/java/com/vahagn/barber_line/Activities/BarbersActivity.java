@@ -61,24 +61,9 @@ public class BarbersActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     BarberShops shop = snapshot.getValue(BarberShops.class);
-//                    assert shop != null;
-//
-//                    if (shop.getOpeningTimes() != null) {
-//                        Log.d("MapiBarbersActivity", "Map is: " + shop.getOpeningTimes().get("Monday").getOpen()+ " - "+shop.getOpeningTimes().get("Monday").getClose());
-//                        Log.d("MapiBarbersActivity", "Map is: " + shop.getOpeningTimes().get("Tuesday").getOpen()+ " - "+shop.getOpeningTimes().get("Monday").getClose());
-//                        Log.d("MapiBarbersActivity", "Map is: " + shop.getOpeningTimes().get("Wednesday").getOpen()+ " - "+shop.getOpeningTimes().get("Monday").getClose());
-//                        Log.d("MapiBarbersActivity", "Map is: " + shop.getOpeningTimes().get("Thursday").getOpen()+ " - "+shop.getOpeningTimes().get("Monday").getClose());
-//                        Log.d("MapiBarbersActivity", "Map is: " + shop.getOpeningTimes().get("Friday").getOpen()+ " - "+shop.getOpeningTimes().get("Monday").getClose());
-//                        Log.d("MapiBarbersActivity", "Map is: " + shop.getOpeningTimes().get("Saturday").getOpen()+ " - "+shop.getOpeningTimes().get("Monday").getClose());
-//                        Log.d("MapiBarbersActivity", "Map is: " + shop.getOpeningTimes().get("Sunday").getOpen()+ " - "+shop.getOpeningTimes().get("Monday").getClose());
-//                    } else {
-//                        Log.d("MapiBarbersActivity", "Map is: Null");
-//
-//                    }
 
                     addBarbershop(secondActivityContainer, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getOwnerEmail(), shop.getCoordinates(), shop.getSpecialists(),shop.getReviews(), shop.getOpeningTimes());
                     ListBarberShops.add(new BarberShops(shop.getOwnerEmail(), shop.getName(), shop.getAddress(), shop.getCoordinates(), shop.getImage(), shop.getLogo(), shop.getRating(), shop.getReviews(), shop.getServices(), shop.getSpecialists(), shop.getOpeningTimes()));
-//                    ListBarberShops.add(shop);
                 }
             }
 
@@ -129,9 +114,6 @@ public class BarbersActivity extends AppCompatActivity {
         View barbershopView = LayoutInflater.from(this).inflate(R.layout.barbershops_gray, container, false);
 
         ImageView logoImageView = barbershopView.findViewById(R.id.logo);
-//        int logoResId = getResources().getIdentifier(logo, "drawable", getPackageName());
-//        logoImageView.setImageResource(logoResId);
-//        Glide.with(this).load(logo).into(logoImageView);
 
         Glide.with(this)
                 .load(logo)

@@ -4,8 +4,7 @@ public class TopHaircuts {
     private String image;
     private String name;
 
-    public TopHaircuts() {
-    }
+    public TopHaircuts() {}
 
     public TopHaircuts(String image, String name) {
         this.image = image;

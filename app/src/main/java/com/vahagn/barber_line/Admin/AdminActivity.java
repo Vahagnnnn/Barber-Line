@@ -41,6 +41,7 @@ public class AdminActivity extends AppCompatActivity {
 //        joinToBarberShop.setOnTouchListener(touchEffect);
 
         createBarberShop.setOnClickListener(view -> navigateTo(CreateBarberShopActivity.class));
+        joinToBarberShop.setOnClickListener(view -> navigateTo(JoinToBarberShopActivity.class));
     }
 
     private void navigateTo(Class<?> targetActivity) {

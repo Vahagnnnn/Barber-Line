@@ -81,18 +81,18 @@ public class AddBarbersActivity extends AppCompatActivity {
         transaction.replace(R.id.info_container, servicesFragment);
         transaction.commit();
 
-        View.OnTouchListener touchEffect = (v, event) -> {
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    v.animate().alpha(0.8f).setDuration(50).start();
-                    return false;
-                case MotionEvent.ACTION_UP:
-                case MotionEvent.ACTION_CANCEL:
-                    v.animate().alpha(1.0f).setDuration(50).start();
-                    break;
-            }
-            return false;
-        };
+//        View.OnTouchListener touchEffect = (v, event) -> {
+//            switch (event.getAction()) {
+//                case MotionEvent.ACTION_DOWN:
+//                    v.animate().alpha(0.8f).setDuration(50).start();
+//                    return false;
+//                case MotionEvent.ACTION_UP:
+//                case MotionEvent.ACTION_CANCEL:
+//                    v.animate().alpha(1.0f).setDuration(50).start();
+//                    break;
+//            }
+//            return false;
+//        };
 
         BarberImage = findViewById(R.id.BarberImage);
         BarberName = findViewById(R.id.BarberName);
@@ -102,8 +102,8 @@ public class AddBarbersActivity extends AppCompatActivity {
         ServiceDuration = findViewById(R.id.ServiceDuration);
         FrameLayout addService = findViewById(R.id.AddService);
 
-        save.setOnTouchListener(touchEffect);
-        addService.setOnTouchListener(touchEffect);
+//        save.setOnTouchListener(touchEffect);
+//        addService.setOnTouchListener(touchEffect);
 
         BarberImage.setOnClickListener(v -> openGallery());
         addService.setOnClickListener(v -> AddService());
@@ -215,33 +215,27 @@ public class AddBarbersActivity extends AppCompatActivity {
         String BarberName_str = BarberName.getText().toString().trim();
         String BarberPhoneNumber_str = Objects.requireNonNull(countryCodeBarberPhoneNumber.getText()).toString().trim();
 
-        // Validate phone number using the phone number library
 
-        if (BarberName_str.isEmpty()) {
-            Toast.makeText(this, "Please write Barber's name", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        if (!isValidPhoneNumber()) {
-            Toast.makeText(this, "Invalid phone number format", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        if (BarberImage.getDrawable().getConstantState().equals(getResources().getDrawable(R.drawable.img_avatar).getConstantState())) {
-            Toast.makeText(this, "Please upload the image", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        if (BarberName_str.isEmpty()) {
-            Toast.makeText(this, "Please write Barber's name", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-
-        if (ListServices.isEmpty()) {
-            Toast.makeText(this, "The Services list is empty", Toast.LENGTH_SHORT).show();
-            return;
-        }
+//        if (BarberName_str.isEmpty()) {
+//            Toast.makeText(this, "Please write Barber's name", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//        if (!isValidPhoneNumber()) {
+//            Toast.makeText(this, "Invalid phone number format", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//        if (BarberImage.getDrawable().getConstantState().equals(getResources().getDrawable(R.drawable.img_avatar).getConstantState())) {
+//            Toast.makeText(this, "Please upload the image", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//        if (BarberName_str.isEmpty()) {
+//            Toast.makeText(this, "Please write Barber's name", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//        if (ListServices.isEmpty()) {
+//            Toast.makeText(this, "The Services list is empty", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
 
         if (SpecialistsFragment.Edit) {
 
@@ -261,11 +255,20 @@ public class AddBarbersActivity extends AppCompatActivity {
                 CreateBarberShopActivity.ListSpecialist.add(updatedBarber);
             }
             SpecialistsFragment.Edit = false;
+            navigateTo(CreateBarberShopActivity.class);
+
+        } else if (JoinToBarberShopActivity.JoinToBarberShopActivity_REGISTER) {
+            Barbers JoinToBarberShop_Specialist = new Barbers(String.valueOf(imageUri), BarberName_str, BarberPhoneNumber_str, ListServices);
+
+            Toast.makeText(this, "Request Sent", Toast.LENGTH_SHORT).show();
+            JoinToBarberShopActivity.JoinToBarberShopActivity_REGISTER = false;
+            navigateTo(AdminActivity.class);
+
         } else {
             CreateBarberShopActivity.ListSpecialist.add(new Barbers(String.valueOf(imageUri), BarberName_str, BarberPhoneNumber_str, ListServices));
             Toast.makeText(this, "The Barber has been added", Toast.LENGTH_SHORT).show();
+            navigateTo(CreateBarberShopActivity.class);
         }
-        navigateTo(CreateBarberShopActivity.class);
     }
 
     private void openGallery() {
@@ -409,5 +412,11 @@ public class AddBarbersActivity extends AppCompatActivity {
             Log.e("PhoneValidation", "NumberFormatException: " + e.getMessage());
             return false;
         }
+    }
+
+
+    public void GoBack(View view) {
+        JoinToBarberShopActivity.JoinToBarberShopActivity_REGISTER = false;
+        onBackPressed();
     }
 }

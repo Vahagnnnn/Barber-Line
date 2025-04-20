@@ -49,7 +49,6 @@ public class TopHaircutsAdapter extends RecyclerView.Adapter<TopHaircutsAdapter.
                     .into(holder.haircut_image);
         }
 
-
 //        holder.haircut_image.setImageResource(item.getImage());
     }
 

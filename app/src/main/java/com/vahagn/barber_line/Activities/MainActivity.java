@@ -31,6 +31,7 @@ import com.vahagn.barber_line.model.TopHaircuts;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -59,7 +60,9 @@ public class MainActivity extends AppCompatActivity {
         SetTopBarberShops();
         SetTopBarbers();
         SetTopHaircuts();
-
+//        TopHaircutsList.add(new TopHaircuts("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzOIFV5QknzGju2KYY-cVAzyFZNgfk57q_sg&s", "Side fringe"));
+//        TopHaircutsList.add(new TopHaircuts("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzOIFV5QknzGju2KYY-cVAzyFZNgfk57q_sg&s", "Side fringe"));
+//        setTopHaircutsRecycler(TopHaircutsList);
 //        TopHaircutsList.add(new TopHaircuts(R.drawable.img_haircut, "The Textured Crop"));
 //        TopHaircutsList.add(new TopHaircuts(R.drawable.img_haircut, "The Textured Crop"));
 //        TopHaircutsList.add(new TopHaircuts(R.drawable.img_haircut, "The Textured Crop"));
@@ -121,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     TopHaircuts haircuts = snapshot.getValue(TopHaircuts.class);
                     assert haircuts != null;
-                    TopHaircutsList.add(new TopHaircuts(haircuts.getImage(),haircuts.getName()));
+                    TopHaircutsList.add(haircuts);
                 }
                 setTopHaircutsRecycler(TopHaircutsList);
             }

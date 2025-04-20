@@ -6,23 +6,31 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.vahagn.barber_line.Admin.AdminActivity;
 import com.vahagn.barber_line.R;
 
+import java.net.URI;
+
+
 public class HairCutsActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hair_cuts);
 
+
     }
+
 
     public void ToLogin(View view) {
         navigateTo(LoginActivity.class);
@@ -63,6 +71,7 @@ public class HairCutsActivity extends AppCompatActivity {
         else
             navigateTo(LoginActivity.class);
     }
+
     public void ToBooks(View view) {
         if (MainActivity.isLogin)
             navigateTo(BooksActivity.class);

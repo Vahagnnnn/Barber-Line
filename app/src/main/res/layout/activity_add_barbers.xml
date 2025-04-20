@@ -29,7 +29,7 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:contentDescription="@string/app_name"
-                android:onClick="ToCreateBarberShop"
+                android:onClick="GoBack"
                 android:scaleType="centerInside"
                 android:src="@drawable/img_arrow_left"
                 tools:ignore="MissingConstraints" />
@@ -149,6 +149,7 @@
                 android:id="@+id/Save"
                 android:layout_width="180dp"
                 android:layout_height="48dp"
+                android:foreground="@drawable/ripple_dark"
                 android:layout_marginTop="20dp"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -254,6 +255,7 @@
                 android:layout_height="48dp"
                 android:layout_marginTop="20dp"
                 android:textSize="12sp"
+                android:foreground="@drawable/ripple_dark"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ServiceDurationInput">
