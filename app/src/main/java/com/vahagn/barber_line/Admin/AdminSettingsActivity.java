@@ -14,8 +14,12 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,6 +35,7 @@ import com.vahagn.barber_line.Classes.Barbers;
 import com.vahagn.barber_line.Classes.Reviews;
 import com.vahagn.barber_line.Classes.Services;
 import com.vahagn.barber_line.Classes.TimeRange;
+import com.vahagn.barber_line.Fragments.SpecialistsFragment;
 import com.vahagn.barber_line.R;
 
 import java.io.Serializable;
@@ -50,14 +55,17 @@ public class AdminSettingsActivity extends AppCompatActivity {
     public static List<Barbers> ListSpecialist = new ArrayList<>();
     public static List<Reviews> ListReviews = new ArrayList<>();
     public static Map<String, TimeRange> openingTimes = new HashMap<>();
+    public static String workPlace;
 
     String ownerEmail;
 
-    FrameLayout Confirm_List_Layout, Wait_List_Layout, Rejected_List_Layout;
+//    FrameLayout Confirm_List_Layout, Wait_List_Layout, Rejected_List_Layout;
     TextView List_TextView;
     LinearLayout barbershops_list;
 
 //    TextView Confirm_List_TextView, Wait_List_TextView, Rejected_List_TextView;
+
+    public static  List<Barbers> applicant_barber = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +103,10 @@ public class AdminSettingsActivity extends AppCompatActivity {
 //        Rejected_List_Layout.setOnClickListener(v -> AddRejected(ownerEmail));
 
     }
+
     public void AddConfirm(View view) {
+        List_TextView.setText("Operating Barbershops");
+        barbershops_list.removeAllViews();
         barberShopsRef.addValueEventListener(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
             @Override
@@ -103,8 +114,8 @@ public class AdminSettingsActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     BarberShops shop = snapshot.getValue(BarberShops.class);
                     if (shop != null && Objects.equals(shop.getOwnerEmail(), ownerEmail)) {
-                        addBarbershop( shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists(), shop.getReviews(), shop.getOpeningTimes());
-                        List_TextView.setText("Operating Barbershops");
+                        addBarbershop(shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists(), shop.getReviews(), shop.getOpeningTimes());
+                        workPlace = shop.getName();
                     }
                 }
             }
@@ -115,7 +126,11 @@ public class AdminSettingsActivity extends AppCompatActivity {
             }
         });
     }
+
     public void AddWait(View view) {
+        List_TextView.setText("Pending Barbershops");
+        barbershops_list.removeAllViews();
+
         pendingRef.addValueEventListener(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
             @Override
@@ -123,8 +138,7 @@ public class AdminSettingsActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     BarberShops shop = snapshot.getValue(BarberShops.class);
                     if (shop != null && Objects.equals(shop.getOwnerEmail(), ownerEmail)) {
-                        addBarbershop( shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists(), shop.getReviews(), shop.getOpeningTimes());
-                        List_TextView.setText("Pending Barbershops");
+                        addBarbershop(shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists(), shop.getReviews(), shop.getOpeningTimes());
                     }
                 }
             }
@@ -135,7 +149,11 @@ public class AdminSettingsActivity extends AppCompatActivity {
             }
         });
     }
+
     public void AddRejected(View view) {
+        List_TextView.setText("Rejected Barbershops");
+        barbershops_list.removeAllViews();
+
         rejectedRef.addValueEventListener(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
             @Override
@@ -143,7 +161,7 @@ public class AdminSettingsActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     BarberShops shop = snapshot.getValue(BarberShops.class);
                     if (shop != null && Objects.equals(shop.getOwnerEmail(), ownerEmail)) {
-                        addBarbershop( shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists(), shop.getReviews(), shop.getOpeningTimes(), shop.getReason());
+                        addBarbershop(shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists(), shop.getReviews(), shop.getOpeningTimes(), shop.getReason());
                         List_TextView.setText("Rejected Barbershops");
                     }
                 }
@@ -248,5 +266,38 @@ public class AdminSettingsActivity extends AppCompatActivity {
 
     public void ToBooks(View view) {
         navigateTo(AdminBooksActivity.class);
+    }
+
+    public void ToApplicant_Barber(View view) {
+        Log.i("workPlace",workPlace);
+
+        if (workPlace != null) {
+            DatabaseReference applicant_barbersShopsRef = FirebaseDatabase.getInstance().getReference("applicant_barbers");
+
+            applicant_barbersShopsRef.addValueEventListener(new ValueEventListener() {
+                @SuppressLint("SetTextI18n")
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        Barbers barber = snapshot.getValue(Barbers.class);
+                        if (barber != null && Objects.equals(barber.getWorkPlace(), workPlace)) {
+                            applicant_barber.add(barber);
+
+//                            SpecialistsFragment specialistsFragment = new SpecialistsFragment(applicant_barber);
+//                            specialistsFragment.addSpecialist(barber);
+
+                            navigateTo(Applicant_BarberActivity.class);
+                        } else
+                            Toast.makeText(AdminSettingsActivity.this, "You don't have Applicant Barbers", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.w("Firebase", "Failed to read value.", databaseError.toException());
+                }
+            });
+        } else
+            Toast.makeText(this, "You don't have your own BarberShop", Toast.LENGTH_SHORT).show();
     }
 }

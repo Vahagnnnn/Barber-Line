@@ -23,6 +23,12 @@
         android:theme="@style/Theme.BarberLine"
         tools:targetApi="31">
         <activity
+            android:name=".Admin.BarbersAboutActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Admin.Applicant_BarberActivity"
+            android:exported="false" />
+        <activity
             android:name=".Admin.JoinToBarberShopActivity"
             android:exported="false" />
         <activity

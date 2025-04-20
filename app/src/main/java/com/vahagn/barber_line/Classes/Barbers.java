@@ -7,8 +7,7 @@ public class Barbers implements Serializable {
     private int barberId;
     private int barberShopsId;
 
-
-//    private int ID;
+    //    private int ID;
     private String name;
     private String phoneNumber;
     private String image;
@@ -28,12 +27,21 @@ public class Barbers implements Serializable {
 
     }
 
-    public Barbers(String image, String name, String phoneNumber,List<Services> services) {
+    public Barbers(String image, String name, String phoneNumber, List<Services> services) {
         this.image = image;
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.services = services;
         this.rating = 5;
+    }
+
+    public Barbers(String image, String name, String phoneNumber, List<Services> services, String workPlace) {
+        this.image = image;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.services = services;
+        this.rating = 5;
+        this.workPlace = workPlace;
     }
 
     public Barbers(String name, String phoneNumber, String image, String workPlace, double rating, List<Services> services, List<Reviews> reviews, List<Appointment> appointments) {

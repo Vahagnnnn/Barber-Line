@@ -27,6 +27,8 @@ import androidx.fragment.app.FragmentTransaction;
 import com.bumptech.glide.Glide;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
@@ -216,10 +218,10 @@ public class AddBarbersActivity extends AppCompatActivity {
         String BarberPhoneNumber_str = Objects.requireNonNull(countryCodeBarberPhoneNumber.getText()).toString().trim();
 
 
-//        if (BarberName_str.isEmpty()) {
-//            Toast.makeText(this, "Please write Barber's name", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
+        if (BarberName_str.isEmpty()) {
+            Toast.makeText(this, "Please write Barber's name", Toast.LENGTH_SHORT).show();
+            return;
+        }
 //        if (!isValidPhoneNumber()) {
 //            Toast.makeText(this, "Invalid phone number format", Toast.LENGTH_SHORT).show();
 //            return;
@@ -258,9 +260,14 @@ public class AddBarbersActivity extends AppCompatActivity {
             navigateTo(CreateBarberShopActivity.class);
 
         } else if (JoinToBarberShopActivity.JoinToBarberShopActivity_REGISTER) {
-            Barbers JoinToBarberShop_Specialist = new Barbers(String.valueOf(imageUri), BarberName_str, BarberPhoneNumber_str, ListServices);
+            Barbers Applicant_Barber = new Barbers(String.valueOf(imageUri), BarberName_str, BarberPhoneNumber_str, ListServices,JoinToBarberShopActivity.BarberWorkPlace);
 
             Toast.makeText(this, "Request Sent", Toast.LENGTH_SHORT).show();
+
+            Log.i("BarberWorkPlace",JoinToBarberShopActivity.BarberWorkPlace);
+            Log.i("BarberWorkPlace",Applicant_Barber.getWorkPlace());
+
+            AddApplicant_BarberDB(Applicant_Barber);
             JoinToBarberShopActivity.JoinToBarberShopActivity_REGISTER = false;
             navigateTo(AdminActivity.class);
 
@@ -271,6 +278,30 @@ public class AddBarbersActivity extends AppCompatActivity {
         }
     }
 
+
+    private  void AddApplicant_BarberDB(Barbers Applicant_Barber){
+        DatabaseReference applicant_barbersShopsRef = FirebaseDatabase.getInstance().getReference("applicant_barbers");
+
+        applicant_barbersShopsRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                long newId = task.getResult().getChildrenCount();
+                applicant_barbersShopsRef.child(String.valueOf(newId)).setValue(Applicant_Barber)
+                        .addOnCompleteListener(storeTask -> {
+                            if (storeTask.isSuccessful()) {
+                                Toast.makeText(AddBarbersActivity.this, "Store successful", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(AddBarbersActivity.this, AdminActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Toast.makeText(AddBarbersActivity.this, "Failed to store user data", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            } else {
+                Toast.makeText(AddBarbersActivity.this, "Failed to retrieve data", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
     private void openGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/*");
@@ -326,12 +357,9 @@ public class AddBarbersActivity extends AppCompatActivity {
     }
 
     public void ToCreateBarberShop(View view) {
-//        navigateTo(CreateBarberShopActivity.class);
         onBackPressed();
     }
 
-
-    // Function to get phone number length based on country
     private int getPhoneNumberLength(String countryCode) {
         PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
         try {

@@ -44,8 +44,8 @@ public class SpecialistsFragment extends Fragment {
     public static boolean Edit;
 
 
-    public static String imageUrl ,name,rating;
-    public static List<Services> ListServices= new ArrayList<>();
+    public static String imageUrl, name, rating;
+    public static List<Services> ListServices = new ArrayList<>();
 
     public SpecialistsFragment() {
     }
@@ -67,7 +67,7 @@ public class SpecialistsFragment extends Fragment {
         return view;
     }
 
-    private void addSpecialist(Barbers specialist) {
+    public void addSpecialist(Barbers specialist) {
         View specialistView = LayoutInflater.from(getContext()).inflate(R.layout.specialists, infoContainer, false);
         ImageView specialistImage = specialistView.findViewById(R.id.image);
         TextView specialistName = specialistView.findViewById(R.id.name);
@@ -94,8 +94,7 @@ public class SpecialistsFragment extends Fragment {
 
 //                Toast.makeText(getContext(), specialist.getName(), Toast.LENGTH_SHORT).show();
             });
-        }
-        else {
+        } else {
             specialistView.setOnClickListener(v -> {
                 Intent intent = new Intent(getContext(), SpecialistActivity.class);
 

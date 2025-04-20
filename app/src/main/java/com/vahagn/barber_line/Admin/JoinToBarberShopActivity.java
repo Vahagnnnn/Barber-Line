@@ -50,6 +50,7 @@ public class JoinToBarberShopActivity extends AppCompatActivity {
     LinearLayout barbers_list_Layout;
 
     private SearchView searchView;
+    public  static String BarberWorkPlace;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,6 +156,8 @@ public class JoinToBarberShopActivity extends AppCompatActivity {
             builder.setNeutralButton("Register", (dialog, which) -> {
                 Toast.makeText(this, "Register", Toast.LENGTH_SHORT).show();
                 JoinToBarberShopActivity.JoinToBarberShopActivity_REGISTER = true;
+                Log.i("BarberWorkPlace",name);
+                BarberWorkPlace = name;
                 navigateTo(AddBarbersActivity.class);
 
             });
