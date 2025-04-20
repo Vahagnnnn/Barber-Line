@@ -179,8 +179,8 @@ public class JoinToBarberShopActivity extends AppCompatActivity {
         startActivity(intent, options.toBundle());
     }
 
-    public void ToHome(View view) {
-        navigateTo(MainActivity.class);
+    public void ToAdmin(View view) {
+        navigateTo(AdminActivity.class);
     }
     public void ToSetting(View view) {
         navigateTo(AdminSettingsActivity.class);

@@ -3,12 +3,14 @@ package com.vahagn.barber_line.Admin;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -44,49 +46,65 @@ public class AdminSettingsActivity extends AppCompatActivity {
     DatabaseReference pendingRef = FirebaseDatabase.getInstance().getReference().child("pending_barbershops");
     DatabaseReference rejectedRef = FirebaseDatabase.getInstance().getReference("rejected_barbershops");
 
-
     public static String imageUrl, name, rating, address;
     public static List<Barbers> ListSpecialist = new ArrayList<>();
     public static List<Reviews> ListReviews = new ArrayList<>();
     public static Map<String, TimeRange> openingTimes = new HashMap<>();
 
-    TextView Confirm_List_TextView, Wait_List_TextView, Rejected_List_TextView;
+    String ownerEmail;
+
+    FrameLayout Confirm_List_Layout, Wait_List_Layout, Rejected_List_Layout;
+    TextView List_TextView;
+    LinearLayout barbershops_list;
+
+//    TextView Confirm_List_TextView, Wait_List_TextView, Rejected_List_TextView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_settings);
+        barbershops_list = findViewById(R.id.barbershops_list);
+//        LinearLayout confirm_barbershops_container = findViewById(R.id.confirm_barbershops_list);
+//        LinearLayout pending_barbershops_container = findViewById(R.id.pending_barbershops_list);
+//        LinearLayout rejected_barbershops_container = findViewById(R.id.rejected_barbershops_list);
 
-        LinearLayout confirm_barbershops_container = findViewById(R.id.confirm_barbershops_list);
-        LinearLayout pending_barbershops_container = findViewById(R.id.pending_barbershops_list);
-        LinearLayout rejected_barbershops_container = findViewById(R.id.rejected_barbershops_list);
+        List_TextView = findViewById(R.id.List_TextView);
 
-        Confirm_List_TextView = findViewById(R.id.Confirm_List_TextView);
-        Wait_List_TextView = findViewById(R.id.Wait_List_TextView);
-        Rejected_List_TextView = findViewById(R.id.Rejected_List_TextView);
+//        Confirm_List_TextView = findViewById(R.id.Confirm_List_TextView);
+//        Wait_List_TextView = findViewById(R.id.Wait_List_TextView);
+//        Rejected_List_TextView = findViewById(R.id.Rejected_List_TextView);
 
-        Confirm_List_TextView.setVisibility(GONE);
-        Wait_List_TextView.setVisibility(GONE);
-        Rejected_List_TextView.setVisibility(GONE);
+//        Confirm_List_TextView.setVisibility(GONE);
+//        Wait_List_TextView.setVisibility(GONE);
+//        Rejected_List_TextView.setVisibility(GONE);
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        String ownerEmail = "";
-
         if (currentUser != null) {
             ownerEmail = currentUser.getEmail();
-            Log.d("FirebaseAuth", "Current user email: " + ownerEmail);
         } else {
-            Log.e("FirebaseAuth", "No user is signed in");
+            ownerEmail = "";
         }
+        AddConfirm(null);
 
-        String OwnerEmail = ownerEmail;
+//        Confirm_List_Layout = findViewById(R.id.Confirm_List_Layout);
+//        Wait_List_Layout = findViewById(R.id.Wait_List_Layout);
+//        Rejected_List_Layout = findViewById(R.id.Rejected_List_Layout);
+//
+//        Confirm_List_Layout.setOnClickListener(v -> AddConfirm(ownerEmail));
+//        Wait_List_Layout.setOnClickListener(v -> AddWait(ownerEmail));
+//        Rejected_List_Layout.setOnClickListener(v -> AddRejected(ownerEmail));
+
+    }
+    public void AddConfirm(View view) {
         barberShopsRef.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     BarberShops shop = snapshot.getValue(BarberShops.class);
-                    if (shop != null && Objects.equals(shop.getOwnerEmail(), OwnerEmail)) {
-                        addBarbershop(confirm_barbershops_container, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists(),shop.getReviews(),shop.getOpeningTimes());
-                        Confirm_List_TextView.setVisibility(VISIBLE);
+                    if (shop != null && Objects.equals(shop.getOwnerEmail(), ownerEmail)) {
+                        addBarbershop( shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists(), shop.getReviews(), shop.getOpeningTimes());
+                        List_TextView.setText("Operating Barbershops");
                     }
                 }
             }
@@ -96,15 +114,17 @@ public class AdminSettingsActivity extends AppCompatActivity {
                 Log.w("Firebase", "Failed to read value.", databaseError.toException());
             }
         });
-
+    }
+    public void AddWait(View view) {
         pendingRef.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     BarberShops shop = snapshot.getValue(BarberShops.class);
-                    if (shop != null && Objects.equals(shop.getOwnerEmail(), OwnerEmail)) {
-                        addBarbershop(pending_barbershops_container, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists(),shop.getReviews(),shop.getOpeningTimes());
-                        Wait_List_TextView.setVisibility(VISIBLE);
+                    if (shop != null && Objects.equals(shop.getOwnerEmail(), ownerEmail)) {
+                        addBarbershop( shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists(), shop.getReviews(), shop.getOpeningTimes());
+                        List_TextView.setText("Pending Barbershops");
                     }
                 }
             }
@@ -114,15 +134,17 @@ public class AdminSettingsActivity extends AppCompatActivity {
                 Log.w("Firebase", "Failed to read value.", databaseError.toException());
             }
         });
-
+    }
+    public void AddRejected(View view) {
         rejectedRef.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     BarberShops shop = snapshot.getValue(BarberShops.class);
-                    if (shop != null && Objects.equals(shop.getOwnerEmail(), OwnerEmail)) {
-                        addBarbershop(rejected_barbershops_container, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists(), shop.getReviews(),shop.getOpeningTimes(), shop.getReason());
-                        Rejected_List_TextView.setVisibility(VISIBLE);
+                    if (shop != null && Objects.equals(shop.getOwnerEmail(), ownerEmail)) {
+                        addBarbershop( shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists(), shop.getReviews(), shop.getOpeningTimes(), shop.getReason());
+                        List_TextView.setText("Rejected Barbershops");
                     }
                 }
             }
@@ -134,8 +156,9 @@ public class AdminSettingsActivity extends AppCompatActivity {
         });
     }
 
-    public void addBarbershop(LinearLayout container, String logo, String imageUrl, String name, double rating, String address, List<Barbers> ListSpecialist, List<Reviews> ListReviews, Map<String, TimeRange> openingTimes) {
-        View barbershopView = LayoutInflater.from(this).inflate(R.layout.barbershops_gray, container, false);
+
+    public void addBarbershop(String logo, String imageUrl, String name, double rating, String address, List<Barbers> ListSpecialist, List<Reviews> ListReviews, Map<String, TimeRange> openingTimes) {
+        View barbershopView = LayoutInflater.from(this).inflate(R.layout.barbershops_gray, barbershops_list, false);
         ImageView logoImageView = barbershopView.findViewById(R.id.logo);
 
         Glide.with(this)
@@ -167,11 +190,12 @@ public class AdminSettingsActivity extends AppCompatActivity {
             startActivity(intent, options.toBundle());
         });
 
-        container.addView(barbershopView);
+        barbershops_list.removeAllViews();
+        barbershops_list.addView(barbershopView);
     }
 
-    public void addBarbershop(LinearLayout container, String logo, String imageUrl, String name, double rating, String address, List<Barbers> ListSpecialist,List<Reviews> ListReviews, Map<String, TimeRange> openingTimes, String reason) {
-        View barbershopView = LayoutInflater.from(this).inflate(R.layout.barbershops_gray, container, false);
+    public void addBarbershop(String logo, String imageUrl, String name, double rating, String address, List<Barbers> ListSpecialist, List<Reviews> ListReviews, Map<String, TimeRange> openingTimes, String reason) {
+        View barbershopView = LayoutInflater.from(this).inflate(R.layout.barbershops_gray, barbershops_list, false);
         ImageView logoImageView = barbershopView.findViewById(R.id.logo);
 
         Glide.with(this)
@@ -181,8 +205,8 @@ public class AdminSettingsActivity extends AppCompatActivity {
         TextView nameTextView = barbershopView.findViewById(R.id.name);
         TextView addressTextView = barbershopView.findViewById(R.id.address);
 
-//        nameTextView.setText(name);
-        nameTextView.setText(reason);
+        nameTextView.setText(name);
+//        nameTextView.setText(reason);
         addressTextView.setText(address);
 
 
@@ -201,8 +225,8 @@ public class AdminSettingsActivity extends AppCompatActivity {
                     "sharedImageTransition");
             startActivity(intent, options.toBundle());
         });
-
-        container.addView(barbershopView);
+        barbershops_list.removeAllViews();
+        barbershops_list.addView(barbershopView);
     }
 
     private void navigateTo(Class<?> targetActivity) {
