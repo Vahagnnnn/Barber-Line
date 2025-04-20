@@ -20,7 +20,9 @@ import com.vahagn.barber_line.Activities.ServicesActivity;
 import com.vahagn.barber_line.Activities.SettingsActivity;
 import com.vahagn.barber_line.Activities.SpecialistActivity;
 import com.vahagn.barber_line.Admin.AddBarbersActivity;
+import com.vahagn.barber_line.Admin.Applicant_BarberActivity;
 import com.vahagn.barber_line.Admin.CreateBarberShopActivity;
+import com.vahagn.barber_line.Admin.JoinToBarberShopActivity;
 import com.vahagn.barber_line.Classes.Services;
 import com.vahagn.barber_line.R;
 
@@ -91,8 +93,26 @@ public class SpecialistsFragment extends Fragment {
                 startActivity(intent);
                 name = specialist.getName();
                 rating = String.valueOf(specialist.getRating());
+            });
+        } else if (Applicant_BarberActivity.Is_Applicant_BarberActivity) {
+            specialistView.setOnClickListener(v -> {
 
-//                Toast.makeText(getContext(), specialist.getName(), Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle(specialist.getName());
+
+                builder.setPositiveButton("Confirm", (dialog, which) -> {
+                    Toast.makeText(getContext(), "Confirmed", Toast.LENGTH_SHORT).show();
+                });
+
+
+                builder.setNeutralButton("Cancel", (dialog, which) -> dialog.cancel());
+                Toast.makeText(getContext(), "Rejected", Toast.LENGTH_SHORT).show();
+
+                builder.setNegativeButton("Reject", (dialog, which) -> {
+                    Toast.makeText(getContext(), "Rejected", Toast.LENGTH_SHORT).show();
+                });
+
+                builder.show();
             });
         } else {
             specialistView.setOnClickListener(v -> {

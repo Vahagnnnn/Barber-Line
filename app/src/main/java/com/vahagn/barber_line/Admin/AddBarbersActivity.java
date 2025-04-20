@@ -222,22 +222,22 @@ public class AddBarbersActivity extends AppCompatActivity {
             Toast.makeText(this, "Please write Barber's name", Toast.LENGTH_SHORT).show();
             return;
         }
-//        if (!isValidPhoneNumber()) {
-//            Toast.makeText(this, "Invalid phone number format", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-//        if (BarberImage.getDrawable().getConstantState().equals(getResources().getDrawable(R.drawable.img_avatar).getConstantState())) {
-//            Toast.makeText(this, "Please upload the image", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-//        if (BarberName_str.isEmpty()) {
-//            Toast.makeText(this, "Please write Barber's name", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-//        if (ListServices.isEmpty()) {
-//            Toast.makeText(this, "The Services list is empty", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
+        if (!isValidPhoneNumber()) {
+            Toast.makeText(this, "Invalid phone number format", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (BarberImage.getDrawable().getConstantState().equals(getResources().getDrawable(R.drawable.img_avatar).getConstantState())) {
+            Toast.makeText(this, "Please upload the image", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (BarberName_str.isEmpty()) {
+            Toast.makeText(this, "Please write Barber's name", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (ListServices.isEmpty()) {
+            Toast.makeText(this, "The Services list is empty", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         if (SpecialistsFragment.Edit) {
 

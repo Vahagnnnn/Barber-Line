@@ -29,10 +29,12 @@ import java.util.Objects;
 
 public class Applicant_BarberActivity extends AppCompatActivity {
 
+    public static boolean Is_Applicant_BarberActivity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_applicant_barber);
+        Is_Applicant_BarberActivity = true;
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
@@ -51,6 +53,7 @@ public class Applicant_BarberActivity extends AppCompatActivity {
         navigateTo(AdminBooksActivity.class);
     }
     public void GoBack(View view) {
+        Is_Applicant_BarberActivity = false;
         onBackPressed();
     }
 

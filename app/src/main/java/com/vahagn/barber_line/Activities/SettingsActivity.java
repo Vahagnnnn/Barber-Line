@@ -28,6 +28,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.vahagn.barber_line.Admin.AdminActivity;
+import com.vahagn.barber_line.Admin.Applicant_BarberActivity;
 import com.vahagn.barber_line.EditProfile.EditProfileActivity;
 import com.vahagn.barber_line.R;
 import com.vahagn.barber_line.SuperAdmin.SuperAdminModerationActivity;
@@ -46,6 +47,9 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        Applicant_BarberActivity.Is_Applicant_BarberActivity = false;
+
+
         edit_profile = findViewById(R.id.edit_profile);
         logout_button = findViewById(R.id.logout_button);
         remove_account = findViewById(R.id.remove_account);
