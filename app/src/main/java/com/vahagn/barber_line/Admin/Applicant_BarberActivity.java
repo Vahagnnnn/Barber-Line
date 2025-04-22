@@ -52,6 +52,11 @@ public class Applicant_BarberActivity extends AppCompatActivity {
     public void ToBooks(View view) {
         navigateTo(AdminBooksActivity.class);
     }
+    public void ToAdminSettings(View view) {
+        Is_Applicant_BarberActivity = false;
+        navigateTo(AdminSettingsActivity.class);
+    }
+
     public void GoBack(View view) {
         Is_Applicant_BarberActivity = false;
         onBackPressed();

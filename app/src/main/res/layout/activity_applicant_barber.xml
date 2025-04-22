@@ -28,7 +28,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:contentDescription="@string/app_name"
-            android:onClick="GoBack"
+            android:onClick="ToAdminSettings"
             android:scaleType="centerInside"
             android:src="@drawable/img_arrow_left"
             tools:ignore="MissingConstraints" />

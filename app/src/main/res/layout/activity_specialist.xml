@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#242C3B"
-    android:transitionName="specialistView"
+    android:transitionName="sharedImageTransition"
+    android:id="@+id/main"
     app:circularflow_radiusInDP="30dp"
     tools:context=".Activities.SpecialistActivity">
 
@@ -131,11 +132,50 @@
         android:layout_height="0dp"
         android:layout_marginHorizontal="15dp"
         android:layout_marginTop="13dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginBottom="15dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/container_frame1" />
 
+
+    <LinearLayout
+        android:id="@+id/confirm_reject_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/info_container">
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_confirm"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:backgroundTint="#4CAF50"
+            android:text="Confirm"
+            android:textColor="@android:color/white"
+            app:cornerRadius="16dp"
+            app:iconPadding="8dp"
+            app:iconTint="@android:color/white" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_reject"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="#F44336"
+            android:text="Reject"
+            android:textColor="@android:color/white"
+            app:cornerRadius="16dp"
+            app:iconPadding="8dp"
+            app:iconTint="@android:color/white" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

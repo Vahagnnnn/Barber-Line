@@ -268,27 +268,65 @@ public class AdminSettingsActivity extends AppCompatActivity {
         navigateTo(AdminBooksActivity.class);
     }
 
-    public void ToApplicant_Barber(View view) {
-        Log.i("workPlace",workPlace);
+//    public void ToApplicant_Barber(View view) {
+//        if (workPlace != null) {
+//            DatabaseReference applicant_barbersShopsRef = FirebaseDatabase.getInstance().getReference("applicant_barbers");
+//
+//            applicant_barbersShopsRef.addValueEventListener(new ValueEventListener() {
+//                @SuppressLint("SetTextI18n")
+//                @Override
+//                public void onDataChange(DataSnapshot dataSnapshot) {
+//                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                        Barbers barber = snapshot.getValue(Barbers.class);
+//                        if (barber != null && Objects.equals(barber.getWorkPlace(), workPlace)) {
+//                            applicant_barber.add(barber);
+//
+////                            SpecialistsFragment specialistsFragment = new SpecialistsFragment(applicant_barber);
+////                            specialistsFragment.addSpecialist(barber);
+//                            Log.i("workPlace","IF "+workPlace);
+//
+//                            navigateTo(Applicant_BarberActivity.class);
+//                        } else
+//                            Log.i("workPlace","ELSE "+workPlace);
+//
+//                            Toast.makeText(AdminSettingsActivity.this, "You don't have Applicant Barbers", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//
+//                @Override
+//                public void onCancelled(DatabaseError databaseError) {
+//                    Log.w("Firebase", "Failed to read value.", databaseError.toException());
+//                }
+//            });
+//        } else
+//            Toast.makeText(this, "You don't have your own BarberShop", Toast.LENGTH_SHORT).show();
+//    }
 
+
+
+    public void ToApplicant_Barber(View view) {
         if (workPlace != null) {
             DatabaseReference applicant_barbersShopsRef = FirebaseDatabase.getInstance().getReference("applicant_barbers");
 
-            applicant_barbersShopsRef.addValueEventListener(new ValueEventListener() {
+            applicant_barbersShopsRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @SuppressLint("SetTextI18n")
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
+                    boolean found = false;
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         Barbers barber = snapshot.getValue(Barbers.class);
                         if (barber != null && Objects.equals(barber.getWorkPlace(), workPlace)) {
                             applicant_barber.add(barber);
+                            found = true;
+                            Log.i("workPlace", "IF " + workPlace);
+                        }
+                    }
 
-//                            SpecialistsFragment specialistsFragment = new SpecialistsFragment(applicant_barber);
-//                            specialistsFragment.addSpecialist(barber);
-
-                            navigateTo(Applicant_BarberActivity.class);
-                        } else
-                            Toast.makeText(AdminSettingsActivity.this, "You don't have Applicant Barbers", Toast.LENGTH_SHORT).show();
+                    if (found) {
+                        navigateTo(Applicant_BarberActivity.class);
+                    } else {
+                        Log.i("workPlace", "No matching barbers");
+                        Toast.makeText(AdminSettingsActivity.this, "You don't have Applicant Barbers", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -297,7 +335,9 @@ public class AdminSettingsActivity extends AppCompatActivity {
                     Log.w("Firebase", "Failed to read value.", databaseError.toException());
                 }
             });
-        } else
+        } else {
             Toast.makeText(this, "You don't have your own BarberShop", Toast.LENGTH_SHORT).show();
+        }
     }
+
 }

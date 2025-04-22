@@ -263,10 +263,6 @@ public class AddBarbersActivity extends AppCompatActivity {
             Barbers Applicant_Barber = new Barbers(String.valueOf(imageUri), BarberName_str, BarberPhoneNumber_str, ListServices,JoinToBarberShopActivity.BarberWorkPlace);
 
             Toast.makeText(this, "Request Sent", Toast.LENGTH_SHORT).show();
-
-            Log.i("BarberWorkPlace",JoinToBarberShopActivity.BarberWorkPlace);
-            Log.i("BarberWorkPlace",Applicant_Barber.getWorkPlace());
-
             AddApplicant_BarberDB(Applicant_Barber);
             JoinToBarberShopActivity.JoinToBarberShopActivity_REGISTER = false;
             navigateTo(AdminActivity.class);
@@ -279,7 +275,7 @@ public class AddBarbersActivity extends AppCompatActivity {
     }
 
 
-    private  void AddApplicant_BarberDB(Barbers Applicant_Barber){
+    private void AddApplicant_BarberDB(Barbers Applicant_Barber){
         DatabaseReference applicant_barbersShopsRef = FirebaseDatabase.getInstance().getReference("applicant_barbers");
 
         applicant_barbersShopsRef.get().addOnCompleteListener(task -> {

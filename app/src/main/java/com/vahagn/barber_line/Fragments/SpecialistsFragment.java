@@ -86,7 +86,6 @@ public class SpecialistsFragment extends Fragment {
         specialistName.setText(specialist.getName());
         specialistRating.setText(String.valueOf(specialist.getRating()));
 
-        Log.i("ASAA", "ServicesActivity " + ServicesActivity.ServicesActivity);
         if (ServicesActivity.ServicesActivity) {
             specialistView.setOnClickListener(v -> {
                 Intent intent = new Intent(getContext(), DateTimeActivity.class);
@@ -94,26 +93,34 @@ public class SpecialistsFragment extends Fragment {
                 name = specialist.getName();
                 rating = String.valueOf(specialist.getRating());
             });
-        } else if (Applicant_BarberActivity.Is_Applicant_BarberActivity) {
-            specialistView.setOnClickListener(v -> {
+//        } else if (Applicant_BarberActivity.Is_Applicant_BarberActivity) {
+//            specialistView.setOnClickListener(v -> {
+//                Intent intent = new Intent(getContext(), SpecialistActivity.class);
+//
+//                imageUrl = specialist.getImage();
+//                name = specialist.getName();
+//                rating = String.valueOf(specialist.getRating());
+//                ListServices = specialist.getServices();
+//
+//                startActivity(intent);
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setTitle(specialist.getName());
-
-                builder.setPositiveButton("Confirm", (dialog, which) -> {
-                    Toast.makeText(getContext(), "Confirmed", Toast.LENGTH_SHORT).show();
-                });
-
-
-                builder.setNeutralButton("Cancel", (dialog, which) -> dialog.cancel());
-                Toast.makeText(getContext(), "Rejected", Toast.LENGTH_SHORT).show();
-
-                builder.setNegativeButton("Reject", (dialog, which) -> {
-                    Toast.makeText(getContext(), "Rejected", Toast.LENGTH_SHORT).show();
-                });
-
-                builder.show();
-            });
+//                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+//                builder.setTitle(specialist.getName());
+//
+//                builder.setPositiveButton("Confirm", (dialog, which) -> {
+//                    Toast.makeText(getContext(), "Confirmed", Toast.LENGTH_SHORT).show();
+//                });
+//
+//
+//                builder.setNeutralButton("Cancel", (dialog, which) -> dialog.cancel());
+//                Toast.makeText(getContext(), "Rejected", Toast.LENGTH_SHORT).show();
+//
+//                builder.setNegativeButton("Reject", (dialog, which) -> {
+//                    Toast.makeText(getContext(), "Rejected", Toast.LENGTH_SHORT).show();
+//                });
+//
+//                builder.show();
+//            });
         } else {
             specialistView.setOnClickListener(v -> {
                 Intent intent = new Intent(getContext(), SpecialistActivity.class);
