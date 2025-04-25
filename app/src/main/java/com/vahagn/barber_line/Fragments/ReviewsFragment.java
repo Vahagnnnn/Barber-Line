@@ -1,5 +1,6 @@
 package com.vahagn.barber_line.Fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -9,9 +10,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
@@ -31,15 +36,21 @@ public class ReviewsFragment extends Fragment {
     private List<Reviews> ListReviews;
 
 
+    private RatingBar ratingBar;
+    private TextView ratingDisplay;
+    private EditText review_edittext;
+    private Button submitButton;
+
     public ReviewsFragment(List<Reviews> ListReviews) {
         this.ListReviews = ListReviews;
     }
 
 
+    @SuppressLint("SetTextI18n")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_reviews, container, false);
+        View view = inflater.inflate(R.layout.fragment_reviews, container, false);
 
         infoContainer = view.findViewById(R.id.info_container);
         if (ListReviews != null) {
@@ -47,6 +58,32 @@ public class ReviewsFragment extends Fragment {
                 addReviews(review);
             }
         }
+
+
+        ratingBar = view.findViewById(R.id.ratingBar);
+        ratingDisplay = view.findViewById(R.id.ratingDisplay);
+        review_edittext = view.findViewById(R.id.review_edittext);
+        submitButton = view.findViewById(R.id.submitButton);
+
+        ratingBar.setOnRatingBarChangeListener((ratingBar, rating, fromUser) -> {
+            ratingDisplay.setText("Rating: " + rating);
+        });
+
+        submitButton.setOnClickListener(v -> {
+            float rating = ratingBar.getRating();
+            if (rating != 0 && !String.valueOf(review_edittext.getText()).isEmpty())
+                Toast.makeText(getContext(), "Please select a Rating", Toast.LENGTH_SHORT).show();
+            else if (!String.valueOf(review_edittext.getText()).isEmpty())
+                Toast.makeText(getContext(), "The review is empty" + rating, Toast.LENGTH_SHORT).show();
+            else
+            {
+                Reviews review = new Reviews();
+                Toast.makeText(getContext(), "Sent" , Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+
         return view;
     }
 

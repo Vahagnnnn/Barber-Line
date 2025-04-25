@@ -41,14 +41,128 @@
             android:fillViewport="true"
             tools:ignore="MissingConstraints">
 
+            <!--            <androidx.constraintlayout.widget.ConstraintLayout-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:orientation="vertical"-->
+            <!--                android:paddingBottom="60dp">-->
+
+            <!--                <LinearLayout-->
+            <!--                    android:id="@+id/info_container"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:orientation="vertical" />-->
+
+            <!--                <RatingBar-->
+            <!--                    android:id="@+id/ratingBar"-->
+            <!--                    style="@style/Widget.AppCompat.RatingBar"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:numStars="5"-->
+            <!--                    android:progressTint="#ffc900"-->
+            <!--                    android:rating="0"-->
+            <!--                    android:stepSize="1.0"-->
+            <!--                    app:layout_constraintTop_toTopOf="@+id/info_container" />-->
+
+            <!--                <TextView-->
+            <!--                    android:id="@+id/ratingDisplay"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:text="Rating: 0.0"-->
+            <!--                    android:textSize="16sp"-->
+            <!--                    app:layout_constraintTop_toBottomOf="@+id/ratingBar" />-->
+
+            <!--                <EditText-->
+            <!--                    android:id="@+id/message_or_requests"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_marginTop="10dp"-->
+            <!--                    android:background="@drawable/grayborder_frame"-->
+            <!--                    android:gravity="top"-->
+            <!--                    android:hint="Your message or requests"-->
+            <!--                    android:inputType="textMultiLine"-->
+            <!--                    android:minLines="3"-->
+            <!--                    android:padding="12dp"-->
+            <!--                    android:textColor="@color/white"-->
+            <!--                    android:textColorHint="#B3B3B3"-->
+            <!--                    android:textSize="16sp"-->
+            <!--                    app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                    app:layout_constraintStart_toStartOf="parent"-->
+            <!--                    app:layout_constraintTop_toBottomOf="@+id/ratingDisplay" />-->
+
+            <!--                <Button-->
+            <!--                    android:id="@+id/submitButton"-->
+            <!--                    android:layout_width="200dp"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_marginTop="10dp"-->
+            <!--                    android:text="Send"-->
+            <!--                    app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                    app:layout_constraintStart_toStartOf="parent"-->
+            <!--                    app:layout_constraintTop_toBottomOf="@+id/message_or_requests" />-->
+
+            <!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+
             <LinearLayout
-                android:id="@+id/info_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingBottom="30dp" />
+                android:paddingBottom="60dp">
+
+                <LinearLayout
+                    android:id="@+id/info_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+
+                <RatingBar
+                    android:id="@+id/ratingBar"
+                    style="@style/Widget.AppCompat.RatingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:numStars="5"
+                    android:progressTint="#ffc900"
+                    android:rating="0"
+                    android:scaleX="0.8"
+                    android:scaleY="0.8"
+                    android:stepSize="1.0" />
+
+                <TextView
+                    android:id="@+id/ratingDisplay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rating: 0.0"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/review_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/grayborder_frame"
+                    android:gravity="top"
+                    android:hint="Your review"
+                    android:inputType="textMultiLine"
+                    android:minLines="3"
+                    android:padding="12dp"
+                    android:textColor="@color/white"
+                    android:textColorHint="#B3B3B3"
+                    android:textSize="16sp"
+                    tools:ignore="Autofill" />
+
+                <Button
+                    android:id="@+id/submitButton"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:text="Send" />
+
+            </LinearLayout>
+
 
         </androidx.core.widget.NestedScrollView>
+
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
