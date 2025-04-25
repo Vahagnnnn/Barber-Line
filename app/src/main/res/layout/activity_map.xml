@@ -75,16 +75,36 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <SearchView
-        android:id="@+id/searchView"
+<!--    <SearchView-->
+<!--        android:id="@+id/searchView"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:layout_marginHorizontal="10dp"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:background="@drawable/radius_10_dp"-->
+<!--        android:iconifiedByDefault="false"-->
+<!--        android:queryBackground="@android:color/transparent"-->
+<!--        android:queryHint="Names of barbershops"-->
+<!--        android:textColorHint="#A0A4AC"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+    <AutoCompleteTextView
+        android:id="@+id/autoCompleteTextView"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginHorizontal="10dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/radius_10_dp"
-        android:iconifiedByDefault="false"
-        android:queryBackground="@android:color/transparent"
-        android:queryHint="Names of barbershops"
+        android:completionThreshold="1"
+        android:dropDownAnchor="@id/autoCompleteTextView"
+        android:dropDownHeight="wrap_content"
+        android:hint="Names of barbershops"
+        android:imeOptions="actionSearch"
+        android:inputType="text"
+        android:padding="12dp"
+        android:textColor="#FFFFFF"
         android:textColorHint="#A0A4AC"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -107,8 +127,8 @@
             android:layout_marginHorizontal="15dp"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="20dp"
-            android:foreground="@drawable/ripple_dark"
             android:background="@drawable/gray_frame_info_map"
+            android:foreground="@drawable/ripple_dark"
             android:paddingStart="10dp"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
