@@ -26,19 +26,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="17dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:clipToPadding="false"
             android:gravity="center"
             android:orientation="horizontal">
 
-            <ImageButton
-                android:id="@+id/arrowToHome"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="@drawable/img_back_home"
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
                 android:contentDescription="@string/app_name"
                 android:onClick="ToHome"
-                android:scaleType="centerInside" />
+                android:src="@drawable/img_arrow_left" />
+
+<!--            <ImageButton-->
+<!--                android:id="@+id/arrowToHome"-->
+<!--                android:layout_width="48dp"-->
+<!--                android:layout_height="48dp"-->
+<!--                android:background="@drawable/img_back_home"-->
+<!--                android:contentDescription="@string/app_name"-->
+<!--                android:onClick="ToHome"-->
+<!--                android:scaleType="centerInside" />-->
 
             <TextView
                 android:id="@+id/text_barber_time"
@@ -97,6 +104,7 @@
             <!-- Continue Button -->
             <FrameLayout
                 android:id="@+id/continue_button"
+                android:foreground="@drawable/ripple_dark"
                 android:layout_width="327dp"
                 android:layout_height="48dp"
                 android:layout_gravity="center"

@@ -25,19 +25,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="17dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:clipToPadding="false"
             android:gravity="center"
             android:orientation="horizontal">
 
-            <ImageButton
-                android:id="@+id/container_frame2"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="@drawable/img_back_home"
+            <!--            <ImageButton-->
+            <!--                android:id="@+id/container_frame2"-->
+            <!--                android:layout_width="48dp"-->
+            <!--                android:layout_height="48dp"-->
+            <!--                android:background="@drawable/img_back_home"-->
+            <!--                android:contentDescription="@string/app_name"-->
+            <!--                android:onClick="ToLogin"-->
+            <!--                android:scaleType="centerInside" />-->
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
                 android:contentDescription="@string/app_name"
                 android:onClick="ToLogin"
-                android:scaleType="centerInside" />
+                android:src="@drawable/img_arrow_left" />
 
             <TextView
                 android:id="@+id/text_barber_time"
@@ -180,6 +187,7 @@
                     android:textColor="@color/white" />
             </com.google.android.material.textfield.TextInputLayout>
 
+
             <!-- Register Button -->
             <FrameLayout
                 android:id="@+id/register_button"
@@ -187,6 +195,7 @@
                 android:layout_height="48dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="24dp"
+                android:foreground="@drawable/ripple_dark"
                 android:textSize="12sp">
 
                 <ImageView

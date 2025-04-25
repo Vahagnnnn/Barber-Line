@@ -116,34 +116,34 @@ public class EditProfileActivity extends AppCompatActivity {
         }
 
 
-        View.OnTouchListener touchEffect = (v, event) -> {
-            GradientDrawable drawable = new GradientDrawable();
-            drawable.setColor(Color.TRANSPARENT);
-            drawable.setCornerRadius(15);
-            v.setBackground(drawable);
+//        View.OnTouchListener touchEffect = (v, event) -> {
+//            GradientDrawable drawable = new GradientDrawable();
+//            drawable.setColor(Color.TRANSPARENT);
+//            drawable.setCornerRadius(15);
+//            v.setBackground(drawable);
+//
+//            switch (event.getAction()) {
+//                case MotionEvent.ACTION_DOWN:
+//                    v.postDelayed(() -> {
+//                        drawable.setColor(Color.parseColor("#646363"));
+//                        v.setBackground(drawable);
+//                    }, 0);
+//                    return false;
+//                case MotionEvent.ACTION_UP:
+//                case MotionEvent.ACTION_CANCEL:
+//                    v.postDelayed(() -> {
+//                        drawable.setColor(Color.TRANSPARENT);
+//                        v.setBackground(drawable);
+//                    }, 0);
+//                    break;
+//            }
+//            return false;
+//        };
 
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    v.postDelayed(() -> {
-                        drawable.setColor(Color.parseColor("#646363"));
-                        v.setBackground(drawable);
-                    }, 0);
-                    return false;
-                case MotionEvent.ACTION_UP:
-                case MotionEvent.ACTION_CANCEL:
-                    v.postDelayed(() -> {
-                        drawable.setColor(Color.TRANSPARENT);
-                        v.setBackground(drawable);
-                    }, 0);
-                    break;
-            }
-            return false;
-        };
-
-        editFirstName.setOnTouchListener(touchEffect);
-        editLastName.setOnTouchListener(touchEffect);
-        editPhoneNumber.setOnTouchListener(touchEffect);
-        editPassword.setOnTouchListener(touchEffect);
+//        editFirstName.setOnTouchListener(touchEffect);
+//        editLastName.setOnTouchListener(touchEffect);
+//        editPhoneNumber.setOnTouchListener(touchEffect);
+//        editPassword.setOnTouchListener(touchEffect);
     }
 
     private void openGallery() {

@@ -70,31 +70,42 @@ public class RegisterActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("email_str", MODE_PRIVATE);
         email.setText(sharedPreferences.getString("email", " "));
 
-        register_button.setOnTouchListener((v, event) -> {
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    v.animate().alpha(0.8f).setDuration(50).start();
-                    break;
-                case MotionEvent.ACTION_UP:
-                    v.animate().alpha(1.0f).setDuration(50).start();
+//        register_button.setOnTouchListener((v, event) -> {
+//            switch (event.getAction()) {
+//                case MotionEvent.ACTION_DOWN:
+//                    v.animate().alpha(0.8f).setDuration(50).start();
+//                    break;
+//                case MotionEvent.ACTION_UP:
+//                    v.animate().alpha(1.0f).setDuration(50).start();
+//
+//                    String first_name_str = first_name.getText().toString();
+//                    String last_name_str = last_name.getText().toString();
+//                    String email_str = email.getText().toString();
+//                    String password_str = password.getText().toString();
+//                    String phoneNumber_str = "+374" + phoneNumber.getText().toString().substring(5);
+//
+//                    if (validateInput(first_name_str, last_name_str, email_str, password_str, phoneNumber_str)) {
+//                        signUpUser(first_name_str, last_name_str, email_str, password_str, phoneNumber_str);
+//                    }
+//                    break;
+//                case MotionEvent.ACTION_CANCEL:
+//                    v.animate().alpha(1.0f).setDuration(50).start();
+//                    break;
+//            }
+//            return true;
+//        });
 
-                    String first_name_str = first_name.getText().toString();
-                    String last_name_str = last_name.getText().toString();
-                    String email_str = email.getText().toString();
-                    String password_str = password.getText().toString();
-                    String phoneNumber_str = "+374" + phoneNumber.getText().toString().substring(5);
+        register_button.setOnClickListener(v -> {
+            String first_name_str = first_name.getText().toString();
+            String last_name_str = last_name.getText().toString();
+            String email_str = email.getText().toString();
+            String password_str = password.getText().toString();
+            String phoneNumber_str = "+374" + phoneNumber.getText().toString().substring(5);
 
-                    if (validateInput(first_name_str, last_name_str, email_str, password_str, phoneNumber_str)) {
-                        signUpUser(first_name_str, last_name_str, email_str, password_str, phoneNumber_str);
-                    }
-                    break;
-                case MotionEvent.ACTION_CANCEL:
-                    v.animate().alpha(1.0f).setDuration(50).start();
-                    break;
+            if (validateInput(first_name_str, last_name_str, email_str, password_str, phoneNumber_str)) {
+                signUpUser(first_name_str, last_name_str, email_str, password_str, phoneNumber_str);
             }
-            return true;
         });
-
     }
 
     private boolean validateInput(String first_name, String last_name, String email, String password, String phoneNumber) {

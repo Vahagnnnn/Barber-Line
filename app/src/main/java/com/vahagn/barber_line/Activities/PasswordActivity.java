@@ -52,26 +52,35 @@ public class PasswordActivity extends AppCompatActivity {
         String email = sharedPreferences.getString("email", " ");
         editor.putString("email", email);
 
-        continue_button.setOnTouchListener((v, event) -> {
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    v.animate().alpha(0.8f).setDuration(50).start();
-                    break;
-                case MotionEvent.ACTION_UP:
-                    v.animate().alpha(1.0f).setDuration(50).start();
+//        continue_button.setOnTouchListener((v, event) -> {
+//            switch (event.getAction()) {
+//                case MotionEvent.ACTION_DOWN:
+//                    v.animate().alpha(0.8f).setDuration(50).start();
+//                    break;
+//                case MotionEvent.ACTION_UP:
+//                    v.animate().alpha(1.0f).setDuration(50).start();
+//
+//                    if (!validatePassword()) {
+//                        Toast.makeText(PasswordActivity.this, "Invalid information", Toast.LENGTH_SHORT).show();
+//                    } else {
+//                        signInUser(email);
+//                    }
+//
+//                    break;
+//                case MotionEvent.ACTION_CANCEL:
+//                    v.animate().alpha(1.0f).setDuration(50).start();
+//                    break;
+//            }
+//            return true;
+//        });
 
-                    if (!validatePassword()) {
-                        Toast.makeText(PasswordActivity.this, "Invalid information", Toast.LENGTH_SHORT).show();
-                    } else {
-                        signInUser(email);
-                    }
 
-                    break;
-                case MotionEvent.ACTION_CANCEL:
-                    v.animate().alpha(1.0f).setDuration(50).start();
-                    break;
+        continue_button.setOnClickListener(v -> {
+            if (!validatePassword()) {
+                Toast.makeText(PasswordActivity.this, "Invalid information", Toast.LENGTH_SHORT).show();
+            } else {
+                signInUser(email);
             }
-            return true;
         });
     }
 
