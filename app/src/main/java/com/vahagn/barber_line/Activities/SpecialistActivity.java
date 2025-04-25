@@ -106,7 +106,6 @@ public class SpecialistActivity extends AppCompatActivity {
     }
 
     private void ConfirmBarber() {
-
         DatabaseReference barberShopsRef = FirebaseDatabase.getInstance().getReference("barberShops");
         DatabaseReference applicant_barbersShopsRef = FirebaseDatabase.getInstance().getReference("applicant_barbers");
         Barbers newBarber = new Barbers(SpecialistsFragment.imageUrl, SpecialistsFragment.name, SpecialistsFragment.rating, SpecialistsFragment.ListServices);
@@ -127,27 +126,6 @@ public class SpecialistActivity extends AppCompatActivity {
                         }
 
                         specialists.add(newBarber);
-
-//                        barbershopSnapshot.getRef().child("specialists").setValue(specialists)
-//                                .addOnSuccessListener(aVoid -> {
-//                                    applicant_barbersShopsRef.child(newBarber.getName()).removeValue()
-//                                            .addOnSuccessListener(aVoid2 -> {
-//                                                Toast.makeText(SpecialistActivity.this, "Barber added and removed from applicants successfully!", Toast.LENGTH_SHORT).show();
-//                                                Log.d("Firebase", "Barber added to " + AdminSettingsActivity.workPlace + " and removed from applicants");
-//                                                ToAdminSettings();
-//                                            })
-//                                            .addOnFailureListener(e -> {
-//                                                Toast.makeText(SpecialistActivity.this, "Failed to remove barber from applicants: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-//                                                Log.e("Firebase", "Error removing barber from applicants", e);
-//                                            });
-//                                })
-//                                .addOnFailureListener(e -> {
-//                                    Toast.makeText(SpecialistActivity.this, "Failed to add barber: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-//                                    Log.e("Firebase", "Error adding barber", e);
-//                                });
-
-
-
 
                         barbershopSnapshot.getRef().child("specialists").setValue(specialists)
                                 .addOnSuccessListener(aVoid -> {

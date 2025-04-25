@@ -1,13 +1,24 @@
 package com.vahagn.barber_line.Activities;
 
 
+import android.Manifest;
 import android.app.ActivityOptions;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,6 +33,7 @@ import com.vahagn.barber_line.Admin.AdminActivity;
 import com.vahagn.barber_line.Admin.AdminBooksActivity;
 import com.vahagn.barber_line.Classes.BarberShops;
 import com.vahagn.barber_line.Classes.Barbers;
+import com.vahagn.barber_line.Notification.AlarmScheduler;
 import com.vahagn.barber_line.R;
 import com.vahagn.barber_line.adapter.TopBarberShopsAdapter;
 import com.vahagn.barber_line.adapter.TopBarbersAdapter;
@@ -52,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
 
+
+//    TextView Barber_Line_Text;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,14 +74,6 @@ public class MainActivity extends AppCompatActivity {
         SetTopBarberShops();
         SetTopBarbers();
         SetTopHaircuts();
-//        TopHaircutsList.add(new TopHaircuts("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzOIFV5QknzGju2KYY-cVAzyFZNgfk57q_sg&s", "Side fringe"));
-//        TopHaircutsList.add(new TopHaircuts("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzOIFV5QknzGju2KYY-cVAzyFZNgfk57q_sg&s", "Side fringe"));
-//        setTopHaircutsRecycler(TopHaircutsList);
-//        TopHaircutsList.add(new TopHaircuts(R.drawable.img_haircut, "The Textured Crop"));
-//        TopHaircutsList.add(new TopHaircuts(R.drawable.img_haircut, "The Textured Crop"));
-//        TopHaircutsList.add(new TopHaircuts(R.drawable.img_haircut, "The Textured Crop"));
-//        TopHaircutsList.add(new TopHaircuts(R.drawable.img_haircut, "The Textured Crop"));
-//        setTopHaircutsRecycler(TopHaircutsList);
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -75,6 +81,11 @@ public class MainActivity extends AppCompatActivity {
         if (currentUser != null) {
             MainActivity.isLogin = true;
         }
+
+//
+//        Barber_Line_Text = findViewById(R.id.Barber_Line_Text);
+//        Barber_Line_Text.setOnClickListener(v -> showNotification());
+
     }
 
     private void SetTopBarberShops() {
@@ -227,4 +238,22 @@ public class MainActivity extends AppCompatActivity {
         else
             navigateTo(LoginActivity.class);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

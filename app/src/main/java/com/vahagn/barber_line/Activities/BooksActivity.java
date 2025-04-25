@@ -1,5 +1,6 @@
 package com.vahagn.barber_line.Activities;
 
+import static android.view.View.GONE;
 import static com.vahagn.barber_line.Activities.MainActivity.isLogin;
 
 import android.annotation.SuppressLint;
@@ -52,10 +53,13 @@ public class BooksActivity extends AppCompatActivity {
 
     public static String uniqueID;
 
+    public static LinearLayout NewAppointmentsLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_books);
+        NewAppointmentsLayout = findViewById(R.id.NewAppointmentsLayout);
 
 
         appointmentsRecyclerView = findViewById(R.id.appointments_recycler_view);
@@ -87,6 +91,7 @@ public class BooksActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Appointment appointment = snapshot.getValue(Appointment.class);
                     if (appointment != null && appointment.getUserEmail().equals(userEmail)) {
+                        NewAppointmentsLayout.setVisibility(GONE);
                         AppointmentsList.add(appointment);
                     }
                 }

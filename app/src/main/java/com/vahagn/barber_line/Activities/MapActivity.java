@@ -1,5 +1,7 @@
 package com.vahagn.barber_line.Activities;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 import static com.vahagn.barber_line.Activities.MainActivity.TopBarberShopsList;
 import static com.vahagn.barber_line.Activities.MainActivity.isLogin;
 
@@ -24,6 +26,10 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -31,6 +37,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -45,10 +54,12 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.vahagn.barber_line.Admin.AdminActivity;
 import com.vahagn.barber_line.Admin.AdminSettingsActivity;
 import com.vahagn.barber_line.Classes.BarberShops;
+import com.vahagn.barber_line.Fragments.SpecialistsFragment;
 import com.vahagn.barber_line.R;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -57,6 +68,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private GoogleMap gMap;
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
+
+    LinearLayout barbershop_infoLayout_Map;
+    TextView barbershop_name_info, barbershop_address_info;
+    ImageView barbershop_image_info;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +83,20 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+        barbershop_infoLayout_Map = findViewById(R.id.barbershop_infoLayout_Map);
+        barbershop_name_info = findViewById(R.id.barbershop_name_info);
+        barbershop_address_info = findViewById(R.id.barbershop_address_info);
+        barbershop_image_info = findViewById(R.id.barbershop_image_info);
+
+        barbershop_infoLayout_Map.setVisibility(GONE);
+        barbershop_infoLayout_Map.setOnClickListener(v ->
+        {
+            Intent intent = new Intent(getApplicationContext(), BarberShopsAboutActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra("from_where", "MapActivity");
+            getApplicationContext().startActivity(intent);
+        });
 
     }
 
@@ -89,7 +118,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
                     LatLng location = new LatLng(latitude, longitude);
 
-                    Log.i("img" , barberShop.getLogo());
+                    Log.i("img", barberShop.getLogo());
                     addCustomMarker(location, barberShop.getName(), barberShop.getLogo());
                 } catch (NumberFormatException e) {
                     Log.i("coords", "Error parsing coordinates: " + e.getMessage());
@@ -201,49 +230,71 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     .title(bitmap != null ? Name : "Default Marker");
 
             gMap.addMarker(markerOptions);
-            gMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                @Override
-                public boolean onMarkerClick(Marker marker) {
-                    if (marker.equals(marker)) {
-                        Intent intent = new Intent(getApplicationContext(), BarberShopsAboutActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            gMap.setOnMarkerClickListener(marker -> {
 
 
-                        List<BarberShops> paragonShops = TopBarberShopsList.stream()
-                                .filter(shop -> marker.getTitle().equals(shop.getName()))
-                                .collect(Collectors.toList());
+                barbershop_infoLayout_Map.setVisibility(VISIBLE);
 
-                        paragonShops.forEach(shop -> {
-                            intent.putExtra("from_where", "MapActivity");
+                List<BarberShops> barberShops = TopBarberShopsList.stream()
+                        .filter(shop -> Objects.equals(marker.getTitle(), shop.getName()))
+                        .collect(Collectors.toList());
 
-                            BarbersActivity.imageUrl = shop.getImage();
-                            BarbersActivity.name = shop.getName();
-                            BarbersActivity.rating = String.valueOf(shop.getRating());
+                barberShops.forEach(shop -> {
+                    BarbersActivity.imageUrl = shop.getImage();
+                    BarbersActivity.name = shop.getName();
+                    BarbersActivity.rating = String.valueOf(shop.getRating());
+                    BarbersActivity.OwnerEmail = shop.getOwnerEmail();
+                    BarbersActivity.address = shop.getAddress();
+                    BarbersActivity.logo = shop.getLogo();
+                    BarbersActivity.coordinates = shop.getCoordinates();
+                    BarbersActivity.ListSpecialist = shop.getSpecialists();
+                    BarbersActivity.ListReviews = shop.getReviews();
+                    BarbersActivity.openingTimes = shop.getOpeningTimes();
 
-                            if (shop.getOwnerEmail()!=null)
-                            {
-                                Log.i("OwnerEmail",shop.getOwnerEmail());
-                            }
-                            else
-                                Log.i("OwnerEmail","Null");
-                            BarbersActivity.OwnerEmail = shop.getOwnerEmail();
+                    barbershop_name_info.setText(BarbersActivity.name);
+                    barbershop_address_info.setText(BarbersActivity.address);
 
-                            BarbersActivity.address = shop.getAddress();
-                            BarbersActivity.logo = shop.getLogo();
-                            BarbersActivity.coordinates = shop.getCoordinates();
-                            BarbersActivity.ListSpecialist = shop.getSpecialists();
-                            BarbersActivity.ListReviews = shop.getReviews();
-                            BarbersActivity.openingTimes = shop.getOpeningTimes();
-//                            BarbersActivity.ListService = shop.getServices();
-                        });
+                    Glide.with(MapActivity.this)
+                            .load(BarbersActivity.imageUrl)
+                            .apply(RequestOptions.bitmapTransform(new RoundedCorners(60)))
+                            .into(barbershop_image_info);
+                });
 
-                        getApplicationContext().startActivity(intent);
+//                        Intent intent = new Intent(getApplicationContext(), BarberShopsAboutActivity.class);
+//                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-                        return true;
-                    }
-                    return false;
-                }
 
+//                    List<BarberShops> barberShops = TopBarberShopsList.stream()
+//                            .filter(shop -> Objects.equals(marker.getTitle(), shop.getName()))
+//                            .collect(Collectors.toList());
+
+//                barberShops.forEach(shop -> {
+////                        intent.putExtra("from_where", "MapActivity");
+//
+//                        BarbersActivity.imageUrl = shop.getImage();
+//                        BarbersActivity.name = shop.getName();
+//                        BarbersActivity.rating = String.valueOf(shop.getRating());
+//
+//                        if (shop.getOwnerEmail()!=null)
+//                        {
+//                            Log.i("OwnerEmail",shop.getOwnerEmail());
+//                        }
+//                        else
+//                            Log.i("OwnerEmail","Null");
+//                        BarbersActivity.OwnerEmail = shop.getOwnerEmail();
+//
+//                        BarbersActivity.address = shop.getAddress();
+//                        BarbersActivity.logo = shop.getLogo();
+//                        BarbersActivity.coordinates = shop.getCoordinates();
+//                        BarbersActivity.ListSpecialist = shop.getSpecialists();
+//                        BarbersActivity.ListReviews = shop.getReviews();
+//                        BarbersActivity.openingTimes = shop.getOpeningTimes();
+////                            BarbersActivity.ListService = shop.getServices();
+//                    });
+
+//                    getApplicationContext().startActivity(intent);
+//                    return true;
+                return false;
             });
         }
 
@@ -296,15 +347,18 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public void ToHome(View view) {
         navigateTo(MainActivity.class);
     }
+
     public void ToAdmin(View view) {
         if (isLogin)
             navigateTo(AdminActivity.class);
         else
             navigateTo(LoginActivity.class);
     }
+
     public void ToBarbers(View view) {
         navigateTo(BarbersActivity.class);
     }
+
     public void ToBooks(View view) {
         if (isLogin)
             navigateTo(BooksActivity.class);
