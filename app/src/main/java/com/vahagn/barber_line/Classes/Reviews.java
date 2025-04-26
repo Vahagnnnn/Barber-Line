@@ -1,6 +1,6 @@
 package com.vahagn.barber_line.Classes;
 
-import android.widget.ImageView;
+import android.text.Editable;
 
 import java.io.Serializable;
 
@@ -10,7 +10,8 @@ public class Reviews implements Serializable {
     private String ReviewText;
     private double Rating;
 
-    public Reviews() {}
+    public Reviews() {
+    }
 
     public Reviews(String CustomerImage,String CustomerName, String ReviewText, double Rating) {
         this.CustomerImage = CustomerImage;
@@ -18,6 +19,13 @@ public class Reviews implements Serializable {
         this.ReviewText = ReviewText;
         this.Rating = Rating;
     }
+
+//    public Reviews(String CustomerImage,String CustomerName, String ReviewText, double Rating) {
+//        this.CustomerImage = CustomerImage;
+//        this.CustomerName = CustomerName;
+//        this.ReviewText = ReviewText;
+//        this.Rating = Rating;
+//    }
 
     public String getCustomerImage() {
         return CustomerImage;

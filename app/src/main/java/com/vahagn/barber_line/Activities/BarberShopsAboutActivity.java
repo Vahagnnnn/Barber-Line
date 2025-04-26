@@ -2,6 +2,7 @@ package com.vahagn.barber_line.Activities;
 
 import static com.vahagn.barber_line.Activities.MainActivity.isLogin;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
@@ -39,7 +40,9 @@ import java.util.Set;
 public class BarberShopsAboutActivity extends AppCompatActivity {
     FrameLayout back_section;
     ImageView image;
-    TextView name, rating, adress;
+    @SuppressLint("StaticFieldLeak")
+    public static TextView name;
+    TextView  rating, address;
 
     CategoryAdapter categoryAdapter;
     RecyclerView categoryRecycler;
@@ -64,7 +67,7 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
         image = findViewById(R.id.image);
         name = findViewById(R.id.name);
         rating = findViewById(R.id.rating);
-        adress = findViewById(R.id.adress);
+        address = findViewById(R.id.address);
         back_section = findViewById(R.id.back_section);
 
         String from_where = getIntent().getStringExtra("from_where");
@@ -79,7 +82,7 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
                 .into(image);
         name.setText(BarbersActivity.name);
         rating.setText(BarbersActivity.rating);
-        adress.setText(BarbersActivity.address);
+        address.setText(BarbersActivity.address);
 
         ListSpecialist = BarbersActivity.ListSpecialist;
         ListReviews = BarbersActivity.ListReviews;

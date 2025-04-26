@@ -42,7 +42,7 @@ public class SettingsActivity extends AppCompatActivity {
     TextView Firstname_LastnameText, emailText, phoneNumberText;
     ImageView profileImageView;
 
-    @SuppressLint("ClickableViewAccessibility")
+    @SuppressLint({"ClickableViewAccessibility", "SetTextI18n"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,46 +61,64 @@ public class SettingsActivity extends AppCompatActivity {
         emailText = findViewById(R.id.email);
         phoneNumberText = findViewById(R.id.phoneNumberText);
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            String userId = user.getUid();
-            databaseReference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot snapshot) {
-                    if (snapshot.exists()) {
-                        String first_name = snapshot.child("first_name").getValue(String.class);
-                        String last_name = snapshot.child("last_name").getValue(String.class);
-                        String email = snapshot.child("email").getValue(String.class);
-                        String phone = snapshot.child("phoneNumber").getValue(String.class);
-                        String photoUrl = snapshot.child("photoUrl").getValue(String.class);
 
-                        assert phone != null;
-                        phone = phone.substring(0, 4) + " " + phone.substring(4, 6) + " " + phone.substring(6, 8) + " " + phone.substring(8);
+        Firstname_LastnameText.setText(MainActivity.userClass.getFirst_name() + " " + MainActivity.userClass.getLast_name());
+        emailText.setText(MainActivity.userClass.getEmail());
+        String  phone = MainActivity.userClass.getPhoneNumber().substring(0, 4) + " " + MainActivity.userClass.getPhoneNumber().substring(4, 6) + " " + MainActivity.userClass.getPhoneNumber().substring(6, 8) + " " + MainActivity.userClass.getPhoneNumber().substring(8);
+        phoneNumberText.setText(phone);
 
-                        Firstname_LastnameText.setText(first_name + " " + last_name);
-                        emailText.setText(email);
-                        phoneNumberText.setText(phone);
-
-                        if (photoUrl != null && !photoUrl.isEmpty()) {
-                            Glide.with(SettingsActivity.this)
-                                    .load(photoUrl)
-                                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(100)))
-                                    .into(profileImageView);
-                        }
-
-                        if (Objects.equals(email, "vahagn.makaryan.v@gmail.com")){
-                            admin.setVisibility(View.VISIBLE);
-                        }
-                    }
-                }
-
-                @Override
-                public void onCancelled(DatabaseError error) {
-                    Log.w("Firebase", "Failed to read value.", error.toException());
-                }
-            });
+        if (MainActivity.userClass.getPhotoUrl() != null && !MainActivity.userClass.getPhotoUrl().isEmpty()) {
+            Glide.with(SettingsActivity.this)
+                    .load(MainActivity.userClass.getPhotoUrl())
+                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(100)))
+                    .into(profileImageView);
         }
+
+        if (Objects.equals(MainActivity.userClass.getEmail(), "vahagn.makaryan.v@gmail.com")){
+            admin.setVisibility(View.VISIBLE);
+        }
+
+
+//        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//        if (user != null) {
+//            String userId = user.getUid();
+//            databaseReference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(DataSnapshot snapshot) {
+//                    if (snapshot.exists()) {
+//                        String first_name = snapshot.child("first_name").getValue(String.class);
+//                        String last_name = snapshot.child("last_name").getValue(String.class);
+//                        String email = snapshot.child("email").getValue(String.class);
+//                        String phone = snapshot.child("phoneNumber").getValue(String.class);
+//                        String photoUrl = snapshot.child("photoUrl").getValue(String.class);
+//
+//                        assert phone != null;
+//                        phone = phone.substring(0, 4) + " " + phone.substring(4, 6) + " " + phone.substring(6, 8) + " " + phone.substring(8);
+//
+//                        Firstname_LastnameText.setText(first_name + " " + last_name);
+//                        emailText.setText(email);
+//                        phoneNumberText.setText(phone);
+//
+//                        if (photoUrl != null && !photoUrl.isEmpty()) {
+//                            Glide.with(SettingsActivity.this)
+//                                    .load(photoUrl)
+//                                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(100)))
+//                                    .into(profileImageView);
+//                        }
+//
+//                        if (Objects.equals(email, "vahagn.makaryan.v@gmail.com")){
+//                            admin.setVisibility(View.VISIBLE);
+//                        }
+//                    }
+//                }
+//
+//                @Override
+//                public void onCancelled(DatabaseError error) {
+//                    Log.w("Firebase", "Failed to read value.", error.toException());
+//                }
+//            });
+//        }
 
 //        View.OnTouchListener touchEffect = (v, event) -> {
 //            GradientDrawable drawable = new GradientDrawable();

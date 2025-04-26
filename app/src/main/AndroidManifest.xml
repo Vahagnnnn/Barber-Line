@@ -70,7 +70,8 @@
             android:exported="false" />
         <activity
             android:name=".Admin.AdminBarberShopsAboutActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".Admin.AdminSettingsActivity"
             android:exported="false" />

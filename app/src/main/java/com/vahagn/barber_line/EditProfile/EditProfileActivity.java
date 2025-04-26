@@ -31,6 +31,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.vahagn.barber_line.Activities.MainActivity;
 import com.vahagn.barber_line.Activities.SettingsActivity;
 import com.vahagn.barber_line.R;
 
@@ -39,7 +40,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class EditProfileActivity extends AppCompatActivity {
-    public static HashMap<String, String> InfoArr = new HashMap<>();
+//    public static HashMap<String, String> InfoArr = new HashMap<>();
 
     private DatabaseReference databaseReference;
     TextView FirstnameText, LastnameText, phoneNumberText;
@@ -68,52 +69,64 @@ public class EditProfileActivity extends AppCompatActivity {
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
 
-
         mAuth = FirebaseAuth.getInstance();
         profileImageView.setOnClickListener(v -> openGallery());
 
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            String userId = user.getUid();
-            databaseReference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot snapshot) {
-                    if (snapshot.exists()) {
-                        String first_name = snapshot.child("first_name").getValue(String.class);
-                        String last_name = snapshot.child("last_name").getValue(String.class);
-                        String email = snapshot.child("email").getValue(String.class);
-                        String phone = snapshot.child("phoneNumber").getValue(String.class);
-                        String photoUrl = snapshot.child("photoUrl").getValue(String.class);
+        FirstnameText.setText(MainActivity.userClass.getFirst_name());
+        LastnameText.setText(MainActivity.userClass.getLast_name());
+        String  phone = MainActivity.userClass.getPhoneNumber().substring(0, 4) + " " + MainActivity.userClass.getPhoneNumber().substring(4, 6) + " " + MainActivity.userClass.getPhoneNumber().substring(6, 8) + " " + MainActivity.userClass.getPhoneNumber().substring(8);
+        phoneNumberText.setText(phone);
 
-                        InfoArr.put("first_name", first_name);
-                        InfoArr.put("last_name", last_name);
-                        InfoArr.put("email", email);
-                        InfoArr.put("phoneNumber", phone);
-                        InfoArr.put("photoUrl", photoUrl);
-
-                        assert phone != null;
-                        phone = phone.substring(0, 4) + " " + phone.substring(4, 6) + " " + phone.substring(6, 8) + " " + phone.substring(8);
-
-                        FirstnameText.setText(first_name);
-                        LastnameText.setText(last_name);
-                        phoneNumberText.setText(phone);
-
-                        if (photoUrl != null && !photoUrl.isEmpty()) {
-                            Glide.with(EditProfileActivity.this)
-                                    .load(photoUrl)
-                                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(100)))
-                                    .into(profileImageView);
-                        }
-                    }
-                }
-
-                @Override
-                public void onCancelled(DatabaseError error) {
-                    Log.w("Firebase", "Failed to read value.", error.toException());
-                }
-            });
+        if (MainActivity.userClass.getPhotoUrl() != null && !MainActivity.userClass.getPhotoUrl().isEmpty()) {
+            Glide.with(EditProfileActivity.this)
+                    .load(MainActivity.userClass.getPhotoUrl())
+                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(100)))
+                    .into(profileImageView);
         }
+
+
+//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//        if (user != null) {
+//            String userId = user.getUid();
+//            databaseReference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(DataSnapshot snapshot) {
+//                    if (snapshot.exists()) {
+//                        String first_name = snapshot.child("first_name").getValue(String.class);
+//                        String last_name = snapshot.child("last_name").getValue(String.class);
+//                        String email = snapshot.child("email").getValue(String.class);
+//                        String phone = snapshot.child("phoneNumber").getValue(String.class);
+//                        String photoUrl = snapshot.child("photoUrl").getValue(String.class);
+//
+//                        InfoArr.put("first_name", first_name);
+//                        InfoArr.put("last_name", last_name);
+//                        InfoArr.put("email", email);
+//                        InfoArr.put("phoneNumber", phone);
+//                        InfoArr.put("photoUrl", photoUrl);
+//
+//                        assert phone != null;
+//                        phone = phone.substring(0, 4) + " " + phone.substring(4, 6) + " " + phone.substring(6, 8) + " " + phone.substring(8);
+//
+//                        FirstnameText.setText(first_name);
+//                        LastnameText.setText(last_name);
+//                        phoneNumberText.setText(phone);
+//
+//                        if (photoUrl != null && !photoUrl.isEmpty()) {
+//                            Glide.with(EditProfileActivity.this)
+//                                    .load(photoUrl)
+//                                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(100)))
+//                                    .into(profileImageView);
+//                        }
+//                    }
+//                }
+//
+//                @Override
+//                public void onCancelled(DatabaseError error) {
+//                    Log.w("Firebase", "Failed to read value.", error.toException());
+//                }
+//            });
+//        }
 
 
 //        View.OnTouchListener touchEffect = (v, event) -> {
@@ -173,6 +186,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     String base64Image = bitmapToBase64(compressedBitmap);
                     String dataUrl = "data:image/jpeg;base64," + base64Image;
 
+                    MainActivity.userClass.setPhotoUrl(dataUrl);
                     userRef.child("photoUrl").setValue(dataUrl)
                             .addOnCompleteListener(task -> {
                                 if (task.isSuccessful()) {

@@ -1,5 +1,6 @@
 package com.vahagn.barber_line.EditProfile;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.vahagn.barber_line.Activities.MainActivity;
 import com.vahagn.barber_line.R;
 
 public class EditPhoneNumberActivity extends AppCompatActivity {
@@ -26,6 +28,7 @@ public class EditPhoneNumberActivity extends AppCompatActivity {
     EditText PhoneNumber;
     private final String prefix = "+374 ";
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +40,7 @@ public class EditPhoneNumberActivity extends AppCompatActivity {
         usersRef = FirebaseDatabase.getInstance().getReference("Users");
 
         // Set the prefix and phone number
-        String phoneNumberFromInfoArr = EditProfileActivity.InfoArr.get("phoneNumber");
+        String phoneNumberFromInfoArr = MainActivity.userClass.getPhoneNumber();
         PhoneNumber.setText(prefix + phoneNumberFromInfoArr.substring(4));
 
         PhoneNumber.addTextChangedListener(new TextWatcher() {
@@ -78,6 +81,7 @@ public class EditPhoneNumberActivity extends AppCompatActivity {
             String userId = user.getUid();
             DatabaseReference userRef = usersRef.child(userId);
 
+            MainActivity.userClass.setPhoneNumber(PhoneNumber);
             userRef.child("phoneNumber").setValue(PhoneNumber)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {

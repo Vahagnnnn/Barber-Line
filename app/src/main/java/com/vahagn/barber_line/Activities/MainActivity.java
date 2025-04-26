@@ -22,6 +22,9 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -33,6 +36,7 @@ import com.vahagn.barber_line.Admin.AdminActivity;
 import com.vahagn.barber_line.Admin.AdminBooksActivity;
 import com.vahagn.barber_line.Classes.BarberShops;
 import com.vahagn.barber_line.Classes.Barbers;
+import com.vahagn.barber_line.Classes.Users;
 import com.vahagn.barber_line.Notification.AlarmScheduler;
 import com.vahagn.barber_line.R;
 import com.vahagn.barber_line.adapter.TopBarberShopsAdapter;
@@ -63,9 +67,9 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference TopHaircuts = FirebaseDatabase.getInstance().getReference().child("TopHaircuts");
 
     private FirebaseAuth mAuth;
+    public static Users userClass;
 
-
-//    TextView Barber_Line_Text;
+    //    TextView Barber_Line_Text;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         SetTopBarberShops();
         SetTopBarbers();
         SetTopHaircuts();
-
+        ReadUserInfo();
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -82,10 +86,41 @@ public class MainActivity extends AppCompatActivity {
             MainActivity.isLogin = true;
         }
 
+
 //
 //        Barber_Line_Text = findViewById(R.id.Barber_Line_Text);
 //        Barber_Line_Text.setOnClickListener(v -> showNotification());
 
+    }
+
+    private void ReadUserInfo() {
+        DatabaseReference UsersRef = FirebaseDatabase.getInstance().getReference("Users");
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+
+        if (user != null) {
+            String userId = user.getUid();
+            UsersRef.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        String first_name = snapshot.child("first_name").getValue(String.class);
+                        String last_name = snapshot.child("last_name").getValue(String.class);
+                        String email = snapshot.child("email").getValue(String.class);
+                        String password = snapshot.child("password").getValue(String.class);
+                        String phoneNumber = snapshot.child("phoneNumber").getValue(String.class);
+                        String photoUrl = snapshot.child("photoUrl").getValue(String.class);
+
+                        userClass = new Users(first_name, last_name, email, password, phoneNumber, photoUrl);
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError error) {
+                    Log.w("Firebase", "Failed to read value.", error.toException());
+                }
+            });
+        }
     }
 
     private void SetTopBarberShops() {
@@ -96,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     BarberShops shop = snapshot.getValue(BarberShops.class);
                     assert shop != null;
-                    TopBarberShopsList.add(new BarberShops(shop.getOwnerEmail(),shop.getName(), shop.getAddress(), shop.getCoordinates(), shop.getImage(), shop.getLogo(), shop.getRating(), shop.getReviews(), shop.getServices(), shop.getSpecialists(),shop.getOpeningTimes()));
+                    TopBarberShopsList.add(new BarberShops(shop.getOwnerEmail(), shop.getName(), shop.getAddress(), shop.getCoordinates(), shop.getImage(), shop.getLogo(), shop.getRating(), shop.getReviews(), shop.getServices(), shop.getSpecialists(), shop.getOpeningTimes()));
                 }
                 setTopBarberShopsRecycler(TopBarberShopsList);
             }
@@ -159,7 +194,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     private void setTopBarbersRecycler(List<Barbers> topBarbersList) {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
 
@@ -200,12 +234,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void To(View view) {
-        Log.i("isLogin", String.valueOf(isLogin));
         if (isLogin) {
-            Log.i("isLogin", String.valueOf(isLogin));
-            navigateTo(SettingsActivity.class);
+            if (userClass == null) {
+                Toast.makeText(this, "Wait a second and try again", Toast.LENGTH_SHORT).show();
+            } else
+                navigateTo(SettingsActivity.class);
         } else {
-            Log.i("isLogin", String.valueOf(isLogin));
             navigateTo(LoginActivity.class);
         }
 
@@ -222,6 +256,7 @@ public class MainActivity extends AppCompatActivity {
     public void ToMap(View view) {
         navigateTo(MapActivity.class);
     }
+
     public void ToHairCuts(View view) {
         navigateTo(HairCutsActivity.class);
     }
@@ -232,28 +267,13 @@ public class MainActivity extends AppCompatActivity {
         else
             navigateTo(LoginActivity.class);
     }
+
     public void ToBooks(View view) {
         if (isLogin)
             navigateTo(BooksActivity.class);
         else
             navigateTo(LoginActivity.class);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

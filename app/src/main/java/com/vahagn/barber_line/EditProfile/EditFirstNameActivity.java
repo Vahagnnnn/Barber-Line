@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.vahagn.barber_line.Activities.MainActivity;
 import com.vahagn.barber_line.R;
 
 public class EditFirstNameActivity extends AppCompatActivity {
@@ -33,7 +34,8 @@ public class EditFirstNameActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         usersRef = FirebaseDatabase.getInstance().getReference("Users");
 
-        FirstnameText.setText(EditProfileActivity.InfoArr.get("first_name"));
+//        FirstnameText.setText(EditProfileActivity.InfoArr.get("first_name"));
+        FirstnameText.setText(MainActivity.userClass.getFirst_name());
 
         save.setOnClickListener(view -> UpdateUserFirstName(String.valueOf(FirstnameText.getText())));
     }
@@ -44,6 +46,7 @@ public class EditFirstNameActivity extends AppCompatActivity {
             String userId = user.getUid();
             DatabaseReference userRef = usersRef.child(userId);
 
+            MainActivity.userClass.setFirst_name(newName);
             userRef.child("first_name").setValue(newName)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
