@@ -20,13 +20,6 @@ public class Reviews implements Serializable {
         this.Rating = Rating;
     }
 
-//    public Reviews(String CustomerImage,String CustomerName, String ReviewText, double Rating) {
-//        this.CustomerImage = CustomerImage;
-//        this.CustomerName = CustomerName;
-//        this.ReviewText = ReviewText;
-//        this.Rating = Rating;
-//    }
-
     public String getCustomerImage() {
         return CustomerImage;
     }
