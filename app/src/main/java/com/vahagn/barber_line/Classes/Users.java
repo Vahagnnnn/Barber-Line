@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public class Users {
     private String id;
-//    public String ID;
+    //    public String ID;
     public String first_name;
     public String last_name;
     public String name;
@@ -21,7 +21,7 @@ public class Users {
     public String profilePictureUrl;
     public List<Appointment> appointments;
 
-    public Users(String first_name, String last_name,String email, String password, String phoneNumber, String photoUrl) {
+    public Users(String first_name, String last_name, String email, String password, String phoneNumber, String photoUrl) {
         this.first_name = first_name;
         this.last_name = last_name;
         this.email = email;
@@ -29,6 +29,14 @@ public class Users {
         this.phoneNumber = phoneNumber;
         this.photoUrl = photoUrl;
     }
+
+//    public Users(String first_name, String last_name, String email, String password, String photoUrl) {
+//        this.first_name = first_name;
+//        this.last_name = last_name;
+//        this.email = email;
+//        this.password = password;
+//        this.photoUrl = photoUrl;
+//    }
 
     public Users(String name, String email, String password, String image, String phoneNumber, String passwordHash, String profilePictureUrl, List<Appointment> appointments) {
         this.id = UUID.randomUUID().toString();

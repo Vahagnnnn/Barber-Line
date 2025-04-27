@@ -107,6 +107,8 @@ public class PhoneNumberActivity extends AppCompatActivity {
         Users user_DB = new Users(first_name, last_name, email, password, phoneNumber, photoUrl);
         MainActivity.userClass = user_DB;
 
+//        MainActivity.userClass.setPhoneNumber(phoneNumber);
+
         usersRef.child(currentUser.getUid()).setValue(user_DB)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {

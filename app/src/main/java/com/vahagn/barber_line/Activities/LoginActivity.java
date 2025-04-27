@@ -208,6 +208,15 @@ public class LoginActivity extends AppCompatActivity {
 
 //                    MainActivity.userClass = new Users(first_name_last_name[0], first_name_last_name[1], email, password, phoneNumber, photoUrl);
 
+
+//                    MainActivity.userClass = new Users(first_name_last_name[0], first_name_last_name[1], email, password, photoUrl);
+//
+//                    Log.i("userClass", MainActivity.userClass.getFirst_name());
+//                    Log.i("userClass", MainActivity.userClass.getLast_name());
+//                    Log.i("userClass", MainActivity.userClass.getEmail());
+//                    Log.i("userClass", MainActivity.userClass.getPassword());
+//
+
                     Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(LoginActivity.this, PhoneNumberActivity.class);
                     startActivity(intent);
