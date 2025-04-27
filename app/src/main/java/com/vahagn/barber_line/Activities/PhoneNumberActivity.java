@@ -1,5 +1,6 @@
 package com.vahagn.barber_line.Activities;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -132,4 +133,24 @@ public class PhoneNumberActivity extends AppCompatActivity {
         Intent intent = new Intent(this, targetActivity);
         startActivity(intent, options.toBundle());
     }
+
+    @SuppressLint("MissingSuperCall")
+    @Override
+    public void onBackPressed() {
+    }
+
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//        FirebaseAuth.getInstance().signOut();
+//        SharedPreferences sharedPreferences = getSharedPreferences("UserInformation", MODE_PRIVATE);
+//        SharedPreferences.Editor editor = sharedPreferences.edit();
+//        editor.clear();
+//        editor.apply();
+//        Toast.makeText(PhoneNumberActivity.this, "You have been logged out.", Toast.LENGTH_SHORT).show();
+//        MainActivity.isLogin = false;
+//        Intent intent = new Intent(PhoneNumberActivity.this, MainActivity.class);
+//        startActivity(intent);
+//        finish();
+//    }
 }

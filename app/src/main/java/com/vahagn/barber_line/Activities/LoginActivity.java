@@ -56,9 +56,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
 
-
-
-
 //        FirebaseAuth.getInstance().signOut();
 //        SharedPreferences sharedPreferences = getSharedPreferences("UserInformation", MODE_PRIVATE);
 //        SharedPreferences.Editor editor = sharedPreferences.edit();
