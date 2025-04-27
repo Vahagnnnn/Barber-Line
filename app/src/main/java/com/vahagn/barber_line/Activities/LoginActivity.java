@@ -33,6 +33,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.vahagn.barber_line.Classes.Users;
 import com.vahagn.barber_line.R;
 
 import java.util.Objects;
@@ -53,6 +54,25 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+
+
+
+
+//        FirebaseAuth.getInstance().signOut();
+//        SharedPreferences sharedPreferences = getSharedPreferences("UserInformation", MODE_PRIVATE);
+//        SharedPreferences.Editor editor = sharedPreferences.edit();
+//        editor.clear();
+//        editor.apply();
+//        Toast.makeText(LoginActivity.this, "You have been logged out.", Toast.LENGTH_SHORT).show();
+//        MainActivity.isLogin = false;
+//        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//        startActivity(intent);
+//        finish();
+
+
+
+
 
         if (FirebaseApp.getApps(this).isEmpty()) {
             FirebaseApp.initializeApp(this);
@@ -125,7 +145,6 @@ public class LoginActivity extends AppCompatActivity {
                         navigateTo(RegisterActivity.class);
                     }
                 }
-
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
                     Log.w("DatabaseError", "User check cancelled", databaseError.toException());
@@ -184,14 +203,13 @@ public class LoginActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("first_name", first_name_last_name[0]);
                     editor.putString("last_name", first_name_last_name[1]);
-                    Log.i("fullName",fullName);
-                    Log.i("fullName",first_name_last_name[0]);
-                    Log.i("fullName",first_name_last_name[1]);
-
                     editor.putString("email", email);
                     editor.putString("password", password);
                     editor.putString("photoUrl", photoUrl);
                     editor.apply();
+
+
+//                    MainActivity.userClass = new Users(first_name_last_name[0], first_name_last_name[1], email, password, phoneNumber, photoUrl);
 
                     Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(LoginActivity.this, PhoneNumberActivity.class);

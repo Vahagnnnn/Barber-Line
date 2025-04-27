@@ -42,9 +42,6 @@
             android:name=".Admin.JoinToBarberShopActivity"
             android:exported="false" />
         <activity
-            android:name=".Activities.HairCutsActivity"
-            android:exported="false" />
-        <activity
             android:name=".Activities.ManageAppointmentActivity"
             android:exported="false" />
         <activity

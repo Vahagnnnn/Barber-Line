@@ -62,21 +62,50 @@ public class SettingsActivity extends AppCompatActivity {
         phoneNumberText = findViewById(R.id.phoneNumberText);
 
 
-        Firstname_LastnameText.setText(MainActivity.userClass.getFirst_name() + " " + MainActivity.userClass.getLast_name());
-        emailText.setText(MainActivity.userClass.getEmail());
-        String  phone = MainActivity.userClass.getPhoneNumber().substring(0, 4) + " " + MainActivity.userClass.getPhoneNumber().substring(4, 6) + " " + MainActivity.userClass.getPhoneNumber().substring(6, 8) + " " + MainActivity.userClass.getPhoneNumber().substring(8);
-        phoneNumberText.setText(phone);
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+        if (MainActivity.userClass != null) {
+            Firstname_LastnameText.setText(MainActivity.userClass.getFirst_name() + " " + MainActivity.userClass.getLast_name());
+            emailText.setText(MainActivity.userClass.getEmail());
 
-        if (MainActivity.userClass.getPhotoUrl() != null && !MainActivity.userClass.getPhotoUrl().isEmpty()) {
-            Glide.with(SettingsActivity.this)
-                    .load(MainActivity.userClass.getPhotoUrl())
-                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(100)))
-                    .into(profileImageView);
+            String phone = MainActivity.userClass.getPhoneNumber().substring(0, 4) + " " +
+                    MainActivity.userClass.getPhoneNumber().substring(4, 6) + " " +
+                    MainActivity.userClass.getPhoneNumber().substring(6, 8) + " " +
+                    MainActivity.userClass.getPhoneNumber().substring(8);
+            phoneNumberText.setText(phone);
+
+            if (MainActivity.userClass.getPhotoUrl() != null && !MainActivity.userClass.getPhotoUrl().isEmpty()) {
+                Glide.with(SettingsActivity.this)
+                        .load(MainActivity.userClass.getPhotoUrl())
+                        .apply(RequestOptions.bitmapTransform(new RoundedCorners(100)))
+                        .into(profileImageView);
+            }
+
+            if (Objects.equals(MainActivity.userClass.getEmail(), "vahagn.makaryan.v@gmail.com")) {
+                admin.setVisibility(View.VISIBLE);
+            }
+        } else {
+            Toast.makeText(this, "User data not available. Please login again.", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
         }
 
-        if (Objects.equals(MainActivity.userClass.getEmail(), "vahagn.makaryan.v@gmail.com")){
-            admin.setVisibility(View.VISIBLE);
-        }
+
+//        Firstname_LastnameText.setText(MainActivity.userClass.getFirst_name() + " " + MainActivity.userClass.getLast_name());
+//        emailText.setText(MainActivity.userClass.getEmail());
+//        String  phone = MainActivity.userClass.getPhoneNumber().substring(0, 4) + " " + MainActivity.userClass.getPhoneNumber().substring(4, 6) + " " + MainActivity.userClass.getPhoneNumber().substring(6, 8) + " " + MainActivity.userClass.getPhoneNumber().substring(8);
+//        phoneNumberText.setText(phone);
+//
+//        if (MainActivity.userClass.getPhotoUrl() != null && !MainActivity.userClass.getPhotoUrl().isEmpty()) {
+//            Glide.with(SettingsActivity.this)
+//                    .load(MainActivity.userClass.getPhotoUrl())
+//                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(100)))
+//                    .into(profileImageView);
+//        }
+//
+//        if (Objects.equals(MainActivity.userClass.getEmail(), "vahagn.makaryan.v@gmail.com")){
+//            admin.setVisibility(View.VISIBLE);
+//        }
 
 
 //        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
@@ -184,7 +213,7 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
-    public void logOut() {
+    public  void logOut() {
         FirebaseAuth.getInstance().signOut();
         SharedPreferences sharedPreferences = getSharedPreferences("UserInformation", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();

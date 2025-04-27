@@ -104,6 +104,7 @@ public class PhoneNumberActivity extends AppCompatActivity {
         String photoUrl = sharedPreferences.getString("photoUrl", " ");
 
         Users user_DB = new Users(first_name, last_name, email, password, phoneNumber, photoUrl);
+        MainActivity.userClass = user_DB;
 
         usersRef.child(currentUser.getUid()).setValue(user_DB)
                 .addOnCompleteListener(task -> {

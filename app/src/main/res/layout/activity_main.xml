@@ -268,7 +268,6 @@
                     android:layout_height="wrap_content"
                     android:foreground="?attr/selectableItemBackground"
                     android:fontFamily="@font/lato"
-                    android:onClick="ToHairCuts"
                     android:text="@string/see_more"
                     android:textColor="@color/light_blue"
                     android:textSize="15sp" />

@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.UUID;
 
 public class Users {
-    public String ID;
+    private String id;
+//    public String ID;
     public String first_name;
     public String last_name;
     public String name;
@@ -30,7 +31,7 @@ public class Users {
     }
 
     public Users(String name, String email, String password, String image, String phoneNumber, String passwordHash, String profilePictureUrl, List<Appointment> appointments) {
-        this.ID = UUID.randomUUID().toString();
+        this.id = UUID.randomUUID().toString();
         this.name = name;
         this.email = email;
         this.password = password;
@@ -40,12 +41,12 @@ public class Users {
         this.appointments = appointments;
     }
 
-    public String getID() {
-        return ID;
+    public String getId() {
+        return id;
     }
 
-    public void setID(String ID) {
-        this.ID = ID;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getFirst_name() {

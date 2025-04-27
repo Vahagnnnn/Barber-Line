@@ -7,6 +7,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -74,6 +75,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
+//        FirebaseAuth.getInstance().signOut();
+//        SharedPreferences sharedPreferences = getSharedPreferences("UserInformation", MODE_PRIVATE);
+//        SharedPreferences.Editor editor = sharedPreferences.edit();
+//        editor.clear();
+//        editor.apply();
+//        Toast.makeText(MainActivity.this, "You have been logged out.", Toast.LENGTH_SHORT).show();
+//        MainActivity.isLogin = false;
+//        Intent intent = new Intent(MainActivity.this, MainActivity.class);
+//        startActivity(intent);
+//        finish();
 
         SetTopBarberShops();
         SetTopBarbers();
@@ -255,10 +269,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void ToMap(View view) {
         navigateTo(MapActivity.class);
-    }
-
-    public void ToHairCuts(View view) {
-        navigateTo(HairCutsActivity.class);
     }
 
     public void ToAdmin(View view) {
