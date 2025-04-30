@@ -90,15 +90,19 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
 
         if (MainActivity.userClass.getFavourite_Barbershops() != null) {
             try {
-                Log.i("heartCheck", String.valueOf(BarbersActivity.KeyId));
-                Log.i("heartCheck", String.valueOf(MainActivity.userClass.getFavourite_Barbershops().get(BarbersActivity.KeyId)));
-
                 if (String.valueOf(MainActivity.userClass.getFavourite_Barbershops().get(BarbersActivity.KeyId)).equals("true")) {
                     heart.setImageResource(R.drawable.img_heart_red);
                     heart.setTag(R.drawable.img_heart_red);
                 }
+                else
+                {
+                    heart.setImageResource(R.drawable.img_heart);
+                    heart.setTag(R.drawable.img_heart);
+                }
             } catch (Exception ignored) {
-
+                heart.setImageResource(R.drawable.img_heart);
+                heart.setTag(R.drawable.img_heart);
+                Log.i("heartCheck", "catch");
             }
         } else {
             heart.setImageResource(R.drawable.img_heart);
