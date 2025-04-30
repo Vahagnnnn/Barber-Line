@@ -81,19 +81,31 @@ public class CreateBarberShopActivity extends AppCompatActivity implements OnMap
             "06:00 PM", "06:30 PM", "07:00 PM", "07:30 PM",
             "08:00 PM", "08:30 PM", "09:00 PM"
     };
-    private  final List<String> daysOfWeek = Arrays.asList(
+    private final List<String> daysOfWeek = Arrays.asList(
             "Monday", "Tuesday", "Wednesday", "Thursday",
             "Friday", "Saturday", "Sunday"
     );
     private Map<String, TimeRange> openingTimes = new HashMap<>();
+
+
+    String BarberShopName_INTENT;
+    Uri BarberShopImage_getImageURI_INTENT, BarberShopImageUri_getdataUrl_INTENT;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_barber_shop);
-        isCreateBarberShopActivity = true;
 
+        if (AdminActivity.AdminActivity)
+            ListSpecialist.clear();
+        else {
+            BarberShopName.setText(BarberShopName_INTENT);
+            BarberShopImage.setImageURI(BarberShopImage_getImageURI_INTENT);
+            BarberShopImageUri = BarberShopImageUri_getdataUrl_INTENT;
+        }
+        AdminActivity.AdminActivity = false;
+        isCreateBarberShopActivity = true;
 
         barberShopsRef = FirebaseDatabase.getInstance().getReference("pending_barbershops");
 
@@ -279,7 +291,7 @@ public class CreateBarberShopActivity extends AppCompatActivity implements OnMap
                     Log.i("timeRange", "getClose = " + timeRange.getClose());
                     Log.i("timeRange", "getOpen = " + timeRange.getOpen());
 
-                    if (!Objects.equals(timeRange.getOpen(), "Closed") ) {
+                    if (!Objects.equals(timeRange.getOpen(), "Closed")) {
                         Log.i("timeRange", "getOpen = " + timeRange.getOpen() + " getClose = " + timeRange.getClose());
                         openingTimes.put(day, timeRange);
                     }
@@ -448,6 +460,7 @@ public class CreateBarberShopActivity extends AppCompatActivity implements OnMap
 
     public void ToAddBarber(View view) {
         navigateTo(AddBarbersActivity.class);
+        BarberShopName_INTENT
     }
 
     public void ToSetting(View view) {

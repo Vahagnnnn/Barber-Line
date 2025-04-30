@@ -15,6 +15,7 @@ import com.vahagn.barber_line.R;
 
 public class AdminActivity extends AppCompatActivity {
 
+    public static boolean AdminActivity;
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +41,11 @@ public class AdminActivity extends AppCompatActivity {
 //        createBarberShop.setOnTouchListener(touchEffect);
 //        joinToBarberShop.setOnTouchListener(touchEffect);
 
-        createBarberShop.setOnClickListener(view -> navigateTo(CreateBarberShopActivity.class));
+        createBarberShop.setOnClickListener(view ->
+        {
+            AdminActivity = true;
+            navigateTo(CreateBarberShopActivity.class);
+        });
         joinToBarberShop.setOnClickListener(view -> navigateTo(JoinToBarberShopActivity.class));
     }
 
@@ -56,9 +61,11 @@ public class AdminActivity extends AppCompatActivity {
     public void ToHome(View view) {
         navigateTo(MainActivity.class);
     }
+
     public void ToSetting(View view) {
         navigateTo(AdminSettingsActivity.class);
     }
+
     public void ToBooks(View view) {
         navigateTo(AdminBooksActivity.class);
     }

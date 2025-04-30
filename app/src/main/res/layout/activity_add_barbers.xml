@@ -49,6 +49,7 @@
                     android:id="@+id/BarberImage"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:foreground="@drawable/ripple_dark"
                     android:scaleType="centerCrop"
                     android:src="@drawable/img_avatar" />
             </androidx.cardview.widget.CardView>

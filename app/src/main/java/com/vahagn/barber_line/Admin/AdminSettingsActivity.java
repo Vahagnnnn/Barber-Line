@@ -138,6 +138,7 @@ public class AdminSettingsActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     BarberShops shop = snapshot.getValue(BarberShops.class);
                     if (shop != null && Objects.equals(shop.getOwnerEmail(), ownerEmail)) {
+//                        Log.i("pendingRef",shop.getName());
                         addBarbershop(shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists(), shop.getReviews(), shop.getOpeningTimes());
                     }
                 }
@@ -208,7 +209,7 @@ public class AdminSettingsActivity extends AppCompatActivity {
             startActivity(intent, options.toBundle());
         });
 
-        barbershops_list.removeAllViews();
+//        barbershops_list.removeAllViews();
         barbershops_list.addView(barbershopView);
     }
 
@@ -236,6 +237,8 @@ public class AdminSettingsActivity extends AppCompatActivity {
             AdminSettingsActivity.rating = String.valueOf(rating);
             AdminSettingsActivity.address = address;
             AdminSettingsActivity.ListSpecialist = ListSpecialist;
+            AdminSettingsActivity.ListReviews = ListReviews;
+            AdminSettingsActivity.openingTimes = openingTimes;
 
             ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
                     this,
@@ -243,7 +246,7 @@ public class AdminSettingsActivity extends AppCompatActivity {
                     "sharedImageTransition");
             startActivity(intent, options.toBundle());
         });
-        barbershops_list.removeAllViews();
+//        barbershops_list.removeAllViews();
         barbershops_list.addView(barbershopView);
     }
 
