@@ -41,7 +41,7 @@ import java.util.Map;
 
 public class JoinToBarberShopActivity extends AppCompatActivity {
 
-    public  static  boolean JoinToBarberShopActivity_REGISTER ;
+    public static boolean JoinToBarberShopActivity_REGISTER;
     DatabaseReference barberShopsRef = FirebaseDatabase.getInstance().getReference("barberShops");
 
     private List<BarberShops> ListBarberShops = new ArrayList<>();
@@ -50,7 +50,7 @@ public class JoinToBarberShopActivity extends AppCompatActivity {
     LinearLayout barbers_list_Layout;
 
     private SearchView searchView;
-    public  static String BarberWorkPlace;
+    public static String BarberWorkPlace;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +65,7 @@ public class JoinToBarberShopActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     BarberShops shop = snapshot.getValue(BarberShops.class);
 
-                    addBarbershop(barbers_list_Layout, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getOwnerEmail(), shop.getCoordinates(), shop.getSpecialists(),shop.getReviews(), shop.getOpeningTimes());
+                    addBarbershop(barbers_list_Layout, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getOwnerEmail(), shop.getCoordinates(), shop.getSpecialists(), shop.getReviews(), shop.getOpeningTimes());
                     ListBarberShops.add(new BarberShops(shop.getOwnerEmail(), shop.getName(), shop.getAddress(), shop.getCoordinates(), shop.getImage(), shop.getLogo(), shop.getRating(), shop.getReviews(), shop.getServices(), shop.getSpecialists(), shop.getOpeningTimes()));
                 }
             }
@@ -102,7 +102,7 @@ public class JoinToBarberShopActivity extends AppCompatActivity {
         }
         barbers_list_Layout.removeAllViews();
         for (BarberShops shop : filtered_barbers_list) {
-            addBarbershop(barbers_list_Layout, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getOwnerEmail(), shop.getCoordinates(), shop.getSpecialists(), shop.getReviews(),shop.getOpeningTimes());
+            addBarbershop(barbers_list_Layout, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getOwnerEmail(), shop.getCoordinates(), shop.getSpecialists(), shop.getReviews(), shop.getOpeningTimes());
         }
     }
 
@@ -144,19 +144,19 @@ public class JoinToBarberShopActivity extends AppCompatActivity {
 //            startActivity(intent, options.toBundle());
 
 
-
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Join To Barber Shop");
+            builder.setTitle("Join To " + name);
+//            builder.setTitle("Join To Barber Shop");
 
             builder.setPositiveButton("Send Request", (dialog, which) -> {
-                    Toast.makeText(this, "Send Request", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Send Request", Toast.LENGTH_SHORT).show();
             });
 
 
             builder.setNeutralButton("Register", (dialog, which) -> {
                 Toast.makeText(this, "Register", Toast.LENGTH_SHORT).show();
                 JoinToBarberShopActivity.JoinToBarberShopActivity_REGISTER = true;
-                Log.i("BarberWorkPlace",name);
+                Log.i("BarberWorkPlace", name);
                 BarberWorkPlace = name;
                 navigateTo(AddBarbersActivity.class);
 
@@ -185,9 +185,11 @@ public class JoinToBarberShopActivity extends AppCompatActivity {
     public void ToAdmin(View view) {
         navigateTo(AdminActivity.class);
     }
+
     public void ToSetting(View view) {
         navigateTo(AdminSettingsActivity.class);
     }
+
     public void ToBooks(View view) {
         navigateTo(AdminBooksActivity.class);
     }
