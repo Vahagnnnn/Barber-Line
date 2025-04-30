@@ -2,6 +2,7 @@ package com.vahagn.barber_line.Classes;
 
 import android.net.Uri;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,7 +21,17 @@ public class Users {
     public String passwordHash;
     public String profilePictureUrl;
     public List<Appointment> appointments;
+    public List<Integer> Favourite_Barbershops = new ArrayList<>();
 
+    public Users(String first_name, String last_name, String email, String password, String phoneNumber, String photoUrl,List<Integer> Favourite_Barbershops) {
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.email = email;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.photoUrl = photoUrl;
+        this.Favourite_Barbershops = Favourite_Barbershops;
+    }
     public Users(String first_name, String last_name, String email, String password, String phoneNumber, String photoUrl) {
         this.first_name = first_name;
         this.last_name = last_name;
@@ -29,7 +40,6 @@ public class Users {
         this.phoneNumber = phoneNumber;
         this.photoUrl = photoUrl;
     }
-
 //    public Users(String first_name, String last_name, String email, String password, String photoUrl) {
 //        this.first_name = first_name;
 //        this.last_name = last_name;
@@ -151,5 +161,13 @@ public class Users {
 
     public void setAppointments(List<Appointment> appointments) {
         this.appointments = appointments;
+    }
+
+    public List<Integer> getFavourite_Barbershops() {
+        return Favourite_Barbershops;
+    }
+
+    public void setFavourite_Barbershops(List<Integer> favourite_Barbershops) {
+        Favourite_Barbershops = favourite_Barbershops;
     }
 }

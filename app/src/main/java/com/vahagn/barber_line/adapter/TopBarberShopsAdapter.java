@@ -71,6 +71,8 @@ public class TopBarberShopsAdapter extends RecyclerView.Adapter<TopBarberShopsAd
 //                intent.putExtra("ListSpecialist", (Serializable) item.getSpecialists());
 //                intent.putExtra("ListService", (Serializable) item.getServices());
 
+                Log.i("heartCheck","heartCheckTopBarber = " + item.getKeyId());
+                BarbersActivity.KeyId = item.getKeyId();
                 BarbersActivity.imageUrl = item.getImage();
                 BarbersActivity.name = item.getName();
                 BarbersActivity.rating = String.valueOf(item.getRating());

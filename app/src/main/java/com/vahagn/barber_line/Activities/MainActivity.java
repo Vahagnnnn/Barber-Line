@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
@@ -77,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-
 //        FirebaseAuth.getInstance().signOut();
 //        SharedPreferences sharedPreferences = getSharedPreferences("UserInformation", MODE_PRIVATE);
 //        SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -124,8 +124,39 @@ public class MainActivity extends AppCompatActivity {
                         String password = snapshot.child("password").getValue(String.class);
                         String phoneNumber = snapshot.child("phoneNumber").getValue(String.class);
                         String photoUrl = snapshot.child("photoUrl").getValue(String.class);
+                        List<Integer> Favourite_Barbershops = (List<Integer>) snapshot.child("Favourite_Barbershops").getValue();
+//
+//                        if (Favourite_Barbershops == null) {
+//                            Favourite_Barbershops = new ArrayList<>();
+//                        }
+//
+//
+//// Log the list
+//                        if (Favourite_Barbershops != null) {
+//                            Log.d("FavouriteBarbershops", "Favourite Barbershops: " + Favourite_Barbershops.toString());
+//                            if (MainActivity.userClass.getFavourite_Barbershops().contains(BarbersActivity.KeyId)) {
+//                                Log.d("FavouriteBarbershops", String.valueOf(BarbersActivity.KeyId));
+//
+//                            }
+//                        }
+//
+//                        if (Favourite_Barbershops == null) {
+//                            Log.d("FavouriteBarbershops", "No favourite barbershops found");
+//                            Favourite_Barbershops = new ArrayList<>();
 
-                        userClass = new Users(first_name, last_name, email, password, phoneNumber, photoUrl);
+//                            if (MainActivity.userClass.getFavourite_Barbershops().contains(BarbersActivity.KeyId)) {
+//                                Log.d("FavouriteBarbershops", String.valueOf(BarbersActivity.KeyId));
+//
+//                            }
+
+//                            if (!Favourite_Barbershops.isEmpty()) {
+//                                Log.d("FavouriteBarbershops", String.valueOf(BarbersActivity.KeyId));
+//
+//                            }
+
+
+                        userClass = new Users(first_name, last_name, email, password, phoneNumber, photoUrl, Favourite_Barbershops);
+
                     }
                 }
 
@@ -140,12 +171,15 @@ public class MainActivity extends AppCompatActivity {
     private void SetTopBarberShops() {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 TopBarberShopsList.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    int KeyId = Integer.parseInt(Objects.requireNonNull(snapshot.getKey()));
+
                     BarberShops shop = snapshot.getValue(BarberShops.class);
                     assert shop != null;
-                    TopBarberShopsList.add(new BarberShops(shop.getOwnerEmail(), shop.getName(), shop.getAddress(), shop.getCoordinates(), shop.getImage(), shop.getLogo(), shop.getRating(), shop.getReviews(), shop.getServices(), shop.getSpecialists(), shop.getOpeningTimes()));
+
+                    TopBarberShopsList.add(new BarberShops(KeyId, shop.getOwnerEmail(), shop.getName(), shop.getAddress(), shop.getCoordinates(), shop.getImage(), shop.getLogo(), shop.getRating(), shop.getReviews(), shop.getServices(), shop.getSpecialists(), shop.getOpeningTimes()));
                 }
                 setTopBarberShopsRecycler(TopBarberShopsList);
             }

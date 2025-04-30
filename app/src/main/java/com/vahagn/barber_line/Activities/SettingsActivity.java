@@ -197,6 +197,8 @@ public class SettingsActivity extends AppCompatActivity {
                                             editor.clear();
                                             editor.apply();
 
+                                            FirebaseAuth.getInstance().signOut();
+
                                             Toast.makeText(SettingsActivity.this, "Account has been removed.", Toast.LENGTH_SHORT).show();
                                             MainActivity.isLogin = false;
                                             Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
@@ -255,5 +257,16 @@ public class SettingsActivity extends AppCompatActivity {
     }
     public void ToMap(View view) {
         navigateTo(MapActivity.class);
+    }
+
+
+    public void GoToFavourites(View view) {
+        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
+                this,
+                findViewById(R.id.main),
+                "sharedImageTransition");
+        Intent intent = new Intent(this, BarbersActivity.class);
+        intent.putExtra("To","Favourites");
+        startActivity(intent, options.toBundle());
     }
 }

@@ -36,13 +36,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class BarbersActivity extends AppCompatActivity {
 
-    DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("barberShops");
     LinearLayout secondActivityContainer;
 
-    public static String logo, imageUrl, name, rating, OwnerEmail, address, coordinates;
+    public static Object ImageResource, tag;
+    public static int KeyId;
+    public static String logo,imageUrl,name,rating,OwnerEmail,address,coordinates;
     public static List<Barbers> ListSpecialist = new ArrayList<>();
     public static List<Reviews> ListReviews = new ArrayList<>();
     public static Map<String, TimeRange> openingTimes = new HashMap<>();
@@ -56,22 +58,14 @@ public class BarbersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_barbers);
         secondActivityContainer = findViewById(R.id.barbers_list);
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    BarberShops shop = snapshot.getValue(BarberShops.class);
 
-                    addBarbershop(secondActivityContainer, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getOwnerEmail(), shop.getCoordinates(), shop.getSpecialists(),shop.getReviews(), shop.getOpeningTimes());
-                    ListBarberShops.add(new BarberShops(shop.getOwnerEmail(), shop.getName(), shop.getAddress(), shop.getCoordinates(), shop.getImage(), shop.getLogo(), shop.getRating(), shop.getReviews(), shop.getServices(), shop.getSpecialists(), shop.getOpeningTimes()));
-                }
-            }
+        String To = getIntent().getStringExtra("To");
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.w("Firebase", "Failed to read value.", databaseError.toException());
-            }
-        });
+        if ("Favourites".equals(To))
+//            ReadBarberShops();
+            ReadFavouritesBarberShops();
+        else
+            ReadBarberShops();
 
         searchView = findViewById(R.id.searchView);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -90,6 +84,57 @@ public class BarbersActivity extends AppCompatActivity {
 
     }
 
+    private void ReadBarberShops() {
+        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("barberShops");
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                     int KeyId = Integer.parseInt(Objects.requireNonNull(snapshot.getKey()));
+
+                    BarberShops shop = snapshot.getValue(BarberShops.class);
+                    assert shop != null;
+
+                    addBarbershop(secondActivityContainer, KeyId, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getOwnerEmail(), shop.getCoordinates(), shop.getSpecialists(), shop.getReviews(), shop.getOpeningTimes());
+                    ListBarberShops.add(new BarberShops(shop.getOwnerEmail(), shop.getName(), shop.getAddress(), shop.getCoordinates(), shop.getImage(), shop.getLogo(), shop.getRating(), shop.getReviews(), shop.getServices(), shop.getSpecialists(), shop.getOpeningTimes()));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.w("Firebase", "Failed to read value.", databaseError.toException());
+            }
+        });
+
+    }
+    private void ReadFavouritesBarberShops(){
+        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("barberShops");
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    int KeyId = Integer.parseInt(Objects.requireNonNull(snapshot.getKey()));
+
+                    if (String.valueOf(MainActivity.userClass.getFavourite_Barbershops().get(KeyId)).equals("true")) {
+
+                        BarberShops shop = snapshot.getValue(BarberShops.class);
+                        assert shop != null;
+
+                        addBarbershop(secondActivityContainer, KeyId ,shop.getLogo(),  shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getOwnerEmail(), shop.getCoordinates(), shop.getSpecialists(),shop.getReviews(), shop.getOpeningTimes());
+                        ListBarberShops.add(new BarberShops(shop.getOwnerEmail(), shop.getName(), shop.getAddress(), shop.getCoordinates(), shop.getImage(), shop.getLogo(), shop.getRating(), shop.getReviews(), shop.getServices(), shop.getSpecialists(), shop.getOpeningTimes()));
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.w("Firebase", "Failed to read value.", databaseError.toException());
+            }
+        });
+
+    }
+
     private void filterBarbershops(String query) {
         filteredList.clear();
         for (BarberShops barbershop : ListBarberShops) {
@@ -99,18 +144,11 @@ public class BarbersActivity extends AppCompatActivity {
         }
         secondActivityContainer.removeAllViews();
         for (BarberShops shop : filteredList) {
-//            if (shop.getOpeningTimes() != null) {
-//                Log.d("Mapi", "Map is: " + shop.getOpeningTimes().get("Monday"));
-//            } else {
-//                Log.d("Mapi", "Map is: Null");
-//
-//            }
-            addBarbershop(secondActivityContainer, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getOwnerEmail(), shop.getCoordinates(), shop.getSpecialists(), shop.getReviews(),shop.getOpeningTimes());
+            addBarbershop(secondActivityContainer, shop.getKeyId(), shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getOwnerEmail(), shop.getCoordinates(), shop.getSpecialists(), shop.getReviews(), shop.getOpeningTimes());
         }
     }
 
-
-    public void addBarbershop(LinearLayout container, String logo, String imageUrl, String name, double rating, String address, String OwnerEmail, String coordinates, List<Barbers> ListSpecialist, List<Reviews> ListReviews, Map<String, TimeRange> openingTimes) {
+    public void addBarbershop(LinearLayout container, int KeyId, String logo, String imageUrl, String name, double rating, String address, String OwnerEmail, String coordinates, List<Barbers> ListSpecialist, List<Reviews> ListReviews, Map<String, TimeRange> openingTimes) {
         View barbershopView = LayoutInflater.from(this).inflate(R.layout.barbershops_gray, container, false);
 
         ImageView logoImageView = barbershopView.findViewById(R.id.logo);
@@ -130,6 +168,8 @@ public class BarbersActivity extends AppCompatActivity {
             Intent intent = new Intent(this, BarberShopsAboutActivity.class);
             intent.putExtra("from_where", "BarbersActivity");
 
+            Log.i("heartCheck","heartCheckBarbers = " + KeyId);
+            BarbersActivity.KeyId = KeyId;
             BarbersActivity.imageUrl = imageUrl;
             BarbersActivity.logo = logo;
             BarbersActivity.name = name;

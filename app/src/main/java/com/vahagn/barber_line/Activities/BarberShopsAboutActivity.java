@@ -5,6 +5,7 @@ import static com.vahagn.barber_line.Activities.MainActivity.isLogin;
 import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,11 +14,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.vahagn.barber_line.Admin.AdminActivity;
 import com.vahagn.barber_line.Admin.CreateBarberShopActivity;
 import com.vahagn.barber_line.Classes.Barbers;
@@ -42,7 +47,7 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
     ImageView image;
     @SuppressLint("StaticFieldLeak")
     public static TextView name;
-    TextView  rating, address;
+    TextView rating, address;
 
     CategoryAdapter categoryAdapter;
     RecyclerView categoryRecycler;
@@ -51,6 +56,8 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
     List<Services> ListService = new ArrayList<>();
     List<Reviews> ListReviews = new ArrayList<>();
     Map<String, TimeRange> openingTimes;
+
+    ImageView heart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,14 +76,10 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
         rating = findViewById(R.id.rating);
         address = findViewById(R.id.address);
         back_section = findViewById(R.id.back_section);
+        heart = findViewById(R.id.heart);
 
         String from_where = getIntent().getStringExtra("from_where");
-//        String imageUrl = getIntent().getStringExtra("image");
-//        String nameText = getIntent().getStringExtra("name");
-//        String ratingText = getIntent().getStringExtra("rating");
-//        String addressText = getIntent().getStringExtra("address");
 
-//        image.setImageResource(imageUrl);
         Glide.with(this)
                 .load(BarbersActivity.imageUrl)
                 .into(image);
@@ -84,6 +87,23 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
         rating.setText(BarbersActivity.rating);
         address.setText(BarbersActivity.address);
 
+
+        if (MainActivity.userClass.getFavourite_Barbershops() != null) {
+            try {
+                Log.i("heartCheck", String.valueOf(BarbersActivity.KeyId));
+                Log.i("heartCheck", String.valueOf(MainActivity.userClass.getFavourite_Barbershops().get(BarbersActivity.KeyId)));
+
+                if (String.valueOf(MainActivity.userClass.getFavourite_Barbershops().get(BarbersActivity.KeyId)).equals("true")) {
+                    heart.setImageResource(R.drawable.img_heart_red);
+                    heart.setTag(R.drawable.img_heart_red);
+                }
+            } catch (Exception ignored) {
+
+            }
+        } else {
+            heart.setImageResource(R.drawable.img_heart);
+            heart.setTag(R.drawable.img_heart);
+        }
         ListSpecialist = BarbersActivity.ListSpecialist;
         ListReviews = BarbersActivity.ListReviews;
         openingTimes = BarbersActivity.openingTimes;
@@ -116,20 +136,17 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
             transaction.replace(R.id.info_container, specialistsFragment);
             transaction.commit();
         }
-        back_section.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (Objects.equals(from_where, "BarbersActivity"))
-                    ToBarbers(v);
-                else if (Objects.equals(from_where, "MainActivity"))
-                    ToHome(v);
-                else if (Objects.equals(from_where, "MapActivity"))
-                    ToMap(v);
-                else if (Objects.equals(from_where, "AppointmentsAboutActivity"))
-                    ToBooks(v);
-                else
-                    ToHome(v);
-            }
+        back_section.setOnClickListener(v -> {
+            if (Objects.equals(from_where, "BarbersActivity"))
+                ToBarbers(v);
+            else if (Objects.equals(from_where, "MainActivity"))
+                ToHome(v);
+            else if (Objects.equals(from_where, "MapActivity"))
+                ToMap(v);
+            else if (Objects.equals(from_where, "AppointmentsAboutActivity"))
+                ToBooks(v);
+            else
+                ToHome(v);
         });
         categoryList.add(new Category(1, "Specialists", R.drawable.specialists, "#EDEFFB"));
         categoryList.add(new Category(2, "Services", R.drawable.scissors, "#242C3B"));
@@ -185,5 +202,34 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
                 "sharedImageTransition");
         Intent intent = new Intent(this, targetActivity);
         startActivity(intent, options.toBundle());
+    }
+
+    public void AddToFavourites(View view) {
+        String userId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+        DatabaseReference userFavRef = FirebaseDatabase.getInstance()
+                .getReference("Users")
+                .child(userId)
+                .child("Favourite_Barbershops");
+
+        Object tag = heart.getTag();
+
+        if (tag instanceof Integer) {
+            int tagValue = (int) tag;
+            if (tagValue == R.drawable.img_heart) {
+                heart.setImageResource(R.drawable.img_heart_red);
+                heart.setTag(R.drawable.img_heart_red);
+                userFavRef.child(String.valueOf(BarbersActivity.KeyId)).setValue(true);
+//                Log.i("getTag", "Tag: img_heart_red");
+            } else if (tagValue == R.drawable.img_heart_red) {
+                heart.setImageResource(R.drawable.img_heart);
+                heart.setTag(R.drawable.img_heart);
+                userFavRef.child(String.valueOf(BarbersActivity.KeyId)).removeValue();
+//                Log.i("getTag", "Tag: img_heart");
+            }
+        } else {
+            Log.i("getTag", "Tag is null or not an Integer");
+        }
+
+
     }
 }

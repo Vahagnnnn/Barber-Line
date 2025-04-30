@@ -4,7 +4,7 @@
     <selectionStates>
       <SelectionState runConfigName="Barber-Line">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2025-04-16T13:42:56.717971300Z">
+        <DropdownSelection timestamp="2025-04-30T10:11:15.722193600Z">
           <Target type="DEFAULT_BOOT">
             <handle>
               <DeviceId pluginId="PhysicalDevice" identifier="serial=R58T803VTNA" />
