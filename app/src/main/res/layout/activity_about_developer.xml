@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:background="#242C3B"
     android:layout_height="match_parent"
+    android:background="#242C3B"
+    android:transitionName="sharedImageTransition"
     tools:context=".Activities.AboutDeveloperActivity">
 
     <!-- Top Section -->
@@ -25,7 +26,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:contentDescription="@string/app_name"
-            android:onClick="ToHome"
+            android:onClick="ToSettings"
             android:scaleType="centerInside"
             android:src="@drawable/img_arrow_left" />
 
@@ -39,94 +40,250 @@
             android:includeFontPadding="false"
             android:maxLines="1"
             android:singleLine="true"
-            android:text="@string/profile"
+            android:text="About the developer"
             android:textColor="#FFFFFFFF"
             android:textSize="20sp" />
     </FrameLayout>
 
+
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:clipToPadding="false"
+        android:gravity="center"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/top"
-        tools:ignore="MissingConstraints">
+        android:paddingLeft="140dp"
+        android:paddingTop="8dp"
+        android:paddingRight="140dp"
+        android:paddingBottom="7dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/top">
 
-        <TextView
-            android:id="@+id/Firstname_LastnameText"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="-4.5dp"
-            android:layout_marginBottom="-4.5dp"
-            android:fontFamily="@font/inter_bold"
-            android:gravity="center"
-            android:includeFontPadding="false"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:text="@string/name_surname"
-            android:textColor="#FFFFFFFF"
-            android:textSize="24sp" />
-
-        <TextView
-            android:id="@+id/email"
-            android:layout_width="match_parent"
-            android:layout_height="18dp"
+        <androidx.cardview.widget.CardView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_gravity="center"
-            android:layout_marginTop="1.5dp"
-            android:layout_marginBottom="-3dp"
-            android:fontFamily="@font/inter_semibold"
-            android:gravity="center"
-            android:includeFontPadding="false"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:text="@string/user_useryan_u_gmail_com"
-            android:textColor="#FF9F9F9F"
-            android:textSize="14sp" />
+            android:layout_marginBottom="1dp"
+            app:cardCornerRadius="37dp">
 
-        <TextView
-            android:id="@+id/phoneNumberText"
-            android:layout_width="match_parent"
-            android:layout_height="18dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="46dp"
-            android:layout_marginBottom="-3dp"
-            android:fontFamily="@font/inter_semibold"
-            android:gravity="center"
-            android:includeFontPadding="false"
-            android:letterSpacing="0.01"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:text="@string/_374_00_00_0000"
-            android:textColor="#FF9F9F9F"
-            android:textSize="14sp" />
+            <ImageView
+                android:id="@+id/profileImageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/img_admin_vahagn" />
+        </androidx.cardview.widget.CardView>
 
-        <TextView
-            android:id="@+id/textGithub"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="GitHub Profile"
-            android:textColor="@android:color/holo_blue_dark"
-            android:textSize="16sp" />
+        <!--        <FrameLayout-->
+        <!--            android:id="@+id/container_group1"-->
+        <!--            android:layout_width="400dp"-->
+        <!--            android:layout_height="200dp"-->
+        <!--            android:layout_gravity="center"-->
+        <!--            android:layout_marginTop="10dp">-->
 
-        <TextView
-            android:id="@+id/textLinkedIn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="LinkedIn Profile"
-            android:textColor="@android:color/holo_blue_dark"
-            android:textSize="16sp" />
+        <!--            <TextView-->
+        <!--                android:id="@+id/Firstname_LastnameText"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="30dp"-->
+        <!--                android:layout_gravity="center_horizontal"-->
+        <!--                android:layout_marginTop="-4.5dp"-->
+        <!--                android:layout_marginBottom="-4.5dp"-->
+        <!--                android:fontFamily="@font/inter_bold"-->
+        <!--                android:gravity="center"-->
+        <!--                android:includeFontPadding="false"-->
+        <!--                android:maxLines="1"-->
+        <!--                android:singleLine="true"-->
+        <!--                android:text="Vahagn Makaryan"-->
+        <!--                android:textColor="#FFFFFFFF"-->
+        <!--                android:textSize="24sp" />-->
 
-        <TextView
-            android:id="@+id/textCV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="View My CV"
-            android:textColor="@android:color/holo_blue_dark"
-            android:textSize="16sp" />
+        <!--            <TextView-->
+        <!--                android:id="@+id/email"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="18dp"-->
+        <!--                android:layout_gravity="center"-->
+        <!--                android:layout_marginTop="2dp"-->
+        <!--                android:layout_marginBottom="-3dp"-->
+        <!--                android:fontFamily="@font/inter_semibold"-->
+        <!--                android:gravity="center"-->
+        <!--                android:includeFontPadding="false"-->
+        <!--                android:maxLines="1"-->
+        <!--                android:singleLine="true"-->
+        <!--                android:text="vahagn.makaryan.y@gmail.com"-->
+        <!--                android:textColor="#FF9F9F9F"-->
+        <!--                android:textSize="14sp" />-->
+
+        <!--            <TextView-->
+        <!--                android:id="@+id/phoneNumberText"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="18dp"-->
+        <!--                android:layout_gravity="center_horizontal"-->
+        <!--                android:layout_marginTop="46dp"-->
+        <!--                android:layout_marginBottom="-3dp"-->
+        <!--                android:fontFamily="@font/inter_semibold"-->
+        <!--                android:gravity="center"-->
+        <!--                android:includeFontPadding="false"-->
+        <!--                android:letterSpacing="0.01"-->
+        <!--                android:maxLines="1"-->
+        <!--                android:singleLine="true"-->
+        <!--                android:text="+374 43 38 1234"-->
+        <!--                android:textColor="#FF9F9F9F"-->
+        <!--                android:textSize="14sp" />-->
+
+
+        <!--            <TextView-->
+        <!--                android:id="@+id/Github"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="18dp"-->
+        <!--                android:layout_gravity="center_horizontal"-->
+        <!--                android:layout_marginTop="80dp"-->
+        <!--                android:layout_marginBottom="-3dp"-->
+        <!--                android:fontFamily="@font/inter_semibold"-->
+        <!--                android:gravity="center"-->
+        <!--                android:includeFontPadding="false"-->
+        <!--                android:letterSpacing="0.01"-->
+        <!--                android:maxLines="1"-->
+        <!--                android:singleLine="true"-->
+        <!--                android:textColor="@android:color/holo_blue_dark"-->
+        <!--                android:text="GitHub Profile"-->
+        <!--                android:textSize="14sp" />-->
+
+        <!--            <TextView-->
+        <!--                android:id="@+id/textLinkedIn"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_marginBottom="8dp"-->
+        <!--                android:text="LinkedIn Profile"-->
+        <!--                android:textColor="@android:color/holo_blue_dark"-->
+        <!--                android:textSize="16sp" />-->
+
+        <!--            <TextView-->
+        <!--                android:id="@+id/textCV"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_marginBottom="8dp"-->
+        <!--                android:text="View My CV"-->
+        <!--                android:textColor="@android:color/holo_blue_dark"-->
+        <!--                android:textSize="16sp" />-->
+        <!--        </FrameLayout>-->
+
+
+        <LinearLayout
+            android:id="@+id/container_group1"
+            android:layout_width="400dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/Firstname_LastnameText"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:fontFamily="@font/inter_bold"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="Vahagn Makaryan"
+                android:textColor="#FFFFFFFF"
+                android:textSize="22sp" />
+
+            <TextView
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="18dp"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/inter_semibold"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="vahagn.makaryan.y@gmail.com"
+                android:textColor="#FF9F9F9F"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/phoneNumberText"
+                android:layout_width="match_parent"
+                android:layout_height="18dp"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/inter_semibold"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:letterSpacing="0.01"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="+374 43 38 1234"
+                android:textColor="#FF9F9F9F"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/Github"
+                android:layout_width="wrap_content"
+                android:layout_height="18dp"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/inter_semibold"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:letterSpacing="0.0"
+                android:text="GitHub Profile"
+                android:textColor="@android:color/holo_blue_dark"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/LinkedIn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/inter_semibold"
+                android:foreground="?attr/selectableItemBackground"
+                android:includeFontPadding="false"
+                android:letterSpacing="0.01"
+                android:text="LinkedIn Profile"
+                android:textColor="@android:color/holo_blue_dark"
+                android:textSize="14sp" />
+
+            <!--            <TextView-->
+            <!--                android:id="@+id/CV"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:foreground="?attr/selectableItemBackground"-->
+            <!--                android:layout_marginTop="2dp"-->
+            <!--                android:layout_marginBottom="8dp"-->
+            <!--                android:fontFamily="@font/inter_semibold"-->
+            <!--                android:text="View My CV"-->
+            <!--                android:textColor="@android:color/holo_blue_dark"-->
+            <!--                android:textSize="14sp" />-->
+
+            <Button
+                android:id="@+id/btnViewCV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="#1E88E5"
+                android:fontFamily="@font/inter_bold"
+                android:text="View My CV"
+                android:textColor="#FFFFFF" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/inter_semibold"
+                android:gravity="start"
+                android:text="Ես Վահագն Մակարյանն եմ այս ծրագրի ստեղծողը։ Ինձ համար կարևոր է մշտապես սովորելը և զարգանալը։ Ներկայումս ես ակտիվորեն փնտրում եմ աշխատանք կամ ինտերնշիփ, որը կօգնի ինձ խորացնել իմ գիտելիքները, կիրառել արդեն ձեռք բերված փորձն ու միաժամանակ շարունակել զարգանալ պրոֆեսիոնալ դաշտում։ Իմ խոր ցանկությունն է դառնալ այնպիսի միջավայրի մաս, որտեղ գնահատվում են նախաձեռնողականությունը, ստեղծարար մտածելակերպը և նվիրվածությունը։ Համոզված եմ, որ իմ գիտելիքներն ու մոտիվացիան կարող են արժեքավոր ներդրում լինել ձեր կազմակերպությունում։ Երախտագիտությամբ կընդունեմ Ձեր կողմից հանդիպման հնարավորություն՝ ավելին պատմելու իմ փորձի, գիտելիքների ու ձգտումների մասին։"
+                android:textColor="#FF9F9F9F"
+                android:textSize="14sp" />
+        </LinearLayout>
 
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

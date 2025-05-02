@@ -258,7 +258,9 @@ public class SettingsActivity extends AppCompatActivity {
     public void ToMap(View view) {
         navigateTo(MapActivity.class);
     }
-
+    public void ToAboutTheDeveloper(View view) {
+        navigateTo(AboutDeveloperActivity.class);
+    }
 
     public void GoToFavourites(View view) {
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(

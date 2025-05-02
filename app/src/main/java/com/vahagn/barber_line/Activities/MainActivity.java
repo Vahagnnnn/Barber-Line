@@ -323,6 +323,4 @@ public class MainActivity extends AppCompatActivity {
         else
             navigateTo(LoginActivity.class);
     }
-
-
 }
