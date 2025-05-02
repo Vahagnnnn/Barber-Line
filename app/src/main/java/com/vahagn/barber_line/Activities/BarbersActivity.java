@@ -168,7 +168,7 @@ public class BarbersActivity extends AppCompatActivity {
 
                     String userClassKeyId;
                     try {
-                        userClassKeyId = String.valueOf(MainActivity.userClass.getFavourite_Barbershops().get(KeyId));
+                        userClassKeyId = String.valueOf(MainActivity.userClass.getFavouriteBarbershops().get(KeyId));
                     } catch (Exception e) {
                         userClassKeyId = "false";
                     }

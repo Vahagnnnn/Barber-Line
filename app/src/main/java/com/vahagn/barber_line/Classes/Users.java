@@ -1,14 +1,11 @@
 package com.vahagn.barber_line.Classes;
 
-import android.net.Uri;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 public class Users {
     private String id;
-    //    public String ID;
     public String first_name;
     public String last_name;
     public String name;
@@ -21,17 +18,18 @@ public class Users {
     public String passwordHash;
     public String profilePictureUrl;
     public List<Appointment> appointments;
-    public List<Integer> Favourite_Barbershops = new ArrayList<>();
+    public List<Integer> favouriteBarbershops = new ArrayList<>();  
 
-    public Users(String first_name, String last_name, String email, String password, String phoneNumber, String photoUrl,List<Integer> Favourite_Barbershops) {
+    public Users(String first_name, String last_name, String email, String password, String phoneNumber, String photoUrl, List<Integer> favouriteBarbershops) {  
         this.first_name = first_name;
         this.last_name = last_name;
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.photoUrl = photoUrl;
-        this.Favourite_Barbershops = Favourite_Barbershops;
+        this.favouriteBarbershops = favouriteBarbershops;  
     }
+
     public Users(String first_name, String last_name, String email, String password, String phoneNumber, String photoUrl) {
         this.first_name = first_name;
         this.last_name = last_name;
@@ -40,13 +38,6 @@ public class Users {
         this.phoneNumber = phoneNumber;
         this.photoUrl = photoUrl;
     }
-//    public Users(String first_name, String last_name, String email, String password, String photoUrl) {
-//        this.first_name = first_name;
-//        this.last_name = last_name;
-//        this.email = email;
-//        this.password = password;
-//        this.photoUrl = photoUrl;
-//    }
 
     public Users(String name, String email, String password, String image, String phoneNumber, String passwordHash, String profilePictureUrl, List<Appointment> appointments) {
         this.id = UUID.randomUUID().toString();
@@ -59,6 +50,7 @@ public class Users {
         this.appointments = appointments;
     }
 
+    // Геттеры и сеттеры для всех полей
     public String getId() {
         return id;
     }
@@ -163,11 +155,11 @@ public class Users {
         this.appointments = appointments;
     }
 
-    public List<Integer> getFavourite_Barbershops() {
-        return Favourite_Barbershops;
+    public List<Integer> getFavouriteBarbershops() {  
+        return favouriteBarbershops;  
     }
 
-    public void setFavourite_Barbershops(List<Integer> favourite_Barbershops) {
-        Favourite_Barbershops = favourite_Barbershops;
+    public void setFavouriteBarbershops(List<Integer> favouriteBarbershops) {  
+        this.favouriteBarbershops = favouriteBarbershops;  
     }
 }

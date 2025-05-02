@@ -88,9 +88,9 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
         address.setText(BarbersActivity.address);
 
 
-        if (MainActivity.userClass.getFavourite_Barbershops() != null) {
+        if (MainActivity.userClass.getFavouriteBarbershops() != null) {
             try {
-                if (String.valueOf(MainActivity.userClass.getFavourite_Barbershops().get(BarbersActivity.KeyId)).equals("true")) {
+                if (String.valueOf(MainActivity.userClass.getFavouriteBarbershops().get(BarbersActivity.KeyId)).equals("true")) {
                     heart.setImageResource(R.drawable.img_heart_red);
                     heart.setTag(R.drawable.img_heart_red);
                 } else {
@@ -233,9 +233,9 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
                 heart.setTag(R.drawable.img_heart);
                 userFavRef.child(String.valueOf(BarbersActivity.KeyId)).removeValue();
 
-                List<Integer> Favourite_Barbershops = MainActivity.userClass.getFavourite_Barbershops();
+                List<Integer> Favourite_Barbershops = MainActivity.userClass.getFavouriteBarbershops();
                 Favourite_Barbershops.remove(BarbersActivity.KeyId);
-                MainActivity.userClass.setFavourite_Barbershops(Favourite_Barbershops);
+                MainActivity.userClass.setFavouriteBarbershops(Favourite_Barbershops);
 
 //                userClassKeyId = String.valueOf(MainActivity.userClass.getFavourite_Barbershops().get(BarbersActivity.KeyId));
 //                BarbersActivity.ListBarberShops.clear();;
