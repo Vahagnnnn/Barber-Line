@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,11 +41,11 @@ import java.util.Objects;
 
 public class BarbersActivity extends AppCompatActivity {
 
-    LinearLayout secondActivityContainer;
+    public static LinearLayout secondActivityContainer;
 
     public static Object ImageResource, tag;
     public static int KeyId;
-    public static String logo,imageUrl,name,rating,OwnerEmail,address,coordinates;
+    public static String logo, imageUrl, name, rating, OwnerEmail, address, coordinates;
     public static List<Barbers> ListSpecialist = new ArrayList<>();
     public static List<Reviews> ListReviews = new ArrayList<>();
     public static Map<String, TimeRange> openingTimes = new HashMap<>();
@@ -52,6 +53,8 @@ public class BarbersActivity extends AppCompatActivity {
     private List<BarberShops> ListBarberShops = new ArrayList<>();
     private List<BarberShops> filteredList = new ArrayList<>();
     private SearchView searchView;
+
+    String from_where;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,10 +64,15 @@ public class BarbersActivity extends AppCompatActivity {
 
         String To = getIntent().getStringExtra("To");
 
-        if ("Favourites".equals(To))
+        if ("Favourites".equals(To)) {
 //            ReadBarberShops();
+
+//            ListBarberShops.clear();
+//            secondActivityContainer.removeAllViews();
+
+            Log.i("from_where", "ReadFavouritesBarberShops");
             ReadFavouritesBarberShops();
-        else
+        } else
             ReadBarberShops();
 
         searchView = findViewById(R.id.searchView);
@@ -82,6 +90,9 @@ public class BarbersActivity extends AppCompatActivity {
             }
         });
 
+        from_where = getIntent().getStringExtra("from_where");
+        Log.i("from_where", "from_where Barbers = " + from_where);
+
     }
 
     private void ReadBarberShops() {
@@ -90,7 +101,7 @@ public class BarbersActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                     int KeyId = Integer.parseInt(Objects.requireNonNull(snapshot.getKey()));
+                    int KeyId = Integer.parseInt(Objects.requireNonNull(snapshot.getKey()));
 
                     BarberShops shop = snapshot.getValue(BarberShops.class);
                     assert shop != null;
@@ -107,32 +118,81 @@ public class BarbersActivity extends AppCompatActivity {
         });
 
     }
-    private void ReadFavouritesBarberShops(){
+//    private void ReadFavouritesBarberShops(){
+//        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("barberShops");
+//        myRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                    int KeyId = Integer.parseInt(Objects.requireNonNull(snapshot.getKey()));
+//
+//                    if (String.valueOf(MainActivity.userClass.getFavourite_Barbershops().get(KeyId)).equals("true")) {
+//
+//                        BarberShops shop = snapshot.getValue(BarberShops.class);
+//                        assert shop != null;
+//
+//                        addBarbershop(secondActivityContainer, KeyId ,shop.getLogo(),  shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getOwnerEmail(), shop.getCoordinates(), shop.getSpecialists(),shop.getReviews(), shop.getOpeningTimes());
+//                        ListBarberShops.add(new BarberShops(shop.getOwnerEmail(), shop.getName(), shop.getAddress(), shop.getCoordinates(), shop.getImage(), shop.getLogo(), shop.getRating(), shop.getReviews(), shop.getServices(), shop.getSpecialists(), shop.getOpeningTimes()));
+//                    }
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//                Log.w("Firebase", "Failed to read value.", databaseError.toException());
+//            }
+//        });
+//
+//    }
+
+    private void ReadFavouritesBarberShops() {
+        if (!MainActivity.isLogin || MainActivity.userClass == null) {
+            Toast.makeText(BarbersActivity.this, "Please log in to view favorites", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("barberShops");
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ListBarberShops.clear();
+                secondActivityContainer.removeAllViews();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    int KeyId = Integer.parseInt(Objects.requireNonNull(snapshot.getKey()));
+                    String key = snapshot.getKey();
+                    if (key == null) {
+                        Log.w("BarbersActivity", "Invalid snapshot key");
+                        continue;
+                    }
+                    int KeyId = Integer.parseInt(key);
 
-                    if (String.valueOf(MainActivity.userClass.getFavourite_Barbershops().get(KeyId)).equals("true")) {
+                    String userClassKeyId;
+                    try {
+                        userClassKeyId = String.valueOf(MainActivity.userClass.getFavourite_Barbershops().get(KeyId));
+                    } catch (Exception e) {
+                        userClassKeyId = "false";
+                    }
+
+                    if (userClassKeyId.equals("true")) {
 
                         BarberShops shop = snapshot.getValue(BarberShops.class);
                         assert shop != null;
 
-                        addBarbershop(secondActivityContainer, KeyId ,shop.getLogo(),  shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getOwnerEmail(), shop.getCoordinates(), shop.getSpecialists(),shop.getReviews(), shop.getOpeningTimes());
+                        addBarbershop(secondActivityContainer, KeyId, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getOwnerEmail(), shop.getCoordinates(), shop.getSpecialists(), shop.getReviews(), shop.getOpeningTimes());
                         ListBarberShops.add(new BarberShops(shop.getOwnerEmail(), shop.getName(), shop.getAddress(), shop.getCoordinates(), shop.getImage(), shop.getLogo(), shop.getRating(), shop.getReviews(), shop.getServices(), shop.getSpecialists(), shop.getOpeningTimes()));
                     }
-
+                }
+                if (ListBarberShops.isEmpty()) {
+                    Toast.makeText(BarbersActivity.this, "No favorite barbershops", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.w("Firebase", "Failed to read value.", databaseError.toException());
+                Toast.makeText(BarbersActivity.this, "Failed to load favorites", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
     private void filterBarbershops(String query) {
@@ -166,9 +226,19 @@ public class BarbersActivity extends AppCompatActivity {
 
         barbershopView.setOnClickListener(v -> {
             Intent intent = new Intent(this, BarberShopsAboutActivity.class);
-            intent.putExtra("from_where", "BarbersActivity");
 
-            Log.i("heartCheck","heartCheckBarbers = " + KeyId);
+            if (from_where != null) {
+                if (Objects.equals(from_where.trim(), "Favourites")) {
+                    Log.i("from_where", "from_where IF = " + from_where);
+                    intent.putExtra("from_where", "Favourites");
+                }
+            } else {
+                Log.i("from_where", "from_where Else = " + from_where);
+                intent.putExtra("from_where", "BarbersActivity");
+            }
+
+
+            Log.i("heartCheck", "heartCheckBarbers = " + KeyId);
             BarbersActivity.KeyId = KeyId;
             BarbersActivity.imageUrl = imageUrl;
             BarbersActivity.logo = logo;

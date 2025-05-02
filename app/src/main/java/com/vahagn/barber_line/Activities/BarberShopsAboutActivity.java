@@ -93,9 +93,7 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
                 if (String.valueOf(MainActivity.userClass.getFavourite_Barbershops().get(BarbersActivity.KeyId)).equals("true")) {
                     heart.setImageResource(R.drawable.img_heart_red);
                     heart.setTag(R.drawable.img_heart_red);
-                }
-                else
-                {
+                } else {
                     heart.setImageResource(R.drawable.img_heart);
                     heart.setTag(R.drawable.img_heart);
                 }
@@ -141,6 +139,8 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
             transaction.commit();
         }
         back_section.setOnClickListener(v -> {
+            assert from_where != null;
+            Log.i("from_where", from_where);
             if (Objects.equals(from_where, "BarbersActivity"))
                 ToBarbers(v);
             else if (Objects.equals(from_where, "MainActivity"))
@@ -149,7 +149,9 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
                 ToMap(v);
             else if (Objects.equals(from_where, "AppointmentsAboutActivity"))
                 ToBooks(v);
-            else
+            else if (Objects.equals(from_where, "Favourites")) {
+                GoToFavourites(v);
+            } else
                 ToHome(v);
         });
         categoryList.add(new Category(1, "Specialists", R.drawable.specialists, "#EDEFFB"));
@@ -225,15 +227,33 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
                 userFavRef.child(String.valueOf(BarbersActivity.KeyId)).setValue(true);
 //                Log.i("getTag", "Tag: img_heart_red");
             } else if (tagValue == R.drawable.img_heart_red) {
+                Log.i("heartCheck", "heartCheckBarbers = " + BarbersActivity.KeyId);
+
                 heart.setImageResource(R.drawable.img_heart);
                 heart.setTag(R.drawable.img_heart);
                 userFavRef.child(String.valueOf(BarbersActivity.KeyId)).removeValue();
+
+                List<Integer> Favourite_Barbershops = MainActivity.userClass.getFavourite_Barbershops();
+                Favourite_Barbershops.remove(BarbersActivity.KeyId);
+                MainActivity.userClass.setFavourite_Barbershops(Favourite_Barbershops);
+
+//                userClassKeyId = String.valueOf(MainActivity.userClass.getFavourite_Barbershops().get(BarbersActivity.KeyId));
+//                BarbersActivity.ListBarberShops.clear();;
 //                Log.i("getTag", "Tag: img_heart");
             }
         } else {
             Log.i("getTag", "Tag is null or not an Integer");
         }
+    }
 
-
+    public void GoToFavourites(View view) {
+        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
+                this,
+                findViewById(R.id.main),
+                "sharedImageTransition");
+        Intent intent = new Intent(this, BarbersActivity.class);
+        intent.putExtra("To", "Favourites");
+        intent.putExtra("from_where", "Favourites");
+        startActivity(intent, options.toBundle());
     }
 }
