@@ -172,7 +172,7 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
         categoryRecycler = findViewById(R.id.category);
         categoryRecycler.setLayoutManager(layoutManager);
 
-        categoryAdapter = new CategoryAdapter(this, categoryList, ListSpecialist, ListService, ListReviews, openingTimes, coordinates,nameMark,logo, getSupportFragmentManager());
+        categoryAdapter = new CategoryAdapter(this, categoryList, ListSpecialist, ListService, ListReviews, openingTimes, coordinates,nameMark,logo, getSupportFragmentManager(),false );
         categoryRecycler.setAdapter(categoryAdapter);
     }
 

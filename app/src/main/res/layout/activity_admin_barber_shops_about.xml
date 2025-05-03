@@ -54,9 +54,9 @@
             android:src="@drawable/img_arrow" />
     </FrameLayout>
 
-    <!-- Like Section -->
+    <!-- Edit Section -->
     <FrameLayout
-        android:id="@+id/like_section"
+        android:id="@+id/edit_section"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginTop="15dp"
@@ -72,13 +72,13 @@
             android:scaleType="centerInside" />
 
         <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_gravity="center"
             android:layout_marginTop="1dp"
             android:contentDescription="@string/app_name"
             android:scaleType="centerInside"
-            android:src="@drawable/img_heart" />
+            android:src="@drawable/img_edit_barbershop" />
     </FrameLayout>
 
     <!-- Information Section-->

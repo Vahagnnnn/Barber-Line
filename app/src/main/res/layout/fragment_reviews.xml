@@ -41,67 +41,6 @@
             android:fillViewport="true"
             tools:ignore="MissingConstraints">
 
-            <!--            <androidx.constraintlayout.widget.ConstraintLayout-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:orientation="vertical"-->
-            <!--                android:paddingBottom="60dp">-->
-
-            <!--                <LinearLayout-->
-            <!--                    android:id="@+id/info_container"-->
-            <!--                    android:layout_width="match_parent"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:orientation="vertical" />-->
-
-            <!--                <RatingBar-->
-            <!--                    android:id="@+id/ratingBar"-->
-            <!--                    style="@style/Widget.AppCompat.RatingBar"-->
-            <!--                    android:layout_width="wrap_content"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:numStars="5"-->
-            <!--                    android:progressTint="#ffc900"-->
-            <!--                    android:rating="0"-->
-            <!--                    android:stepSize="1.0"-->
-            <!--                    app:layout_constraintTop_toTopOf="@+id/info_container" />-->
-
-            <!--                <TextView-->
-            <!--                    android:id="@+id/ratingDisplay"-->
-            <!--                    android:layout_width="wrap_content"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:text="Rating: 0.0"-->
-            <!--                    android:textSize="16sp"-->
-            <!--                    app:layout_constraintTop_toBottomOf="@+id/ratingBar" />-->
-
-            <!--                <EditText-->
-            <!--                    android:id="@+id/message_or_requests"-->
-            <!--                    android:layout_width="match_parent"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:layout_marginTop="10dp"-->
-            <!--                    android:background="@drawable/grayborder_frame"-->
-            <!--                    android:gravity="top"-->
-            <!--                    android:hint="Your message or requests"-->
-            <!--                    android:inputType="textMultiLine"-->
-            <!--                    android:minLines="3"-->
-            <!--                    android:padding="12dp"-->
-            <!--                    android:textColor="@color/white"-->
-            <!--                    android:textColorHint="#B3B3B3"-->
-            <!--                    android:textSize="16sp"-->
-            <!--                    app:layout_constraintEnd_toEndOf="parent"-->
-            <!--                    app:layout_constraintStart_toStartOf="parent"-->
-            <!--                    app:layout_constraintTop_toBottomOf="@+id/ratingDisplay" />-->
-
-            <!--                <Button-->
-            <!--                    android:id="@+id/submitButton"-->
-            <!--                    android:layout_width="200dp"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:layout_marginTop="10dp"-->
-            <!--                    android:text="Send"-->
-            <!--                    app:layout_constraintEnd_toEndOf="parent"-->
-            <!--                    app:layout_constraintStart_toStartOf="parent"-->
-            <!--                    app:layout_constraintTop_toBottomOf="@+id/message_or_requests" />-->
-
-            <!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -115,78 +54,142 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical" />
 
-                <RatingBar
-                    android:id="@+id/ratingBar"
-                    style="@style/Widget.AppCompat.RatingBar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:numStars="5"
-                    android:progressTint="#ffc900"
-                    android:rating="0"
-                    android:scaleX="0.8"
-                    android:scaleY="0.8"
-                    android:stepSize="1.0" />
 
-                <TextView
-                    android:id="@+id/ratingDisplay"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Rating: 0.0"
-                    android:textSize="16sp" />
-
-                <EditText
-                    android:id="@+id/review_edittext"
+                <LinearLayout
+                    android:id="@+id/review_section_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/grayborder_frame"
-                    android:gravity="top"
-                    android:hint="Your review"
-                    android:inputType="textMultiLine"
-                    android:minLines="3"
-                    android:padding="12dp"
-                    android:textColor="@color/white"
-                    android:textColorHint="#B3B3B3"
-                    android:textSize="16sp"
-                    tools:ignore="Autofill" />
+                    android:orientation="vertical"
+                    android:layout_marginTop="12dp"
+                    android:padding="8dp">
 
-                <FrameLayout
-                    android:id="@+id/submitButton"
-                    android:layout_width="300dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="16dp"
-                    android:foreground="@drawable/ripple_dark"
-                    android:textSize="12sp">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/img_login_button"
-                        android:contentDescription="@string/app_name"
-                        android:scaleType="centerCrop" />
+                    <RatingBar
+                        android:id="@+id/ratingBar"
+                        style="@style/Widget.AppCompat.RatingBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:numStars="5"
+                        android:progressTint="#ffc900"
+                        android:rating="0"
+                        android:scaleX="0.8"
+                        android:scaleY="0.8"
+                        android:stepSize="1.0" />
 
                     <TextView
+                        android:id="@+id/ratingDisplay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Rating: 0.0"
+                        android:textSize="16sp"
+                        android:layout_marginTop="4dp" />
+
+                    <EditText
+                        android:id="@+id/review_edittext"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/grayborder_frame"
+                        android:gravity="top"
+                        android:hint="Your review"
+                        android:inputType="textMultiLine"
+                        android:minLines="3"
+                        android:padding="12dp"
+                        android:textColor="@color/white"
+                        android:textColorHint="#B3B3B3"
+                        android:textSize="16sp"
+                        tools:ignore="Autofill" />
+
+                    <FrameLayout
+                        android:id="@+id/submitButton"
+                        android:layout_width="300dp"
+                        android:layout_height="40dp"
                         android:layout_gravity="center"
-                        android:fontFamily="@font/montserrat_bold"
-                        android:gravity="center"
-                        android:singleLine="true"
-                        android:text="Send review"
-                        android:textColor="#FFFFFFFF"
-                        android:textSize="16sp" />
-                </FrameLayout>
+                        android:layout_marginTop="16dp"
+                        android:foreground="@drawable/ripple_dark"
+                        android:textSize="12sp">
 
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/img_login_button"
+                            android:contentDescription="@string/app_name"
+                            android:scaleType="centerCrop" />
 
-<!--                <Button-->
-<!--                    android:id="@+id/createBarberShop"-->
-<!--                    android:layout_width="200dp"-->
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/montserrat_bold"
+                            android:gravity="center"
+                            android:singleLine="true"
+                            android:text="Send review"
+                            android:textColor="#FFFFFFFF"
+                            android:textSize="16sp" />
+                    </FrameLayout>
+                </LinearLayout>
+
+<!--                <RatingBar-->
+<!--                    android:id="@+id/ratingBar"-->
+<!--                    style="@style/Widget.AppCompat.RatingBar"-->
+<!--                    android:layout_width="wrap_content"-->
 <!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_gravity="center_horizontal"-->
-<!--                    android:layout_marginTop="10dp"-->
-<!--                    android:text="Send" />-->
+<!--                    android:numStars="5"-->
+<!--                    android:progressTint="#ffc900"-->
+<!--                    android:rating="0"-->
+<!--                    android:scaleX="0.8"-->
+<!--                    android:scaleY="0.8"-->
+<!--                    android:stepSize="1.0" />-->
 
+<!--                <TextView-->
+<!--                    android:id="@+id/ratingDisplay"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Rating: 0.0"-->
+<!--                    android:textSize="16sp" />-->
+
+<!--                <EditText-->
+<!--                    android:id="@+id/review_edittext"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="10dp"-->
+<!--                    android:background="@drawable/grayborder_frame"-->
+<!--                    android:gravity="top"-->
+<!--                    android:hint="Your review"-->
+<!--                    android:inputType="textMultiLine"-->
+<!--                    android:minLines="3"-->
+<!--                    android:padding="12dp"-->
+<!--                    android:textColor="@color/white"-->
+<!--                    android:textColorHint="#B3B3B3"-->
+<!--                    android:textSize="16sp"-->
+<!--                    tools:ignore="Autofill" />-->
+
+<!--                <FrameLayout-->
+<!--                    android:id="@+id/submitButton"-->
+<!--                    android:layout_width="300dp"-->
+<!--                    android:layout_height="40dp"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:layout_marginTop="16dp"-->
+<!--                    android:foreground="@drawable/ripple_dark"-->
+<!--                    android:textSize="12sp">-->
+
+<!--                    <ImageView-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:background="@drawable/img_login_button"-->
+<!--                        android:contentDescription="@string/app_name"-->
+<!--                        android:scaleType="centerCrop" />-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:fontFamily="@font/montserrat_bold"-->
+<!--                        android:gravity="center"-->
+<!--                        android:singleLine="true"-->
+<!--                        android:text="Send review"-->
+<!--                        android:textColor="#FFFFFFFF"-->
+<!--                        android:textSize="16sp" />-->
+<!--                </FrameLayout>-->
             </LinearLayout>
 
 

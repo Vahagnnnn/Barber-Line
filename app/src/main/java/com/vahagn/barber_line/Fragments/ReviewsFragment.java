@@ -1,5 +1,8 @@
 package com.vahagn.barber_line.Fragments;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -49,16 +52,18 @@ import java.util.List;
 import java.util.Objects;
 
 public class ReviewsFragment extends Fragment {
-    private LinearLayout infoContainer;
+    private LinearLayout infoContainer,review_section_container;
     private List<Reviews> ListReviews;
+    private Boolean isAdmin;
 
     private RatingBar ratingBar;
     private TextView ratingDisplay;
     private EditText review_edittext;
     private FrameLayout submitButton;
 
-    public ReviewsFragment(List<Reviews> ListReviews) {
+    public ReviewsFragment(List<Reviews> ListReviews,Boolean isAdmin) {
         this.ListReviews = ListReviews;
+        this.isAdmin = isAdmin;
     }
 
 
@@ -74,7 +79,11 @@ public class ReviewsFragment extends Fragment {
                 addReviews(review);
             }
         }
-
+        review_section_container = view.findViewById(R.id.review_section_container);
+        if (isAdmin)
+            review_section_container.setVisibility(GONE);
+        else
+            review_section_container.setVisibility(VISIBLE);
 
         ratingBar = view.findViewById(R.id.ratingBar);
         ratingDisplay = view.findViewById(R.id.ratingDisplay);

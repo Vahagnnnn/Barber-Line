@@ -20,6 +20,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.vahagn.barber_line.Activities.BarberShopsAboutActivity;
+import com.vahagn.barber_line.Activities.BooksActivity;
 import com.vahagn.barber_line.Classes.Barbers;
 import com.vahagn.barber_line.Classes.OpeningTime;
 import com.vahagn.barber_line.Classes.Reviews;
@@ -45,8 +46,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     private  Map<String, TimeRange> openingTimes;
     private  String coordinates,name,logo;
     private FragmentManager fragmentManager;
+    private Boolean isAdmin;
 
-    public CategoryAdapter(Context context, List<Category> categories, List<Barbers> ListSpecialist, List<Services> ListService, List<Reviews> ListReviews,Map<String, TimeRange> openingTimes, String coordinates, String name, String logo,FragmentManager fragmentManager) {
+    public CategoryAdapter(Context context, List<Category> categories, List<Barbers> ListSpecialist, List<Services> ListService, List<Reviews> ListReviews,Map<String, TimeRange> openingTimes, String coordinates, String name, String logo,FragmentManager fragmentManager,Boolean isAdmin) {
         this.context = context;
         this.categories = categories;
         this.ListSpecialist = ListSpecialist;
@@ -57,6 +59,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         this.name = name;
         this.logo = logo;
         this.fragmentManager = fragmentManager;
+        this.isAdmin = isAdmin;
     }
 //    public CategoryAdapter(Context context, List<Category> categories, List<Barbers> ListSpecialist, List<Services> ListService, FragmentManager fragmentManager) {
 //        this.context = context;
@@ -106,7 +109,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
                         Log.i("getServices",ListService.toString());
                         break;
                     case "Reviews":
-                        Fragment reviewsFragment = new ReviewsFragment(ListReviews);
+                        Fragment reviewsFragment = new ReviewsFragment(ListReviews,isAdmin);
                         transaction.replace(R.id.info_container, reviewsFragment);
                         transaction.addToBackStack(null);
                         transaction.commit();
