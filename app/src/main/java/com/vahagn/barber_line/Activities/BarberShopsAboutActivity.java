@@ -88,7 +88,8 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
         address.setText(BarbersActivity.address);
 
 
-        if (MainActivity.userClass.getFavouriteBarbershops() != null) {
+//        if (MainActivity.userClass.getFavouriteBarbershops() != null) {
+        if (MainActivity.userClass != null && MainActivity.userClass.getFavouriteBarbershops() != null) {
             try {
                 if (String.valueOf(MainActivity.userClass.getFavouriteBarbershops().get(BarbersActivity.KeyId)).equals("true")) {
                     heart.setImageResource(R.drawable.img_heart_red);
@@ -210,8 +211,53 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
         startActivity(intent, options.toBundle());
     }
 
+//    public void AddToFavourites(View view) {
+//        if (isLogin) {
+//            String userId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+//            DatabaseReference userFavRef = FirebaseDatabase.getInstance()
+//                    .getReference("Users")
+//                    .child(userId)
+//                    .child("Favourite_Barbershops");
+//
+//            Object tag = heart.getTag();
+//
+//            if (tag instanceof Integer) {
+//                int tagValue = (int) tag;
+//                if (tagValue == R.drawable.img_heart) {
+//                    heart.setImageResource(R.drawable.img_heart_red);
+//                    heart.setTag(R.drawable.img_heart_red);
+//                    userFavRef.child(String.valueOf(BarbersActivity.KeyId)).setValue(true);
+////                Log.i("getTag", "Tag: img_heart_red");
+//                } else if (tagValue == R.drawable.img_heart_red) {
+//                    Log.i("heartCheck", "heartCheckBarbers = " + BarbersActivity.KeyId);
+//
+//                    heart.setImageResource(R.drawable.img_heart);
+//                    heart.setTag(R.drawable.img_heart);
+//                    userFavRef.child(String.valueOf(BarbersActivity.KeyId)).removeValue();
+//
+//                    List<Integer> Favourite_Barbershops = MainActivity.userClass.getFavouriteBarbershops();
+//                    Favourite_Barbershops.remove(BarbersActivity.KeyId);
+//                    MainActivity.userClass.setFavouriteBarbershops(Favourite_Barbershops);
+//
+////                userClassKeyId = String.valueOf(MainActivity.userClass.getFavourite_Barbershops().get(BarbersActivity.KeyId));
+////                BarbersActivity.ListBarberShops.clear();;
+////                Log.i("getTag", "Tag: img_heart");
+//                }
+//            } else {
+//                Log.i("getTag", "Tag is null or not an Integer");
+//            }
+//        } else
+//            navigateTo(LoginActivity.class);
+//    }
+
+
     public void AddToFavourites(View view) {
-        String userId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+        if (!isLogin || FirebaseAuth.getInstance().getCurrentUser() == null) {
+            navigateTo(LoginActivity.class);
+            return;
+        }
+
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference userFavRef = FirebaseDatabase.getInstance()
                 .getReference("Users")
                 .child(userId)
@@ -225,10 +271,7 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
                 heart.setImageResource(R.drawable.img_heart_red);
                 heart.setTag(R.drawable.img_heart_red);
                 userFavRef.child(String.valueOf(BarbersActivity.KeyId)).setValue(true);
-//                Log.i("getTag", "Tag: img_heart_red");
             } else if (tagValue == R.drawable.img_heart_red) {
-                Log.i("heartCheck", "heartCheckBarbers = " + BarbersActivity.KeyId);
-
                 heart.setImageResource(R.drawable.img_heart);
                 heart.setTag(R.drawable.img_heart);
                 userFavRef.child(String.valueOf(BarbersActivity.KeyId)).removeValue();
@@ -236,15 +279,12 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
                 List<Integer> Favourite_Barbershops = MainActivity.userClass.getFavouriteBarbershops();
                 Favourite_Barbershops.remove(BarbersActivity.KeyId);
                 MainActivity.userClass.setFavouriteBarbershops(Favourite_Barbershops);
-
-//                userClassKeyId = String.valueOf(MainActivity.userClass.getFavourite_Barbershops().get(BarbersActivity.KeyId));
-//                BarbersActivity.ListBarberShops.clear();;
-//                Log.i("getTag", "Tag: img_heart");
             }
         } else {
             Log.i("getTag", "Tag is null or not an Integer");
         }
     }
+
 
     public void GoToFavourites(View view) {
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(

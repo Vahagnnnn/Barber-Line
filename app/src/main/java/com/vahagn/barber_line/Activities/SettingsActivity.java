@@ -223,6 +223,7 @@ public class SettingsActivity extends AppCompatActivity {
         editor.apply();
         Toast.makeText(SettingsActivity.this, "You have been logged out.", Toast.LENGTH_SHORT).show();
         MainActivity.isLogin = false;
+        MainActivity.userClass = null;
         Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
