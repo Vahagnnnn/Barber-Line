@@ -68,6 +68,10 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation(libs.play.services.maps.v1900)
+
+    implementation (libs.places.v330)
+    implementation (libs.play.services.maps.v1920)
+    implementation (libs.okhttp)
 }
 
 

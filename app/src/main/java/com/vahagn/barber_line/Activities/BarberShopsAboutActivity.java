@@ -1,5 +1,6 @@
 package com.vahagn.barber_line.Activities;
 
+import static android.view.View.GONE;
 import static com.vahagn.barber_line.Activities.MainActivity.isLogin;
 
 import android.annotation.SuppressLint;
@@ -33,6 +34,7 @@ import com.vahagn.barber_line.Classes.Services;
 import com.vahagn.barber_line.Classes.TimeRange;
 import com.vahagn.barber_line.Fragments.SpecialistsFragment;
 import com.vahagn.barber_line.R;
+import com.vahagn.barber_line.SuperAdmin.SuperAdminModerationActivity;
 import com.vahagn.barber_line.adapter.CategoryAdapter;
 import com.vahagn.barber_line.model.Category;
 
@@ -44,7 +46,7 @@ import java.util.Objects;
 import java.util.Set;
 
 public class BarberShopsAboutActivity extends AppCompatActivity {
-    FrameLayout back_section;
+    FrameLayout back_section, like_section;
     ImageView image;
     @SuppressLint("StaticFieldLeak")
     public static TextView name;
@@ -57,9 +59,10 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
     List<Services> ListService = new ArrayList<>();
     List<Reviews> ListReviews = new ArrayList<>();
     Map<String, TimeRange> openingTimes;
-    String coordinates,nameMark,logo;
-
+    String coordinates, nameMark, logo;
     ImageView heart;
+
+    public static boolean isAdmin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,9 +72,7 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
         SpecialistActivity.SpecialistActivity = false;
         ServicesActivity.ServicesActivity = false;
         Applicant_BarberActivity.Is_Applicant_BarberActivity = false;
-
-        Log.i("ASAA", "BarberShopsAboutActivity " + SpecialistActivity.SpecialistActivity);
-        Log.i("ASAA", "BarberShopsAboutActivity " + ServicesActivity.ServicesActivity);
+        isAdmin = false;
 
 
         image = findViewById(R.id.image);
@@ -79,10 +80,14 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
         rating = findViewById(R.id.rating);
         address = findViewById(R.id.address);
         back_section = findViewById(R.id.back_section);
+        like_section = findViewById(R.id.like_section);
         heart = findViewById(R.id.heart);
 
         String from_where = getIntent().getStringExtra("from_where");
-
+        if (Objects.equals(from_where, "SuperAdminModerationActivity")) {
+            isAdmin = true;
+            like_section.setVisibility(GONE);
+        }
         Glide.with(this)
                 .load(BarbersActivity.imageUrl)
                 .into(image);
@@ -146,8 +151,6 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
             transaction.commit();
         }
         back_section.setOnClickListener(v -> {
-            assert from_where != null;
-            Log.i("from_where", from_where);
             if (Objects.equals(from_where, "BarbersActivity"))
                 ToBarbers(v);
             else if (Objects.equals(from_where, "MainActivity"))
@@ -156,9 +159,11 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
                 ToMap(v);
             else if (Objects.equals(from_where, "AppointmentsAboutActivity"))
                 ToBooks(v);
-            else if (Objects.equals(from_where, "Favourites")) {
+            else if (Objects.equals(from_where, "Favourites"))
                 GoToFavourites(v);
-            } else
+            else if (Objects.equals(from_where, "SuperAdminModerationActivity"))
+                navigateTo(SuperAdminModerationActivity.class);
+            else
                 ToHome(v);
         });
         categoryList.add(new Category(1, "Specialists", R.drawable.specialists, "#EDEFFB"));
@@ -174,7 +179,7 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
         categoryRecycler = findViewById(R.id.category);
         categoryRecycler.setLayoutManager(layoutManager);
 
-        categoryAdapter = new CategoryAdapter(this, categoryList, ListSpecialist, ListService, ListReviews, openingTimes, coordinates,nameMark,logo, getSupportFragmentManager(),false );
+        categoryAdapter = new CategoryAdapter(this, categoryList, ListSpecialist, ListService, ListReviews, openingTimes, coordinates, nameMark, logo, getSupportFragmentManager(), isAdmin);
         categoryRecycler.setAdapter(categoryAdapter);
     }
 

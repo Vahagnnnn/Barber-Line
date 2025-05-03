@@ -80,6 +80,7 @@ public class ReviewsFragment extends Fragment {
             }
         }
         review_section_container = view.findViewById(R.id.review_section_container);
+        Log.i("from_where", String.valueOf(isAdmin));
         if (isAdmin)
             review_section_container.setVisibility(GONE);
         else

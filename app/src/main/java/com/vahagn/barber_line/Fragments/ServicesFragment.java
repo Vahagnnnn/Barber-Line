@@ -86,7 +86,7 @@ public class ServicesFragment extends Fragment {
 
 //                Toast.makeText(getContext(), services.getName(), Toast.LENGTH_SHORT).show();
             });
-        } else {
+        } else if (SpecialistsFragment.CanBook){
             servicesView.setOnClickListener(v -> {
                 Intent intent = new Intent(getContext(), ServicesActivity.class);
 

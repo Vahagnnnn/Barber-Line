@@ -192,41 +192,6 @@
                 android:textColor="#FFFFFFFF"
                 android:textSize="12sp" />
         </FrameLayout>
-
-        <!-- Map -->
-        <!--        <FrameLayout-->
-        <!--            android:id="@+id/container_settings"-->
-        <!--            android:layout_width="48dp"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginEnd="15dp"-->
-        <!--            android:onClick="ToMap"-->
-        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--            app:layout_constraintEnd_toEndOf="parent"-->
-        <!--            app:layout_constraintTop_toTopOf="parent">-->
-
-        <!--            <ImageView-->
-        <!--                android:id="@+id/img_setting"-->
-        <!--                android:layout_width="25dp"-->
-        <!--                android:layout_height="25dp"-->
-        <!--                android:layout_gravity="center_horizontal"-->
-        <!--                android:contentDescription="@string/app_name"-->
-        <!--                android:scaleType="centerInside"-->
-        <!--                android:src="@drawable/img_location" />-->
-
-        <!--            <TextView-->
-        <!--                android:id="@+id/txt_settings"-->
-        <!--                android:layout_width="match_parent"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:layout_marginTop="27dp"-->
-        <!--                android:fontFamily="@font/roboto_slab"-->
-        <!--                android:gravity="center_horizontal"-->
-        <!--                android:includeFontPadding="false"-->
-        <!--                android:maxLines="1"-->
-        <!--                android:singleLine="true"-->
-        <!--                android:text="@string/map"-->
-        <!--                android:textColor="#FFFFFFFF"-->
-        <!--                android:textSize="12sp" />-->
-        <!--        </FrameLayout>-->
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

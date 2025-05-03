@@ -41,7 +41,7 @@ public class AddLocationActivity extends AppCompatActivity implements OnMapReady
     private FusedLocationProviderClient fusedLocationClient;
     private Marker currentLocationMarker;
     private GoogleMap myMap;
-    private SearchView mapSearchView;
+    private SearchView mapSearch;
 
     private TextView address_textView;
     private Button Done;
@@ -53,7 +53,7 @@ public class AddLocationActivity extends AppCompatActivity implements OnMapReady
         address_textView = findViewById(R.id.address);
         Done = findViewById(R.id.Done);
 
-        mapSearchView = findViewById(R.id.mapSearch);
+        mapSearch = findViewById(R.id.mapSearch);
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -61,7 +61,7 @@ public class AddLocationActivity extends AppCompatActivity implements OnMapReady
             mapFragment.getMapAsync(this);
         }
 
-        mapSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        mapSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 searchLocation(query);

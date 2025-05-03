@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,15 +22,20 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.vahagn.barber_line.Activities.BarberShopsAboutActivity;
+import com.vahagn.barber_line.Activities.BarbersActivity;
 import com.vahagn.barber_line.Activities.MainActivity;
 import com.vahagn.barber_line.Activities.SettingsActivity;
 import com.vahagn.barber_line.Classes.BarberShops;
 import com.vahagn.barber_line.Classes.Barbers;
+import com.vahagn.barber_line.Classes.Reviews;
 import com.vahagn.barber_line.Classes.Services;
+import com.vahagn.barber_line.Classes.TimeRange;
+import com.vahagn.barber_line.Fragments.SpecialistsFragment;
 import com.vahagn.barber_line.R;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 public class SuperAdminModerationActivity extends AppCompatActivity {
 
@@ -37,29 +43,39 @@ public class SuperAdminModerationActivity extends AppCompatActivity {
     DatabaseReference pendingRef = FirebaseDatabase.getInstance().getReference().child("pending_barbershops");
     DatabaseReference rejectedRef = FirebaseDatabase.getInstance().getReference("rejected_barbershops");
 
+    private ProgressBar loadingProgressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_super_admin_moderation);
+        SpecialistsFragment.CanBook = false;
+
+
         LinearLayout secondActivityContainer = findViewById(R.id.barbers_list);
+        loadingProgressBar = findViewById(R.id.loading_progress_bar);
+        loadingProgressBar.setVisibility(View.VISIBLE);
+
         pendingRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                secondActivityContainer.removeAllViews();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     BarberShops shop = snapshot.getValue(BarberShops.class);
-                    addBarbershop(secondActivityContainer, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getSpecialists(), shop.getServices(), snapshot.getKey());
+                    addBarbershop(secondActivityContainer, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(),shop.getCoordinates(),  shop.getSpecialists(),shop.getReviews(),shop.getOpeningTimes(), snapshot.getKey());
                 }
+                loadingProgressBar.setVisibility(View.GONE);
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.w("Firebase", "Failed to read value.", databaseError.toException());
+                loadingProgressBar.setVisibility(View.GONE);
             }
         });
     }
 
 
-    public void addBarbershop(LinearLayout container, String logo, String image, String name, double rating, String address, List<Barbers> ListSpecialist, List<Services> ListService, String key) {
+    public void addBarbershop(LinearLayout container, String logo, String imageUrl, String name, double rating, String address, String coordinates, List<Barbers> ListSpecialist, List<Reviews> ListReviews, Map<String, TimeRange> openingTimes, String key) {
         View barbershopView = LayoutInflater.from(this).inflate(R.layout.barbershops_gray, container, false);
 
         ImageView logoImageView = barbershopView.findViewById(R.id.logo);
@@ -77,17 +93,26 @@ public class SuperAdminModerationActivity extends AppCompatActivity {
 
         barbershopView.setOnClickListener(v -> {
             Intent intent = new Intent(this, BarberShopsAboutActivity.class);
-            intent.putExtra("from_where", "BarbersActivity");
-            intent.putExtra("image", image);
-            intent.putExtra("name", name);
-            intent.putExtra("rating", String.valueOf(rating));
-            intent.putExtra("address", address);
-            intent.putExtra("ListSpecialist", (Serializable) ListSpecialist);
-            intent.putExtra("ListService", (Serializable) ListService);
+            intent.putExtra("from_where", "SuperAdminModerationActivity");
+//            intent.putExtra("image", image);
+//            intent.putExtra("name", name);
+//            intent.putExtra("rating", String.valueOf(rating));
+//            intent.putExtra("address", address);
+//            intent.putExtra("ListSpecialist", (Serializable) ListSpecialist);
+//            intent.putExtra("ListService", (Serializable) ListService);
 
+            BarbersActivity.imageUrl = imageUrl;
+            BarbersActivity.logo = logo;
+            BarbersActivity.name = name;
+            BarbersActivity.rating = String.valueOf(rating);
+            BarbersActivity.address = address;
+            BarbersActivity.coordinates = coordinates;
+            BarbersActivity.ListSpecialist = ListSpecialist;
+            BarbersActivity.ListReviews = ListReviews;
+            BarbersActivity.openingTimes = openingTimes;
             ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
                     this,
-                    findViewById(R.id.bottom_navigation),
+                    findViewById(R.id.main),
                     "sharedImageTransition");
             startActivity(intent, options.toBundle());
         });

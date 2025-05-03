@@ -43,7 +43,7 @@ public class SpecialistsFragment extends Fragment {
     private LinearLayout infoContainer;
     private List<Barbers> specialists;
 
-    public static boolean Edit;
+    public static boolean Edit,CanBook;
 
 
     public static String imageUrl, name, rating;
@@ -121,7 +121,7 @@ public class SpecialistsFragment extends Fragment {
 //
 //                builder.show();
 //            });
-        } else {
+        } else if (CanBook){
             specialistView.setOnClickListener(v -> {
                 Intent intent = new Intent(getContext(), SpecialistActivity.class);
 

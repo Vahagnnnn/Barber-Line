@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#242C3B"
-    android:transitionName="barbershopView"
+    android:transitionName="sharedImageTransition"
     app:circularflow_radiusInDP="30dp"
     tools:context=".SuperAdmin.SuperAdminModerationActivity">
 
@@ -28,6 +28,7 @@
             android:layout_height="48dp"
             android:contentDescription="@string/app_name"
             android:onClick="ToSettings"
+            android:layout_gravity="center"
             android:scaleType="centerInside"
             android:src="@drawable/img_arrow_left" />
 
@@ -134,6 +135,17 @@
                 android:orientation="vertical">
 
             </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/loading_progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:layout_gravity="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

@@ -30,6 +30,7 @@ import com.vahagn.barber_line.Classes.Barbers;
 import com.vahagn.barber_line.Classes.Reviews;
 import com.vahagn.barber_line.Classes.Services;
 import com.vahagn.barber_line.Classes.TimeRange;
+import com.vahagn.barber_line.Fragments.SpecialistsFragment;
 import com.vahagn.barber_line.R;
 
 import java.io.Serializable;
@@ -60,6 +61,7 @@ public class BarbersActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_barbers);
+        SpecialistsFragment.CanBook = true;
         secondActivityContainer = findViewById(R.id.barbers_list);
 
         String To = getIntent().getStringExtra("To");
