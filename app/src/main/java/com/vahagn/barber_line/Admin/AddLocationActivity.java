@@ -222,4 +222,10 @@ public class AddLocationActivity extends AppCompatActivity implements OnMapReady
     public void ToCreateBarberShop(View view) {
         onBackPressed();
     }
+    public void ToBooks(View view) {
+        navigateTo(AdminBooksActivity.class);
+    }
+    public void ToSetting(View view) {
+        navigateTo(AdminSettingsActivity.class);
+    }
 }

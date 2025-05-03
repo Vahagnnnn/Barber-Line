@@ -458,5 +458,7 @@ public class CreateBarberShopActivity extends AppCompatActivity implements OnMap
     public void ToSetting(View view) {
         navigateTo(AdminSettingsActivity.class);
     }
-
+    public void ToBooks(View view) {
+        navigateTo(AdminBooksActivity.class);
+    }
 }

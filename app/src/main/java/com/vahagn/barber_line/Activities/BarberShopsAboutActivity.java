@@ -24,6 +24,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.vahagn.barber_line.Admin.AdminActivity;
+import com.vahagn.barber_line.Admin.Applicant_BarberActivity;
 import com.vahagn.barber_line.Admin.CreateBarberShopActivity;
 import com.vahagn.barber_line.Classes.Barbers;
 import com.vahagn.barber_line.Classes.OpeningTime;
@@ -67,6 +68,7 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
         CreateBarberShopActivity.isCreateBarberShopActivity = false;
         SpecialistActivity.SpecialistActivity = false;
         ServicesActivity.ServicesActivity = false;
+        Applicant_BarberActivity.Is_Applicant_BarberActivity = false;
 
         Log.i("ASAA", "BarberShopsAboutActivity " + SpecialistActivity.SpecialistActivity);
         Log.i("ASAA", "BarberShopsAboutActivity " + ServicesActivity.ServicesActivity);

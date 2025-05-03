@@ -43,7 +43,6 @@ public class Applicant_BarberActivity extends AppCompatActivity {
         transaction.addToBackStack(null);
         transaction.commit();
 
-
     }
 
     public void ToAdmin(View view) {

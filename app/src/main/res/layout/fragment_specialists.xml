@@ -49,7 +49,5 @@
                 android:paddingBottom="30dp" />
 
         </androidx.core.widget.NestedScrollView>
-
-
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

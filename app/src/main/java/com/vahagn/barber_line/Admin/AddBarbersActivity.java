@@ -83,19 +83,6 @@ public class AddBarbersActivity extends AppCompatActivity {
         transaction.replace(R.id.info_container, servicesFragment);
         transaction.commit();
 
-//        View.OnTouchListener touchEffect = (v, event) -> {
-//            switch (event.getAction()) {
-//                case MotionEvent.ACTION_DOWN:
-//                    v.animate().alpha(0.8f).setDuration(50).start();
-//                    return false;
-//                case MotionEvent.ACTION_UP:
-//                case MotionEvent.ACTION_CANCEL:
-//                    v.animate().alpha(1.0f).setDuration(50).start();
-//                    break;
-//            }
-//            return false;
-//        };
-
         BarberImage = findViewById(R.id.BarberImage);
         BarberName = findViewById(R.id.BarberName);
         FrameLayout save = findViewById(R.id.Save);
@@ -103,9 +90,6 @@ public class AddBarbersActivity extends AppCompatActivity {
         ServicePrice = findViewById(R.id.ServicePrice);
         ServiceDuration = findViewById(R.id.ServiceDuration);
         FrameLayout addService = findViewById(R.id.AddService);
-
-//        save.setOnTouchListener(touchEffect);
-//        addService.setOnTouchListener(touchEffect);
 
         BarberImage.setOnClickListener(v -> openGallery());
         addService.setOnClickListener(v -> AddService());
@@ -265,8 +249,12 @@ public class AddBarbersActivity extends AppCompatActivity {
             Toast.makeText(this, "Request Sent", Toast.LENGTH_SHORT).show();
             AddApplicant_BarberDB(Applicant_Barber);
             JoinToBarberShopActivity.JoinToBarberShopActivity_REGISTER = false;
-            navigateTo(AdminActivity.class);
 
+            BarberProfileActivity.name = BarberName_str;
+            BarberProfileActivity.rating = "5.0";
+            BarberProfileActivity.ListServices = ListServices;
+            BarberProfileActivity.imageUrl = String.valueOf(imageUri);
+            navigateTo(AdminActivity.class);
         } else {
             CreateBarberShopActivity.ListSpecialist.add(new Barbers(String.valueOf(imageUri), BarberName_str, BarberPhoneNumber_str, ListServices));
             Toast.makeText(this, "The Barber has been added", Toast.LENGTH_SHORT).show();

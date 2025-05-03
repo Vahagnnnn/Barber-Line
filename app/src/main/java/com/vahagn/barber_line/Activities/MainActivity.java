@@ -36,6 +36,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.vahagn.barber_line.Admin.AdminActivity;
 import com.vahagn.barber_line.Admin.AdminBooksActivity;
+import com.vahagn.barber_line.Admin.Applicant_BarberActivity;
 import com.vahagn.barber_line.Classes.BarberShops;
 import com.vahagn.barber_line.Classes.Barbers;
 import com.vahagn.barber_line.Classes.Users;
@@ -76,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Applicant_BarberActivity.Is_Applicant_BarberActivity = false;
 
 
 //        FirebaseAuth.getInstance().signOut();

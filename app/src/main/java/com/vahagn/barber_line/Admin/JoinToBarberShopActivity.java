@@ -123,30 +123,8 @@ public class JoinToBarberShopActivity extends AppCompatActivity {
 
 
         barbershopView.setOnClickListener(v -> {
-//            Intent intent = new Intent(this, BarberShopsAboutActivity.class);
-//            intent.putExtra("from_where", "BarbersActivity");
-//
-//            BarbersActivity.imageUrl = imageUrl;
-//            BarbersActivity.logo = logo;
-//            BarbersActivity.name = name;
-//            BarbersActivity.rating = String.valueOf(rating);
-//            BarbersActivity.OwnerEmail = OwnerEmail;
-//            BarbersActivity.address = address;
-//            BarbersActivity.coordinates = coordinates;
-//            BarbersActivity.ListSpecialist = ListSpecialist;
-//            BarbersActivity.ListReviews = ListReviews;
-//            BarbersActivity.openingTimes = openingTimes;
-//
-//            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
-//                    this,
-//                    findViewById(R.id.bottom_navigation),
-//                    "sharedImageTransition");
-//            startActivity(intent, options.toBundle());
-
-
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Join To " + name);
-//            builder.setTitle("Join To Barber Shop");
 
             builder.setPositiveButton("Send Request", (dialog, which) -> {
                 Toast.makeText(this, "Send Request", Toast.LENGTH_SHORT).show();
@@ -156,7 +134,6 @@ public class JoinToBarberShopActivity extends AppCompatActivity {
             builder.setNeutralButton("Register", (dialog, which) -> {
                 Toast.makeText(this, "Register", Toast.LENGTH_SHORT).show();
                 JoinToBarberShopActivity.JoinToBarberShopActivity_REGISTER = true;
-                Log.i("BarberWorkPlace", name);
                 BarberWorkPlace = name;
                 navigateTo(AddBarbersActivity.class);
 

@@ -30,6 +30,7 @@
             android:contentDescription="@string/app_name"
             android:onClick="ToAdminSettings"
             android:scaleType="centerInside"
+            android:layout_gravity="center"
             android:src="@drawable/img_arrow_left"
             tools:ignore="MissingConstraints" />
 
@@ -73,7 +74,7 @@
                 android:background="@drawable/radius_10_dp"
                 android:iconifiedByDefault="false"
                 android:queryBackground="@android:color/transparent"
-                android:queryHint="Names of barbershops"
+                android:queryHint="Names of barber"
                 android:textColorHint="#A0A4AC"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
