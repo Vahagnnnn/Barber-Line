@@ -26,6 +26,9 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -58,6 +61,8 @@ import com.vahagn.barber_line.Fragments.SpecialistsFragment;
 import com.vahagn.barber_line.R;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -72,6 +77,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     LinearLayout barbershop_infoLayout_Map;
     TextView barbershop_name_info, barbershop_address_info;
     ImageView barbershop_image_info;
+
+    List<String> barberShopsNames = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +105,127 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             getApplicationContext().startActivity(intent);
         });
 
+
+        AutoCompleteTextView autoCompleteTextView = findViewById(R.id.autoCompleteTextView);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_dropdown_item_1line,
+                barberShopsNames
+        );
+        autoCompleteTextView.setAdapter(adapter);
+
+        autoCompleteTextView.setOnItemClickListener((parent, view, position, id) -> {
+            String selected = (String) parent.getItemAtPosition(position);
+
+            BarberShops shop = TopBarberShopsList.stream()
+                    .filter(b -> b.getName().equals(selected))
+                    .findFirst()
+                    .orElse(null);
+
+            if (shop != null) {
+                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.hideSoftInputFromWindow(autoCompleteTextView.getWindowToken(), 0);
+                }
+
+                barbershop_infoLayout_Map.setVisibility(VISIBLE);
+
+                BarbersActivity.imageUrl = shop.getImage();
+                BarbersActivity.name = shop.getName();
+                BarbersActivity.rating = String.valueOf(shop.getRating());
+                BarbersActivity.OwnerEmail = shop.getOwnerEmail();
+                BarbersActivity.address = shop.getAddress();
+                BarbersActivity.logo = shop.getLogo();
+                BarbersActivity.coordinates = shop.getCoordinates();
+                BarbersActivity.ListSpecialist = shop.getSpecialists();
+                BarbersActivity.ListReviews = shop.getReviews();
+                BarbersActivity.openingTimes = shop.getOpeningTimes();
+
+                barbershop_name_info.setText(BarbersActivity.name);
+                barbershop_address_info.setText(BarbersActivity.address);
+
+                Glide.with(MapActivity.this)
+                        .load(BarbersActivity.imageUrl)
+                        .apply(RequestOptions.bitmapTransform(new RoundedCorners(60)))
+                        .into(barbershop_image_info);
+
+                String[] coords = shop.getCoordinates().split(" ");
+                try {
+                    double lat = Double.parseDouble(coords[0].replace(",", "").trim());
+                    double lng = Double.parseDouble(coords[1].replace(",", "").trim());
+                    LatLng selectedLatLng = new LatLng(lat, lng);
+                    gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(selectedLatLng, 15));
+                } catch (NumberFormatException e) {
+                    Log.e("MapActivity", "Invalid coordinates: " + shop.getCoordinates());
+                }
+            } else {
+                Toast.makeText(MapActivity.this, "Barbershop not found", Toast.LENGTH_SHORT).show();
+            }
+
+        });
     }
+
+    private void setupAutoCompleteBarbershopSearch() {
+        AutoCompleteTextView autoCompleteTextView = findViewById(R.id.autoCompleteTextView);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_dropdown_item_1line,
+                barberShopsNames
+        );
+        autoCompleteTextView.setAdapter(adapter);
+
+        autoCompleteTextView.setOnItemClickListener((parent, view, position, id) -> {
+            String selected = (String) parent.getItemAtPosition(position);
+
+            BarberShops shop = TopBarberShopsList.stream()
+                    .filter(b -> b.getName().equals(selected))
+                    .findFirst()
+                    .orElse(null);
+
+            if (shop != null) {
+                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.hideSoftInputFromWindow(autoCompleteTextView.getWindowToken(), 0);
+                }
+
+                barbershop_infoLayout_Map.setVisibility(VISIBLE);
+
+                BarbersActivity.imageUrl = shop.getImage();
+                BarbersActivity.name = shop.getName();
+                BarbersActivity.rating = String.valueOf(shop.getRating());
+                BarbersActivity.OwnerEmail = shop.getOwnerEmail();
+                BarbersActivity.address = shop.getAddress();
+                BarbersActivity.logo = shop.getLogo();
+                BarbersActivity.coordinates = shop.getCoordinates();
+                BarbersActivity.ListSpecialist = shop.getSpecialists();
+                BarbersActivity.ListReviews = shop.getReviews();
+                BarbersActivity.openingTimes = shop.getOpeningTimes();
+
+                barbershop_name_info.setText(BarbersActivity.name);
+                barbershop_address_info.setText(BarbersActivity.address);
+
+                Glide.with(MapActivity.this)
+                        .load(BarbersActivity.imageUrl)
+                        .apply(RequestOptions.bitmapTransform(new RoundedCorners(60)))
+                        .into(barbershop_image_info);
+
+                String[] coords = shop.getCoordinates().split(" ");
+                try {
+                    double lat = Double.parseDouble(coords[0].replace(",", "").trim());
+                    double lng = Double.parseDouble(coords[1].replace(",", "").trim());
+                    LatLng selectedLatLng = new LatLng(lat, lng);
+                    gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(selectedLatLng, 15));
+                } catch (NumberFormatException e) {
+                    Log.e("MapActivity", "Invalid coordinates: " + shop.getCoordinates());
+                }
+            } else {
+                Toast.makeText(MapActivity.this, "Barbershop not found", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
@@ -119,6 +246,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     LatLng location = new LatLng(latitude, longitude);
 
                     Log.i("img", barberShop.getLogo());
+                    barberShopsNames.add(barberShop.getName());
                     addCustomMarker(location, barberShop.getName(), barberShop.getLogo());
                 } catch (NumberFormatException e) {
                     Log.i("coords", "Error parsing coordinates: " + e.getMessage());
