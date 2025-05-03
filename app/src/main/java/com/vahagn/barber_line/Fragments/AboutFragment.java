@@ -52,13 +52,17 @@ public class AboutFragment extends Fragment implements OnMapReadyCallback {
     private MaterialCardView mondayCircle, tuesdayCircle, wednesdayCircle, thursdayCircle, fridayCircle, saturdayCircle, sundayCircle;
     private TextView mondayText, tuesdayText, wednesdayText, thursdayText, fridayText, saturdayText, sundayText;
     private Map<String, TimeRange> openingTimes;
+    private String coordinates,name,logo;
     private GoogleMap gMap;
 
     public AboutFragment() {
     }
 
-    public AboutFragment(Map<String, TimeRange> openingTimes) {
+    public AboutFragment(Map<String, TimeRange> openingTimes,String coordinates,String name,String logo) {
         this.openingTimes = openingTimes;
+        this.coordinates = coordinates;
+        this.name = name;
+        this.logo = logo;
     }
 
     @Override
@@ -151,7 +155,7 @@ public class AboutFragment extends Fragment implements OnMapReadyCallback {
             gMap.getUiSettings().setTiltGesturesEnabled(false); // Explicitly disables tilting
             gMap.getUiSettings().setRotateGesturesEnabled(false); // Explicitly disables rotation
 
-            String[] coords = BarbersActivity.coordinates.split(" ");
+            String[] coords = coordinates.split(" ");
             String latitudeString = coords[0].replace(",", "").trim();
             String longitudeString = coords[1].replace(",", "").trim();
 
@@ -160,7 +164,7 @@ public class AboutFragment extends Fragment implements OnMapReadyCallback {
                 double longitude = Double.parseDouble(longitudeString);
                 LatLng location = new LatLng(latitude, longitude);
 
-                addCustomMarker(location, BarbersActivity.name, BarbersActivity.logo);
+                addCustomMarker(location, name, logo);
                 gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15)); // Zoom into marker
             } catch (NumberFormatException e) {
                 Log.i("coords", "Error parsing coordinates: " + e.getMessage());

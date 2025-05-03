@@ -43,15 +43,19 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     private List<Services> ListService;
     private List<Reviews> ListReviews;
     private  Map<String, TimeRange> openingTimes;
+    private  String coordinates,name,logo;
     private FragmentManager fragmentManager;
 
-    public CategoryAdapter(Context context, List<Category> categories, List<Barbers> ListSpecialist, List<Services> ListService, List<Reviews> ListReviews,Map<String, TimeRange> openingTimes, FragmentManager fragmentManager) {
+    public CategoryAdapter(Context context, List<Category> categories, List<Barbers> ListSpecialist, List<Services> ListService, List<Reviews> ListReviews,Map<String, TimeRange> openingTimes, String coordinates, String name, String logo,FragmentManager fragmentManager) {
         this.context = context;
         this.categories = categories;
         this.ListSpecialist = ListSpecialist;
         this.ListService = ListService;
         this.ListReviews = ListReviews;
         this.openingTimes = openingTimes;
+        this.coordinates = coordinates;
+        this.name = name;
+        this.logo = logo;
         this.fragmentManager = fragmentManager;
     }
 //    public CategoryAdapter(Context context, List<Category> categories, List<Barbers> ListSpecialist, List<Services> ListService, FragmentManager fragmentManager) {
@@ -108,7 +112,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
                         transaction.commit();
                         break;
                     case "About":
-                        Fragment aboutFragment = new AboutFragment(openingTimes);
+                        Fragment aboutFragment = new AboutFragment(openingTimes,coordinates,name,logo);
                         transaction.replace(R.id.info_container, aboutFragment);
                         transaction.addToBackStack(null);
                         transaction.commit();

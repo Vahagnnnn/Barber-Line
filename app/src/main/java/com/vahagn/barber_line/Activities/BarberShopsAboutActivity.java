@@ -56,6 +56,7 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
     List<Services> ListService = new ArrayList<>();
     List<Reviews> ListReviews = new ArrayList<>();
     Map<String, TimeRange> openingTimes;
+    String coordinates,nameMark,logo;
 
     ImageView heart;
 
@@ -110,6 +111,9 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
         ListSpecialist = BarbersActivity.ListSpecialist;
         ListReviews = BarbersActivity.ListReviews;
         openingTimes = BarbersActivity.openingTimes;
+        coordinates = BarbersActivity.coordinates;
+        nameMark = BarbersActivity.name;
+        logo = BarbersActivity.logo;
 
 
         if (ListSpecialist != null) {
@@ -168,7 +172,7 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
         categoryRecycler = findViewById(R.id.category);
         categoryRecycler.setLayoutManager(layoutManager);
 
-        categoryAdapter = new CategoryAdapter(this, categoryList, ListSpecialist, ListService, ListReviews, openingTimes, getSupportFragmentManager());
+        categoryAdapter = new CategoryAdapter(this, categoryList, ListSpecialist, ListService, ListReviews, openingTimes, coordinates,nameMark,logo, getSupportFragmentManager());
         categoryRecycler.setAdapter(categoryAdapter);
     }
 

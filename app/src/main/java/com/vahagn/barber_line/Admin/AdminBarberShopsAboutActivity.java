@@ -45,6 +45,7 @@ public class AdminBarberShopsAboutActivity extends AppCompatActivity {
     List<Services> ListService = new ArrayList<>();
     List<Reviews> ListReviews = new ArrayList<>();
     Map<String, TimeRange> openingTimes;
+    String coordinates,nameMark,logo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +79,9 @@ public class AdminBarberShopsAboutActivity extends AppCompatActivity {
         ListSpecialist = AdminSettingsActivity.ListSpecialist;
         ListReviews = AdminSettingsActivity.ListReviews;
         openingTimes = AdminSettingsActivity.openingTimes;
-
+        coordinates = AdminSettingsActivity.coordinates;
+        nameMark = AdminSettingsActivity.name;
+        logo = AdminSettingsActivity.logo;
 
         if (ListSpecialist != null) {
             Set<String> existingServiceNames = new HashSet<>();
@@ -111,6 +114,7 @@ public class AdminBarberShopsAboutActivity extends AppCompatActivity {
         categoryList.add(new Category(1, "Specialists", R.drawable.specialists, "#EDEFFB"));
         categoryList.add(new Category(2, "Services", R.drawable.scissors, "#242C3B"));
         categoryList.add(new Category(3, "Reviews", R.drawable.star_xml, "#242C3B"));
+        categoryList.add(new Category(4, "About", R.drawable.ic_about, "#242C3B"));
         setCategoryRecycler(categoryList);
 
     }
@@ -121,7 +125,7 @@ public class AdminBarberShopsAboutActivity extends AppCompatActivity {
         categoryRecycler = findViewById(R.id.category);
         categoryRecycler.setLayoutManager(layoutManager);
 
-        categoryAdapter = new CategoryAdapter(this, categoryList, ListSpecialist, ListService, ListReviews, openingTimes, getSupportFragmentManager());
+        categoryAdapter = new CategoryAdapter(this, categoryList, ListSpecialist, ListService, ListReviews, openingTimes, coordinates,nameMark,logo, getSupportFragmentManager());
 //        categoryAdapter = new CategoryAdapter(this, categoryList, ListSpecialist, ListService, getSupportFragmentManager());
         categoryRecycler.setAdapter(categoryAdapter);
     }
