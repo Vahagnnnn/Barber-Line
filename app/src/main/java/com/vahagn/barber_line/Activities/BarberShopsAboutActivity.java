@@ -50,7 +50,7 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
     ImageView image;
     @SuppressLint("StaticFieldLeak")
     public static TextView name;
-    TextView rating, address;
+    TextView rating, ReviewsCount, address;
 
     CategoryAdapter categoryAdapter;
     RecyclerView categoryRecycler;
@@ -64,6 +64,7 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
 
     public static boolean isAdmin;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +79,7 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
         image = findViewById(R.id.image);
         name = findViewById(R.id.name);
         rating = findViewById(R.id.rating);
+        ReviewsCount = findViewById(R.id.ReviewsCount);
         address = findViewById(R.id.address);
         back_section = findViewById(R.id.back_section);
         like_section = findViewById(R.id.like_section);
@@ -120,6 +122,11 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
         }
         ListSpecialist = BarbersActivity.ListSpecialist;
         ListReviews = BarbersActivity.ListReviews;
+        if (ListReviews != null) {
+            ReviewsCount.setText("(" + ListReviews.size() + ")");
+        } else {
+            ReviewsCount.setText("(0)");
+        }
         openingTimes = BarbersActivity.openingTimes;
         coordinates = BarbersActivity.coordinates;
         nameMark = BarbersActivity.name;
@@ -298,7 +305,6 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
                 userFavRef.child(String.valueOf(BarbersActivity.KeyId)).removeValue();
 
                 List<Integer> Favourite_Barbershops = MainActivity.userClass.getFavouriteBarbershops();
-
 
 
                 Log.i("barbershopId", String.valueOf(BarbersActivity.KeyId));
