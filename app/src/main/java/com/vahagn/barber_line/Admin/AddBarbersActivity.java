@@ -258,7 +258,9 @@ public class AddBarbersActivity extends AppCompatActivity {
         } else {
             CreateBarberShopActivity.ListSpecialist.add(new Barbers(String.valueOf(imageUri), BarberName_str, BarberPhoneNumber_str, ListServices));
             Toast.makeText(this, "The Barber has been added", Toast.LENGTH_SHORT).show();
-            navigateTo(CreateBarberShopActivity.class);
+//            navigateTo(CreateBarberShopActivity.class);
+            ToCreateBarberShop();
+
         }
     }
 
@@ -340,9 +342,16 @@ public class AddBarbersActivity extends AppCompatActivity {
         startActivity(intent, options.toBundle());
     }
 
-    public void ToCreateBarberShop(View view) {
-        onBackPressed();
+    public void ToCreateBarberShop() {
+        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
+                this,
+                findViewById(R.id.main),
+                "sharedImageTransition");
+        Intent intent = new Intent(this, CreateBarberShopActivity.class);
+        intent.putExtra("from_where", "AddBarbersActivity");
+        startActivity(intent, options.toBundle());
     }
+
 
     private int getPhoneNumberLength(String countryCode) {
         PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();

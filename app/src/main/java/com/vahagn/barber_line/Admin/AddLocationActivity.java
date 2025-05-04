@@ -85,7 +85,12 @@ public class AddLocationActivity extends AppCompatActivity implements OnMapReady
             Intent intent = new Intent(this, CreateBarberShopActivity.class);
             intent.putExtra("latitude", position.latitude);
             intent.putExtra("longitude", position.longitude);
+
+            CreateBarberShopActivity.latitudeGlobal=  position.latitude;
+            CreateBarberShopActivity.longitudeGlobal=  position.longitude;
+
             intent.putExtra("address", address);
+            intent.putExtra("from_where", "AddLocationActivity");
 
             ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
                     this,
@@ -93,6 +98,8 @@ public class AddLocationActivity extends AppCompatActivity implements OnMapReady
                     "sharedImageTransition");
 
             startActivity(intent, options.toBundle());
+
+
         } else {
             Toast.makeText(this, "Please select a location", Toast.LENGTH_SHORT).show();
         }
