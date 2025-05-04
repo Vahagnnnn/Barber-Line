@@ -83,23 +83,6 @@ public class LoginActivity extends AppCompatActivity {
 
         usersRef = FirebaseDatabase.getInstance().getReference("Users");
 
-//        continue_button.setOnTouchListener((v, event) -> {
-//            switch (event.getAction()) {
-//                case MotionEvent.ACTION_DOWN:
-//                    v.animate().alpha(0.8f).setDuration(50).start();
-//                    break;
-//                case MotionEvent.ACTION_UP:
-//                    v.animate().alpha(1.0f).setDuration(50).start();
-//                    signInUser();
-//                    break;
-//                case MotionEvent.ACTION_CANCEL:
-//                    v.animate().alpha(1.0f).setDuration(50).start();
-//                    break;
-//            }
-//            return true;
-//        });
-
-
         continue_button.setOnClickListener(v -> signInUser());
         googleSignInButton.setOnClickListener(v -> signIn());
 

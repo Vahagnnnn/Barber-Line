@@ -215,7 +215,7 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
-    public  void logOut() {
+    public void logOut() {
         FirebaseAuth.getInstance().signOut();
         SharedPreferences sharedPreferences = getSharedPreferences("UserInformation", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -253,24 +253,35 @@ public class SettingsActivity extends AppCompatActivity {
     public void ToBarberShopOwner(View view) {
         navigateTo(AdminActivity.class);
     }
+
     public void ToSuperAdminModerationActivity(View view) {
         navigateTo(SuperAdminModerationActivity.class);
     }
+
     public void ToMap(View view) {
         navigateTo(MapActivity.class);
     }
+
     public void ToAboutTheDeveloper(View view) {
         navigateTo(AboutDeveloperActivity.class);
     }
 
-    public void GoToFavourites(View view) {
+    public void ToFavourites(View view) {
+        navigateTo(FavouriteBarberShopsActivity.class);
+    }
+
+    public void ToNews(View view) {
+        navigateTo(NewsActivity.class);
+    }
+    public void ToReport(View view) {
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
                 this,
                 findViewById(R.id.main),
                 "sharedImageTransition");
-        Intent intent = new Intent(this, FavouriteBarberShopsActivity.class);
-//        intent.putExtra("To","Favourites");
-//        intent.putExtra("from_where", "Favourites");
+        Intent intent = new Intent(this, ReportActivity.class);
+        intent.putExtra("name",MainActivity.userClass.getFirst_name());
+        intent.putExtra("email",MainActivity.userClass.getEmail());
         startActivity(intent, options.toBundle());
+
     }
 }
