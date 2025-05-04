@@ -64,17 +64,17 @@ public class BarbersActivity extends AppCompatActivity {
         SpecialistsFragment.CanBook = true;
         secondActivityContainer = findViewById(R.id.barbers_list);
 
-        String To = getIntent().getStringExtra("To");
+//        String To = getIntent().getStringExtra("To");
 
-        if ("Favourites".equals(To)) {
-//            ReadBarberShops();
-
-//            ListBarberShops.clear();
-//            secondActivityContainer.removeAllViews();
-
-            Log.i("from_where", "ReadFavouritesBarberShops");
-            ReadFavouritesBarberShops();
-        } else
+//        if ("Favourites".equals(To)) {
+////            ReadBarberShops();
+//
+////            ListBarberShops.clear();
+////            secondActivityContainer.removeAllViews();
+//
+//            Log.i("from_where", "ReadFavouritesBarberShops");
+//            ReadFavouritesBarberShops();
+//        } else
             ReadBarberShops();
 
         searchView = findViewById(R.id.searchView);
@@ -120,82 +120,54 @@ public class BarbersActivity extends AppCompatActivity {
         });
 
     }
-//    private void ReadFavouritesBarberShops(){
+//    private void ReadFavouritesBarberShops() {
+//        if (!MainActivity.isLogin || MainActivity.userClass == null) {
+//            Toast.makeText(BarbersActivity.this, "Please log in to view favorites", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//
 //        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("barberShops");
 //        myRef.addValueEventListener(new ValueEventListener() {
 //            @Override
 //            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                ListBarberShops.clear();
+//                secondActivityContainer.removeAllViews();
 //                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//                    int KeyId = Integer.parseInt(Objects.requireNonNull(snapshot.getKey()));
+//                    String key = snapshot.getKey();
+//                    if (key == null) {
+//                        Log.w("BarbersActivity", "Invalid snapshot key");
+//                        continue;
+//                    }
+//                    int KeyId = Integer.parseInt(key);
 //
-//                    if (String.valueOf(MainActivity.userClass.getFavourite_Barbershops().get(KeyId)).equals("true")) {
+//                    String userClassKeyId;
+//                    try {
+//                        userClassKeyId = String.valueOf(MainActivity.userClass.getFavouriteBarbershops().get(KeyId));
+//                    } catch (Exception e) {
+//                        userClassKeyId = "false";
+//                    }
+//
+//                    if (userClassKeyId.equals("true")) {
 //
 //                        BarberShops shop = snapshot.getValue(BarberShops.class);
 //                        assert shop != null;
 //
-//                        addBarbershop(secondActivityContainer, KeyId ,shop.getLogo(),  shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getOwnerEmail(), shop.getCoordinates(), shop.getSpecialists(),shop.getReviews(), shop.getOpeningTimes());
+//                        addBarbershop(secondActivityContainer, KeyId, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getOwnerEmail(), shop.getCoordinates(), shop.getSpecialists(), shop.getReviews(), shop.getOpeningTimes());
 //                        ListBarberShops.add(new BarberShops(shop.getOwnerEmail(), shop.getName(), shop.getAddress(), shop.getCoordinates(), shop.getImage(), shop.getLogo(), shop.getRating(), shop.getReviews(), shop.getServices(), shop.getSpecialists(), shop.getOpeningTimes()));
 //                    }
-//
+//                }
+//                if (ListBarberShops.isEmpty()) {
+//                    Toast.makeText(BarbersActivity.this, "No favorite barbershops", Toast.LENGTH_SHORT).show();
 //                }
 //            }
 //
 //            @Override
 //            public void onCancelled(@NonNull DatabaseError databaseError) {
 //                Log.w("Firebase", "Failed to read value.", databaseError.toException());
+//                Toast.makeText(BarbersActivity.this, "Failed to load favorites", Toast.LENGTH_SHORT).show();
 //            }
 //        });
-//
 //    }
-
-    private void ReadFavouritesBarberShops() {
-        if (!MainActivity.isLogin || MainActivity.userClass == null) {
-            Toast.makeText(BarbersActivity.this, "Please log in to view favorites", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("barberShops");
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ListBarberShops.clear();
-                secondActivityContainer.removeAllViews();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    String key = snapshot.getKey();
-                    if (key == null) {
-                        Log.w("BarbersActivity", "Invalid snapshot key");
-                        continue;
-                    }
-                    int KeyId = Integer.parseInt(key);
-
-                    String userClassKeyId;
-                    try {
-                        userClassKeyId = String.valueOf(MainActivity.userClass.getFavouriteBarbershops().get(KeyId));
-                    } catch (Exception e) {
-                        userClassKeyId = "false";
-                    }
-
-                    if (userClassKeyId.equals("true")) {
-
-                        BarberShops shop = snapshot.getValue(BarberShops.class);
-                        assert shop != null;
-
-                        addBarbershop(secondActivityContainer, KeyId, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getOwnerEmail(), shop.getCoordinates(), shop.getSpecialists(), shop.getReviews(), shop.getOpeningTimes());
-                        ListBarberShops.add(new BarberShops(shop.getOwnerEmail(), shop.getName(), shop.getAddress(), shop.getCoordinates(), shop.getImage(), shop.getLogo(), shop.getRating(), shop.getReviews(), shop.getServices(), shop.getSpecialists(), shop.getOpeningTimes()));
-                    }
-                }
-                if (ListBarberShops.isEmpty()) {
-                    Toast.makeText(BarbersActivity.this, "No favorite barbershops", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.w("Firebase", "Failed to read value.", databaseError.toException());
-                Toast.makeText(BarbersActivity.this, "Failed to load favorites", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 
     private void filterBarbershops(String query) {
         filteredList.clear();

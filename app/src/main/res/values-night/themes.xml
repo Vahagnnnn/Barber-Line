@@ -3,6 +3,7 @@
     <style name="Base.Theme.BarberLine" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
         <item name="android:statusBarColor">#242C3B</item>
+        <item name="android:navigationBarColor">#242C3B</item>
         <item name="colorOnSurfaceVariant">#928f96</item>
     </style>
 

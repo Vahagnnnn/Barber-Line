@@ -27,6 +27,9 @@
         android:theme="@style/Theme.BarberLine"
         tools:targetApi="31">
         <activity
+            android:name=".Activities.FavouriteBarberShopsActivity"
+            android:exported="false" />
+        <activity
             android:name=".Admin.BarberProfileActivity"
             android:exported="false" />
         <activity

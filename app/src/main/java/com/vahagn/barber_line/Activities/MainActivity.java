@@ -50,6 +50,7 @@ import com.vahagn.barber_line.model.TopBarbers;
 import com.vahagn.barber_line.model.TopHaircuts;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -128,36 +129,42 @@ public class MainActivity extends AppCompatActivity {
                         String password = snapshot.child("password").getValue(String.class);
                         String phoneNumber = snapshot.child("phoneNumber").getValue(String.class);
                         String photoUrl = snapshot.child("photoUrl").getValue(String.class);
-                        List<Integer> Favourite_Barbershops = (List<Integer>) snapshot.child("Favourite_Barbershops").getValue();
-//
-//                        if (Favourite_Barbershops == null) {
-//                            Favourite_Barbershops = new ArrayList<>();
-//                        }
-//
-//
-//// Log the list
-//                        if (Favourite_Barbershops != null) {
-//                            Log.d("FavouriteBarbershops", "Favourite Barbershops: " + Favourite_Barbershops.toString());
-//                            if (MainActivity.userClass.getFavourite_Barbershops().contains(BarbersActivity.KeyId)) {
-//                                Log.d("FavouriteBarbershops", String.valueOf(BarbersActivity.KeyId));
-//
-//                            }
-//                        }
-//
-//                        if (Favourite_Barbershops == null) {
-//                            Log.d("FavouriteBarbershops", "No favourite barbershops found");
-//                            Favourite_Barbershops = new ArrayList<>();
+//                        List<Integer> Favourite_Barbershops = (List<Integer>) snapshot.child("Favourite_Barbershops").getValue();
 
-//                            if (MainActivity.userClass.getFavourite_Barbershops().contains(BarbersActivity.KeyId)) {
-//                                Log.d("FavouriteBarbershops", String.valueOf(BarbersActivity.KeyId));
-//
-//                            }
 
-//                            if (!Favourite_Barbershops.isEmpty()) {
-//                                Log.d("FavouriteBarbershops", String.valueOf(BarbersActivity.KeyId));
-//
-//                            }
+                        // Handling Favourite_Barbershops data
+                        List<Integer> Favourite_Barbershops = new ArrayList<>();
+                        Object favShops = snapshot.child("Favourite_Barbershops").getValue();
 
+                        if (favShops instanceof HashMap) {
+                            Log.w("UserInfo", "HashMap");
+                            HashMap<String, Boolean> map = (HashMap<String, Boolean>) favShops;
+                            for (String key : map.keySet()) {
+                                if (map.get(key) == true) {
+                                    try {
+                                        int shopId = Integer.parseInt(key);
+                                        Favourite_Barbershops.add(shopId);
+                                    } catch (NumberFormatException e) {
+                                        Log.w("UserInfo", "Invalid shop ID format: " + key, e);
+                                    }
+                                }
+                            }
+                        } else if (favShops instanceof List) {
+                            Log.w("UserInfo", "List");
+                            List<Boolean> favList = (List<Boolean>) favShops;
+                            for (int i = 0; i < favList.size(); i++) {
+                                if (favList.get(i) != null && favList.get(i)) {
+                                    // Index i corresponds to the shop ID
+                                    Favourite_Barbershops.add(i);
+                                }
+                            }
+                        } else {
+                            Log.w("UserInfo", "Unexpected data type for Favourite_Barbershops: " + favShops);
+                        }
+
+
+                        // Log the Favourite_Barbershops to see the values
+                        Log.d("UserInfo", "Favourite Barbershops: " + Favourite_Barbershops);
 
                         userClass = new Users(first_name, last_name, email, password, phoneNumber, photoUrl, Favourite_Barbershops);
 

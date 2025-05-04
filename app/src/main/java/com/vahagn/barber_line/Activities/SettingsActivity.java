@@ -268,9 +268,9 @@ public class SettingsActivity extends AppCompatActivity {
                 this,
                 findViewById(R.id.main),
                 "sharedImageTransition");
-        Intent intent = new Intent(this, BarbersActivity.class);
-        intent.putExtra("To","Favourites");
-        intent.putExtra("from_where", "Favourites");
+        Intent intent = new Intent(this, FavouriteBarberShopsActivity.class);
+//        intent.putExtra("To","Favourites");
+//        intent.putExtra("from_where", "Favourites");
         startActivity(intent, options.toBundle());
     }
 }
