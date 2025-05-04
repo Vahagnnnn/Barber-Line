@@ -43,6 +43,7 @@ public class FavouriteBarberShopsActivity extends AppCompatActivity {
     private List<BarberShops> ListBarberShops = new ArrayList<>();
 
     LinearLayout noFavorites;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -149,12 +150,21 @@ public class FavouriteBarberShopsActivity extends AppCompatActivity {
         container.addView(barbershopView);
     }
 
-    public void ToSettings(View view) {
+    private void navigateTo(Class<?> targetActivity) {
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
                 this,
                 findViewById(R.id.main),
                 "sharedImageTransition");
-        Intent intent = new Intent(this, SettingsActivity.class);
+        Intent intent = new Intent(this, targetActivity);
         startActivity(intent, options.toBundle());
+    }
+
+
+    public void ToSettings(View view) {
+        navigateTo(SettingsActivity.class);
+    }
+
+    public void ToBarbers(View view) {
+        navigateTo(BarbersActivity.class);
     }
 }

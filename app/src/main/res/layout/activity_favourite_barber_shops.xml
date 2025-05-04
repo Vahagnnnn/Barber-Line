@@ -60,11 +60,11 @@
 
     <LinearLayout
         android:id="@+id/noFavorites"
-        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="vertical"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -82,10 +82,20 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
             android:layout_marginTop="16dp"
             android:text="No favourite barbershops yet"
+            android:textColor="@color/white"
             android:textSize="16sp" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="#384B70"
+            android:onClick="ToBarbers"
+            android:text="Start searching"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
 
     </LinearLayout>
 
