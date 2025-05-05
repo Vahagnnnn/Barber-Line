@@ -2,6 +2,7 @@ package com.vahagn.barber_line.Admin;
 
 import static com.vahagn.barber_line.Activities.MainActivity.isLogin;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
@@ -150,5 +151,11 @@ public class AdminBarberShopsAboutActivity extends AppCompatActivity {
                 "sharedImageTransition");
         Intent intent = new Intent(this, targetActivity);
         startActivity(intent, options.toBundle());
+    }
+
+    @SuppressLint("MissingSuperCall")
+    @Override
+    public void onBackPressed() {
+        ToSetting(null);
     }
 }

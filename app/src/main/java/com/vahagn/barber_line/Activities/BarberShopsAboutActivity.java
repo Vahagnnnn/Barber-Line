@@ -63,7 +63,7 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
     ImageView heart;
 
     public static boolean isAdmin;
-
+  public   String from_where;
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +85,7 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
         like_section = findViewById(R.id.like_section);
         heart = findViewById(R.id.heart);
 
-        String from_where = getIntent().getStringExtra("from_where");
+        from_where  = getIntent().getStringExtra("from_where");
         if (Objects.equals(from_where, "SuperAdminModerationActivity")) {
             isAdmin = true;
             like_section.setVisibility(GONE);
@@ -160,22 +160,23 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
             transaction.replace(R.id.info_container, specialistsFragment);
             transaction.commit();
         }
-        back_section.setOnClickListener(v -> {
-            if (Objects.equals(from_where, "BarbersActivity"))
-                ToBarbers(v);
-            else if (Objects.equals(from_where, "MainActivity"))
-                ToHome(v);
-            else if (Objects.equals(from_where, "MapActivity"))
-                ToMap(v);
-            else if (Objects.equals(from_where, "AppointmentsAboutActivity"))
-                ToBooks(v);
-            else if (Objects.equals(from_where, "Favourites"))
-                GoToFavourites(v);
-            else if (Objects.equals(from_where, "SuperAdminModerationActivity"))
-                navigateTo(SuperAdminModerationActivity.class);
-            else
-                ToHome(v);
-        });
+        //            if (Objects.equals(from_where, "BarbersActivity"))
+        //                ToBarbers(v);
+        //            else if (Objects.equals(from_where, "MainActivity"))
+        //                ToHome(v);
+        //            else if (Objects.equals(from_where, "MapActivity"))
+        //                ToMap(v);
+        //            else if (Objects.equals(from_where, "AppointmentsAboutActivity"))
+        //                ToBooks(v);
+        //            else if (Objects.equals(from_where, "Favourites"))
+        //                GoToFavourites(v);
+        //            else if (Objects.equals(from_where, "SuperAdminModerationActivity"))
+        //                navigateTo(SuperAdminModerationActivity.class);
+        //            else
+        //                ToHome(v);
+
+        back_section.setOnClickListener(v -> Back());
+
         categoryList.add(new Category(1, "Specialists", R.drawable.specialists, "#EDEFFB"));
         categoryList.add(new Category(2, "Services", R.drawable.scissors, "#242C3B"));
         categoryList.add(new Category(3, "Reviews", R.drawable.star_xml, "#242C3B"));
@@ -331,5 +332,29 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
 //        intent.putExtra("To", "Favourites");
 //        intent.putExtra("from_where", "Favourites");
         startActivity(intent, options.toBundle());
+    }
+
+    private void Back()
+    {
+        if (Objects.equals(from_where, "BarbersActivity"))
+            ToBarbers(null);
+        else if (Objects.equals(from_where, "MainActivity"))
+            ToHome(null);
+        else if (Objects.equals(from_where, "MapActivity"))
+            ToMap(null);
+        else if (Objects.equals(from_where, "AppointmentsAboutActivity"))
+            ToBooks(null);
+        else if (Objects.equals(from_where, "Favourites"))
+            GoToFavourites(null);
+        else if (Objects.equals(from_where, "SuperAdminModerationActivity"))
+            navigateTo(SuperAdminModerationActivity.class);
+        else
+            ToHome(null);
+    }
+
+    @SuppressLint("MissingSuperCall")
+    @Override
+    public void onBackPressed() {
+        Back();
     }
 }
