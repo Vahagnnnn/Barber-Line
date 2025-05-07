@@ -52,10 +52,10 @@ public class SpecialistsFragment extends Fragment {
     private LinearLayout infoContainer;
     private List<Barbers> specialists;
 
-    public static boolean Edit,CanBook;
+    public static boolean Edit, CanBook;
 
 
-    public static String imageUrl, name, rating;
+    public static String imageUrl, name, rating,BarberEmail,joinType;
     public static List<Services> ListServices = new ArrayList<>();
 
     public SpecialistsFragment() {
@@ -102,42 +102,27 @@ public class SpecialistsFragment extends Fragment {
                 name = specialist.getName();
                 rating = String.valueOf(specialist.getRating());
             });
-//        } else if (Applicant_BarberActivity.Is_Applicant_BarberActivity) {
-//            specialistView.setOnClickListener(v -> {
-//                Intent intent = new Intent(getContext(), SpecialistActivity.class);
-//
-//                imageUrl = specialist.getImage();
-//                name = specialist.getName();
-//                rating = String.valueOf(specialist.getRating());
-//                ListServices = specialist.getServices();
-//
-//                startActivity(intent);
-//
-//                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-//                builder.setTitle(specialist.getName());
-//
-//                builder.setPositiveButton("Confirm", (dialog, which) -> {
-//                    Toast.makeText(getContext(), "Confirmed", Toast.LENGTH_SHORT).show();
-//                });
-//
-//
-//                builder.setNeutralButton("Cancel", (dialog, which) -> dialog.cancel());
-//                Toast.makeText(getContext(), "Rejected", Toast.LENGTH_SHORT).show();
-//
-//                builder.setNegativeButton("Reject", (dialog, which) -> {
-//                    Toast.makeText(getContext(), "Rejected", Toast.LENGTH_SHORT).show();
-//                });
-//
-//                builder.show();
-//            });
+        } else if (Applicant_BarberActivity.Is_Applicant_BarberActivity) {
+            specialistView.setOnClickListener(v -> {
+                Intent intent = new Intent(getContext(), SpecialistActivity.class);
+
+                imageUrl = specialist.getImage();
+                name = specialist.getName();
+                rating = String.valueOf(specialist.getRating());
+                ListServices = specialist.getServices();
+                BarberEmail = specialist.getEmail();
+                joinType = specialist.getJoinType();
+
+                startActivity(intent);
+            });
 
 
         } else if (SelectBarberForSendRequestActivity) {
             specialistView.setOnClickListener(v -> {
-                SelectBarberForSendRequestActivity =false;
+                SelectBarberForSendRequestActivity = false;
                 Toast.makeText(getContext(), "Request sent", Toast.LENGTH_SHORT).show();
 
-                Barbers Applicant_Barber = new Barbers(String.valueOf(specialist.getImage()), specialist.getName(), specialist.getPhoneNumber(), specialist.getServices(),specialist.getWorkPlace());
+                Barbers Applicant_Barber = new Barbers(String.valueOf(specialist.getImage()), specialist.getName(), specialist.getPhoneNumber(), specialist.getServices(), specialist.getWorkPlace(),BarberEmail,"Send Request");
                 AddApplicant_BarberDB(Applicant_Barber);
 
                 FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -147,18 +132,16 @@ public class SpecialistsFragment extends Fragment {
                             .child(currentUser.getUid());
 
 
-
                     Map<String, Object> updates = new HashMap<>();
                     updates.put("myWorkplaceName", specialist.getWorkPlace());
                     updates.put("myWorkplaceId", JoinToBarberShopActivity.BarbershopKeyId);
                     updates.put("myIdAsBarber", specialist.getBarberId());
                     updates.put("status", "pending");
                     userRef.updateChildren(updates);
-
                 }
 
             });
-        } else if (CanBook){
+        } else if (CanBook) {
             specialistView.setOnClickListener(v -> {
                 Intent intent = new Intent(getContext(), SpecialistActivity.class);
 
@@ -179,6 +162,8 @@ public class SpecialistsFragment extends Fragment {
 
         infoContainer.addView(specialistView);
     }
+
+
 
     private void showEditDeleteDialog(Barbers specialist) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -220,7 +205,7 @@ public class SpecialistsFragment extends Fragment {
         }
     }
 
-    private void AddApplicant_BarberDB(Barbers Applicant_Barber){
+    private void AddApplicant_BarberDB(Barbers Applicant_Barber) {
         DatabaseReference applicant_barbersShopsRef = FirebaseDatabase.getInstance().getReference("applicant_barbers");
 
         applicant_barbersShopsRef.get().addOnCompleteListener(task -> {

@@ -21,6 +21,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -46,8 +48,8 @@ public class JoinToBarberShopActivity extends AppCompatActivity {
     DatabaseReference barberShopsRef = FirebaseDatabase.getInstance().getReference("barberShops");
 
     private List<BarberShops> ListBarberShops = new ArrayList<>();
-    public static String BarbershopName;
-    public static int AsBarberKeyId,BarbershopKeyId;
+    public static String BarbershopName, BarberEmail;
+    public static int BarbershopKeyId;
     public static List<Barbers> ListSpecialistSendRequest = new ArrayList<>();
 
     private List<BarberShops> filtered_barbers_list = new ArrayList<>();
@@ -152,11 +154,11 @@ public class JoinToBarberShopActivity extends AppCompatActivity {
         }
         barbers_list_Layout.removeAllViews();
         for (BarberShops shop : filtered_barbers_list) {
-            addBarbershop(barbers_list_Layout, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getOwnerEmail(), shop.getCoordinates(), shop.getSpecialists(), shop.getReviews(), shop.getOpeningTimes(),shop.getKeyId());
+            addBarbershop(barbers_list_Layout, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getOwnerEmail(), shop.getCoordinates(), shop.getSpecialists(), shop.getReviews(), shop.getOpeningTimes(), shop.getKeyId());
         }
     }
 
-    public void addBarbershop(LinearLayout container, String logo, String imageUrl, String name, double rating, String address, String OwnerEmail, String coordinates, List<Barbers> ListSpecialist, List<Reviews> ListReviews, Map<String, TimeRange> openingTimes, int KeyId ) {
+    public void addBarbershop(LinearLayout container, String logo, String imageUrl, String name, double rating, String address, String OwnerEmail, String coordinates, List<Barbers> ListSpecialist, List<Reviews> ListReviews, Map<String, TimeRange> openingTimes, int KeyId) {
         View barbershopView = LayoutInflater.from(this).inflate(R.layout.barbershops_gray, container, false);
 
         ImageView logoImageView = barbershopView.findViewById(R.id.logo);
@@ -178,8 +180,13 @@ public class JoinToBarberShopActivity extends AppCompatActivity {
 
             builder.setPositiveButton("Send Request", (dialog, which) -> {
                 BarbershopName = name;
-                BarbershopKeyId= KeyId;
-                ListSpecialistSendRequest =ListSpecialist;
+                BarbershopKeyId = KeyId;
+                ListSpecialistSendRequest = ListSpecialist;
+
+                FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                assert currentUser != null;
+                BarberEmail = currentUser.getEmail();
+
                 navigateTo(SelectBarberForSendRequestActivity.class);
                 Toast.makeText(this, "SelectBarberForSendRequestActivity", Toast.LENGTH_SHORT).show();
 

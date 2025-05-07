@@ -66,6 +66,7 @@ public class AdminSettingsActivity extends AppCompatActivity {
 
     public static  List<Barbers> applicant_barber = new ArrayList<>();
 
+    LinearLayout wait_for_confirmation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +76,8 @@ public class AdminSettingsActivity extends AppCompatActivity {
         List_TextView = findViewById(R.id.List_TextView);
         loadingProgressBar = findViewById(R.id.loading_progress_bar);
         loadingProgressBar.setVisibility(View.VISIBLE);
+        wait_for_confirmation = findViewById(R.id.wait_for_confirmation);
+        wait_for_confirmation.setVisibility(View.VISIBLE);
 
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -94,6 +97,7 @@ public class AdminSettingsActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                barbershops_list.removeAllViews();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     BarberShops shop = snapshot.getValue(BarberShops.class);
                     if (shop != null && Objects.equals(shop.getOwnerEmail(), ownerEmail)) {
@@ -121,6 +125,7 @@ public class AdminSettingsActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                barbershops_list.removeAllViews();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     BarberShops shop = snapshot.getValue(BarberShops.class);
                     if (shop != null && Objects.equals(shop.getOwnerEmail(), ownerEmail)) {
@@ -147,6 +152,7 @@ public class AdminSettingsActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                barbershops_list.removeAllViews();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     BarberShops shop = snapshot.getValue(BarberShops.class);
                     if (shop != null && Objects.equals(shop.getOwnerEmail(), ownerEmail)) {
