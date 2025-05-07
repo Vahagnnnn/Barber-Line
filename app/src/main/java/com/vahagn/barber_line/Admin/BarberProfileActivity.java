@@ -1,5 +1,6 @@
 package com.vahagn.barber_line.Admin;
 
+import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
 import android.annotation.SuppressLint;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -43,6 +45,7 @@ import com.vahagn.barber_line.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class BarberProfileActivity extends AppCompatActivity {
     public static boolean SpecialistActivity;
@@ -50,7 +53,9 @@ public class BarberProfileActivity extends AppCompatActivity {
     ImageView profileImageView;
     TextView nameText, phoneNumberText, ratingText;
 
-    LinearLayout wait_for_confirmation ;
+    LinearLayout aboutLayout, wait_for_confirmation;
+    ConstraintLayout settingLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +72,8 @@ public class BarberProfileActivity extends AppCompatActivity {
         phoneNumberText = findViewById(R.id.phoneNumberText);
         ratingText = findViewById(R.id.ratingText);
 
+        aboutLayout = findViewById(R.id.aboutLayout);
+        settingLayout = findViewById(R.id.settingLayout);
         wait_for_confirmation = findViewById(R.id.wait_for_confirmation);
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -80,20 +87,23 @@ public class BarberProfileActivity extends AppCompatActivity {
             usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    Integer myWorkplaceId = dataSnapshot.child("myWorkplaceId").getValue(Integer.class);
-                    Integer myIdAsBarber = dataSnapshot.child("myIdAsBarber").getValue(Integer.class);
+                    if (!Objects.equals(dataSnapshot.child("status").getValue(String.class), "pending")) {
+                        Integer myWorkplaceId = dataSnapshot.child("myWorkplaceId").getValue(Integer.class);
+                        Integer myIdAsBarber = dataSnapshot.child("myIdAsBarber").getValue(Integer.class);
 
-//                    Log.i("barberShopsId", String.valueOf(myWorkplaceId));
-//                    Log.i("barberShopsId", String.valueOf(myIdAsBarber));
+                        if (myWorkplaceId != null && myIdAsBarber != null) {
+                            setInfo(myIdAsBarber, myWorkplaceId);
+                        } else {
+                            Toast.makeText(BarberProfileActivity.this, "Insufficient data to load the profile", Toast.LENGTH_SHORT).show();
+                            Log.e("barberShopsId", "myWorkplaceId or myIdAsBarber is null");
+                        }
 
-                    if (myWorkplaceId != null && myIdAsBarber != null) {
-                        setInfo(myIdAsBarber, myWorkplaceId);
-                    } else {
-                        Toast.makeText(BarberProfileActivity.this, "Insufficient data to load the profile", Toast.LENGTH_SHORT).show();
-                        Log.e("barberShopsId", "myWorkplaceId or myIdAsBarber is null");
-                    }
-
-                    setInfo(myWorkplaceId, myIdAsBarber);
+                        aboutLayout.setVisibility(VISIBLE);
+                        settingLayout.setVisibility(VISIBLE);
+                        wait_for_confirmation.setVisibility(GONE);
+                        setInfo(myWorkplaceId, myIdAsBarber);
+                    } else
+                        wait_for_confirmation.setVisibility(VISIBLE);
                 }
 
                 @Override
@@ -103,8 +113,7 @@ public class BarberProfileActivity extends AppCompatActivity {
             });
         }
 
-        if (nameText.getText() == "Name Surname")
-        {
+        if (nameText.getText() == "Name Surname") {
 
         }
     }

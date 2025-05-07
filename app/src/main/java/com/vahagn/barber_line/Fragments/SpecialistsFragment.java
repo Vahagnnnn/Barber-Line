@@ -152,6 +152,7 @@ public class SpecialistsFragment extends Fragment {
                     updates.put("myWorkplaceName", specialist.getWorkPlace());
                     updates.put("myWorkplaceId", JoinToBarberShopActivity.BarbershopKeyId);
                     updates.put("myIdAsBarber", specialist.getBarberId());
+                    updates.put("status", "pending");
                     userRef.updateChildren(updates);
 
                 }

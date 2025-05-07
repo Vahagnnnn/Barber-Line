@@ -211,7 +211,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/aboutLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
@@ -219,6 +219,7 @@
         android:layout_marginTop="24dp"
         android:clipToPadding="false"
         android:gravity="center"
+        android:visibility="gone"
         android:orientation="vertical"
         android:paddingLeft="140dp"
         android:paddingTop="8dp"
@@ -302,7 +303,7 @@
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
+        android:id="@+id/settingLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
@@ -310,7 +311,7 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        app:layout_constraintTop_toBottomOf="@+id/aboutLayout">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/container_group2"
