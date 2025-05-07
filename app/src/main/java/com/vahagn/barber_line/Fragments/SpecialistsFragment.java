@@ -146,9 +146,14 @@ public class SpecialistsFragment extends Fragment {
                             .getReference("Users")
                             .child(currentUser.getUid());
 
+
+
                     Map<String, Object> updates = new HashMap<>();
                     updates.put("myWorkplaceName", specialist.getWorkPlace());
+                    updates.put("myWorkplaceId", JoinToBarberShopActivity.BarbershopKeyId);
+                    updates.put("myIdAsBarber", specialist.getBarberId());
                     userRef.updateChildren(updates);
+
                 }
 
             });

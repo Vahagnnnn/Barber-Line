@@ -45,8 +45,8 @@ public class TopBarbersAdapter extends RecyclerView.Adapter<TopBarbersAdapter.To
         this.TopBarbers_WithID = TopBarbers_WithID;
 
         for (Barbers barbers : TopBarbers_WithID) {
-            Log.i("getBarberById", "BarberId " + barbers.getBarberId());
-            Log.i("getBarberById", "BarberShopsId " + barbers.getBarberShopsId());
+//            Log.i("getBarberById", "BarberId " + barbers.getBarberId());
+//            Log.i("getBarberById", "BarberShopsId " + barbers.getBarberShopsId());
             getBarberById(barbers.getBarberId(), barbers.getBarberShopsId());
         }
 
@@ -76,7 +76,7 @@ public class TopBarbersAdapter extends RecyclerView.Adapter<TopBarbersAdapter.To
 //                    Log.i("getBarberById", "BarberPhoneNumberFOR " + barber.getPhone());
                     if (barber != null && barberId == barber.getBarberId()) {
 //                        Log.i("getBarberById", "IF " );
-                        Log.i("getBarberById", "BarberNameIF = " + barber.getName() + " BarberShopsId = " + barber.getBarberShopsId() + " BarberId = " + barber.getBarberId());
+//                        Log.i("getBarberById", "BarberNameIF = " + barber.getName() + " BarberShopsId = " + barber.getBarberShopsId() + " BarberId = " + barber.getBarberId());
                         TopBarbers.add(barber);
 //                        Log.i("getBarberById", "ADD " );
                         notifyDataSetChanged();

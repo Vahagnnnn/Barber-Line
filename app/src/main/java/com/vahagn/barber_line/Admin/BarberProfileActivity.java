@@ -2,6 +2,7 @@ package com.vahagn.barber_line.Admin;
 
 import static android.view.View.VISIBLE;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,13 +22,19 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.vahagn.barber_line.Activities.MainActivity;
 import com.vahagn.barber_line.Activities.ServicesActivity;
+import com.vahagn.barber_line.Activities.SettingsActivity;
 import com.vahagn.barber_line.Classes.Barbers;
 import com.vahagn.barber_line.Classes.Services;
 import com.vahagn.barber_line.Fragments.ServicesFragment;
@@ -38,56 +45,118 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BarberProfileActivity extends AppCompatActivity {
-    public static String imageUrl,name, rating;
-    public static List<Services> ListServices = new ArrayList<>();
-
-    TextView BarberNameTop, BarberName, BarberRating ,Confirmed_Rejected;
-    ImageView BarberImage;
     public static boolean SpecialistActivity;
 
+    ImageView profileImageView;
+    TextView nameText, phoneNumberText, ratingText;
 
+    LinearLayout wait_for_confirmation ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_barber_profile);
-
         SpecialistActivity = true;
 
-        BarberNameTop = findViewById(R.id.BarberNameTop);
-        BarberName = findViewById(R.id.BarberName);
-        BarberImage = findViewById(R.id.BarberImage);
-        BarberRating = findViewById(R.id.BarberRating);
-        Confirmed_Rejected = findViewById(R.id.Confirmed_Rejected);
-
-        BarberNameTop.setText(name);
-        BarberName.setText(name);
-        BarberRating.setText(rating);
-
-        if (imageUrl != null && !imageUrl.isEmpty()) {
-            Glide.with(BarberProfileActivity.this)
-                    .load(imageUrl)
-                    .into(BarberImage);
-        }
-
-
-        ServicesFragment servicesFragment = new ServicesFragment(ListServices);
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.info_container, servicesFragment);
-        transaction.commit();
-
+        ReadBarberID();
 
     }
 
+    private void ReadBarberID() {
+        profileImageView = findViewById(R.id.profileImageView);
+        nameText = findViewById(R.id.nameText);
+        phoneNumberText = findViewById(R.id.phoneNumberText);
+        ratingText = findViewById(R.id.ratingText);
+
+        wait_for_confirmation = findViewById(R.id.wait_for_confirmation);
+
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (currentUser != null) {
+
+            String uid = currentUser.getUid();
+            DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("Users").child(uid);
+
+
+            usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Integer myWorkplaceId = dataSnapshot.child("myWorkplaceId").getValue(Integer.class);
+                    Integer myIdAsBarber = dataSnapshot.child("myIdAsBarber").getValue(Integer.class);
+
+//                    Log.i("barberShopsId", String.valueOf(myWorkplaceId));
+//                    Log.i("barberShopsId", String.valueOf(myIdAsBarber));
+
+                    if (myWorkplaceId != null && myIdAsBarber != null) {
+                        setInfo(myIdAsBarber, myWorkplaceId);
+                    } else {
+                        Toast.makeText(BarberProfileActivity.this, "Insufficient data to load the profile", Toast.LENGTH_SHORT).show();
+                        Log.e("barberShopsId", "myWorkplaceId or myIdAsBarber is null");
+                    }
+
+                    setInfo(myWorkplaceId, myIdAsBarber);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.e("Firebase", "Database error: " + databaseError.getMessage());
+                }
+            });
+        }
+
+        if (nameText.getText() == "Name Surname")
+        {
+
+        }
+    }
+
+    private void setInfo(Integer barberShopsId, Integer barberId) {
+        DatabaseReference barberShopsRef = FirebaseDatabase.getInstance().getReference("barberShops").child(String.valueOf(barberShopsId)).child("specialists");
+
+        barberShopsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot child : snapshot.getChildren()) {
+                    Barbers barber = child.getValue(Barbers.class);
+                    if (barber != null && barberId == barber.getBarberId()) {
+                        nameText.setText(barber.getName());
+                        String phone = barber.getPhoneNumber().substring(0, 4) + " " +
+                                barber.getPhoneNumber().substring(4, 6) + " " +
+                                barber.getPhoneNumber().substring(6, 8) + " " +
+                                barber.getPhoneNumber().substring(8);
+                        phoneNumberText.setText(phone);
+                        ratingText.setText(barber.getRating() + "★");
+
+                        String image = barber.getImage();
+                        if (image != null && !image.isEmpty()) {
+                            Glide.with(BarberProfileActivity.this).load(image).apply(RequestOptions.bitmapTransform(new RoundedCorners(100))).into(profileImageView);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w("Firebase", "Failed to read value.", error.toException());
+            }
+        });
+    }
+
     private void navigateTo(Class<?> targetActivity) {
-        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
-                this,
-                findViewById(R.id.main),
-                "sharedImageTransition");
+        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this, findViewById(R.id.main), "sharedImageTransition");
         Intent intent = new Intent(this, targetActivity);
         startActivity(intent, options.toBundle());
     }
 
     public void ToAdminSettings(View view) {
         navigateTo(AdminSettingsActivity.class);
+    }
+
+    public void ToBooks(View view) {
+        navigateTo(AdminBooksActivity.class);
+    }
+
+    public void ToAdmin(View view) {
+        navigateTo(AdminActivity.class);
     }
 }

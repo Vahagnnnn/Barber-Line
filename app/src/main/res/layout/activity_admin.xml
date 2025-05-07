@@ -42,7 +42,7 @@
                 android:fontFamily="@font/montserrat_bold"
                 android:gravity="center"
                 android:singleLine="true"
-                android:text="Create Barber Shop"
+                android:text="Create a Barber Shop"
                 android:textColor="#FFFFFFFF"
                 android:textSize="16sp" />
         </FrameLayout>
@@ -72,7 +72,7 @@
                 android:fontFamily="@font/montserrat_bold"
                 android:gravity="center"
                 android:singleLine="true"
-                android:text="Join To Barber Shop"
+                android:text="Join a Barber Shop"
                 android:textColor="#FFFFFFFF"
                 android:textSize="16sp" />
         </FrameLayout>

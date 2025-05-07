@@ -250,10 +250,10 @@ public class AddBarbersActivity extends AppCompatActivity {
             AddApplicant_BarberDB(Applicant_Barber);
             JoinToBarberShopActivity.JoinToBarberShopActivity_REGISTER = false;
 
-            BarberProfileActivity.name = BarberName_str;
-            BarberProfileActivity.rating = "5.0";
-            BarberProfileActivity.ListServices = ListServices;
-            BarberProfileActivity.imageUrl = String.valueOf(imageUri);
+//            BarberProfileActivity.name = BarberName_str;
+//            BarberProfileActivity.rating = "5.0";
+//            BarberProfileActivity.ListServices = ListServices;
+//            BarberProfileActivity.imageUrl = String.valueOf(imageUri);
             navigateTo(AdminActivity.class);
         } else {
             CreateBarberShopActivity.ListSpecialist.add(new Barbers(String.valueOf(imageUri), BarberName_str, BarberPhoneNumber_str, ListServices));

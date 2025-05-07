@@ -38,6 +38,7 @@ import com.vahagn.barber_line.R;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class JoinToBarberShopActivity extends AppCompatActivity {
 
@@ -46,6 +47,7 @@ public class JoinToBarberShopActivity extends AppCompatActivity {
 
     private List<BarberShops> ListBarberShops = new ArrayList<>();
     public static String BarbershopName;
+    public static int AsBarberKeyId,BarbershopKeyId;
     public static List<Barbers> ListSpecialistSendRequest = new ArrayList<>();
 
     private List<BarberShops> filtered_barbers_list = new ArrayList<>();
@@ -63,13 +65,58 @@ public class JoinToBarberShopActivity extends AppCompatActivity {
         barbers_list_Layout = findViewById(R.id.barbers_list);
 
         barberShopsRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                    BarberShops shop = snapshot.getValue(BarberShops.class);
+//
+//                    assert shop != null;
+//                    addBarbershop(barbers_list_Layout, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getOwnerEmail(), shop.getCoordinates(), shop.getSpecialists(), shop.getReviews(), shop.getOpeningTimes(), Integer.parseInt(Objects.requireNonNull(snapshot.getKey())));
+//                    ListBarberShops.add(new BarberShops( Integer.parseInt(Objects.requireNonNull(snapshot.getKey())),shop.getOwnerEmail(), shop.getName(), shop.getAddress(), shop.getCoordinates(), shop.getImage(), shop.getLogo(), shop.getRating(), shop.getReviews(), shop.getServices(), shop.getSpecialists(), shop.getOpeningTimes()));
+//                }
+//            }
+
+
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     BarberShops shop = snapshot.getValue(BarberShops.class);
+                    int barbershopKey = Integer.parseInt(Objects.requireNonNull(snapshot.getKey()));
 
-                    addBarbershop(barbers_list_Layout, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getOwnerEmail(), shop.getCoordinates(), shop.getSpecialists(), shop.getReviews(), shop.getOpeningTimes());
-                    ListBarberShops.add(new BarberShops(shop.getOwnerEmail(), shop.getName(), shop.getAddress(), shop.getCoordinates(), shop.getImage(), shop.getLogo(), shop.getRating(), shop.getReviews(), shop.getServices(), shop.getSpecialists(), shop.getOpeningTimes()));
+                    List<Barbers> specialistsWithKeys = new ArrayList<>();
+
+                    DataSnapshot specialistsSnapshot = snapshot.child("specialists");
+                    for (DataSnapshot specialistSnap : specialistsSnapshot.getChildren()) {
+                        Barbers specialist = specialistSnap.getValue(Barbers.class);
+                        String specialistKey = specialistSnap.getKey();
+
+                        if (specialist != null) {
+                            assert specialistKey != null;
+                            specialist.setBarberId(Integer.parseInt(specialistKey));
+                            specialistsWithKeys.add(specialist);
+                        }
+                    }
+
+                    if (shop != null) {
+                        shop.setSpecialists(specialistsWithKeys);
+
+                        addBarbershop(barbers_list_Layout, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getOwnerEmail(), shop.getCoordinates(), specialistsWithKeys, shop.getReviews(), shop.getOpeningTimes(), barbershopKey);
+
+                        ListBarberShops.add(new BarberShops(
+                                barbershopKey,
+                                shop.getOwnerEmail(),
+                                shop.getName(),
+                                shop.getAddress(),
+                                shop.getCoordinates(),
+                                shop.getImage(),
+                                shop.getLogo(),
+                                shop.getRating(),
+                                shop.getReviews(),
+                                shop.getServices(),
+                                specialistsWithKeys,
+                                shop.getOpeningTimes()
+                        ));
+                    }
                 }
             }
 
@@ -105,11 +152,11 @@ public class JoinToBarberShopActivity extends AppCompatActivity {
         }
         barbers_list_Layout.removeAllViews();
         for (BarberShops shop : filtered_barbers_list) {
-            addBarbershop(barbers_list_Layout, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getOwnerEmail(), shop.getCoordinates(), shop.getSpecialists(), shop.getReviews(), shop.getOpeningTimes());
+            addBarbershop(barbers_list_Layout, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getOwnerEmail(), shop.getCoordinates(), shop.getSpecialists(), shop.getReviews(), shop.getOpeningTimes(),shop.getKeyId());
         }
     }
 
-    public void addBarbershop(LinearLayout container, String logo, String imageUrl, String name, double rating, String address, String OwnerEmail, String coordinates, List<Barbers> ListSpecialist, List<Reviews> ListReviews, Map<String, TimeRange> openingTimes) {
+    public void addBarbershop(LinearLayout container, String logo, String imageUrl, String name, double rating, String address, String OwnerEmail, String coordinates, List<Barbers> ListSpecialist, List<Reviews> ListReviews, Map<String, TimeRange> openingTimes, int KeyId ) {
         View barbershopView = LayoutInflater.from(this).inflate(R.layout.barbershops_gray, container, false);
 
         ImageView logoImageView = barbershopView.findViewById(R.id.logo);
@@ -131,8 +178,10 @@ public class JoinToBarberShopActivity extends AppCompatActivity {
 
             builder.setPositiveButton("Send Request", (dialog, which) -> {
                 BarbershopName = name;
-                ListSpecialistSendRequest = ListSpecialist;
+                BarbershopKeyId= KeyId;
+                ListSpecialistSendRequest =ListSpecialist;
                 navigateTo(SelectBarberForSendRequestActivity.class);
+                Toast.makeText(this, "SelectBarberForSendRequestActivity", Toast.LENGTH_SHORT).show();
 
             });
 
