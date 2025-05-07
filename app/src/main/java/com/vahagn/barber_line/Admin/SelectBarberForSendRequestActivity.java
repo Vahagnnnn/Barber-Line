@@ -19,11 +19,14 @@ import com.vahagn.barber_line.R;
 
 public class SelectBarberForSendRequestActivity extends AppCompatActivity {
 
+    public static boolean SelectBarberForSendRequestActivity;
     TextView BarbershopName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_barber_for_send_request);
+        SelectBarberForSendRequestActivity = true;
 
 
         BarbershopName = findViewById(R.id.BarbershopName);
@@ -48,5 +51,12 @@ public class SelectBarberForSendRequestActivity extends AppCompatActivity {
 
     public void ToJoinToBarberShop(View view) {
         navigateTo(JoinToBarberShopActivity.class);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        SelectBarberForSendRequestActivity = false;
     }
 }

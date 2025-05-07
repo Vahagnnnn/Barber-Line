@@ -58,6 +58,7 @@ public class JoinToBarberShopActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join_to_barber_shop);
+        SelectBarberForSendRequestActivity.SelectBarberForSendRequestActivity = false;
 
         barbers_list_Layout = findViewById(R.id.barbers_list);
 

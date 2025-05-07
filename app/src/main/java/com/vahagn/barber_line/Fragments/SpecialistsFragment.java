@@ -1,5 +1,7 @@
 package com.vahagn.barber_line.Fragments;
 
+import static com.vahagn.barber_line.Admin.SelectBarberForSendRequestActivity.SelectBarberForSendRequestActivity;
+
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,11 +17,16 @@ import android.widget.LinearLayout;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.vahagn.barber_line.Activities.DateTimeActivity;
 import com.vahagn.barber_line.Activities.ServicesActivity;
 import com.vahagn.barber_line.Activities.SettingsActivity;
 import com.vahagn.barber_line.Activities.SpecialistActivity;
 import com.vahagn.barber_line.Admin.AddBarbersActivity;
+import com.vahagn.barber_line.Admin.AdminActivity;
 import com.vahagn.barber_line.Admin.Applicant_BarberActivity;
 import com.vahagn.barber_line.Admin.CreateBarberShopActivity;
 import com.vahagn.barber_line.Admin.JoinToBarberShopActivity;
@@ -37,7 +44,9 @@ import com.vahagn.barber_line.Classes.Barbers;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SpecialistsFragment extends Fragment {
     private LinearLayout infoContainer;
@@ -103,7 +112,7 @@ public class SpecialistsFragment extends Fragment {
 //                ListServices = specialist.getServices();
 //
 //                startActivity(intent);
-
+//
 //                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 //                builder.setTitle(specialist.getName());
 //
@@ -121,6 +130,28 @@ public class SpecialistsFragment extends Fragment {
 //
 //                builder.show();
 //            });
+
+
+        } else if (SelectBarberForSendRequestActivity) {
+            specialistView.setOnClickListener(v -> {
+                SelectBarberForSendRequestActivity =false;
+                Toast.makeText(getContext(), "Request sent", Toast.LENGTH_SHORT).show();
+
+                Barbers Applicant_Barber = new Barbers(String.valueOf(specialist.getImage()), specialist.getName(), specialist.getPhoneNumber(), specialist.getServices(),specialist.getWorkPlace());
+                AddApplicant_BarberDB(Applicant_Barber);
+
+                FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                if (currentUser != null) {
+                    DatabaseReference userRef = FirebaseDatabase.getInstance()
+                            .getReference("Users")
+                            .child(currentUser.getUid());
+
+                    Map<String, Object> updates = new HashMap<>();
+                    updates.put("myWorkplaceName", specialist.getWorkPlace());
+                    userRef.updateChildren(updates);
+                }
+
+            });
         } else if (CanBook){
             specialistView.setOnClickListener(v -> {
                 Intent intent = new Intent(getContext(), SpecialistActivity.class);
@@ -131,9 +162,6 @@ public class SpecialistsFragment extends Fragment {
                 ListServices = specialist.getServices();
 
                 startActivity(intent);
-
-//                Toast.makeText(getContext(), specialist.getName(), Toast.LENGTH_SHORT).show();
-
             });
         }
         if (CreateBarberShopActivity.isCreateBarberShopActivity) {
@@ -185,4 +213,28 @@ public class SpecialistsFragment extends Fragment {
             addSpecialist(specialist);
         }
     }
+
+    private void AddApplicant_BarberDB(Barbers Applicant_Barber){
+        DatabaseReference applicant_barbersShopsRef = FirebaseDatabase.getInstance().getReference("applicant_barbers");
+
+        applicant_barbersShopsRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                long newId = task.getResult().getChildrenCount();
+                applicant_barbersShopsRef.child(String.valueOf(newId)).setValue(Applicant_Barber)
+                        .addOnCompleteListener(storeTask -> {
+                            if (storeTask.isSuccessful()) {
+                                Toast.makeText(getContext(), "Store successful", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(getContext(), AdminActivity.class);
+                                startActivity(intent);
+                            } else {
+                                Toast.makeText(getContext(), "Failed to store user data", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            } else {
+                Toast.makeText(getContext(), "Failed to retrieve data", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
 }
