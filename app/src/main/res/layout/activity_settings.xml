@@ -313,7 +313,7 @@
                     android:includeFontPadding="false"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:text="@string/bank_cards"
+                    android:text="Bank Cards -"
                     android:textColor="#FF000000"
                     android:textSize="16sp" />
             </FrameLayout>
@@ -415,7 +415,7 @@
                     android:includeFontPadding="false"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:text="@string/language"
+                    android:text="Language -"
                     android:textColor="#FF000000"
                     android:textSize="16sp" />
             </FrameLayout>

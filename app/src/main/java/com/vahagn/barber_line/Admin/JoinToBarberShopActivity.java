@@ -45,6 +45,8 @@ public class JoinToBarberShopActivity extends AppCompatActivity {
     DatabaseReference barberShopsRef = FirebaseDatabase.getInstance().getReference("barberShops");
 
     private List<BarberShops> ListBarberShops = new ArrayList<>();
+    public static String BarbershopName;
+    public static List<Barbers> ListSpecialistSendRequest = new ArrayList<>();
 
     private List<BarberShops> filtered_barbers_list = new ArrayList<>();
     LinearLayout barbers_list_Layout;
@@ -127,7 +129,10 @@ public class JoinToBarberShopActivity extends AppCompatActivity {
             builder.setTitle("Join To " + name);
 
             builder.setPositiveButton("Send Request", (dialog, which) -> {
-                Toast.makeText(this, "Send Request", Toast.LENGTH_SHORT).show();
+                BarbershopName = name;
+                ListSpecialistSendRequest = ListSpecialist;
+                navigateTo(SelectBarberForSendRequestActivity.class);
+
             });
 
 

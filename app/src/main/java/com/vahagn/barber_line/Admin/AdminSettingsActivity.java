@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,11 +60,9 @@ public class AdminSettingsActivity extends AppCompatActivity {
 
     String ownerEmail;
 
-//    FrameLayout Confirm_List_Layout, Wait_List_Layout, Rejected_List_Layout;
     TextView List_TextView;
     LinearLayout barbershops_list;
-
-//    TextView Confirm_List_TextView, Wait_List_TextView, Rejected_List_TextView;
+    private ProgressBar loadingProgressBar;
 
     public static  List<Barbers> applicant_barber = new ArrayList<>();
 
@@ -71,20 +70,12 @@ public class AdminSettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_settings);
+
         barbershops_list = findViewById(R.id.barbershops_list);
-//        LinearLayout confirm_barbershops_container = findViewById(R.id.confirm_barbershops_list);
-//        LinearLayout pending_barbershops_container = findViewById(R.id.pending_barbershops_list);
-//        LinearLayout rejected_barbershops_container = findViewById(R.id.rejected_barbershops_list);
-
         List_TextView = findViewById(R.id.List_TextView);
+        loadingProgressBar = findViewById(R.id.loading_progress_bar);
+        loadingProgressBar.setVisibility(View.VISIBLE);
 
-//        Confirm_List_TextView = findViewById(R.id.Confirm_List_TextView);
-//        Wait_List_TextView = findViewById(R.id.Wait_List_TextView);
-//        Rejected_List_TextView = findViewById(R.id.Rejected_List_TextView);
-
-//        Confirm_List_TextView.setVisibility(GONE);
-//        Wait_List_TextView.setVisibility(GONE);
-//        Rejected_List_TextView.setVisibility(GONE);
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
@@ -93,18 +84,10 @@ public class AdminSettingsActivity extends AppCompatActivity {
             ownerEmail = "";
         }
         AddConfirm(null);
-
-//        Confirm_List_Layout = findViewById(R.id.Confirm_List_Layout);
-//        Wait_List_Layout = findViewById(R.id.Wait_List_Layout);
-//        Rejected_List_Layout = findViewById(R.id.Rejected_List_Layout);
-//
-//        Confirm_List_Layout.setOnClickListener(v -> AddConfirm(ownerEmail));
-//        Wait_List_Layout.setOnClickListener(v -> AddWait(ownerEmail));
-//        Rejected_List_Layout.setOnClickListener(v -> AddRejected(ownerEmail));
-
     }
 
     public void AddConfirm(View view) {
+        loadingProgressBar.setVisibility(View.VISIBLE);
         List_TextView.setText("Operating Barbershops");
         barbershops_list.removeAllViews();
         barberShopsRef.addValueEventListener(new ValueEventListener() {
@@ -118,16 +101,19 @@ public class AdminSettingsActivity extends AppCompatActivity {
                         workPlace = shop.getName();
                     }
                 }
+                loadingProgressBar.setVisibility(View.GONE);
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.w("Firebase", "Failed to read value.", databaseError.toException());
+                loadingProgressBar.setVisibility(View.GONE);
             }
         });
     }
 
     public void AddWait(View view) {
+        loadingProgressBar.setVisibility(View.VISIBLE);
         List_TextView.setText("Pending Barbershops");
         barbershops_list.removeAllViews();
 
@@ -138,20 +124,22 @@ public class AdminSettingsActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     BarberShops shop = snapshot.getValue(BarberShops.class);
                     if (shop != null && Objects.equals(shop.getOwnerEmail(), ownerEmail)) {
-//                        Log.i("pendingRef",shop.getName());
                         addBarbershop(shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(),shop.getCoordinates(), shop.getSpecialists(), shop.getReviews(), shop.getOpeningTimes());
                     }
                 }
+                loadingProgressBar.setVisibility(View.GONE);
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.w("Firebase", "Failed to read value.", databaseError.toException());
+                loadingProgressBar.setVisibility(View.GONE);
             }
         });
     }
 
     public void AddRejected(View view) {
+        loadingProgressBar.setVisibility(View.VISIBLE);
         List_TextView.setText("Rejected Barbershops");
         barbershops_list.removeAllViews();
 
@@ -166,11 +154,13 @@ public class AdminSettingsActivity extends AppCompatActivity {
                         List_TextView.setText("Rejected Barbershops");
                     }
                 }
+                loadingProgressBar.setVisibility(View.GONE);
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.w("Firebase", "Failed to read value.", databaseError.toException());
+                loadingProgressBar.setVisibility(View.GONE);
             }
         });
     }

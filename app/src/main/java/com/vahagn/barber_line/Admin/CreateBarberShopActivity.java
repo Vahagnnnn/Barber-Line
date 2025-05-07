@@ -141,9 +141,11 @@ public class CreateBarberShopActivity extends AppCompatActivity implements OnMap
         if (Objects.equals(from_where, "AddBarbersActivity") || Objects.equals(from_where, "AddLocationActivity")) {
             if (BarberShopImageUriGlobal != null) {
                 Glide.with(this).load(BarberShopImageUriGlobal).into(BarberShopImage);
+                BarberShopImageUri = BarberShopImageUriGlobal;
             }
             if (BarberShopLogoUriGlobal != null) {
                 Glide.with(this).load(BarberShopLogoUriGlobal).into(BarberShopLogo);
+                BarberShopLogoUri = BarberShopLogoUriGlobal;
             }
             if (BarberShopNameGlobal != null) {
                 BarberShopName.setText(BarberShopNameGlobal);
@@ -397,6 +399,17 @@ public class CreateBarberShopActivity extends AppCompatActivity implements OnMap
 
         BarberShops BarberShop = new BarberShops(ownerEmail, BarberShopName_str, address, coordinates, String.valueOf(BarberShopImageUri), String.valueOf(BarberShopLogoUri), "pending", ListSpecialist, openingTimes);
         addBarberShop(BarberShop);
+
+        if (currentUser != null) {
+            DatabaseReference userRef = FirebaseDatabase.getInstance()
+                    .getReference("Users")
+                    .child(currentUser.getUid());
+
+            Map<String, Object> updates = new HashMap<>();
+            updates.put("myBarbershopName", BarberShopName_str);
+
+            userRef.updateChildren(updates);
+        }
     }
 
     public void addBarberShop(BarberShops BarberShop) {

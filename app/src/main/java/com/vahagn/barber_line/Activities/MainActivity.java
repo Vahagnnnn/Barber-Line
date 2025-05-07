@@ -112,20 +112,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-//    private void filterBarbershops(String query) {
-//        filteredList.clear();
-//        for (BarberShops barbershop : TopBarberShopsList) {
-//            if (barbershop.getName().toLowerCase().contains(query.toLowerCase())) {
-//                filteredList.add(barbershop);
-//            }
-//        }
-//        TopBarberShopsList.clear();
-//        for (BarberShops shop : filteredList) {
-//            TopBarberShopsList.add(new BarberShops(shop.getKeyId(), shop.getOwnerEmail(), shop.getName(), shop.getAddress(), shop.getCoordinates(), shop.getImage(), shop.getLogo(), shop.getRating(), shop.getReviews(), shop.getServices(), shop.getSpecialists(), shop.getOpeningTimes()));
-//        }
-//        setTopBarberShopsRecycler(TopBarberShopsList);
-//    }
-
     private void filterBarbershops(String query) {
         if (query == null || query.trim().isEmpty()) {
             TopBarberShopsList.clear();
@@ -242,31 +228,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-
-
-//    private void SetTopBarberShops() {
-//        myRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                TopBarberShopsList.clear();
-//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//                    int KeyId = Integer.parseInt(Objects.requireNonNull(snapshot.getKey()));
-//
-//                    BarberShops shop = snapshot.getValue(BarberShops.class);
-//                    assert shop != null;
-//
-//                    TopBarberShopsList.add(new BarberShops(KeyId, shop.getOwnerEmail(), shop.getName(), shop.getAddress(), shop.getCoordinates(), shop.getImage(), shop.getLogo(), shop.getRating(), shop.getReviews(), shop.getServices(), shop.getSpecialists(), shop.getOpeningTimes()));
-//                }
-//                setTopBarberShopsRecycler(TopBarberShopsList);
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//                Log.w("Firebase", "Failed to read value.", databaseError.toException());
-//            }
-//        });
-//    }
 
     private void SetTopBarbers() {
         TopBarbers.addValueEventListener(new ValueEventListener() {
