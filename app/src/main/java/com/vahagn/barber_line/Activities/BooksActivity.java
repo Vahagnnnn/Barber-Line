@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -46,7 +47,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class BooksActivity extends AppCompatActivity {
-
     RecyclerView appointmentsRecyclerView;
     List<Appointment> AppointmentsList = new ArrayList<>();
     AppointmentAdapter appointmentAdapter;
@@ -55,11 +55,15 @@ public class BooksActivity extends AppCompatActivity {
 
     public static LinearLayout NewAppointmentsLayout;
 
+    private ProgressBar loadingProgressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_books);
         NewAppointmentsLayout = findViewById(R.id.NewAppointmentsLayout);
+        loadingProgressBar = findViewById(R.id.loading_progress_bar);
+        loadingProgressBar.setVisibility(View.VISIBLE);
 
 
         appointmentsRecyclerView = findViewById(R.id.appointments_recycler_view);
@@ -88,13 +92,22 @@ public class BooksActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 AppointmentsList.clear();
+                boolean hasAppointments = false;
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Appointment appointment = snapshot.getValue(Appointment.class);
                     if (appointment != null && appointment.getUserEmail().equals(userEmail)) {
-                        NewAppointmentsLayout.setVisibility(GONE);
                         AppointmentsList.add(appointment);
+                        hasAppointments = true;
                     }
                 }
+                loadingProgressBar.setVisibility(View.GONE);
+
+                if (hasAppointments) {
+                    NewAppointmentsLayout.setVisibility(GONE);
+                } else {
+                    NewAppointmentsLayout.setVisibility(View.VISIBLE);
+                }
+
                 appointmentAdapter.notifyDataSetChanged();
             }
 

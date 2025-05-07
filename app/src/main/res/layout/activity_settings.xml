@@ -589,6 +589,7 @@
             android:id="@+id/container_book"
             android:layout_width="49dp"
             android:layout_height="wrap_content"
+            android:onClick="ToBooks"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/img_hairstyle"
             app:layout_constraintStart_toEndOf="@id/container_home_fill"

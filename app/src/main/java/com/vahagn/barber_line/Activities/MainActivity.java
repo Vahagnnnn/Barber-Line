@@ -1,32 +1,19 @@
 package com.vahagn.barber_line.Activities;
 
 
-import android.Manifest;
 import android.app.ActivityOptions;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationCompat;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -35,18 +22,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.vahagn.barber_line.Admin.AdminActivity;
-import com.vahagn.barber_line.Admin.AdminBooksActivity;
 import com.vahagn.barber_line.Admin.Applicant_BarberActivity;
 import com.vahagn.barber_line.Classes.BarberShops;
 import com.vahagn.barber_line.Classes.Barbers;
 import com.vahagn.barber_line.Classes.Users;
 import com.vahagn.barber_line.Fragments.SpecialistsFragment;
-import com.vahagn.barber_line.Notification.AlarmScheduler;
 import com.vahagn.barber_line.R;
 import com.vahagn.barber_line.adapter.TopBarberShopsAdapter;
 import com.vahagn.barber_line.adapter.TopBarbersAdapter;
 import com.vahagn.barber_line.adapter.TopHaircutsAdapter;
-import com.vahagn.barber_line.model.TopBarbers;
 import com.vahagn.barber_line.model.TopHaircuts;
 
 import java.util.ArrayList;
@@ -63,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     TopBarbersAdapter topbarbersAdapter;
     TopHaircutsAdapter tophaircutsAdapter;
 
-    public static List<BarberShops> TopBarberShopsList = new ArrayList<>();
+    public static List<BarberShops> originalTopBarberShopsList = new ArrayList<>(),  TopBarberShopsList = new ArrayList<>(), filteredList = new ArrayList<>();
     List<Barbers> TopBarbersList = new ArrayList<>();
     List<TopHaircuts> TopHaircutsList = new ArrayList<>();
 
@@ -74,7 +58,8 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     public static Users userClass;
 
-    //    TextView Barber_Line_Text;
+    private SearchView searchView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,7 +95,57 @@ public class MainActivity extends AppCompatActivity {
 //        Barber_Line_Text = findViewById(R.id.Barber_Line_Text);
 //        Barber_Line_Text.setOnClickListener(v -> showNotification());
 
+
+        searchView = findViewById(R.id.searchView);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // Not used here, but you can implement actions on submit if needed
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterBarbershops(newText);
+                return false;
+            }
+        });
     }
+
+//    private void filterBarbershops(String query) {
+//        filteredList.clear();
+//        for (BarberShops barbershop : TopBarberShopsList) {
+//            if (barbershop.getName().toLowerCase().contains(query.toLowerCase())) {
+//                filteredList.add(barbershop);
+//            }
+//        }
+//        TopBarberShopsList.clear();
+//        for (BarberShops shop : filteredList) {
+//            TopBarberShopsList.add(new BarberShops(shop.getKeyId(), shop.getOwnerEmail(), shop.getName(), shop.getAddress(), shop.getCoordinates(), shop.getImage(), shop.getLogo(), shop.getRating(), shop.getReviews(), shop.getServices(), shop.getSpecialists(), shop.getOpeningTimes()));
+//        }
+//        setTopBarberShopsRecycler(TopBarberShopsList);
+//    }
+
+    private void filterBarbershops(String query) {
+        if (query == null || query.trim().isEmpty()) {
+            TopBarberShopsList.clear();
+            TopBarberShopsList.addAll(originalTopBarberShopsList);
+            setTopBarberShopsRecycler(TopBarberShopsList);
+            return;
+        }
+
+        filteredList.clear();
+        for (BarberShops barbershop : originalTopBarberShopsList) {
+            if (barbershop.getName().toLowerCase().contains(query.toLowerCase())) {
+                filteredList.add(barbershop);
+            }
+        }
+
+        TopBarberShopsList.clear();
+        TopBarberShopsList.addAll(filteredList);
+        setTopBarberShopsRecycler(TopBarberShopsList);
+    }
+
 
     private void ReadUserInfo() {
         DatabaseReference UsersRef = FirebaseDatabase.getInstance().getReference("Users");
@@ -184,13 +219,19 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 TopBarberShopsList.clear();
+                originalTopBarberShopsList.clear();
+
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     int KeyId = Integer.parseInt(Objects.requireNonNull(snapshot.getKey()));
-
                     BarberShops shop = snapshot.getValue(BarberShops.class);
                     assert shop != null;
 
-                    TopBarberShopsList.add(new BarberShops(KeyId, shop.getOwnerEmail(), shop.getName(), shop.getAddress(), shop.getCoordinates(), shop.getImage(), shop.getLogo(), shop.getRating(), shop.getReviews(), shop.getServices(), shop.getSpecialists(), shop.getOpeningTimes()));
+                    BarberShops newShop = new BarberShops(KeyId, shop.getOwnerEmail(), shop.getName(), shop.getAddress(),
+                            shop.getCoordinates(), shop.getImage(), shop.getLogo(), shop.getRating(), shop.getReviews(),
+                            shop.getServices(), shop.getSpecialists(), shop.getOpeningTimes());
+
+                    TopBarberShopsList.add(newShop);
+                    originalTopBarberShopsList.add(newShop);
                 }
                 setTopBarberShopsRecycler(TopBarberShopsList);
             }
@@ -201,6 +242,31 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
+//    private void SetTopBarberShops() {
+//        myRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                TopBarberShopsList.clear();
+//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                    int KeyId = Integer.parseInt(Objects.requireNonNull(snapshot.getKey()));
+//
+//                    BarberShops shop = snapshot.getValue(BarberShops.class);
+//                    assert shop != null;
+//
+//                    TopBarberShopsList.add(new BarberShops(KeyId, shop.getOwnerEmail(), shop.getName(), shop.getAddress(), shop.getCoordinates(), shop.getImage(), shop.getLogo(), shop.getRating(), shop.getReviews(), shop.getServices(), shop.getSpecialists(), shop.getOpeningTimes()));
+//                }
+//                setTopBarberShopsRecycler(TopBarberShopsList);
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                Log.w("Firebase", "Failed to read value.", databaseError.toException());
+//            }
+//        });
+//    }
 
     private void SetTopBarbers() {
         TopBarbers.addValueEventListener(new ValueEventListener() {

@@ -64,18 +64,8 @@ public class BarbersActivity extends AppCompatActivity {
         SpecialistsFragment.CanBook = true;
         secondActivityContainer = findViewById(R.id.barbers_list);
 
-//        String To = getIntent().getStringExtra("To");
+        ReadBarberShops();
 
-//        if ("Favourites".equals(To)) {
-////            ReadBarberShops();
-//
-////            ListBarberShops.clear();
-////            secondActivityContainer.removeAllViews();
-//
-//            Log.i("from_where", "ReadFavouritesBarberShops");
-//            ReadFavouritesBarberShops();
-//        } else
-            ReadBarberShops();
 
         searchView = findViewById(R.id.searchView);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

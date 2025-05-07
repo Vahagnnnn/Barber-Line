@@ -1,5 +1,7 @@
 package com.vahagn.barber_line.Activities;
 
+import static com.vahagn.barber_line.Activities.MainActivity.isLogin;
+
 import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
@@ -200,7 +202,7 @@ public class SettingsActivity extends AppCompatActivity {
                                             FirebaseAuth.getInstance().signOut();
 
                                             Toast.makeText(SettingsActivity.this, "Account has been removed.", Toast.LENGTH_SHORT).show();
-                                            MainActivity.isLogin = false;
+                                            isLogin = false;
                                             Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
                                             startActivity(intent);
                                             finish();
@@ -222,7 +224,7 @@ public class SettingsActivity extends AppCompatActivity {
         editor.clear();
         editor.apply();
         Toast.makeText(SettingsActivity.this, "You have been logged out.", Toast.LENGTH_SHORT).show();
-        MainActivity.isLogin = false;
+        isLogin = false;
         MainActivity.userClass = null;
         Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
         startActivity(intent);
@@ -241,7 +243,12 @@ public class SettingsActivity extends AppCompatActivity {
     public void ToHome(View view) {
         navigateTo(MainActivity.class);
     }
-
+    public void ToBooks(View view) {
+        if (isLogin)
+            navigateTo(BooksActivity.class);
+        else
+            navigateTo(LoginActivity.class);
+    }
     public void ToBarbers(View view) {
         navigateTo(BarbersActivity.class);
     }
