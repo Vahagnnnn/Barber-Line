@@ -51,9 +51,9 @@ public class BarberProfileActivity extends AppCompatActivity {
     public static boolean SpecialistActivity;
 
     ImageView profileImageView;
-    TextView nameText, phoneNumberText, ratingText;
+    TextView nameText, phoneNumberText, ratingText,reject_reason_Text;
 
-    LinearLayout aboutLayout, wait_for_confirmation;
+    LinearLayout aboutLayout, wait_for_confirmation,rejected;
     ConstraintLayout settingLayout;
 
     @Override
@@ -71,10 +71,12 @@ public class BarberProfileActivity extends AppCompatActivity {
         nameText = findViewById(R.id.nameText);
         phoneNumberText = findViewById(R.id.phoneNumberText);
         ratingText = findViewById(R.id.ratingText);
+        reject_reason_Text = findViewById(R.id.reject_reason_Text);
 
         aboutLayout = findViewById(R.id.aboutLayout);
         settingLayout = findViewById(R.id.settingLayout);
         wait_for_confirmation = findViewById(R.id.wait_for_confirmation);
+        rejected = findViewById(R.id.rejected);
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -87,7 +89,17 @@ public class BarberProfileActivity extends AppCompatActivity {
             usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if (!Objects.equals(dataSnapshot.child("status").getValue(String.class), "pending")) {
+                    if (Objects.equals(dataSnapshot.child("status").getValue(String.class), "pending")) {
+                        rejected.setVisibility(GONE);
+                        wait_for_confirmation.setVisibility(VISIBLE);
+                    }
+                    else if(Objects.equals(dataSnapshot.child("status").getValue(String.class), "rejected"))
+                    {
+                        wait_for_confirmation.setVisibility(GONE);
+                        rejected.setVisibility(VISIBLE);
+                        reject_reason_Text.setText("Reason: "+ dataSnapshot.child("rejection_reason").getValue(String.class));
+                    }
+                    else {
                         Integer myWorkplaceId = dataSnapshot.child("myWorkplaceId").getValue(Integer.class);
                         Integer myIdAsBarber = dataSnapshot.child("myIdAsBarber").getValue(Integer.class);
 
@@ -101,9 +113,9 @@ public class BarberProfileActivity extends AppCompatActivity {
                         aboutLayout.setVisibility(VISIBLE);
                         settingLayout.setVisibility(VISIBLE);
                         wait_for_confirmation.setVisibility(GONE);
+                        rejected.setVisibility(GONE);
                         setInfo(myWorkplaceId, myIdAsBarber);
-                    } else
-                        wait_for_confirmation.setVisibility(VISIBLE);
+                    }
                 }
 
                 @Override

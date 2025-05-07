@@ -122,10 +122,13 @@ public class SpecialistsFragment extends Fragment {
                 SelectBarberForSendRequestActivity = false;
                 Toast.makeText(getContext(), "Request sent", Toast.LENGTH_SHORT).show();
 
+                FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+                BarberEmail = currentUser.getEmail();
+
                 Barbers Applicant_Barber = new Barbers(String.valueOf(specialist.getImage()), specialist.getName(), specialist.getPhoneNumber(), specialist.getServices(), specialist.getWorkPlace(),BarberEmail,"Send Request");
                 AddApplicant_BarberDB(Applicant_Barber);
 
-                FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
                 if (currentUser != null) {
                     DatabaseReference userRef = FirebaseDatabase.getInstance()
                             .getReference("Users")
