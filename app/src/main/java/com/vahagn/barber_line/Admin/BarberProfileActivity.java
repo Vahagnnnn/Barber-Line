@@ -5,6 +5,8 @@ import static android.view.View.VISIBLE;
 
 import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -45,7 +47,9 @@ import com.vahagn.barber_line.Fragments.SpecialistsFragment;
 import com.vahagn.barber_line.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class BarberProfileActivity extends AppCompatActivity {
@@ -68,10 +72,6 @@ public class BarberProfileActivity extends AppCompatActivity {
         FrameLayout joinToBarberShop = findViewById(R.id.joinToBarberShop);
         joinToBarberShop.setOnClickListener(view ->
         {
-            Log.i("myBarbershopName", String.valueOf(AdminActivity.myBarbershopName));
-            Log.i("myBarbershopName", String.valueOf(AdminActivity.myWorkplaceName));
-            Log.i("myBarbershopName", String.valueOf(AdminActivity.status));
-
             if (AdminActivity.myBarbershopName == null && AdminActivity.myWorkplaceName == null) {
                 navigateTo(JoinToBarberShopActivity.class);
             } else if (AdminActivity.myBarbershopName != null && !Objects.equals(AdminActivity.status, "rejected"))
@@ -83,6 +83,92 @@ public class BarberProfileActivity extends AppCompatActivity {
         });
 
     }
+
+
+//    public void RemoveBarberAccount(View view) {
+//        new AlertDialog.Builder(this)
+//                .setTitle("Confirm Deletion")
+//                .setMessage("Are you sure you want to remove your account?")
+//                .setPositiveButton("Yes", (dialog, which) -> {
+//                    FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+//                    DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(currentUser.getUid());
+//
+//                    Map<String, Object> updates = new HashMap<>();
+//                    updates.put("myWorkplaceName", null);
+//                    updates.put("myWorkplaceId", null);
+//                    updates.put("myIdAsBarber", null);
+//                    updates.put("status", null);
+//
+//                    userRef.updateChildren(updates);
+//
+//                    DatabaseReference barberShopsRef = FirebaseDatabase.getInstance()
+//                            .getReference("barberShops").
+//                            child(String.valueOf(AdminActivity.barberShopsId))
+//                            .child("specialists")
+//                            .child(String.valueOf(AdminActivity.barberId));
+//
+//                    Map<String, Object> update_status = new HashMap<>();
+//                    update_status.put("status", "deleted");
+//
+//                    barberShopsRef.updateChildren(update_status);
+//
+//                    navigateTo(AdminActivity.class);
+//                })
+//                .setNegativeButton("Cancel", null)
+//                .show();
+//
+//    }
+
+    public void RemoveBarberAccount(View view) {
+        new AlertDialog.Builder(this)
+                .setTitle("Confirm Deletion")
+                .setMessage("Are you sure you want to remove your account?")
+                .setPositiveButton("Yes", (dialog, which) -> {
+                    FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+                    if (currentUser == null) {
+                        return;
+                    }
+
+                    String uid = currentUser.getUid();
+
+                    DatabaseReference userRef = FirebaseDatabase.getInstance()
+                            .getReference("Users")
+                            .child(uid);
+
+                    Map<String, Object> updates = new HashMap<>();
+                    updates.put("myWorkplaceName", null);
+                    updates.put("myWorkplaceId", null);
+                    updates.put("myIdAsBarber", null);
+                    updates.put("status", null);
+
+                    userRef.updateChildren(updates)
+                            .addOnSuccessListener(aVoid -> Log.d("RemoveBarberAccount", "User fields cleared"))
+                            .addOnFailureListener(e -> Log.e("RemoveBarberAccount", "Failed to update user fields", e));
+
+                    String barberShopsId = String.valueOf(AdminActivity.barberShopsId);
+                    String barberId = String.valueOf(AdminActivity.barberId);
+
+                    DatabaseReference barberShopsRef = FirebaseDatabase.getInstance()
+                            .getReference("barberShops")
+                            .child(barberShopsId)
+                            .child("specialists")
+                            .child(barberId);
+
+                    Map<String, Object> update_status = new HashMap<>();
+                    update_status.put("status", "deleted");
+
+                    barberShopsRef.updateChildren(update_status)
+                            .addOnSuccessListener(aVoid -> {
+                                Log.d("RemoveBarberAccount", "Specialist status set to deleted");
+                                navigateTo(AdminActivity.class);
+                            })
+                            .addOnFailureListener(e -> Log.e("RemoveBarberAccount", "Failed to update specialist status", e));
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
+    }
+
 
     private void ReadBarberID() {
         profileImageView = findViewById(R.id.profileImageView);
@@ -129,14 +215,6 @@ public class BarberProfileActivity extends AppCompatActivity {
                             Toast.makeText(BarberProfileActivity.this, "Insufficient data to load the profile", Toast.LENGTH_SHORT).show();
                             Log.e("barberShopsId", "myWorkplaceId or myIdAsBarber is null");
                         }
-
-//                        aboutLayout.setVisibility(VISIBLE);
-//                        settingLayout.setVisibility(VISIBLE);
-//                        wait_for_confirmation.setVisibility(GONE);
-//                        rejected.setVisibility(GONE);
-//                        Log.i("myWorkplaceId", String.valueOf(myWorkplaceId));
-//                        Log.i("myWorkplaceId", String.valueOf(myIdAsBarber));
-//                        setInfo(myWorkplaceId, myIdAsBarber);
                     }
                 }
 
@@ -154,7 +232,7 @@ public class BarberProfileActivity extends AppCompatActivity {
 
     private void setInfo(Integer barberShopsId, Integer barberId) {
         DatabaseReference barberShopsRef = FirebaseDatabase.getInstance().getReference("barberShops").child(String.valueOf(barberShopsId)).child("specialists");
-        Log.i("myWorkplaceId", "barberShopsId = " +barberShopsId);
+        Log.i("myWorkplaceId", "barberShopsId = " + barberShopsId);
 
         barberShopsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
@@ -167,7 +245,7 @@ public class BarberProfileActivity extends AppCompatActivity {
                     if (barber != null && barberId == barber.getBarberId()) {
                         nameText.setText(barber.getName());
                         String phone = barber.getPhoneNumber().substring(0, 5) + " " +
-                                barber.getPhoneNumber().substring( 5, 7) + " " +
+                                barber.getPhoneNumber().substring(5, 7) + " " +
                                 barber.getPhoneNumber().substring(7, 9) + " " +
                                 barber.getPhoneNumber().substring(9);
                         phoneNumberText.setText(phone);

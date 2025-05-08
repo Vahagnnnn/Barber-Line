@@ -75,7 +75,9 @@ public class SpecialistsFragment extends Fragment {
         infoContainer = view.findViewById(R.id.info_container);
         if (specialists != null) {
             for (Barbers specialist : specialists) {
-                addSpecialist(specialist);
+                if (specialist.getStatus() == null || !specialist.getStatus().equalsIgnoreCase("deleted")) {
+                    addSpecialist(specialist);
+                }
             }
         }
         return view;

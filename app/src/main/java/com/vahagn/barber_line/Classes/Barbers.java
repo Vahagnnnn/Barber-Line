@@ -16,6 +16,7 @@ public class Barbers implements Serializable {
     private List<Appointment> appointments;
     private String email;
     private String joinType;
+    private String status;
 
     public Barbers() {
     }
@@ -168,5 +169,13 @@ public class Barbers implements Serializable {
 
     public void setJoinType(String joinType) {
         this.joinType = joinType;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

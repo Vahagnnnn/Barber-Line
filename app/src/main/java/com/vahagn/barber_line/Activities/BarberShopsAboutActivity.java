@@ -160,20 +160,6 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
             transaction.replace(R.id.info_container, specialistsFragment);
             transaction.commit();
         }
-        //            if (Objects.equals(from_where, "BarbersActivity"))
-        //                ToBarbers(v);
-        //            else if (Objects.equals(from_where, "MainActivity"))
-        //                ToHome(v);
-        //            else if (Objects.equals(from_where, "MapActivity"))
-        //                ToMap(v);
-        //            else if (Objects.equals(from_where, "AppointmentsAboutActivity"))
-        //                ToBooks(v);
-        //            else if (Objects.equals(from_where, "Favourites"))
-        //                GoToFavourites(v);
-        //            else if (Objects.equals(from_where, "SuperAdminModerationActivity"))
-        //                navigateTo(SuperAdminModerationActivity.class);
-        //            else
-        //                ToHome(v);
 
         back_section.setOnClickListener(v -> Back());
 
