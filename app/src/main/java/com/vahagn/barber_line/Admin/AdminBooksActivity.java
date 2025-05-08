@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -70,15 +71,17 @@ public class AdminBooksActivity extends AppCompatActivity {
                 AppointmentsList.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Appointment appointment = snapshot.getValue(Appointment.class);
+//                    if (appointment != null && appointment.getBarbershopOwnerEmail().equals(userEmail)) {
+//                        AppointmentsList.add(appointment);
+//                    }
+                    if (appointment != null && AdminActivity.myBarbershopName != null) {
+                        if (appointment.getBarbershopOwnerEmail().equals(userEmail)) {
+                            AppointmentsList.add(appointment);
+                        }
+                    } else if (appointment != null && AdminActivity.myWorkplaceName != null) {
+                        if (appointment.getBarbershopOwnerEmail().equals(userEmail)) {
 
-                    if (appointment.getBarbershopOwnerEmail() != null) {
-                        Log.i("OwnerEmail", appointment.getBarbershopOwnerEmail());
-                    } else
-                        Log.i("OwnerEmail", "Null");
-
-
-                    if (appointment != null && appointment.getBarbershopOwnerEmail().equals(userEmail)) {
-                        AppointmentsList.add(appointment);
+                        }
                     }
                 }
                 appointmentAdapter.notifyDataSetChanged();
@@ -106,7 +109,15 @@ public class AdminBooksActivity extends AppCompatActivity {
     }
 
     public void ToSetting(View view) {
-        navigateTo(AdminSettingsActivity.class);
+        if (AdminActivity.myBarbershopName == null && AdminActivity.myWorkplaceName == null) {
+            Toast.makeText(this, "Create or join to barbershop", Toast.LENGTH_SHORT).show();
+        } else if (AdminActivity.myBarbershopName != null) {
+            navigateTo(AdminSettingsActivity.class);
+        } else {
+            navigateTo(BarberProfileActivity.class);
+        }
+
+//        navigateTo(AdminSettingsActivity.class);
     }
 
 }

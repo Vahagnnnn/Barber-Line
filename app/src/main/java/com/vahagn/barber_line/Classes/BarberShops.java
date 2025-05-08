@@ -8,7 +8,8 @@ import java.util.Map;
 
 @IgnoreExtraProperties
 public class BarberShops {
-    private int KeyId;
+//    private int KeyId;
+    private int barberShopsId;
     private String ownerEmail;
     private String name;
     private String address;
@@ -27,22 +28,22 @@ public class BarberShops {
     }
 
 
-    public BarberShops(int KeyId, String ownerEmail, String name, String address, String coordinates, String image, String logo, String status,
-                       List<Barbers> specialists, Map<String, TimeRange> openingTimes) {
-        this.KeyId = KeyId;
-        this.ownerEmail = ownerEmail;
-        this.name = name;
-        this.address = address;
-        this.coordinates = coordinates;
-        this.image = image;
-        this.logo = logo;
-        this.rating = 5;
-
-        this.status = status;
-
-        this.specialists = specialists;
-        this.openingTimes = openingTimes;
-    }
+//    public BarberShops(int KeyId, String ownerEmail, String name, String address, String coordinates, String image, String logo, String status,
+//                       List<Barbers> specialists, Map<String, TimeRange> openingTimes) {
+//        this.KeyId = KeyId;
+//        this.ownerEmail = ownerEmail;
+//        this.name = name;
+//        this.address = address;
+//        this.coordinates = coordinates;
+//        this.image = image;
+//        this.logo = logo;
+//        this.rating = 5;
+//
+//        this.status = status;
+//
+//        this.specialists = specialists;
+//        this.openingTimes = openingTimes;
+//    }
 
     public BarberShops(String ownerEmail, String name, String address, String coordinates, String image, String logo, String status,
                        List<Barbers> specialists, Map<String, TimeRange> openingTimes) {
@@ -53,16 +54,14 @@ public class BarberShops {
         this.image = image;
         this.logo = logo;
         this.rating = 5;
-
         this.status = status;
-
         this.specialists = specialists;
         this.openingTimes = openingTimes;
     }
 
-    public BarberShops(int KeyId, String ownerEmail, String name, String address, String coordinates, String image, String logo, double rating,
+    public BarberShops(int barberShopsId, String ownerEmail, String name, String address, String coordinates, String image, String logo, double rating,
                        List<Reviews> reviews, List<Services> services, List<Barbers> specialists, Map<String, TimeRange> openingTimes) {
-        this.KeyId = KeyId;
+        this.barberShopsId = barberShopsId;
         this.ownerEmail = ownerEmail;
         this.name = name;
         this.address = address;
@@ -92,12 +91,21 @@ public class BarberShops {
     }
 
 
-    public int getKeyId() {
-        return KeyId;
+//    public int getKeyId() {
+//        return KeyId;
+//    }
+//
+//    public void setKeyId(int keyId) {
+//        KeyId = keyId;
+//    }
+
+
+    public int getBarberShopsId() {
+        return barberShopsId;
     }
 
-    public void setKeyId(int keyId) {
-        KeyId = keyId;
+    public void setBarberShopsId(int barberShopsId) {
+        this.barberShopsId = barberShopsId;
     }
 
     public String getOwnerEmail() {

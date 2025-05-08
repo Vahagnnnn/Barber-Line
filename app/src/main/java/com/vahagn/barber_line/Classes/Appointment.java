@@ -22,14 +22,15 @@ public class Appointment implements Serializable {
     public String status;
     public String message_or_requests;
     public String uniqueID;
-
+    private int barberId;
+    private int barberShopsId;
     public Appointment() {
     }
 
     public Appointment(String userEmail,String userName, String barbershopImageUrl, String barbershopName,
                        String barbershopAddress,String barbershopCoordinates , String barbershopRating,String barbershopOwnerEmail,String weekDay_monthName_dayOfMonth,
                        String time, String barberImageUrl, String barberName, String barberRating,String serviceName,
-                       String servicePrice,String serviceDuration,String status,String message_or_requests,String uniqueID) {
+                       String servicePrice,String serviceDuration,String status,String message_or_requests,String uniqueID,int barberId, int barberShopsId) {
         this.userEmail = userEmail;
         this.userName = userName;
         this.barbershopImageUrl = barbershopImageUrl;
@@ -49,6 +50,8 @@ public class Appointment implements Serializable {
         this.status = status;
         this.message_or_requests = message_or_requests;
         this.uniqueID = uniqueID;
+        this.barberId = barberId;
+        this.barberShopsId = barberShopsId;
     }
 
     public String getUserEmail() {

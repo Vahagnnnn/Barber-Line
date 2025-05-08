@@ -42,6 +42,8 @@ public class ConfirmActivity extends AppCompatActivity {
 
     private DatabaseReference appointmentsRef;
 
+     int BarberId;
+     int BarberShopsId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,17 +53,13 @@ public class ConfirmActivity extends AppCompatActivity {
         BarberShopImageUrl_str = BarbersActivity.imageUrl;
         BarberShopName_str = BarbersActivity.name;
         BarberShopAddress_str = BarbersActivity.address;
-
-        if (BarbersActivity.coordinates != null) {
-            Log.i("BarbershopCoordinates_str","ConfirmActivity = " + BarbersActivity.coordinates);
-        } else {
-            Log.i("BarbershopCoordinates_str", "ConfirmActivity = " +"Message is null");
-        }
         BarbershopCoordinates_str = BarbersActivity.coordinates;
         BarberShopRating_str = BarbersActivity.rating;
         BarberShopOwnerEmail_str = BarbersActivity.OwnerEmail;
+
         weekDay_monthName_dayOfMonth_str = intent.getStringExtra("weekDay_monthName_dayOfMonth");
         Time_str = intent.getStringExtra("Time");
+
         BarberImageUrl_str = SpecialistsFragment.imageUrl;
         BarberName_str = SpecialistsFragment.name;
         BarberRating_str = String.valueOf(SpecialistsFragment.rating);
@@ -69,6 +67,8 @@ public class ConfirmActivity extends AppCompatActivity {
         ServicePrice_str = ServicesFragment.price;
         ServiceDuration_str = ServicesFragment.duration;
 
+        BarberId = BarbersActivity.KeyId;
+        BarberShopsId= BarbersActivity.KeyId;
 
         message_or_requests = findViewById(R.id.message_or_requests);
         BarberShopImage = findViewById(R.id.BarberShopImage);
@@ -139,7 +139,7 @@ public class ConfirmActivity extends AppCompatActivity {
 
         Appointment Appointment = new Appointment(UserEmail, UserName, BarberShopImageUrl_str, BarberShopName_str,
                 BarberShopAddress_str,BarbershopCoordinates_str, BarberShopRating_str,BarberShopOwnerEmail_str, weekDay_monthName_dayOfMonth_str, Time_str, BarberImageUrl_str,
-                BarberName_str, BarberRating_str, ServiceName_str, ServicePrice_str, ServiceDuration_str, "Active", message_or_requests_str, uniqueID);
+                BarberName_str, BarberRating_str, ServiceName_str, ServicePrice_str, ServiceDuration_str, "Active", message_or_requests_str, uniqueID,BarberId,BarberShopsId);
 
         appointmentsRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {

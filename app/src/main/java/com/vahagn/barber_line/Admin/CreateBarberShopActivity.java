@@ -60,7 +60,7 @@ public class CreateBarberShopActivity extends AppCompatActivity implements OnMap
     private EditText BarberShopName, BarberShopAddress;
     private EditText Address;
 
-    private DatabaseReference barberShopsRef;
+    private DatabaseReference pendingbarberShopsRef;
     private boolean isLogoSelected = false;
 
     private GoogleMap mMap;
@@ -89,7 +89,9 @@ public class CreateBarberShopActivity extends AppCompatActivity implements OnMap
     public static String BarberShopNameGlobal, BarberShopAddressGlobal;
     public static Uri BarberShopImageUriGlobal, BarberShopLogoUriGlobal;
     public static Map<String, TimeRange> openingTimesGlobal = new HashMap<>();
-    public static double latitudeGlobal,longitudeGlobal;
+    public static double latitudeGlobal, longitudeGlobal;
+
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +105,7 @@ public class CreateBarberShopActivity extends AppCompatActivity implements OnMap
         isCreateBarberShopActivity = true;
 
 
-        barberShopsRef = FirebaseDatabase.getInstance().getReference("pending_barbershops");
+        pendingbarberShopsRef = FirebaseDatabase.getInstance().getReference("pending_barbershops");
 
         FrameLayout Send_for_moderation = findViewById(R.id.Send_for_moderation);
         BarberShopImage = findViewById(R.id.BarberShopImage);
@@ -200,78 +202,6 @@ public class CreateBarberShopActivity extends AppCompatActivity implements OnMap
         Send_for_moderation.setOnClickListener(v -> Send_for_moderation());
     }
 
-//    private void setupDay(String day) {
-//        int startId = getResources().getIdentifier(day + "_start_spinner", "id", getPackageName());
-//        int endId = getResources().getIdentifier(day + "_end_spinner", "id", getPackageName());
-//
-//        Spinner openSpinner = findViewById(startId);
-//        Spinner closeSpinner = findViewById(endId);
-//
-//        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, timeOptions);
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//
-//        openSpinner.setAdapter(adapter);
-//        closeSpinner.setAdapter(adapter);
-//
-//        openSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-//                String selectedTime = (String) parentView.getItemAtPosition(position);
-//                if ("Closed".equals(selectedTime)) {
-//                    closeSpinner.setSelection(0);
-//                } else {
-//                    TimeRange timeRange = openingTimes.get(day);
-//                    if (timeRange == null) {
-//                        timeRange = new TimeRange();
-//                        openingTimes.put(day, timeRange);
-//                    }
-////                    TimeRange timeRange = new TimeRange();
-//                    timeRange.setOpen(selectedTime);
-//                    Log.i("timeRange", "getOpen = " + timeRange.getOpen());
-//                    Log.i("timeRange", "getClose = " + timeRange.getClose());
-//
-//                    if (!Objects.equals(timeRange.getClose(), "Closed")) {
-//                        Log.i("timeRange", "getOpen = " + timeRange.getOpen() + " getClose = " + timeRange.getClose());
-//                        openingTimes.put(day, timeRange);
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parentView) {
-//            }
-//        });
-//
-//        closeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-//                String selectedTime = (String) parentView.getItemAtPosition(position);
-//                if ("Closed".equals(selectedTime)) {
-//                    openSpinner.setSelection(0);
-//                } else {
-//                    TimeRange timeRange = openingTimes.get(day);
-//                    if (timeRange == null) {
-//                        timeRange = new TimeRange();
-//                        openingTimes.put(day, timeRange);
-//                    }
-//                    timeRange.setClose(selectedTime);
-//                    Log.i("timeRange", "getClose = " + timeRange.getClose());
-//                    Log.i("timeRange", "getOpen = " + timeRange.getOpen());
-//
-//                    if (!Objects.equals(timeRange.getOpen(), "Closed")) {
-//                        Log.i("timeRange", "getOpen = " + timeRange.getOpen() + " getClose = " + timeRange.getClose());
-//                        openingTimes.put(day, timeRange);
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parentView) {
-//            }
-//        });
-//    }
-
-
     private void setupDay(String day) {
         int startId = getResources().getIdentifier(day + "_start_spinner", "id", getPackageName());
         int endId = getResources().getIdentifier(day + "_end_spinner", "id", getPackageName());
@@ -285,7 +215,6 @@ public class CreateBarberShopActivity extends AppCompatActivity implements OnMap
         openSpinner.setAdapter(adapter);
         closeSpinner.setAdapter(adapter);
 
-        // Set initial selection based on openingTimes
         TimeRange timeRange = openingTimes.get(day);
         if (timeRange != null && timeRange.getOpen() != null && timeRange.getClose() != null) {
             int openIndex = Arrays.asList(timeOptions).indexOf(timeRange.getOpen());
@@ -312,7 +241,8 @@ public class CreateBarberShopActivity extends AppCompatActivity implements OnMap
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
 
         closeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -333,7 +263,8 @@ public class CreateBarberShopActivity extends AppCompatActivity implements OnMap
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
     }
 
@@ -398,6 +329,7 @@ public class CreateBarberShopActivity extends AppCompatActivity implements OnMap
         }
 
         BarberShops BarberShop = new BarberShops(ownerEmail, BarberShopName_str, address, coordinates, String.valueOf(BarberShopImageUri), String.valueOf(BarberShopLogoUri), "pending", ListSpecialist, openingTimes);
+//        BarberShops BarberShop = new BarberShops(barberShopsId, ownerEmail, BarberShopName_str, address, coordinates, String.valueOf(BarberShopImageUri), String.valueOf(BarberShopLogoUri), "pending", ListSpecialist, openingTimes);
         addBarberShop(BarberShop);
 
         if (currentUser != null) {
@@ -413,10 +345,10 @@ public class CreateBarberShopActivity extends AppCompatActivity implements OnMap
     }
 
     public void addBarberShop(BarberShops BarberShop) {
-        barberShopsRef.get().addOnCompleteListener(task -> {
+        pendingbarberShopsRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 long newId = task.getResult().getChildrenCount();
-                barberShopsRef.child(String.valueOf(newId)).setValue(BarberShop)
+                pendingbarberShopsRef.child(String.valueOf(newId)).setValue(BarberShop)
                         .addOnCompleteListener(storeTask -> {
                             if (storeTask.isSuccessful()) {
                                 Toast.makeText(CreateBarberShopActivity.this, "Store successful", Toast.LENGTH_SHORT).show();
@@ -577,7 +509,6 @@ public class CreateBarberShopActivity extends AppCompatActivity implements OnMap
 
         navigateTo(AddLocationActivity.class);
     }
-
 
     public void ToSetting(View view) {
         navigateTo(AdminSettingsActivity.class);

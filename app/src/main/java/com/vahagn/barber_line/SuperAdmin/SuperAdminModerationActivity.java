@@ -43,7 +43,8 @@ public class SuperAdminModerationActivity extends AppCompatActivity {
     DatabaseReference pendingRef = FirebaseDatabase.getInstance().getReference().child("pending_barbershops");
     DatabaseReference rejectedRef = FirebaseDatabase.getInstance().getReference("rejected_barbershops");
 
-    private ProgressBar loadingProgressBar;
+    ProgressBar loadingProgressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +62,7 @@ public class SuperAdminModerationActivity extends AppCompatActivity {
                 secondActivityContainer.removeAllViews();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     BarberShops shop = snapshot.getValue(BarberShops.class);
-                    addBarbershop(secondActivityContainer, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(),shop.getCoordinates(),  shop.getSpecialists(),shop.getReviews(),shop.getOpeningTimes(), snapshot.getKey());
+                    addBarbershop(secondActivityContainer, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getCoordinates(), shop.getSpecialists(), shop.getReviews(), shop.getOpeningTimes(), snapshot.getKey());
                 }
                 loadingProgressBar.setVisibility(View.GONE);
             }
@@ -123,7 +124,7 @@ public class SuperAdminModerationActivity extends AppCompatActivity {
             builder.setTitle("Confirm BarberShop")
                     .setMessage("Are you sure you want to confirm this barbershop?")
                     .setPositiveButton("Yes", (dialog, which) -> {
-                        Confirm(barbershopView,container, key);
+                        Confirm(barbershopView, container, key);
                     })
                     .setNegativeButton("No", (dialog, which) -> {
                         EditText input = new EditText(this);
@@ -135,7 +136,7 @@ public class SuperAdminModerationActivity extends AppCompatActivity {
                                 .setPositiveButton("Send", (dialog1, which1) -> {
                                     String reason = input.getText().toString().trim();
                                     if (!reason.isEmpty()) {
-                                        Reject(barbershopView,container, key,reason);
+                                        Reject(barbershopView, container, key, reason);
 
                                         // Можно сохранить причину в БД или логах
 //                                        pendingRef.child(key).removeValue();
@@ -155,7 +156,7 @@ public class SuperAdminModerationActivity extends AppCompatActivity {
     }
 
 
-    private void Confirm(View barbershopView,LinearLayout container,String key) {
+    private void Confirm(View barbershopView, LinearLayout container, String key) {
         pendingRef.child(key).get().addOnSuccessListener(dataSnapshot -> {
             if (dataSnapshot.exists()) {
                 BarberShops shop = dataSnapshot.getValue(BarberShops.class);
@@ -173,6 +174,9 @@ public class SuperAdminModerationActivity extends AppCompatActivity {
                             }
                         }
 
+                        shop.setBarberShopsId((int) nextId);
+                        Log.i("newId", String.valueOf(shop.getBarberShopsId()));
+
                         barberShopsRef.child(String.valueOf(nextId)).setValue(shop)
                                 .addOnSuccessListener(aVoid -> {
                                     pendingRef.child(key).removeValue()
@@ -185,7 +189,8 @@ public class SuperAdminModerationActivity extends AppCompatActivity {
             }
         });
     }
-    private void Reject(View barbershopView,LinearLayout container,String key,String reason) {
+
+    private void Reject(View barbershopView, LinearLayout container, String key, String reason) {
         pendingRef.child(key).get().addOnSuccessListener(dataSnapshot -> {
             if (dataSnapshot.exists()) {
                 BarberShops shop = dataSnapshot.getValue(BarberShops.class);
@@ -217,6 +222,7 @@ public class SuperAdminModerationActivity extends AppCompatActivity {
             }
         });
     }
+
     private void navigateTo(Class<?> targetActivity) {
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
                 this,
@@ -225,6 +231,7 @@ public class SuperAdminModerationActivity extends AppCompatActivity {
         Intent intent = new Intent(this, targetActivity);
         startActivity(intent, options.toBundle());
     }
+
     public void ToSettings(View view) {
         navigateTo(SettingsActivity.class);
     }

@@ -34,6 +34,7 @@ public class ServicesFragment extends Fragment {
     private List<Services> serviceslists;
 
     public static String name, price, duration;
+    public static int barberShopsId;
 
     public ServicesFragment() {
     }
@@ -83,7 +84,7 @@ public class ServicesFragment extends Fragment {
                 name = services.getName();
                 price = services.getPrice();
                 duration = services.getDuration();
-
+                barberShopsId = serviceDuration.getId();
 //                Toast.makeText(getContext(), services.getName(), Toast.LENGTH_SHORT).show();
             });
         } else if (SpecialistsFragment.CanBook){

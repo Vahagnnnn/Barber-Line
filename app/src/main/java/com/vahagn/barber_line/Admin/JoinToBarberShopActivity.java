@@ -142,7 +142,7 @@ public class JoinToBarberShopActivity extends AppCompatActivity {
         }
         barbers_list_Layout.removeAllViews();
         for (BarberShops shop : filtered_barbers_list) {
-            addBarbershop(barbers_list_Layout, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getOwnerEmail(), shop.getCoordinates(), shop.getSpecialists(), shop.getReviews(), shop.getOpeningTimes(), shop.getKeyId());
+            addBarbershop(barbers_list_Layout, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getOwnerEmail(), shop.getCoordinates(), shop.getSpecialists(), shop.getReviews(), shop.getOpeningTimes(), shop.getBarberShopsId());
         }
     }
 
