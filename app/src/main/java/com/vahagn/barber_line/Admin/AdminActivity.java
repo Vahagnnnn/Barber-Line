@@ -57,10 +57,6 @@ public class AdminActivity extends AppCompatActivity {
         });
         joinToBarberShop.setOnClickListener(view ->
         {
-            Log.i("myBarbershopName", String.valueOf(myBarbershopName));
-            Log.i("myBarbershopName", String.valueOf(myWorkplaceName));
-            Log.i("myBarbershopName", String.valueOf(status));
-
             if (myBarbershopName == null && myWorkplaceName == null) {
                 navigateTo(JoinToBarberShopActivity.class);
             } else if (myBarbershopName != null && !Objects.equals(status, "rejected"))

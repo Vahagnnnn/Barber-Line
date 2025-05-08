@@ -12,7 +12,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
@@ -26,6 +28,7 @@ import com.vahagn.barber_line.Activities.BarberShopsAboutActivity;
 import com.vahagn.barber_line.Activities.BarbersActivity;
 import com.vahagn.barber_line.Activities.MainActivity;
 import com.vahagn.barber_line.Activities.SettingsActivity;
+import com.vahagn.barber_line.Activities.SpecialistActivity;
 import com.vahagn.barber_line.Classes.BarberShops;
 import com.vahagn.barber_line.Classes.Barbers;
 import com.vahagn.barber_line.Classes.Reviews;
@@ -183,6 +186,7 @@ public class SuperAdminModerationActivity extends AppCompatActivity {
                                 .child(shop.getOwnerId());
                         Map<String, Object> updates = new HashMap<>();
                         updates.put("myBarbershopId", nextId);
+                        updates.put("status", "confirmed");
                         userRef.updateChildren(updates);
 
                         barberShopsRef.child(String.valueOf(nextId)).setValue(shop)
@@ -225,8 +229,27 @@ public class SuperAdminModerationActivity extends AppCompatActivity {
                                                 container.removeView(barbershopView);
                                             });
                                 });
+                        updateUserStatusWithReason(shop.getOwnerId(), "rejected", reason);
+
                     });
                 }
+            }
+        });
+    }
+
+    private void updateUserStatusWithReason(String ownerId, String status, String reason) {
+        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("Users").child(ownerId);
+        usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                snapshot.getRef().child("status").setValue(status);
+                snapshot.getRef().child("rejection_reason").setValue(reason);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(SuperAdminModerationActivity.this, "Database error while updating user: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("Firebase", "Database error", error.toException());
             }
         });
     }

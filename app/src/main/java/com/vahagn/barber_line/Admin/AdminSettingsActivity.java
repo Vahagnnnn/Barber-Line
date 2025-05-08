@@ -56,38 +56,49 @@ public class AdminSettingsActivity extends AppCompatActivity {
 //    DatabaseReference pendingRef = FirebaseDatabase.getInstance().getReference().child("pending_barbershops");
 //    DatabaseReference rejectedRef = FirebaseDatabase.getInstance().getReference("rejected_barbershops");
 
-    public static String imageUrl, name, logo, rating, address,coordinates;
+    public static String imageUrl, name, logo, rating, address, coordinates;
     public static List<Barbers> ListSpecialist = new ArrayList<>();
     public static List<Reviews> ListReviews = new ArrayList<>();
     public static Map<String, TimeRange> openingTimes = new HashMap<>();
     public static String workPlace;
 
-//
+    //
 //    String ownerEmail;
 //
 //    TextView List_TextView;
 //    LinearLayout barbershops_list;
 //    private ProgressBar loadingProgressBar;
 //
-    public static  List<Barbers> applicant_barber = new ArrayList<>();
+    public static List<Barbers> applicant_barber = new ArrayList<>();
 //
 //    LinearLayout wait_for_confirmation;
 
-    TextView nameText,addressText,ratingText,reject_reason_Text;
-    ImageView barbershop_logo ;
+    TextView nameText, addressText, ratingText, reject_reason_Text;
+    ImageView barbershop_logo;
 
     LinearLayout aboutLayout, wait_for_confirmation, rejected;
     ConstraintLayout settingLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_settings);
 
+        ReadBarberID();
 
+        FrameLayout createBarberShop = findViewById(R.id.createBarberShop);
 
-
-
-
+        createBarberShop.setOnClickListener(view -> {
+            if (AdminActivity.myBarbershopName == null && AdminActivity.myWorkplaceName == null) {
+                navigateTo(CreateBarberShopActivity.class);
+                AdminActivity.AdminActivity = true;
+            } else if (AdminActivity.myBarbershopName != null && !Objects.equals(AdminActivity.status, "rejected"))
+                Toast.makeText(this, "You already have your own barbershop", Toast.LENGTH_SHORT).show();
+            else if (AdminActivity.myBarbershopName != null && Objects.equals(AdminActivity.status, "rejected"))
+                navigateTo(CreateBarberShopActivity.class);
+            else
+                Toast.makeText(this, "You have already joined the barbershop.", Toast.LENGTH_SHORT).show();
+        });
 
 //        barbershops_list = findViewById(R.id.barbershops_list);
 //        List_TextView = findViewById(R.id.List_TextView);
@@ -141,11 +152,10 @@ public class AdminSettingsActivity extends AppCompatActivity {
                         rejected.setVisibility(VISIBLE);
                         reject_reason_Text.setText("Reason: " + dataSnapshot.child("rejection_reason").getValue(String.class));
                     } else {
-                        Integer myWorkplaceId = dataSnapshot.child("myWorkplaceId").getValue(Integer.class);
-                        Integer myIdAsBarber = dataSnapshot.child("myIdAsBarber").getValue(Integer.class);
+                        Integer myBarbershopId = dataSnapshot.child("myBarbershopId").getValue(Integer.class);
 
-                        if (myWorkplaceId != null && myIdAsBarber != null) {
-                            setInfo(myIdAsBarber, myWorkplaceId);
+                        if (myBarbershopId != null) {
+                            setInfo(myBarbershopId);
 
                             aboutLayout.setVisibility(VISIBLE);
                             settingLayout.setVisibility(VISIBLE);
@@ -170,31 +180,22 @@ public class AdminSettingsActivity extends AppCompatActivity {
         }
     }
 
-    private void setInfo(Integer barberShopsId, Integer barberId) {
-        DatabaseReference barberShopsRef = FirebaseDatabase.getInstance().getReference("barberShops").child(String.valueOf(barberShopsId)).child("specialists");
-        Log.i("myWorkplaceId", "barberShopsId = " + barberShopsId);
+    private void setInfo(Integer myBarbershopId) {
+        DatabaseReference barberShopsRef = FirebaseDatabase.getInstance().getReference("barberShops").child(String.valueOf(myBarbershopId));
 
         barberShopsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.i("myWorkplaceId", String.valueOf(barberId));
+                BarberShops barberShops = snapshot.getValue(BarberShops.class);
+                if (barberShops != null) {
+                    nameText.setText(barberShops.getName());
+                    addressText.setText(barberShops.getAddress());
+                    ratingText.setText(barberShops.getRating() + "★");
 
-                for (DataSnapshot child : snapshot.getChildren()) {
-                    Barbers barber = child.getValue(Barbers.class);
-                    if (barber != null && barberId == barber.getBarberId()) {
-                        nameText.setText(barber.getName());
-                        String phone = barber.getPhoneNumber().substring(0, 5) + " " +
-                                barber.getPhoneNumber().substring(5, 7) + " " +
-                                barber.getPhoneNumber().substring(7, 9) + " " +
-                                barber.getPhoneNumber().substring(9);
-                        addressText.setText(phone);
-                        ratingText.setText(barber.getRating() + "★");
-
-                        String image = barber.getImage();
-                        if (image != null && !image.isEmpty()) {
-                            Glide.with(AdminSettingsActivity.this).load(image).apply(RequestOptions.bitmapTransform(new RoundedCorners(100))).into(barbershop_logo);
-                        }
+                    String image = barberShops.getLogo();
+                    if (image != null && !image.isEmpty()) {
+                        Glide.with(AdminSettingsActivity.this).load(image).apply(RequestOptions.bitmapTransform(new RoundedCorners(100))).into(barbershop_logo);
                     }
                 }
             }

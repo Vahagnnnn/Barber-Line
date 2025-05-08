@@ -339,6 +339,7 @@ public class CreateBarberShopActivity extends AppCompatActivity implements OnMap
 
             Map<String, Object> updates = new HashMap<>();
             updates.put("myBarbershopName", BarberShopName_str);
+            updates.put("status", "pending");
 
             userRef.updateChildren(updates);
         }
