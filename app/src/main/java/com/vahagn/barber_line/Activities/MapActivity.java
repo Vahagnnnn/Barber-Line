@@ -132,6 +132,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
                 barbershop_infoLayout_Map.setVisibility(VISIBLE);
 
+                BarbersActivity.barberShopsId = shop.getBarberShopsId();
                 BarbersActivity.imageUrl = shop.getImage();
                 BarbersActivity.name = shop.getName();
                 BarbersActivity.rating = String.valueOf(shop.getRating());

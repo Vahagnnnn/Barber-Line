@@ -1,11 +1,15 @@
 package com.vahagn.barber_line.Admin;
 
+import static android.view.View.GONE;
+
 import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -36,13 +40,17 @@ public class AdminBooksActivity extends AppCompatActivity {
     List<Appointment> AppointmentsList = new ArrayList<>();
     AppointmentAdapter appointmentAdapter;
 
-    public static String uniqueID;
-
+    public static LinearLayout noAppointments;
+    private ProgressBar loadingProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_books);
+
+        noAppointments = findViewById(R.id.noAppointments);
+        loadingProgressBar = findViewById(R.id.loading_progress_bar);
+        loadingProgressBar.setVisibility(View.VISIBLE);
 
         appointmentsRecyclerView = findViewById(R.id.appointments_recycler_view);
         appointmentsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
@@ -69,26 +77,34 @@ public class AdminBooksActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 AppointmentsList.clear();
+                boolean hasAppointments = false;
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Appointment appointment = snapshot.getValue(Appointment.class);
-//                    if (appointment != null && appointment.getBarbershopOwnerEmail().equals(userEmail)) {
-//                        AppointmentsList.add(appointment);
-//                    }
                     if (appointment != null && AdminActivity.myBarbershopName != null) {
                         if (appointment.getBarbershopOwnerEmail().equals(userEmail)) {
                             AppointmentsList.add(appointment);
+                            hasAppointments = true;
                         }
                     } else if (appointment != null && AdminActivity.myWorkplaceName != null) {
-                        if (appointment.getBarbershopOwnerEmail().equals(userEmail)) {
-
+                        if (appointment.getBarberShopsId() == AdminActivity.barberShopsId && appointment.getBarberId() == AdminActivity.barberId) {
+                            AppointmentsList.add(appointment);
+                            hasAppointments = true;
                         }
                     }
                 }
+
+                if (hasAppointments) {
+                    noAppointments.setVisibility(GONE);
+                } else {
+                    noAppointments.setVisibility(View.VISIBLE);
+                }
+                loadingProgressBar.setVisibility(View.GONE);
                 appointmentAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
+                loadingProgressBar.setVisibility(View.GONE);
                 Log.w("Firebase", "Failed to read value.", databaseError.toException());
             }
         });

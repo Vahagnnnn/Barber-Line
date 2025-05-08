@@ -106,7 +106,7 @@ public class FavouriteBarberShopsActivity extends AppCompatActivity {
         });
     }
 
-    public void addBarbershop(LinearLayout container, int KeyId, String logo, String imageUrl, String name, double rating, String address, String OwnerEmail, String coordinates, List<Barbers> ListSpecialist, List<Reviews> ListReviews, Map<String, TimeRange> openingTimes) {
+    public void addBarbershop(LinearLayout container, int barberShopsId, String logo, String imageUrl, String name, double rating, String address, String OwnerEmail, String coordinates, List<Barbers> ListSpecialist, List<Reviews> ListReviews, Map<String, TimeRange> openingTimes) {
         View barbershopView = LayoutInflater.from(this).inflate(R.layout.barbershops_gray, container, false);
 
         ImageView logoImageView = barbershopView.findViewById(R.id.logo);
@@ -126,8 +126,8 @@ public class FavouriteBarberShopsActivity extends AppCompatActivity {
             Intent intent = new Intent(this, BarberShopsAboutActivity.class);
             intent.putExtra("from_where", "Favourites");
 
-            Log.i("heartCheck", "heartCheckBarbers = " + KeyId);
-            BarbersActivity.KeyId = KeyId;
+            Log.i("heartCheck", "heartCheckBarbers = " + barberShopsId);
+            BarbersActivity.barberShopsId = barberShopsId;
             BarbersActivity.imageUrl = imageUrl;
             BarbersActivity.logo = logo;
             BarbersActivity.name = name;

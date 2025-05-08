@@ -64,56 +64,17 @@ public class TopBarberShopsAdapter extends RecyclerView.Adapter<TopBarberShopsAd
             public void onClick(View v) {
                 Intent intent = new Intent(context, BarberShopsAboutActivity.class);
                 intent.putExtra("from_where", "MainActivity");
-//                intent.putExtra("image", item.getImage());
-//                intent.putExtra("name", item.getName());
-//                intent.putExtra("rating", String.valueOf(item.getRating()));
-//                intent.putExtra("address", item.getAddress());
-//                intent.putExtra("ListSpecialist", (Serializable) item.getSpecialists());
-//                intent.putExtra("ListService", (Serializable) item.getServices());
 
-                Log.i("heartCheck","heartCheckTopBarber = " + item.getBarberShopsId());
-                BarbersActivity.KeyId = item.getBarberShopsId();
+                BarbersActivity.barberShopsId = item.getBarberShopsId();
                 BarbersActivity.imageUrl = item.getImage();
                 BarbersActivity.name = item.getName();
                 BarbersActivity.rating = String.valueOf(item.getRating());
-
                 BarbersActivity.OwnerEmail = item.getOwnerEmail();
-
-
-//                Map<String, TimeRange> openingTimes = new HashMap<>();
-//
-//                String[] days = { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
-//
-//                for (String day : days) {
-//                    TimeRange times = new TimeRange() ;
-//                    times.setOpen("10:00 AM");
-//                    times.setClose("9:00 AM");
-//                    openingTimes.put(day, times);
-//                }
-//
-//                item.setOpeningTimes(openingTimes);
-
-
-                if (item.getOwnerEmail()!=null)
-                {
-                    Log.i("OwnerEmail",item.getOwnerEmail());
-                }
-                else {
-                    Log.i("OwnerEmail", "Null");
-                }
-
                 BarbersActivity.address = item.getAddress();
                 BarbersActivity.logo = item.getLogo();
                 BarbersActivity.coordinates = item.getCoordinates();
                 BarbersActivity.ListSpecialist = item.getSpecialists();
                 BarbersActivity.ListReviews = item.getReviews();
-
-//                if (item.getOpeningTimes() != null) {
-//                    Log.d("MapiTopBarberShopsAdapter", "Map is: " + item.getOpeningTimes().get("Monday").getOpen()+ " - "+item.getOpeningTimes().get("Monday").getClose());
-//                } else {
-//                    Log.d("MapiTopBarberShopsAdapter", "Map is: Null");
-//
-//                }
                 BarbersActivity.openingTimes = item.getOpeningTimes();
 
                 context.startActivity(intent);

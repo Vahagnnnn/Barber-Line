@@ -205,4 +205,20 @@ public class Appointment implements Serializable {
     public void setUniqueID(String uniqueID) {
         this.uniqueID = uniqueID;
     }
+
+    public int getBarberId() {
+        return barberId;
+    }
+
+    public void setBarberId(int barberId) {
+        this.barberId = barberId;
+    }
+
+    public int getBarberShopsId() {
+        return barberShopsId;
+    }
+
+    public void setBarberShopsId(int barberShopsId) {
+        this.barberShopsId = barberShopsId;
+    }
 }

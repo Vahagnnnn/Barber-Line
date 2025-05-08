@@ -164,14 +164,12 @@ public class BarberProfileActivity extends AppCompatActivity {
 
                 for (DataSnapshot child : snapshot.getChildren()) {
                     Barbers barber = child.getValue(Barbers.class);
-                    Log.i("myWorkplaceId", "getBarberId = " + String.valueOf(barber.getBarberId()));
-
                     if (barber != null && barberId == barber.getBarberId()) {
                         nameText.setText(barber.getName());
-                        String phone = barber.getPhoneNumber().substring(0, 4) + " " +
-                                barber.getPhoneNumber().substring(4, 6) + " " +
-                                barber.getPhoneNumber().substring(6, 8) + " " +
-                                barber.getPhoneNumber().substring(8);
+                        String phone = barber.getPhoneNumber().substring(0, 5) + " " +
+                                barber.getPhoneNumber().substring( 5, 7) + " " +
+                                barber.getPhoneNumber().substring(7, 9) + " " +
+                                barber.getPhoneNumber().substring(9);
                         phoneNumberText.setText(phone);
                         ratingText.setText(barber.getRating() + "★");
 

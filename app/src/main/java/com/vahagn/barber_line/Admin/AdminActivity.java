@@ -30,6 +30,7 @@ public class AdminActivity extends AppCompatActivity {
 
     public static boolean AdminActivity;
     public static  String myBarbershopName, myWorkplaceName,status;
+    public static Integer barberId,barberShopsId;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -41,7 +42,7 @@ public class AdminActivity extends AppCompatActivity {
         FrameLayout createBarberShop = findViewById(R.id.createBarberShop);
         FrameLayout joinToBarberShop = findViewById(R.id.joinToBarberShop);
 
-        ReadMyBarbershopName_MyWorkplaceName_status();
+        ReadMyBarbershopName_MyWorkplaceName_status_barberId_barberShopsId();
 //        ReadMyBarbershopName();
 //        ReadMyWorkplaceName();
 
@@ -72,7 +73,7 @@ public class AdminActivity extends AppCompatActivity {
     }
 
 
-    private void ReadMyBarbershopName_MyWorkplaceName_status() {
+    private void ReadMyBarbershopName_MyWorkplaceName_status_barberId_barberShopsId() {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference userRef = FirebaseDatabase.getInstance()
                 .getReference("Users")
@@ -85,6 +86,8 @@ public class AdminActivity extends AppCompatActivity {
                     myBarbershopName = dataSnapshot.child("myBarbershopName").getValue(String.class);
                     myWorkplaceName = dataSnapshot.child("myWorkplaceName").getValue(String.class);
                     status = dataSnapshot.child("status").getValue(String.class);
+                    barberId = dataSnapshot.child("myIdAsBarber").getValue(Integer.class);
+                    barberShopsId = dataSnapshot.child("myWorkplaceId").getValue(Integer.class);
                 } else {
                     myBarbershopName = null;
                     myWorkplaceName = null;
@@ -101,29 +104,6 @@ public class AdminActivity extends AppCompatActivity {
             }
         });
     }
-
-//    private void ReadMyWorkplaceName() {
-//        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-//        DatabaseReference userRef = FirebaseDatabase.getInstance()
-//                .getReference("Users")
-//                .child(currentUser.getUid());
-//
-//        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                if (dataSnapshot.exists()) {
-//                    myWorkplaceName = dataSnapshot.child("myWorkplaceName").getValue(String.class);
-//                } else
-//                    myWorkplaceName = null;
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//                myWorkplaceName = null;
-//                Log.e("ReadMyWorkplaceName", "Error: " + databaseError.getMessage());
-//            }
-//        });
-//    }
 
     private void navigateTo(Class<?> targetActivity) {
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(

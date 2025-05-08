@@ -67,8 +67,8 @@ public class ConfirmActivity extends AppCompatActivity {
         ServicePrice_str = ServicesFragment.price;
         ServiceDuration_str = ServicesFragment.duration;
 
-        BarberId = BarbersActivity.KeyId;
-        BarberShopsId= BarbersActivity.KeyId;
+        BarberId = BarbersActivity.barberId;
+        BarberShopsId= BarbersActivity.barberShopsId;
 
         message_or_requests = findViewById(R.id.message_or_requests);
         BarberShopImage = findViewById(R.id.BarberShopImage);

@@ -21,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.vahagn.barber_line.Activities.BarbersActivity;
 import com.vahagn.barber_line.Activities.DateTimeActivity;
 import com.vahagn.barber_line.Activities.ServicesActivity;
 import com.vahagn.barber_line.Activities.SettingsActivity;
@@ -101,8 +102,10 @@ public class SpecialistsFragment extends Fragment {
             specialistView.setOnClickListener(v -> {
                 Intent intent = new Intent(getContext(), DateTimeActivity.class);
                 startActivity(intent);
+                imageUrl = specialist.getImage();
                 name = specialist.getName();
                 rating = specialist.getRating();
+                BarbersActivity.barberId = specialist.getBarberId();
             });
         } else if (Applicant_BarberActivity.Is_Applicant_BarberActivity) {
             specialistView.setOnClickListener(v -> {
@@ -156,6 +159,7 @@ public class SpecialistsFragment extends Fragment {
                 name = specialist.getName();
                 rating = specialist.getRating();
                 ListServices = specialist.getServices();
+                BarbersActivity.barberId = specialist.getBarberId();
 
                 startActivity(intent);
             });

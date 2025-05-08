@@ -101,10 +101,10 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
 //        if (MainActivity.userClass.getFavouriteBarbershops() != null) {
         if (MainActivity.userClass != null && MainActivity.userClass.getFavouriteBarbershops() != null) {
             try {
-                Log.w("UserInfo", String.valueOf(BarbersActivity.KeyId));
-                Log.w("UserInfo", String.valueOf(MainActivity.userClass.getFavouriteBarbershops().contains(BarbersActivity.KeyId)));
+                Log.w("UserInfo", String.valueOf(BarbersActivity.barberShopsId));
+                Log.w("UserInfo", String.valueOf(MainActivity.userClass.getFavouriteBarbershops().contains(BarbersActivity.barberShopsId)));
 //                if (String.valueOf(MainActivity.userClass.getFavouriteBarbershops().get(BarbersActivity.KeyId)).equals("true")) {
-                if (MainActivity.userClass.getFavouriteBarbershops().contains(BarbersActivity.KeyId)) {
+                if (MainActivity.userClass.getFavouriteBarbershops().contains(BarbersActivity.barberShopsId)) {
                     heart.setImageResource(R.drawable.img_heart_red);
                     heart.setTag(R.drawable.img_heart_red);
                 } else {
@@ -292,27 +292,27 @@ public class BarberShopsAboutActivity extends AppCompatActivity {
             if (tagValue == R.drawable.img_heart) {
                 heart.setImageResource(R.drawable.img_heart_red);
                 heart.setTag(R.drawable.img_heart_red);
-                userFavRef.child(String.valueOf(BarbersActivity.KeyId)).setValue(true);
+                userFavRef.child(String.valueOf(BarbersActivity.barberShopsId)).setValue(true);
 
                 List<Integer> Favourite_Barbershops = MainActivity.userClass.getFavouriteBarbershops();
 
-                Favourite_Barbershops.add(BarbersActivity.KeyId);
+                Favourite_Barbershops.add(BarbersActivity.barberShopsId);
                 Log.d("barbershopId", "Favourite Barbershops: " + Favourite_Barbershops);
 
                 MainActivity.userClass.setFavouriteBarbershops(Favourite_Barbershops);
             } else if (tagValue == R.drawable.img_heart_red) {
                 heart.setImageResource(R.drawable.img_heart);
                 heart.setTag(R.drawable.img_heart);
-                userFavRef.child(String.valueOf(BarbersActivity.KeyId)).removeValue();
+                userFavRef.child(String.valueOf(BarbersActivity.barberShopsId)).removeValue();
 
                 List<Integer> Favourite_Barbershops = MainActivity.userClass.getFavouriteBarbershops();
 
 
-                Log.i("barbershopId", String.valueOf(BarbersActivity.KeyId));
+                Log.i("barbershopId", String.valueOf(BarbersActivity.barberShopsId));
                 assert Favourite_Barbershops != null;
-                Log.i("barbershopId", String.valueOf(Favourite_Barbershops.indexOf(BarbersActivity.KeyId)));
+                Log.i("barbershopId", String.valueOf(Favourite_Barbershops.indexOf(BarbersActivity.barberShopsId)));
 
-                Favourite_Barbershops.remove((Integer) BarbersActivity.KeyId);
+                Favourite_Barbershops.remove((Integer) BarbersActivity.barberShopsId);
                 Log.d("barbershopId", "Favourite Barbershops: " + Favourite_Barbershops);
 
                 MainActivity.userClass.setFavouriteBarbershops(Favourite_Barbershops);

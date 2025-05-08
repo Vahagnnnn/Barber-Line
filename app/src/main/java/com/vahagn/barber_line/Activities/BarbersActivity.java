@@ -45,7 +45,7 @@ public class BarbersActivity extends AppCompatActivity {
     public static LinearLayout secondActivityContainer;
 
     public static Object ImageResource, tag;
-    public static int KeyId;
+    public static int barberId,barberShopsId;
     public static String logo, imageUrl, name, rating, OwnerEmail, address, coordinates;
     public static List<Barbers> ListSpecialist = new ArrayList<>();
     public static List<Reviews> ListReviews = new ArrayList<>();
@@ -93,12 +93,10 @@ public class BarbersActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    int KeyId = Integer.parseInt(Objects.requireNonNull(snapshot.getKey()));
-
                     BarberShops shop = snapshot.getValue(BarberShops.class);
                     assert shop != null;
 
-                    addBarbershop(secondActivityContainer, KeyId, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getOwnerEmail(), shop.getCoordinates(), shop.getSpecialists(), shop.getReviews(), shop.getOpeningTimes());
+                    addBarbershop(secondActivityContainer, shop.getBarberShopsId(), shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getOwnerEmail(), shop.getCoordinates(), shop.getSpecialists(), shop.getReviews(), shop.getOpeningTimes());
                     ListBarberShops.add(new BarberShops(shop.getOwnerEmail(), shop.getName(), shop.getAddress(), shop.getCoordinates(), shop.getImage(), shop.getLogo(), shop.getRating(), shop.getReviews(), shop.getServices(), shop.getSpecialists(), shop.getOpeningTimes()));
                 }
             }
@@ -123,7 +121,7 @@ public class BarbersActivity extends AppCompatActivity {
         }
     }
 
-    public void addBarbershop(LinearLayout container, int KeyId, String logo, String imageUrl, String name, double rating, String address, String OwnerEmail, String coordinates, List<Barbers> ListSpecialist, List<Reviews> ListReviews, Map<String, TimeRange> openingTimes) {
+    public void addBarbershop(LinearLayout container, int barberShopsId, String logo, String imageUrl, String name, double rating, String address, String OwnerEmail, String coordinates, List<Barbers> ListSpecialist, List<Reviews> ListReviews, Map<String, TimeRange> openingTimes) {
         View barbershopView = LayoutInflater.from(this).inflate(R.layout.barbershops_gray, container, false);
 
         ImageView logoImageView = barbershopView.findViewById(R.id.logo);
@@ -153,8 +151,7 @@ public class BarbersActivity extends AppCompatActivity {
             }
 
 
-            Log.i("heartCheck", "heartCheckBarbers = " + KeyId);
-            BarbersActivity.KeyId = KeyId;
+            BarbersActivity.barberShopsId = barberShopsId;
             BarbersActivity.imageUrl = imageUrl;
             BarbersActivity.logo = logo;
             BarbersActivity.name = name;
