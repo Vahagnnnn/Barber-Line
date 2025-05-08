@@ -26,15 +26,14 @@ public class Barbers implements Serializable {
 
     }
 
-    public Barbers(String image, String name, double rating, List<Services> services,int barberId, int barberShopsId) {
+    public Barbers(String image, String name,String phoneNumber, List<Services> services,int barberId, int barberShopsId) {
         this.image = image;
         this.name = name;
-        this.rating = rating;
+        this.phoneNumber = phoneNumber;
         this.services = services;
         this.barberId = barberId;
         this.barberShopsId = barberShopsId;
-
-//        this.rating = 5;
+        this.rating = 5;
     }
 
     public Barbers(String image, String name, String phoneNumber, List<Services> services) {

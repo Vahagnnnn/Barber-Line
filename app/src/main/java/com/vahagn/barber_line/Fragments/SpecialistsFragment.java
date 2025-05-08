@@ -55,7 +55,7 @@ public class SpecialistsFragment extends Fragment {
     public static boolean Edit, CanBook;
 
 
-    public static String imageUrl, name,BarberEmail,joinType;
+    public static String imageUrl, name,phoneNumber,BarberEmail,joinType;
     public static double rating;
     public static int barberId,barberShopsId;
     public static List<Services> ListServices = new ArrayList<>();
@@ -111,6 +111,7 @@ public class SpecialistsFragment extends Fragment {
                 imageUrl = specialist.getImage();
                 name = specialist.getName();
                 rating = specialist.getRating();
+                phoneNumber = specialist.getPhoneNumber();
                 ListServices = specialist.getServices();
                 barberId = specialist.getBarberId();
                 barberShopsId = specialist.getBarberShopsId();

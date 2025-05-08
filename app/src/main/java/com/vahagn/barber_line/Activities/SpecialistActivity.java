@@ -185,7 +185,7 @@ public class SpecialistActivity extends AppCompatActivity {
         Toast.makeText(this, "Confirmation...", Toast.LENGTH_LONG).show();
         DatabaseReference barberShopsRef = FirebaseDatabase.getInstance().getReference("barberShops");
         DatabaseReference applicant_barbersShopsRef = FirebaseDatabase.getInstance().getReference("applicant_barbers");
-        Barbers newBarber = new Barbers(SpecialistsFragment.imageUrl, SpecialistsFragment.name, SpecialistsFragment.rating, SpecialistsFragment.ListServices, SpecialistsFragment.barberId, SpecialistsFragment.barberShopsId);
+        Barbers newBarber = new Barbers(SpecialistsFragment.imageUrl, SpecialistsFragment.name, SpecialistsFragment.phoneNumber, SpecialistsFragment.ListServices, SpecialistsFragment.barberId, SpecialistsFragment.barberShopsId);
 
         barberShopsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
