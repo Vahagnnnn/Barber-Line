@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -51,9 +52,9 @@ public class BarberProfileActivity extends AppCompatActivity {
     public static boolean SpecialistActivity;
 
     ImageView profileImageView;
-    TextView nameText, phoneNumberText, ratingText,reject_reason_Text;
+    TextView nameText, phoneNumberText, ratingText, reject_reason_Text;
 
-    LinearLayout aboutLayout, wait_for_confirmation,rejected;
+    LinearLayout aboutLayout, wait_for_confirmation, rejected;
     ConstraintLayout settingLayout;
 
     @Override
@@ -63,6 +64,23 @@ public class BarberProfileActivity extends AppCompatActivity {
         SpecialistActivity = true;
 
         ReadBarberID();
+
+        FrameLayout joinToBarberShop = findViewById(R.id.joinToBarberShop);
+        joinToBarberShop.setOnClickListener(view ->
+        {
+            Log.i("myBarbershopName", String.valueOf(AdminActivity.myBarbershopName));
+            Log.i("myBarbershopName", String.valueOf(AdminActivity.myWorkplaceName));
+            Log.i("myBarbershopName", String.valueOf(AdminActivity.status));
+
+            if (AdminActivity.myBarbershopName == null && AdminActivity.myWorkplaceName == null) {
+                navigateTo(JoinToBarberShopActivity.class);
+            } else if (AdminActivity.myBarbershopName != null && !Objects.equals(AdminActivity.status, "rejected"))
+                Toast.makeText(this, "You already have your own barbershop", Toast.LENGTH_SHORT).show();
+            else if (AdminActivity.myWorkplaceName != null && Objects.equals(AdminActivity.status, "rejected"))
+                navigateTo(JoinToBarberShopActivity.class);
+            else
+                Toast.makeText(this, "You have already joined the barbershop.", Toast.LENGTH_SHORT).show();
+        });
 
     }
 
@@ -92,29 +110,33 @@ public class BarberProfileActivity extends AppCompatActivity {
                     if (Objects.equals(dataSnapshot.child("status").getValue(String.class), "pending")) {
                         rejected.setVisibility(GONE);
                         wait_for_confirmation.setVisibility(VISIBLE);
-                    }
-                    else if(Objects.equals(dataSnapshot.child("status").getValue(String.class), "rejected"))
-                    {
+                    } else if (Objects.equals(dataSnapshot.child("status").getValue(String.class), "rejected")) {
                         wait_for_confirmation.setVisibility(GONE);
                         rejected.setVisibility(VISIBLE);
-                        reject_reason_Text.setText("Reason: "+ dataSnapshot.child("rejection_reason").getValue(String.class));
-                    }
-                    else {
+                        reject_reason_Text.setText("Reason: " + dataSnapshot.child("rejection_reason").getValue(String.class));
+                    } else {
                         Integer myWorkplaceId = dataSnapshot.child("myWorkplaceId").getValue(Integer.class);
                         Integer myIdAsBarber = dataSnapshot.child("myIdAsBarber").getValue(Integer.class);
 
                         if (myWorkplaceId != null && myIdAsBarber != null) {
                             setInfo(myIdAsBarber, myWorkplaceId);
+
+                            aboutLayout.setVisibility(VISIBLE);
+                            settingLayout.setVisibility(VISIBLE);
+                            wait_for_confirmation.setVisibility(GONE);
+                            rejected.setVisibility(GONE);
                         } else {
                             Toast.makeText(BarberProfileActivity.this, "Insufficient data to load the profile", Toast.LENGTH_SHORT).show();
                             Log.e("barberShopsId", "myWorkplaceId or myIdAsBarber is null");
                         }
 
-                        aboutLayout.setVisibility(VISIBLE);
-                        settingLayout.setVisibility(VISIBLE);
-                        wait_for_confirmation.setVisibility(GONE);
-                        rejected.setVisibility(GONE);
-                        setInfo(myWorkplaceId, myIdAsBarber);
+//                        aboutLayout.setVisibility(VISIBLE);
+//                        settingLayout.setVisibility(VISIBLE);
+//                        wait_for_confirmation.setVisibility(GONE);
+//                        rejected.setVisibility(GONE);
+//                        Log.i("myWorkplaceId", String.valueOf(myWorkplaceId));
+//                        Log.i("myWorkplaceId", String.valueOf(myIdAsBarber));
+//                        setInfo(myWorkplaceId, myIdAsBarber);
                     }
                 }
 
@@ -132,13 +154,18 @@ public class BarberProfileActivity extends AppCompatActivity {
 
     private void setInfo(Integer barberShopsId, Integer barberId) {
         DatabaseReference barberShopsRef = FirebaseDatabase.getInstance().getReference("barberShops").child(String.valueOf(barberShopsId)).child("specialists");
+        Log.i("myWorkplaceId", "barberShopsId = " +barberShopsId);
 
         barberShopsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Log.i("myWorkplaceId", String.valueOf(barberId));
+
                 for (DataSnapshot child : snapshot.getChildren()) {
                     Barbers barber = child.getValue(Barbers.class);
+                    Log.i("myWorkplaceId", "getBarberId = " + String.valueOf(barber.getBarberId()));
+
                     if (barber != null && barberId == barber.getBarberId()) {
                         nameText.setText(barber.getName());
                         String phone = barber.getPhoneNumber().substring(0, 4) + " " +
@@ -174,7 +201,12 @@ public class BarberProfileActivity extends AppCompatActivity {
     }
 
     public void ToBooks(View view) {
-        navigateTo(AdminBooksActivity.class);
+        if (Objects.equals(AdminActivity.status, "pending")) {
+            Toast.makeText(this, "Wait for confirmation", Toast.LENGTH_SHORT).show();
+        } else if (Objects.equals(AdminActivity.status, "rejected")) {
+            Toast.makeText(this, "Your request has been rejected, please join again.", Toast.LENGTH_SHORT).show();
+        } else
+            navigateTo(AdminBooksActivity.class);
     }
 
     public void ToAdmin(View view) {

@@ -48,7 +48,7 @@ public class JoinToBarberShopActivity extends AppCompatActivity {
     DatabaseReference barberShopsRef = FirebaseDatabase.getInstance().getReference("barberShops");
 
     private List<BarberShops> ListBarberShops = new ArrayList<>();
-    public static String BarbershopName, BarberEmail;
+    public static String BarberWorkPlace, BarberEmail; //BarbershopName,
     public static int BarbershopKeyId;
     public static List<Barbers> ListSpecialistSendRequest = new ArrayList<>();
 
@@ -56,7 +56,7 @@ public class JoinToBarberShopActivity extends AppCompatActivity {
     LinearLayout barbers_list_Layout;
 
     private SearchView searchView;
-    public static String BarberWorkPlace;
+    public static int BarberId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,18 +67,6 @@ public class JoinToBarberShopActivity extends AppCompatActivity {
         barbers_list_Layout = findViewById(R.id.barbers_list);
 
         barberShopsRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//                    BarberShops shop = snapshot.getValue(BarberShops.class);
-//
-//                    assert shop != null;
-//                    addBarbershop(barbers_list_Layout, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getOwnerEmail(), shop.getCoordinates(), shop.getSpecialists(), shop.getReviews(), shop.getOpeningTimes(), Integer.parseInt(Objects.requireNonNull(snapshot.getKey())));
-//                    ListBarberShops.add(new BarberShops( Integer.parseInt(Objects.requireNonNull(snapshot.getKey())),shop.getOwnerEmail(), shop.getName(), shop.getAddress(), shop.getCoordinates(), shop.getImage(), shop.getLogo(), shop.getRating(), shop.getReviews(), shop.getServices(), shop.getSpecialists(), shop.getOpeningTimes()));
-//                }
-//            }
-
-
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -179,7 +167,7 @@ public class JoinToBarberShopActivity extends AppCompatActivity {
             builder.setTitle("Join To " + name);
 
             builder.setPositiveButton("Send Request", (dialog, which) -> {
-                BarbershopName = name;
+                BarberWorkPlace = name;
                 BarbershopKeyId = KeyId;
                 ListSpecialistSendRequest = ListSpecialist;
 
@@ -197,8 +185,21 @@ public class JoinToBarberShopActivity extends AppCompatActivity {
                 Toast.makeText(this, "Register", Toast.LENGTH_SHORT).show();
                 JoinToBarberShopActivity.JoinToBarberShopActivity_REGISTER = true;
                 BarberWorkPlace = name;
-                navigateTo(AddBarbersActivity.class);
+//                BarbershopName = name;
+                BarbershopKeyId = KeyId;
 
+//                int maxBarberId = -1;
+
+//                Log.d("MaxBarberId", "Size = " + ListSpecialist.size());
+//
+//                for (Barbers barber : ListSpecialist) {
+//                    maxBarberId += 1;
+//                    Log.d("MaxBarberId", String.valueOf(maxBarberId));
+//                }
+
+                BarberId = ListSpecialist.size();
+                Log.d("MaxBarberId", "Last barberId is: " + BarberId);
+                navigateTo(AddBarbersActivity.class);
             });
 
 

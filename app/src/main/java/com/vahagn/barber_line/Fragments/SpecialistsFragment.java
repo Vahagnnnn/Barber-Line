@@ -55,7 +55,9 @@ public class SpecialistsFragment extends Fragment {
     public static boolean Edit, CanBook;
 
 
-    public static String imageUrl, name, rating,BarberEmail,joinType;
+    public static String imageUrl, name,BarberEmail,joinType;
+    public static double rating;
+    public static int barberId,barberShopsId;
     public static List<Services> ListServices = new ArrayList<>();
 
     public SpecialistsFragment() {
@@ -100,7 +102,7 @@ public class SpecialistsFragment extends Fragment {
                 Intent intent = new Intent(getContext(), DateTimeActivity.class);
                 startActivity(intent);
                 name = specialist.getName();
-                rating = String.valueOf(specialist.getRating());
+                rating = specialist.getRating();
             });
         } else if (Applicant_BarberActivity.Is_Applicant_BarberActivity) {
             specialistView.setOnClickListener(v -> {
@@ -108,8 +110,10 @@ public class SpecialistsFragment extends Fragment {
 
                 imageUrl = specialist.getImage();
                 name = specialist.getName();
-                rating = String.valueOf(specialist.getRating());
+                rating = specialist.getRating();
                 ListServices = specialist.getServices();
+                barberId = specialist.getBarberId();
+                barberShopsId = specialist.getBarberShopsId();
                 BarberEmail = specialist.getEmail();
                 joinType = specialist.getJoinType();
 
@@ -134,7 +138,6 @@ public class SpecialistsFragment extends Fragment {
                             .getReference("Users")
                             .child(currentUser.getUid());
 
-
                     Map<String, Object> updates = new HashMap<>();
                     updates.put("myWorkplaceName", specialist.getWorkPlace());
                     updates.put("myWorkplaceId", JoinToBarberShopActivity.BarbershopKeyId);
@@ -150,7 +153,7 @@ public class SpecialistsFragment extends Fragment {
 
                 imageUrl = specialist.getImage();
                 name = specialist.getName();
-                rating = String.valueOf(specialist.getRating());
+                rating = specialist.getRating();
                 ListServices = specialist.getServices();
 
                 startActivity(intent);

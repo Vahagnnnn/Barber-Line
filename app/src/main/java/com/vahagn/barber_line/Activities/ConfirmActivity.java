@@ -64,7 +64,7 @@ public class ConfirmActivity extends AppCompatActivity {
         Time_str = intent.getStringExtra("Time");
         BarberImageUrl_str = SpecialistsFragment.imageUrl;
         BarberName_str = SpecialistsFragment.name;
-        BarberRating_str = SpecialistsFragment.rating;
+        BarberRating_str = String.valueOf(SpecialistsFragment.rating);
         ServiceName_str = ServicesFragment.name;
         ServicePrice_str = ServicesFragment.price;
         ServiceDuration_str = ServicesFragment.duration;

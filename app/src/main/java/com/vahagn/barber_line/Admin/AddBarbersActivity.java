@@ -27,6 +27,8 @@ import androidx.fragment.app.FragmentTransaction;
 import com.bumptech.glide.Glide;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.i18n.phonenumbers.NumberParseException;
@@ -42,7 +44,9 @@ import com.vahagn.barber_line.R;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import android.graphics.Bitmap;
@@ -244,17 +248,30 @@ public class AddBarbersActivity extends AppCompatActivity {
             navigateTo(CreateBarberShopActivity.class);
 
         } else if (JoinToBarberShopActivity.JoinToBarberShopActivity_REGISTER) {
-            Barbers Applicant_Barber = new Barbers(String.valueOf(imageUri), BarberName_str, BarberPhoneNumber_str, ListServices,JoinToBarberShopActivity.BarberWorkPlace);
-
-            Toast.makeText(this, "Request Sent", Toast.LENGTH_SHORT).show();
-            AddApplicant_BarberDB(Applicant_Barber);
             JoinToBarberShopActivity.JoinToBarberShopActivity_REGISTER = false;
+            Toast.makeText(this, "Request Sent", Toast.LENGTH_SHORT).show();
 
-//            BarberProfileActivity.name = BarberName_str;
-//            BarberProfileActivity.rating = "5.0";
-//            BarberProfileActivity.ListServices = ListServices;
-//            BarberProfileActivity.imageUrl = String.valueOf(imageUri);
-            navigateTo(AdminActivity.class);
+            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+            String BarberEmail = currentUser.getEmail();
+
+            Barbers Applicant_Barber = new Barbers(String.valueOf(imageUri), BarberName_str, BarberPhoneNumber_str, ListServices,JoinToBarberShopActivity.BarberWorkPlace,BarberEmail,"Register");
+            Applicant_Barber.setBarberId(JoinToBarberShopActivity.BarberId);
+            Applicant_Barber.setBarberShopsId(JoinToBarberShopActivity.BarbershopKeyId);
+
+            AddApplicant_BarberDB(Applicant_Barber);
+
+            if (currentUser != null) {
+                DatabaseReference userRef = FirebaseDatabase.getInstance()
+                        .getReference("Users")
+                        .child(currentUser.getUid());
+
+                Map<String, Object> updates = new HashMap<>();
+                updates.put("myWorkplaceName", JoinToBarberShopActivity.BarberWorkPlace);
+                updates.put("myWorkplaceId", JoinToBarberShopActivity.BarbershopKeyId);
+                updates.put("myIdAsBarber", JoinToBarberShopActivity.BarberId);
+                updates.put("status", "pending");
+                userRef.updateChildren(updates);
+            }
         } else {
             CreateBarberShopActivity.ListSpecialist.add(new Barbers(String.valueOf(imageUri), BarberName_str, BarberPhoneNumber_str, ListServices));
             Toast.makeText(this, "The Barber has been added", Toast.LENGTH_SHORT).show();

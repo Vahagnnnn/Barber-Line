@@ -67,7 +67,7 @@ public class SpecialistActivity extends AppCompatActivity {
 
         BarberNameTop.setText(SpecialistsFragment.name);
         BarberName.setText(SpecialistsFragment.name);
-        BarberRating.setText(SpecialistsFragment.rating);
+        BarberRating.setText(String.valueOf( SpecialistsFragment.rating));
 
 //        if (SpecialistsFragment.imageUrl != null) {
 //            BarberImage.setImageResource();
@@ -185,7 +185,7 @@ public class SpecialistActivity extends AppCompatActivity {
         Toast.makeText(this, "Confirmation...", Toast.LENGTH_LONG).show();
         DatabaseReference barberShopsRef = FirebaseDatabase.getInstance().getReference("barberShops");
         DatabaseReference applicant_barbersShopsRef = FirebaseDatabase.getInstance().getReference("applicant_barbers");
-        Barbers newBarber = new Barbers(SpecialistsFragment.imageUrl, SpecialistsFragment.name, SpecialistsFragment.rating, SpecialistsFragment.ListServices);
+        Barbers newBarber = new Barbers(SpecialistsFragment.imageUrl, SpecialistsFragment.name, SpecialistsFragment.rating, SpecialistsFragment.ListServices, SpecialistsFragment.barberId, SpecialistsFragment.barberShopsId);
 
         barberShopsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -207,7 +207,8 @@ public class SpecialistActivity extends AppCompatActivity {
 
                             specialists.add(newBarber);
 
-                            // Обновляем список specialists
+                            Log.e("specialists", newBarber.getName());
+
                             barbershopSnapshot.getRef().child("specialists").setValue(specialists)
                                     .addOnSuccessListener(aVoid -> removeFromApplicants(applicant_barbersShopsRef, newBarber))
                                     .addOnFailureListener(e -> {
@@ -301,68 +302,7 @@ public class SpecialistActivity extends AppCompatActivity {
     }
 
 
-//    private void RejectBarber() {
-//        Toast.makeText(this, "Rejecting...", Toast.LENGTH_SHORT).show();
-//        DatabaseReference applicantRef = FirebaseDatabase.getInstance().getReference("applicant_barbers");
-//        DatabaseReference rejectedRef = FirebaseDatabase.getInstance().getReference("rejected_barbershops");
-//
-//        applicantRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                for (DataSnapshot applicantSnapshot : snapshot.getChildren()) {
-//                    String applicantName = applicantSnapshot.child("name").getValue(String.class);
-//                    String applicantEmail = applicantSnapshot.child("email").getValue(String.class);
-//
-//                    if (applicantName != null && applicantName.equals(SpecialistsFragment.name) &&
-//                            applicantEmail != null && applicantEmail.equals(SpecialistsFragment.BarberEmail)) {
-//
-//                        // Check joinType before saving to rejected_barbershops
-//                        String joinType = SpecialistsFragment.joinType;
-//
-//                        if (joinType != null && !joinType.equals("Send Request")) {
-//                            Barbers rejectedBarber = new Barbers(
-//                                    SpecialistsFragment.imageUrl,
-//                                    SpecialistsFragment.name,
-//                                    SpecialistsFragment.rating,
-//                                    SpecialistsFragment.ListServices
-//                            );
-//
-//                            // Save to rejected_barbershops
-//                            rejectedRef.child(AdminSettingsActivity.workPlace).push().setValue(rejectedBarber)
-//                                    .addOnSuccessListener(aVoid -> Log.d("Firebase", "Barber added to rejected_barbershops"))
-//                                    .addOnFailureListener(e -> Log.e("Firebase", "Failed to add to rejected_barbershops", e));
-//                        }
-//
-//                        // First, update user status to "rejected"
-//                        updateUserStatus(SpecialistsFragment.BarberEmail, "rejected", () -> {
-//                            // Then, remove from applicant_barbers
-//                            applicantSnapshot.getRef().removeValue()
-//                                    .addOnSuccessListener(aVoid -> {
-//                                        Toast.makeText(SpecialistActivity.this, "Barber rejected and removed from applicants!", Toast.LENGTH_SHORT).show();
-//                                        Log.d("Firebase", "Barber fully rejected");
-//                                        ToAdminSettings();
-//                                    })
-//                                    .addOnFailureListener(e -> {
-//                                        Toast.makeText(SpecialistActivity.this, "Failed to remove rejected barber: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-//                                        Log.e("Firebase", "Error removing barber", e);
-//                                    });
-//                        });
-//
-//                        break;
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                Toast.makeText(SpecialistActivity.this, "Database error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-//                Log.e("Firebase", "Database error", error.toException());
-//            }
-//        });
-//    }
-
     private void RejectBarber() {
-        // Create an EditText input field
         EditText input = new EditText(this);
         input.setHint("Reason for rejection");
 
@@ -398,8 +338,9 @@ public class SpecialistActivity extends AppCompatActivity {
 
                         String joinType = SpecialistsFragment.joinType;
 
+                        Log.e("specialists", SpecialistsFragment.joinType);
                         if (joinType != null && !joinType.equals("Send Request")) {
-                            // Save rejected barber with reason
+                            Log.e("specialists", SpecialistsFragment.joinType);
                             DatabaseReference rejectedBarberRef = rejectedRef.child(AdminSettingsActivity.workPlace).push();
                             rejectedBarberRef.child("name").setValue(SpecialistsFragment.name);
                             rejectedBarberRef.child("imageUrl").setValue(SpecialistsFragment.imageUrl);
@@ -449,6 +390,7 @@ public class SpecialistActivity extends AppCompatActivity {
                     if (userEmail != null && userEmail.equals(email)) {
                         userSnapshot.getRef().child("status").setValue(status);
                         userSnapshot.getRef().child("rejection_reason").setValue(reason)
+//                        userSnapshot.getRef().child("myWorkplaceName").setValue(null)
                                 .addOnSuccessListener(aVoid -> {
                                     Log.d("Firebase", "User status and reason updated");
                                     onSuccess.run();

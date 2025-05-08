@@ -24,10 +24,12 @@ import com.vahagn.barber_line.Activities.MainActivity;
 import com.vahagn.barber_line.Fragments.SpecialistsFragment;
 import com.vahagn.barber_line.R;
 
+import java.util.Objects;
+
 public class AdminActivity extends AppCompatActivity {
 
     public static boolean AdminActivity;
-    String myBarbershopName, myWorkplaceName;
+    public static  String myBarbershopName, myWorkplaceName,status;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -39,8 +41,9 @@ public class AdminActivity extends AppCompatActivity {
         FrameLayout createBarberShop = findViewById(R.id.createBarberShop);
         FrameLayout joinToBarberShop = findViewById(R.id.joinToBarberShop);
 
-        ReadMyBarbershopName();
-        ReadMyWorkplaceName();
+        ReadMyBarbershopName_MyWorkplaceName_status();
+//        ReadMyBarbershopName();
+//        ReadMyWorkplaceName();
 
         createBarberShop.setOnClickListener(view -> {
             if (myBarbershopName == null && myWorkplaceName == null) {
@@ -53,19 +56,24 @@ public class AdminActivity extends AppCompatActivity {
         });
         joinToBarberShop.setOnClickListener(view ->
         {
+            Log.i("myBarbershopName", String.valueOf(myBarbershopName));
+            Log.i("myBarbershopName", String.valueOf(myWorkplaceName));
+            Log.i("myBarbershopName", String.valueOf(status));
+
             if (myBarbershopName == null && myWorkplaceName == null) {
                 navigateTo(JoinToBarberShopActivity.class);
-            } else if (myBarbershopName != null)
+            } else if (myBarbershopName != null && !Objects.equals(status, "rejected"))
                 Toast.makeText(this, "You already have your own barbershop", Toast.LENGTH_SHORT).show();
+            else if (myWorkplaceName != null && Objects.equals(status, "rejected"))
+                navigateTo(JoinToBarberShopActivity.class);
             else
                 Toast.makeText(this, "You have already joined the barbershop.", Toast.LENGTH_SHORT).show();
         });
     }
 
 
-    private void ReadMyBarbershopName() {
+    private void ReadMyBarbershopName_MyWorkplaceName_status() {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        assert currentUser != null;
         DatabaseReference userRef = FirebaseDatabase.getInstance()
                 .getReference("Users")
                 .child(currentUser.getUid());
@@ -75,42 +83,47 @@ public class AdminActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     myBarbershopName = dataSnapshot.child("myBarbershopName").getValue(String.class);
-                    Log.d("ReadMyBarbershopName", "Barber Shop Name: " + myBarbershopName);
-                } else
+                    myWorkplaceName = dataSnapshot.child("myWorkplaceName").getValue(String.class);
+                    status = dataSnapshot.child("status").getValue(String.class);
+                } else {
                     myBarbershopName = null;
+                    myWorkplaceName = null;
+                    status = null;
+                }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 myBarbershopName = null;
+                myWorkplaceName = null;
+                status = null;
                 Log.e("ReadMyBarbershopName", "Error: " + databaseError.getMessage());
             }
         });
     }
 
-    private void ReadMyWorkplaceName() {
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference userRef = FirebaseDatabase.getInstance()
-                .getReference("Users")
-                .child(currentUser.getUid());
-
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    myWorkplaceName = dataSnapshot.child("myWorkplaceName").getValue(String.class);
-                    Log.d("ReadMyWorkplaceName", "Workplace Name: " + myWorkplaceName);
-                } else
-                    myWorkplaceName = null;
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                myWorkplaceName = null;
-                Log.e("ReadMyWorkplaceName", "Error: " + databaseError.getMessage());
-            }
-        });
-    }
+//    private void ReadMyWorkplaceName() {
+//        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+//        DatabaseReference userRef = FirebaseDatabase.getInstance()
+//                .getReference("Users")
+//                .child(currentUser.getUid());
+//
+//        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                if (dataSnapshot.exists()) {
+//                    myWorkplaceName = dataSnapshot.child("myWorkplaceName").getValue(String.class);
+//                } else
+//                    myWorkplaceName = null;
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//                myWorkplaceName = null;
+//                Log.e("ReadMyWorkplaceName", "Error: " + databaseError.getMessage());
+//            }
+//        });
+//    }
 
     private void navigateTo(Class<?> targetActivity) {
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
@@ -136,10 +149,9 @@ public class AdminActivity extends AppCompatActivity {
     }
 
     public void ToBooks(View view) {
-        if (myBarbershopName == null) {
+        if (myBarbershopName == null &&  myWorkplaceName == null) {
             Toast.makeText(this, "Create or join to barbershop", Toast.LENGTH_SHORT).show();
         } else
             navigateTo(AdminBooksActivity.class);
     }
-
 }

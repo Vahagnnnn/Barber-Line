@@ -283,6 +283,8 @@ public class AdminSettingsActivity extends AppCompatActivity {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         Barbers barber = snapshot.getValue(Barbers.class);
                         if (barber != null && Objects.equals(barber.getWorkPlace(), workPlace)) {
+                            Log.i("ddd", String.valueOf(barber.getBarberId()));
+                            Log.i("ddd", String.valueOf(barber.getBarberShopsId()));
                             applicant_barber.add(barber);
                             found = true;
                             Log.i("workPlace", "IF " + workPlace);

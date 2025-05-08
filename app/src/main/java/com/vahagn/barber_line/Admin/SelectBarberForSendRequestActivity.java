@@ -30,7 +30,7 @@ public class SelectBarberForSendRequestActivity extends AppCompatActivity {
 
 
         BarbershopName = findViewById(R.id.BarbershopName);
-        BarbershopName.setText(JoinToBarberShopActivity.BarbershopName);
+        BarbershopName.setText(JoinToBarberShopActivity.BarberWorkPlace);
 
         SpecialistsFragment specialistsFragment = new SpecialistsFragment(JoinToBarberShopActivity.ListSpecialistSendRequest);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

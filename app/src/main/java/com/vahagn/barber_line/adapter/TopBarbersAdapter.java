@@ -136,7 +136,7 @@ public class TopBarbersAdapter extends RecyclerView.Adapter<TopBarbersAdapter.To
 
             SpecialistsFragment.imageUrl = item.getImage();
             SpecialistsFragment.name = item.getName();
-            SpecialistsFragment.rating = String.valueOf(item.getRating());
+            SpecialistsFragment.rating = item.getRating();
             SpecialistsFragment.ListServices = item.getServices();
 
             DatabaseReference barberShopsRef = FirebaseDatabase.getInstance().getReference("barberShops");
