@@ -6,236 +6,386 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#242C3B"
-    android:transitionName="barbershopView"
+    android:transitionName="sharedImageTransition"
     app:circularflow_radiusInDP="30dp"
     tools:context=".Admin.AdminSettingsActivity">
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/nested_scroll_view"
+    <TextView
+        android:id="@+id/text_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:text="@string/profile"
+        android:textColor="#FFFFFFFF"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/aboutLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fillViewport="true"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:clipToPadding="false"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingLeft="140dp"
+        android:paddingTop="8dp"
+        android:paddingRight="140dp"
+        android:paddingBottom="7dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_profile">
 
-        <!-- Main Content Layout -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="170dp">
+        <androidx.cardview.widget.CardView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="1dp"
+            app:cardCornerRadius="37dp">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <ImageView
+                android:id="@+id/barbershop_logo"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="40dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/img_avatar" />
+        </androidx.cardview.widget.CardView>
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/container_group2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/gray_frame_10dp"
-                    android:paddingHorizontal="10dp"
-                    android:paddingTop="15dp"
-                    android:paddingBottom="15dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="RtlSymmetry">
+        <FrameLayout
+            android:id="@+id/container_group1"
+            android:layout_width="400dp"
+            android:layout_height="61dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp">
 
-                    <!--Edit Profile Section -->
-                    <FrameLayout
-                        android:id="@+id/Confirm_List_Layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="35dp"
-                        android:background="@drawable/gray_frame_10dp"
-                        android:onClick="AddConfirm"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:foreground="@drawable/ripple_dark"
-                        android:paddingStart="10dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <ImageView
-                            android:layout_width="22dp"
-                            android:layout_height="22dp"
-                            android:layout_gravity="start|center_vertical"
-                            android:contentDescription="@string/app_name"
-                            android:scaleType="centerInside"
-                            android:src="@drawable/img_confirm" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="21dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginStart="45dp"
-                            android:fontFamily="@font/nunito_sans_semibold"
-                            android:includeFontPadding="false"
-                            android:maxLines="1"
-                            android:singleLine="true"
-                            android:text="Confirmed"
-                            android:textColor="#FF000000"
-                            android:textSize="16sp" />
-                    </FrameLayout>
-
-                    <!--Admin Profile Section -->
-                    <FrameLayout
-                        android:id="@+id/Wait_List_Layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="35dp"
-                        android:background="@drawable/gray_frame_10dp"
-                        android:onClick="AddWait"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:foreground="@drawable/ripple_dark"
-                        android:paddingStart="10dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/Confirm_List_Layout">
-
-                        <ImageView
-                            android:layout_width="22dp"
-                            android:layout_height="22dp"
-                            android:layout_gravity="start|center_vertical"
-                            android:contentDescription="@string/app_name"
-                            android:scaleType="centerInside"
-                            android:src="@drawable/img_wait" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="21dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginStart="45dp"
-                            android:fontFamily="@font/nunito_sans_semibold"
-                            android:includeFontPadding="false"
-                            android:maxLines="1"
-                            android:singleLine="true"
-                            android:text="Pending"
-                            android:textColor="#FF000000"
-                            android:textSize="16sp" />
-                    </FrameLayout>
-
-                    <!--Favourites Section-->
-                    <FrameLayout
-                        android:id="@+id/Rejected_List_Layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="35dp"
-                        android:onClick="AddRejected"
-                        android:foreground="@drawable/ripple_dark"
-                        android:paddingStart="10dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/Wait_List_Layout">
-
-                        <ImageView
-                            android:layout_width="23dp"
-                            android:layout_height="23dp"
-                            android:layout_gravity="start|center_vertical"
-                            android:contentDescription="@string/app_name"
-                            android:src="@drawable/img_reject" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="21dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginStart="45dp"
-                            android:fontFamily="@font/nunito_sans_semibold"
-                            android:includeFontPadding="false"
-                            android:maxLines="1"
-                            android:singleLine="true"
-                            android:text="Rejected"
-                            android:textColor="#FF000000"
-                            android:textSize="16sp" />
-                    </FrameLayout>
-
-                    <!--News Section-->
-
-
-                    <!--News Section-->
-                    <FrameLayout
-                        android:id="@+id/Applicant_Barber"
-                        android:layout_width="match_parent"
-                        android:layout_height="35dp"
-                        android:foreground="@drawable/ripple_dark"
-                        android:onClick="ToApplicant_Barber"
-                        android:paddingStart="10dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/Rejected_List_Layout">
-
-                        <ImageView
-                            android:layout_width="22dp"
-                            android:layout_height="22dp"
-                            android:layout_gravity="start|center_vertical"
-                            android:contentDescription="@string/app_name"
-                            android:scaleType="centerInside"
-                            android:src="@drawable/img_applicant_barber" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="21dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginStart="45dp"
-                            android:fontFamily="@font/nunito_sans_semibold"
-                            android:includeFontPadding="false"
-                            android:maxLines="1"
-                            android:singleLine="true"
-                            android:text="Applicant Barber"
-                            android:textColor="#FF000000"
-                            android:textSize="16sp" />
-                    </FrameLayout>
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/nameText"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="-4.5dp"
+                android:layout_marginBottom="-4.5dp"
+                android:fontFamily="@font/inter_bold"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="@string/paragon"
+                android:textColor="#FFFFFFFF"
+                android:textSize="24sp" />
 
 
             <TextView
-                android:id="@+id/List_TextView"
+                android:id="@+id/addressText"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="18dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="-3dp"
+                android:fontFamily="@font/inter_semibold"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:letterSpacing="0.01"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="@string/_9_ghazar_parpetsi_st_8"
+                android:textColor="#FF9F9F9F"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/ratingText"
+                android:layout_width="match_parent"
+                android:layout_height="18dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
-                android:fontFamily="@font/poppins_bold"
+                android:layout_marginBottom="-3dp"
+                android:fontFamily="@font/inter_semibold"
                 android:gravity="center"
+                android:includeFontPadding="false"
+                android:maxLines="1"
                 android:singleLine="true"
-                android:text="Operating Barbershops"
-                android:textColor="#FFFFFFFF"
-                android:textSize="16sp" />
+                android:text="5.0★"
+                android:textColor="#FF9F9F9F"
+                android:textSize="14sp" />
+        </FrameLayout>
+    </LinearLayout>
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/paragonLayout"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@drawable/radius_16_dp"-->
+<!--        android:layout_marginTop="24dp"-->
+<!--        android:orientation="vertical"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/text_profile">-->
 
 
-            <LinearLayout
-                android:id="@+id/barbershops_list"
+<!--        <ImageView-->
+<!--            android:id="@+id/image"-->
+<!--            android:layout_width="260dp"-->
+<!--            android:layout_height="160dp"-->
+<!--            android:background="@drawable/top_radius_16_dp"-->
+<!--            android:clipToOutline="true"-->
+<!--            android:contentDescription="@string/app_name"-->
+<!--            android:scaleType="centerCrop"-->
+<!--            android:src="@drawable/img_paragon" />-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="@drawable/bottom_radius_16_dp"-->
+<!--            android:backgroundTint="@color/gray"-->
+<!--            android:orientation="vertical"-->
+<!--            android:paddingLeft="10dp"-->
+<!--            android:paddingBottom="7dp">-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/title"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="22dp"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:fontFamily="@font/poppins"-->
+<!--                android:gravity="center"-->
+<!--                android:text="@string/paragon"-->
+<!--                android:textColor="@android:color/black"-->
+<!--                android:textSize="16sp"-->
+<!--                android:textStyle="bold" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/address"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="22dp"-->
+<!--                android:fontFamily="@font/poppins"-->
+<!--                android:gravity="left"-->
+<!--                android:text="@string/_9_ghazar_parpetsi_st_8"-->
+<!--                android:textColor="@android:color/black"-->
+<!--                android:textSize="16sp" />-->
+
+<!--        </LinearLayout>-->
+
+
+<!--    </LinearLayout>-->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/settingLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginHorizontal="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/aboutLayout">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container_group2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/gray_frame_10dp"
+            android:paddingHorizontal="10dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="RtlSymmetry">
+
+            <FrameLayout
+                android:id="@+id/edit_profile"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="vertical" />
-
-            <ProgressBar
-                android:id="@+id/loading_progress_bar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="visible"
-                android:layout_marginTop="15dp"
-                android:layout_gravity="center"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_height="35dp"
+                android:background="@drawable/gray_frame_10dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="@drawable/ripple_dark"
+                android:paddingStart="10dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/image_profile_light"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_gravity="start|center_vertical"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/img_edit_profile" />
+
+                <TextView
+                    android:id="@+id/text_edit_profile"
+                    android:layout_width="match_parent"
+                    android:layout_height="21dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="45dp"
+                    android:fontFamily="@font/nunito_sans_semibold"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text="Edit barbershop"
+                    android:textColor="#FF000000"
+                    android:textSize="16sp" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/Applicant_Barber"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:foreground="@drawable/ripple_dark"
+                android:onClick="ToApplicant_Barber"
+                android:paddingStart="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_profile">
+
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_gravity="start|center_vertical"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/img_applicant_barber" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="21dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="45dp"
+                    android:fontFamily="@font/nunito_sans_semibold"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text="Applicant Barber"
+                    android:textColor="#FF000000"
+                    android:textSize="16sp" />
+            </FrameLayout>
+
+
+            <FrameLayout
+                android:id="@+id/history_container"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:foreground="@drawable/ripple_dark"
+                android:paddingStart="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Applicant_Barber">
+
+                <ImageView
+                    android:layout_width="23dp"
+                    android:layout_height="23dp"
+                    android:layout_gravity="start|center_vertical"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/ic_history" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="21dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="45dp"
+                    android:fontFamily="@font/nunito_sans_semibold"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text="History"
+                    android:textColor="#FF000000"
+                    android:textSize="16sp" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/MyWorkplace_container"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:foreground="@drawable/ripple_dark"
+                android:paddingStart="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/history_container">
+
+                <ImageView
+                    android:id="@+id/image_heart"
+                    android:layout_width="23dp"
+                    android:layout_height="23dp"
+                    android:layout_gravity="start|center_vertical"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/img_about" />
+
+                <TextView
+                    android:id="@+id/text_favourites"
+                    android:layout_width="match_parent"
+                    android:layout_height="21dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="45dp"
+                    android:fontFamily="@font/nunito_sans_semibold"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text="About"
+                    android:textColor="#FF000000"
+                    android:textSize="16sp" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/remove_account"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="@drawable/ripple_dark"
+                android:onClick="RemoveBarberAccount"
+                android:paddingStart="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/MyWorkplace_container">
+
+                <ImageView
+                    android:id="@+id/image_remove_user"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_gravity="start|center_vertical"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/img_remove_account" />
+
+                <TextView
+                    android:id="@+id/text_remove_account"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="45dp"
+                    android:fontFamily="@font/nunito_sans_semibold"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text="Remove barbershop"
+                    android:textColor="#FFFF0000"
+                    android:textSize="16sp" />
+            </FrameLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 
     <LinearLayout
         android:id="@+id/wait_for_confirmation"
         android:layout_width="wrap_content"
+        android:visibility="gone"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/nested_scroll_view"
+        app:layout_constraintTop_toTopOf="@+id/text_profile"
         tools:ignore="UseCompoundDrawables">
 
         <!-- Heart Icon -->
@@ -253,6 +403,77 @@
             android:text="Wait for confirmation"
             android:textColor="@color/white"
             android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/rejected"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:visibility="gone"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/text_profile"
+        tools:ignore="UseCompoundDrawables">
+
+        <!-- Heart Icon -->
+        <ImageView
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:src="@drawable/img_reject_red" />
+
+        <!-- No favourite products text -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Your request has been rejected"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/reject_reason_Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="13dp"
+            android:gravity="center"
+            android:text="Reason: Your Image wrong"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <FrameLayout
+            android:id="@+id/joinToBarberShop"
+            android:layout_width="327dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:foreground="@drawable/ripple_dark"
+            android:textSize="12sp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/img_login_button"
+                android:contentDescription="@string/app_name"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/montserrat_bold"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="Create again"
+                android:textColor="#FFFFFFFF"
+                android:textSize="16sp" />
+        </FrameLayout>
+
+
     </LinearLayout>
 
 
@@ -386,4 +607,3 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-

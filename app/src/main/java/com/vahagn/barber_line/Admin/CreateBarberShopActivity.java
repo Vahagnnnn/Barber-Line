@@ -328,7 +328,7 @@ public class CreateBarberShopActivity extends AppCompatActivity implements OnMap
             }
         }
 
-        BarberShops BarberShop = new BarberShops(ownerEmail, BarberShopName_str, address, coordinates, String.valueOf(BarberShopImageUri), String.valueOf(BarberShopLogoUri), "pending", ListSpecialist, openingTimes);
+        BarberShops BarberShop = new BarberShops(currentUser.getUid(), ownerEmail, BarberShopName_str, address, coordinates, String.valueOf(BarberShopImageUri), String.valueOf(BarberShopLogoUri), "pending", ListSpecialist, openingTimes);
 //        BarberShops BarberShop = new BarberShops(barberShopsId, ownerEmail, BarberShopName_str, address, coordinates, String.valueOf(BarberShopImageUri), String.valueOf(BarberShopLogoUri), "pending", ListSpecialist, openingTimes);
         addBarberShop(BarberShop);
 

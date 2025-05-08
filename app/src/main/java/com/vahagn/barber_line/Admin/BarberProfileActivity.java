@@ -84,41 +84,6 @@ public class BarberProfileActivity extends AppCompatActivity {
 
     }
 
-
-//    public void RemoveBarberAccount(View view) {
-//        new AlertDialog.Builder(this)
-//                .setTitle("Confirm Deletion")
-//                .setMessage("Are you sure you want to remove your account?")
-//                .setPositiveButton("Yes", (dialog, which) -> {
-//                    FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-//                    DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(currentUser.getUid());
-//
-//                    Map<String, Object> updates = new HashMap<>();
-//                    updates.put("myWorkplaceName", null);
-//                    updates.put("myWorkplaceId", null);
-//                    updates.put("myIdAsBarber", null);
-//                    updates.put("status", null);
-//
-//                    userRef.updateChildren(updates);
-//
-//                    DatabaseReference barberShopsRef = FirebaseDatabase.getInstance()
-//                            .getReference("barberShops").
-//                            child(String.valueOf(AdminActivity.barberShopsId))
-//                            .child("specialists")
-//                            .child(String.valueOf(AdminActivity.barberId));
-//
-//                    Map<String, Object> update_status = new HashMap<>();
-//                    update_status.put("status", "deleted");
-//
-//                    barberShopsRef.updateChildren(update_status);
-//
-//                    navigateTo(AdminActivity.class);
-//                })
-//                .setNegativeButton("Cancel", null)
-//                .show();
-//
-//    }
-
     public void RemoveBarberAccount(View view) {
         new AlertDialog.Builder(this)
                 .setTitle("Confirm Deletion")

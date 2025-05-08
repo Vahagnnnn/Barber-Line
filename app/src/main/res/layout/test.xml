@@ -1,69 +1,388 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="24dp"
-    android:background="#FFFFFF">
+    android:background="#242C3B"
+    android:transitionName="barbershopView"
+    app:circularflow_radiusInDP="30dp"
+    tools:context=".Admin.AdminSettingsActivity">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nested_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal">
+        android:fillViewport="true"
+        app:layout_constraintTop_toTopOf="parent">
 
+        <!-- Main Content Layout -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="170dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="40dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/container_group2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/gray_frame_10dp"
+                    android:paddingHorizontal="10dp"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="RtlSymmetry">
+
+                    <!--Edit Profile Section -->
+                    <FrameLayout
+                        android:id="@+id/Confirm_List_Layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:background="@drawable/gray_frame_10dp"
+                        android:onClick="AddConfirm"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="@drawable/ripple_dark"
+                        android:paddingStart="10dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:layout_gravity="start|center_vertical"
+                            android:contentDescription="@string/app_name"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/img_confirm" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="21dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="45dp"
+                            android:fontFamily="@font/nunito_sans_semibold"
+                            android:includeFontPadding="false"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:text="Confirmed"
+                            android:textColor="#FF000000"
+                            android:textSize="16sp" />
+                    </FrameLayout>
+
+                    <!--Admin Profile Section -->
+                    <FrameLayout
+                        android:id="@+id/Wait_List_Layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:background="@drawable/gray_frame_10dp"
+                        android:onClick="AddWait"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="@drawable/ripple_dark"
+                        android:paddingStart="10dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/Confirm_List_Layout">
+
+                        <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:layout_gravity="start|center_vertical"
+                            android:contentDescription="@string/app_name"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/img_wait" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="21dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="45dp"
+                            android:fontFamily="@font/nunito_sans_semibold"
+                            android:includeFontPadding="false"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:text="Pending"
+                            android:textColor="#FF000000"
+                            android:textSize="16sp" />
+                    </FrameLayout>
+
+                    <!--Favourites Section-->
+                    <FrameLayout
+                        android:id="@+id/Rejected_List_Layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:onClick="AddRejected"
+                        android:foreground="@drawable/ripple_dark"
+                        android:paddingStart="10dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/Wait_List_Layout">
+
+                        <ImageView
+                            android:layout_width="23dp"
+                            android:layout_height="23dp"
+                            android:layout_gravity="start|center_vertical"
+                            android:contentDescription="@string/app_name"
+                            android:src="@drawable/img_reject" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="21dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="45dp"
+                            android:fontFamily="@font/nunito_sans_semibold"
+                            android:includeFontPadding="false"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:text="Rejected"
+                            android:textColor="#FF000000"
+                            android:textSize="16sp" />
+                    </FrameLayout>
+
+                    <!--News Section-->
+
+
+                    <!--News Section-->
+                    <FrameLayout
+                        android:id="@+id/Applicant_Barber"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:foreground="@drawable/ripple_dark"
+                        android:onClick="ToApplicant_Barber"
+                        android:paddingStart="10dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/Rejected_List_Layout">
+
+                        <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:layout_gravity="start|center_vertical"
+                            android:contentDescription="@string/app_name"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/img_applicant_barber" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="21dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="45dp"
+                            android:fontFamily="@font/nunito_sans_semibold"
+                            android:includeFontPadding="false"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:text="Applicant Barber"
+                            android:textColor="#FF000000"
+                            android:textSize="16sp" />
+                    </FrameLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+<!--            <TextView-->
+<!--                android:id="@+id/List_TextView"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:layout_marginTop="20dp"-->
+<!--                android:fontFamily="@font/poppins_bold"-->
+<!--                android:gravity="center"-->
+<!--                android:singleLine="true"-->
+<!--                android:text="Operating Barbershops"-->
+<!--                android:textColor="#FFFFFFFF"-->
+<!--                android:textSize="16sp" />-->
+
+
+<!--            <LinearLayout-->
+<!--                android:id="@+id/barbershops_list"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:orientation="vertical" />-->
+
+<!--            <ProgressBar-->
+<!--                android:id="@+id/loading_progress_bar"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:visibility="visible"-->
+<!--                android:layout_marginTop="15dp"-->
+<!--                android:layout_gravity="center"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent" />-->
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+    <LinearLayout
+        android:id="@+id/wait_for_confirmation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/nested_scroll_view"
+        tools:ignore="UseCompoundDrawables">
+
+        <!-- Heart Icon -->
+        <ImageView
+            android:id="@+id/heartIcon"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:src="@drawable/img_pending" />
+
+        <!-- No favourite products text -->
         <TextView
-            android:id="@+id/textFullName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="First Last"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="12dp"/>
-
-        <TextView
-            android:id="@+id/textEmail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="yourname@gmail.com"
-            android:autoLink="email"
-            android:textSize="16sp"
-            android:layout_marginBottom="8dp"/>
-
-        <TextView
-            android:id="@+id/textPhone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="+1234567890"
-            android:autoLink="phone"
-            android:textSize="16sp"
-            android:layout_marginBottom="8dp"/>
-
-        <TextView
-            android:id="@+id/textGithub"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="GitHub Profile"
-            android:textColor="@android:color/holo_blue_dark"
-            android:textSize="16sp"
-            android:layout_marginBottom="8dp"/>
-
-        <TextView
-            android:id="@+id/textLinkedIn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="LinkedIn Profile"
-            android:textColor="@android:color/holo_blue_dark"
-            android:textSize="16sp"
-            android:layout_marginBottom="8dp"/>
-
-        <TextView
-            android:id="@+id/textCV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="View My CV"
-            android:textColor="@android:color/holo_blue_dark"
-            android:textSize="16sp"
-            android:layout_marginBottom="8dp"/>
-
+            android:layout_marginTop="16dp"
+            android:text="Wait for confirmation"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
     </LinearLayout>
-</ScrollView>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/dark_blue"
+        android:transitionName="sharedImageTransition"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+
+        <!-- Hairstyle (Center Element) -->
+        <ImageView
+            android:id="@+id/img_hairstyle"
+            android:layout_width="62dp"
+            android:layout_height="62dp"
+            android:contentDescription="@string/app_name"
+            android:onClick="ToAdmin"
+            android:scaleType="centerInside"
+            android:src="@drawable/img_hairstyle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Book -->
+        <FrameLayout
+            android:id="@+id/container_book"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="ToBooks"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/img_hairstyle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/img_event"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="@string/app_name"
+                android:scaleType="centerInside"
+                android:src="@drawable/img_book" />
+
+            <TextView
+                android:id="@+id/txt_book"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="27dp"
+                android:fontFamily="@font/roboto_slab"
+                android:gravity="center_horizontal"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="@string/reservations"
+                android:textColor="#FFFFFFFF"
+                android:textSize="12sp" />
+        </FrameLayout>
+
+        <!-- Location -->
+        <FrameLayout
+            android:id="@+id/container_barber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/img_hairstyle"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/img_settings"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="@string/app_name"
+                android:scaleType="centerInside"
+                android:src="@drawable/img_settings_fill" />
+
+            <TextView
+                android:id="@+id/txt_barbers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="27dp"
+                android:fontFamily="@font/roboto_slab"
+                android:gravity="center_horizontal"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="@string/settings"
+                android:textColor="#FFFFFFFF"
+                android:textSize="12sp" />
+        </FrameLayout>
+
+        <!--         Map -->
+        <!--                <FrameLayout-->
+        <!--                    android:id="@+id/container_settings"-->
+        <!--                    android:layout_width="48dp"-->
+        <!--                    android:layout_height="wrap_content"-->
+        <!--                    android:layout_marginEnd="15dp"-->
+        <!--                    android:onClick="ToMap"-->
+        <!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--                    app:layout_constraintEnd_toEndOf="parent"-->
+        <!--                    app:layout_constraintTop_toTopOf="parent">-->
+
+        <!--                    <ImageView-->
+        <!--                        android:id="@+id/img_setting"-->
+        <!--                        android:layout_width="25dp"-->
+        <!--                        android:layout_height="25dp"-->
+        <!--                        android:layout_gravity="center_horizontal"-->
+        <!--                        android:contentDescription="@string/app_name"-->
+        <!--                        android:scaleType="centerInside"-->
+        <!--                        android:src="@drawable/img_location" />-->
+
+        <!--                    <TextView-->
+        <!--                        android:id="@+id/txt_settings"-->
+        <!--                        android:layout_width="match_parent"-->
+        <!--                        android:layout_height="wrap_content"-->
+        <!--                        android:layout_marginTop="27dp"-->
+        <!--                        android:fontFamily="@font/roboto_slab"-->
+        <!--                        android:gravity="center_horizontal"-->
+        <!--                        android:includeFontPadding="false"-->
+        <!--                        android:maxLines="1"-->
+        <!--                        android:singleLine="true"-->
+        <!--                        android:text="@string/map"-->
+        <!--                        android:textColor="#FFFFFFFF"-->
+        <!--                        android:textSize="12sp" />-->
+        <!--                </FrameLayout>-->
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,6 +10,7 @@ import java.util.Map;
 public class BarberShops {
 //    private int KeyId;
     private int barberShopsId;
+    private String ownerId;
     private String ownerEmail;
     private String name;
     private String address;
@@ -45,8 +46,9 @@ public class BarberShops {
 //        this.openingTimes = openingTimes;
 //    }
 
-    public BarberShops(String ownerEmail, String name, String address, String coordinates, String image, String logo, String status,
+    public BarberShops(String ownerId,String ownerEmail, String name, String address, String coordinates, String image, String logo, String status,
                        List<Barbers> specialists, Map<String, TimeRange> openingTimes) {
+        this.ownerId = ownerId;
         this.ownerEmail = ownerEmail;
         this.name = name;
         this.address = address;
@@ -202,5 +204,13 @@ public class BarberShops {
 
     public void setOpeningTimes(Map<String, TimeRange> openingTimes) {
         this.openingTimes = openingTimes;
+    }
+
+    public String getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
     }
 }
