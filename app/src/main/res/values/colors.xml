@@ -8,7 +8,7 @@
     <color name="search_button_bg">#4380EE</color>
     <color name="gray">#FF8A9395</color>
     <color name="light_blue">#006FFD</color>
-
     <color name="hint_color">#cac4f2</color>
     <color name="stroke_color">#928f96</color>
+    <color name="search_hint_color">#A0A4AC</color>
 </resources>

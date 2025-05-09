@@ -4,13 +4,18 @@ import static com.vahagn.barber_line.Activities.MainActivity.isLogin;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.SearchView;
+//import android.widget.SearchView;
+import androidx.appcompat.widget.SearchView;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,7 +50,7 @@ public class BarbersActivity extends AppCompatActivity {
     public static LinearLayout secondActivityContainer;
 
     public static Object ImageResource, tag;
-    public static int barberId,barberShopsId;
+    public static int barberId, barberShopsId;
     public static String logo, imageUrl, name, rating, OwnerEmail, address, coordinates;
     public static List<Barbers> ListSpecialist = new ArrayList<>();
     public static List<Reviews> ListReviews = new ArrayList<>();
@@ -53,7 +58,6 @@ public class BarbersActivity extends AppCompatActivity {
 
     private List<BarberShops> ListBarberShops = new ArrayList<>();
     private List<BarberShops> filteredList = new ArrayList<>();
-    private SearchView searchView;
 
     String from_where;
 
@@ -67,7 +71,28 @@ public class BarbersActivity extends AppCompatActivity {
         ReadBarberShops();
 
 
-        searchView = findViewById(R.id.searchView);
+        SearchView searchView = findViewById(R.id.searchView);
+        if (searchView != null) {
+            searchView.setIconifiedByDefault(false);
+            searchView.setIconified(false);
+            searchView.clearFocus();
+            EditText searchEditText = searchView.findViewById(androidx.appcompat.R.id.search_src_text);
+            if (searchEditText != null) {
+                searchEditText.setHintTextColor(getResources().getColor(android.R.color.darker_gray));
+                searchEditText.setHint("Names of barbershops");
+                searchEditText.setTextColor(Color.parseColor("#A0A4AC"));
+                searchEditText.setHintTextColor(Color.parseColor("#A0A4AC"));
+
+                LinearLayout searchPlate = searchView.findViewById(androidx.appcompat.R.id.search_plate);
+                searchPlate.setBackgroundColor(Color.TRANSPARENT);
+                searchPlate.setBackground(null);
+            } else {
+                Log.e("searchView", "search_src_text not found in SearchView");
+            }
+        } else {
+            Log.e("searchView", "SearchView not found");
+        }
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -110,6 +135,7 @@ public class BarbersActivity extends AppCompatActivity {
         });
 
     }
+
     private void filterBarbershops(String query) {
         filteredList.clear();
         for (BarberShops barbershop : ListBarberShops) {
