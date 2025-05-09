@@ -33,7 +33,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
-        android:visibility="gone"
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
         android:clipToPadding="false"
@@ -43,6 +42,7 @@
         android:paddingTop="8dp"
         android:paddingRight="140dp"
         android:paddingBottom="7dp"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_profile">
 
@@ -120,71 +120,71 @@
         </FrameLayout>
     </LinearLayout>
 
-<!--    <LinearLayout-->
-<!--        android:id="@+id/paragonLayout"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:background="@drawable/radius_16_dp"-->
-<!--        android:layout_marginTop="24dp"-->
-<!--        android:orientation="vertical"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/text_profile">-->
+    <!--    <LinearLayout-->
+    <!--        android:id="@+id/paragonLayout"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:background="@drawable/radius_16_dp"-->
+    <!--        android:layout_marginTop="24dp"-->
+    <!--        android:orientation="vertical"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/text_profile">-->
 
 
-<!--        <ImageView-->
-<!--            android:id="@+id/image"-->
-<!--            android:layout_width="260dp"-->
-<!--            android:layout_height="160dp"-->
-<!--            android:background="@drawable/top_radius_16_dp"-->
-<!--            android:clipToOutline="true"-->
-<!--            android:contentDescription="@string/app_name"-->
-<!--            android:scaleType="centerCrop"-->
-<!--            android:src="@drawable/img_paragon" />-->
+    <!--        <ImageView-->
+    <!--            android:id="@+id/image"-->
+    <!--            android:layout_width="260dp"-->
+    <!--            android:layout_height="160dp"-->
+    <!--            android:background="@drawable/top_radius_16_dp"-->
+    <!--            android:clipToOutline="true"-->
+    <!--            android:contentDescription="@string/app_name"-->
+    <!--            android:scaleType="centerCrop"-->
+    <!--            android:src="@drawable/img_paragon" />-->
 
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:background="@drawable/bottom_radius_16_dp"-->
-<!--            android:backgroundTint="@color/gray"-->
-<!--            android:orientation="vertical"-->
-<!--            android:paddingLeft="10dp"-->
-<!--            android:paddingBottom="7dp">-->
+    <!--        <LinearLayout-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:background="@drawable/bottom_radius_16_dp"-->
+    <!--            android:backgroundTint="@color/gray"-->
+    <!--            android:orientation="vertical"-->
+    <!--            android:paddingLeft="10dp"-->
+    <!--            android:paddingBottom="7dp">-->
 
-<!--            <TextView-->
-<!--                android:id="@+id/title"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="22dp"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:fontFamily="@font/poppins"-->
-<!--                android:gravity="center"-->
-<!--                android:text="@string/paragon"-->
-<!--                android:textColor="@android:color/black"-->
-<!--                android:textSize="16sp"-->
-<!--                android:textStyle="bold" />-->
+    <!--            <TextView-->
+    <!--                android:id="@+id/title"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="22dp"-->
+    <!--                android:layout_marginTop="10dp"-->
+    <!--                android:fontFamily="@font/poppins"-->
+    <!--                android:gravity="center"-->
+    <!--                android:text="@string/paragon"-->
+    <!--                android:textColor="@android:color/black"-->
+    <!--                android:textSize="16sp"-->
+    <!--                android:textStyle="bold" />-->
 
-<!--            <TextView-->
-<!--                android:id="@+id/address"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="22dp"-->
-<!--                android:fontFamily="@font/poppins"-->
-<!--                android:gravity="left"-->
-<!--                android:text="@string/_9_ghazar_parpetsi_st_8"-->
-<!--                android:textColor="@android:color/black"-->
-<!--                android:textSize="16sp" />-->
+    <!--            <TextView-->
+    <!--                android:id="@+id/address"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="22dp"-->
+    <!--                android:fontFamily="@font/poppins"-->
+    <!--                android:gravity="left"-->
+    <!--                android:text="@string/_9_ghazar_parpetsi_st_8"-->
+    <!--                android:textColor="@android:color/black"-->
+    <!--                android:textSize="16sp" />-->
 
-<!--        </LinearLayout>-->
+    <!--        </LinearLayout>-->
 
 
-<!--    </LinearLayout>-->
+    <!--    </LinearLayout>-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/settingLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
         android:layout_marginTop="50dp"
         android:visibility="gone"
-        android:layout_marginHorizontal="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/aboutLayout">
@@ -277,6 +277,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:foreground="@drawable/ripple_dark"
+                android:onClick="ToHistory"
                 android:paddingStart="10dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/Applicant_Barber">
@@ -306,8 +307,8 @@
                 android:id="@+id/BarbershopAbout"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
-                android:onClick="ToBarbershopAbout"
                 android:foreground="@drawable/ripple_dark"
+                android:onClick="ToBarbershopAbout"
                 android:paddingStart="10dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/history_container">
@@ -376,8 +377,6 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
-
     <LinearLayout
         android:id="@+id/wait_for_confirmation"
         android:layout_width="wrap_content"
@@ -412,8 +411,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:visibility="gone"
         android:orientation="vertical"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

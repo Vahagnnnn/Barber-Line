@@ -278,7 +278,9 @@ public class AdminSettingsActivity extends AppCompatActivity {
     public void ToAdmin(View view) {
         navigateTo(AdminActivity.class);
     }
-
+    public void ToHistory(View view) {
+        navigateTo(HistoryActivity.class);
+    }
     public void ToBooks(View view) {
         if (Objects.equals(AdminActivity.status, "pending")) {
             Toast.makeText(this, "Wait for confirmation", Toast.LENGTH_SHORT).show();

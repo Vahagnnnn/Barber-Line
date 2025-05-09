@@ -190,13 +190,17 @@ public class BarberProfileActivity extends AppCompatActivity {
         startActivity(intent, options.toBundle());
     }
 
+    public void ToHistory(View view) {
+        navigateTo(HistoryActivity.class);
+    }
+
     public void ToServices(View view) {
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
                 this, findViewById(R.id.main),
                 "sharedImageTransition");
 
         Intent intent = new Intent(this, SpecialistActivity.class);
-        intent.putExtra("SpecialistActivity" ,false);
+        intent.putExtra("SpecialistActivity", false);
         startActivity(intent, options.toBundle());
     }
 
