@@ -126,9 +126,21 @@ public class AdminActivity extends AppCompatActivity {
     }
 
     public void ToBooks(View view) {
+//        Log.i("myBarbershopName",myBarbershopName);
+//        Log.i("myBarbershopName",status);
         if (myBarbershopName == null &&  myWorkplaceName == null) {
             Toast.makeText(this, "Create or join to barbershop", Toast.LENGTH_SHORT).show();
-        } else
+        }
+        else if (myBarbershopName != null  && Objects.equals(status, "pending")) {
+            Toast.makeText(this, "Your barbershop haven't been confirmed yet", Toast.LENGTH_SHORT).show();
+            navigateTo(AdminSettingsActivity.class);
+        }
+        else if (myWorkplaceName != null  && Objects.equals(status, "pending")) {
+            Toast.makeText(this, "Your barbershop haven't been confirmed yet", Toast.LENGTH_SHORT).show();
+            navigateTo(BarberProfileActivity.class);
+        }
+        else {
             navigateTo(AdminBooksActivity.class);
+        }
     }
 }

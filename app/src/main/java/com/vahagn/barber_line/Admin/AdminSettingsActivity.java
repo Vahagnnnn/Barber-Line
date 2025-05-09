@@ -35,16 +35,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.vahagn.barber_line.Activities.BarbersActivity;
 import com.vahagn.barber_line.Classes.BarberShops;
 import com.vahagn.barber_line.Classes.Barbers;
 import com.vahagn.barber_line.Classes.Reviews;
-import com.vahagn.barber_line.Classes.Services;
 import com.vahagn.barber_line.Classes.TimeRange;
-import com.vahagn.barber_line.Fragments.SpecialistsFragment;
 import com.vahagn.barber_line.R;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -53,32 +49,19 @@ import java.util.Objects;
 
 public class AdminSettingsActivity extends AppCompatActivity {
 
-//    DatabaseReference barberShopsRef = FirebaseDatabase.getInstance().getReference("barberShops");
-//    DatabaseReference pendingRef = FirebaseDatabase.getInstance().getReference().child("pending_barbershops");
-//    DatabaseReference rejectedRef = FirebaseDatabase.getInstance().getReference("rejected_barbershops");
-
-    public static String imageUrl, name, logo, rating, address, coordinates;
+    public static String imageUrl, logo, name, rating, address, OwnerEmail, coordinates;
+    public static int barberShopsId;
     public static List<Barbers> ListSpecialist = new ArrayList<>();
     public static List<Reviews> ListReviews = new ArrayList<>();
     public static Map<String, TimeRange> openingTimes = new HashMap<>();
-//    public static String workPlace;
-
-    //
-//    String ownerEmail;
-//
-//    TextView List_TextView;
-//    LinearLayout barbershops_list;
-//    private ProgressBar loadingProgressBar;
-//
-    public static List<Barbers> applicant_barber = new ArrayList<>();
-//
-//    LinearLayout wait_for_confirmation;
 
     TextView nameText, addressText, ratingText, reject_reason_Text;
     ImageView barbershop_logo;
 
     LinearLayout aboutLayout, wait_for_confirmation, rejected;
     ConstraintLayout settingLayout;
+
+    public static List<Barbers> applicant_barber = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,22 +83,6 @@ public class AdminSettingsActivity extends AppCompatActivity {
             else
                 Toast.makeText(this, "You have already joined the barbershop.", Toast.LENGTH_SHORT).show();
         });
-
-//        barbershops_list = findViewById(R.id.barbershops_list);
-//        List_TextView = findViewById(R.id.List_TextView);
-//        loadingProgressBar = findViewById(R.id.loading_progress_bar);
-//        loadingProgressBar.setVisibility(View.VISIBLE);
-//        wait_for_confirmation = findViewById(R.id.wait_for_confirmation);
-//        wait_for_confirmation.setVisibility(View.VISIBLE);
-//
-//
-//        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-//        if (currentUser != null) {
-//            ownerEmail = currentUser.getEmail();
-//        } else {
-//            ownerEmail = "";
-//        }
-//        AddConfirm(null);
     }
 
 
@@ -138,8 +105,8 @@ public class AdminSettingsActivity extends AppCompatActivity {
 
         if (currentUser != null) {
 
-            String uid = currentUser.getUid();
-            DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("Users").child(uid);
+//            String uid = currentUser.getUid();
+            DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid());
 
 
             usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -175,10 +142,6 @@ public class AdminSettingsActivity extends AppCompatActivity {
                 }
             });
         }
-
-        if (nameText.getText() == "Name Surname") {
-
-        }
     }
 
     private void setInfo(Integer myBarbershopId) {
@@ -194,6 +157,23 @@ public class AdminSettingsActivity extends AppCompatActivity {
                     addressText.setText(barberShops.getAddress());
                     ratingText.setText(barberShops.getRating() + "★");
 
+
+                    barberShopsId = barberShops.getBarberShopsId();
+                    imageUrl = barberShops.getImage();
+                    logo = barberShops.getLogo();
+                    name = barberShops.getName();
+                    rating = String.valueOf(barberShops.getRating());
+                    address = barberShops.getAddress();
+                    OwnerEmail = barberShops.getOwnerEmail();
+                    coordinates = barberShops.getCoordinates();
+                    ListSpecialist = barberShops.getSpecialists();
+                    ListReviews = barberShops.getReviews();
+                    openingTimes = barberShops.getOpeningTimes();
+
+//                    ToBarbershopAbout(null, id, image, logo, name, rating, address, ownerEmail, coordinates, specialists, reviews, openingTimes);
+//                    ToBarbershopAbout(null, barberShops.getBarberShopsId(), barberShops.getImage(), barberShops.getLogo(),  barberShops.getName(), barberShops.getRating(), barberShops.getAddress(), barberShops.getOwnerEmail(), barberShops.getCoordinates(), barberShops.getSpecialists(), barberShops.getReviews(), barberShops.getOpeningTimes());
+
+
                     String image = barberShops.getLogo();
                     if (image != null && !image.isEmpty()) {
                         Glide.with(AdminSettingsActivity.this).load(image).apply(RequestOptions.bitmapTransform(new RoundedCorners(100))).into(barbershop_logo);
@@ -208,168 +188,29 @@ public class AdminSettingsActivity extends AppCompatActivity {
         });
     }
 
+    //    public void ToBarbershopAbout(View view, int barberShopsId, String imageUrl, String logo,  String name, double rating, String address, String OwnerEmail, String coordinates, List<Barbers> ListSpecialist, List<Reviews> ListReviews, Map<String, TimeRange> openingTimes) {
+    public void ToBarbershopAbout(View view) {
+        Intent intent = new Intent(this, AdminBarberShopsAboutActivity.class);
+        intent.putExtra("from_where", "AdminSettingsActivity");
 
-//    public void AddConfirm(View view) {
-//        loadingProgressBar.setVisibility(View.VISIBLE);
-//        List_TextView.setText("Operating Barbershops");
-//        barbershops_list.removeAllViews();
-//        barberShopsRef.addValueEventListener(new ValueEventListener() {
-//            @SuppressLint("SetTextI18n")
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                barbershops_list.removeAllViews();
-//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//                    BarberShops shop = snapshot.getValue(BarberShops.class);
-//                    if (shop != null && Objects.equals(shop.getOwnerEmail(), ownerEmail)) {
-//                        addBarbershop(shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(),shop.getCoordinates(), shop.getSpecialists(), shop.getReviews(), shop.getOpeningTimes());
-//                        workPlace = shop.getName();
-//                    }
-//                }
-//                loadingProgressBar.setVisibility(View.GONE);
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//                Log.w("Firebase", "Failed to read value.", databaseError.toException());
-//                loadingProgressBar.setVisibility(View.GONE);
-//            }
-//        });
-//    }
+//        AdminSettingsActivity.barberShopsId = barberShopsId;
+//        AdminSettingsActivity.imageUrl = imageUrl;
+//        AdminSettingsActivity.logo = logo;
+//        AdminSettingsActivity.name = name;
+//        AdminSettingsActivity.rating = rating;
+//        AdminSettingsActivity.address = address;
+//        AdminSettingsActivity.OwnerEmail = OwnerEmail;
+//        AdminSettingsActivity.coordinates = coordinates;
+//        AdminSettingsActivity.ListSpecialist = ListSpecialist;
+//        AdminSettingsActivity.ListReviews = ListReviews;
+//        AdminSettingsActivity.openingTimes = openingTimes;
 
-//    public void AddWait(View view) {
-//        loadingProgressBar.setVisibility(View.VISIBLE);
-//        List_TextView.setText("Pending Barbershops");
-//        barbershops_list.removeAllViews();
-//
-//        pendingRef.addValueEventListener(new ValueEventListener() {
-//            @SuppressLint("SetTextI18n")
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                barbershops_list.removeAllViews();
-//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//                    BarberShops shop = snapshot.getValue(BarberShops.class);
-//                    if (shop != null && Objects.equals(shop.getOwnerEmail(), ownerEmail)) {
-//                        addBarbershop(shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(),shop.getCoordinates(), shop.getSpecialists(), shop.getReviews(), shop.getOpeningTimes());
-//                    }
-//                }
-//                loadingProgressBar.setVisibility(View.GONE);
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//                Log.w("Firebase", "Failed to read value.", databaseError.toException());
-//                loadingProgressBar.setVisibility(View.GONE);
-//            }
-//        });
-//    }
-
-//    public void AddRejected(View view) {
-//        loadingProgressBar.setVisibility(View.VISIBLE);
-//        List_TextView.setText("Rejected Barbershops");
-//        barbershops_list.removeAllViews();
-//
-//        rejectedRef.addValueEventListener(new ValueEventListener() {
-//            @SuppressLint("SetTextI18n")
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                barbershops_list.removeAllViews();
-//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//                    BarberShops shop = snapshot.getValue(BarberShops.class);
-//                    if (shop != null && Objects.equals(shop.getOwnerEmail(), ownerEmail)) {
-//                        addBarbershop(shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getCoordinates(),shop.getSpecialists(), shop.getReviews(), shop.getOpeningTimes(), shop.getReason());
-//                        List_TextView.setText("Rejected Barbershops");
-//                    }
-//                }
-//                loadingProgressBar.setVisibility(View.GONE);
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//                Log.w("Firebase", "Failed to read value.", databaseError.toException());
-//                loadingProgressBar.setVisibility(View.GONE);
-//            }
-//        });
-//    }
-
-
-//    public void addBarbershop(String logo, String imageUrl, String name, double rating, String address,String coordinates, List<Barbers> ListSpecialist, List<Reviews> ListReviews, Map<String, TimeRange> openingTimes) {
-//        View barbershopView = LayoutInflater.from(this).inflate(R.layout.barbershops_gray, barbershops_list, false);
-//        ImageView logoImageView = barbershopView.findViewById(R.id.logo);
-//
-//        Glide.with(this)
-//                .load(logo)
-//                .into(logoImageView);
-//
-//        TextView nameTextView = barbershopView.findViewById(R.id.name);
-//        TextView addressTextView = barbershopView.findViewById(R.id.address);
-//
-//        nameTextView.setText(name);
-//        addressTextView.setText(address);
-//
-//
-//        barbershopView.setOnClickListener(v -> {
-//            Intent intent = new Intent(this, AdminBarberShopsAboutActivity.class);
-//
-//            AdminSettingsActivity.imageUrl = imageUrl;
-//            AdminSettingsActivity.name = name;
-//            AdminSettingsActivity.logo = logo;
-//            AdminSettingsActivity.rating = String.valueOf(rating);
-//            AdminSettingsActivity.address = address;
-//            AdminSettingsActivity.coordinates = coordinates;
-//            AdminSettingsActivity.ListSpecialist = ListSpecialist;
-//            AdminSettingsActivity.ListReviews = ListReviews;
-//            AdminSettingsActivity.openingTimes = openingTimes;
-//
-//            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
-//                    this,
-//                    findViewById(R.id.bottom_navigation),
-//                    "sharedImageTransition");
-//            startActivity(intent, options.toBundle());
-//        });
-//
-////        barbershops_list.removeAllViews();
-//        barbershops_list.addView(barbershopView);
-//    }
-
-//    public void addBarbershop(String logo, String imageUrl, String name, double rating, String address, String coordinates, List<Barbers> ListSpecialist, List<Reviews> ListReviews, Map<String, TimeRange> openingTimes, String reason) {
-//        View barbershopView = LayoutInflater.from(this).inflate(R.layout.barbershops_gray, barbershops_list, false);
-//        ImageView logoImageView = barbershopView.findViewById(R.id.logo);
-//
-//        Glide.with(this)
-//                .load(logo)
-//                .into(logoImageView);
-//
-//        TextView nameTextView = barbershopView.findViewById(R.id.name);
-//        TextView addressTextView = barbershopView.findViewById(R.id.address);
-//
-//        nameTextView.setText(name);
-////        nameTextView.setText(reason);
-//        addressTextView.setText(address);
-//
-//
-//        barbershopView.setOnClickListener(v -> {
-//            Intent intent = new Intent(this, AdminBarberShopsAboutActivity.class);
-//
-//            AdminSettingsActivity.imageUrl = imageUrl;
-//            AdminSettingsActivity.name = name;
-//            AdminSettingsActivity.logo = logo;
-//            AdminSettingsActivity.rating = String.valueOf(rating);
-//            AdminSettingsActivity.coordinates = coordinates;
-//            AdminSettingsActivity.address = address;
-//            AdminSettingsActivity.ListSpecialist = ListSpecialist;
-//            AdminSettingsActivity.ListReviews = ListReviews;
-//            AdminSettingsActivity.openingTimes = openingTimes;
-//
-//            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
-//                    this,
-//                    findViewById(R.id.bottom_navigation),
-//                    "sharedImageTransition");
-//            startActivity(intent, options.toBundle());
-//        });
-////        barbershops_list.removeAllViews();
-//        barbershops_list.addView(barbershopView);
-//    }
-
+        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
+                this,
+                findViewById(R.id.bottom_navigation),
+                "sharedImageTransition");
+        startActivity(intent, options.toBundle());
+    }
 
     public void RemoveBarbershop(View view) {
 
@@ -383,14 +224,13 @@ public class AdminSettingsActivity extends AppCompatActivity {
                         return;
                     }
 
-                    String uid = currentUser.getUid();
+//                    String uid = currentUser.getUid();
 
                     DatabaseReference userRef = FirebaseDatabase.getInstance()
                             .getReference("Users")
-                            .child(uid);
+                            .child(currentUser.getUid());
 
                     Map<String, Object> updates = new HashMap<>();
-
 
 
                     updates.put("myBarbershopName", null);//Vahagn Confirm
@@ -440,7 +280,12 @@ public class AdminSettingsActivity extends AppCompatActivity {
     }
 
     public void ToBooks(View view) {
-        navigateTo(AdminBooksActivity.class);
+        if (Objects.equals(AdminActivity.status, "pending")) {
+            Toast.makeText(this, "Wait for confirmation", Toast.LENGTH_SHORT).show();
+        } else if (Objects.equals(AdminActivity.status, "rejected")) {
+            Toast.makeText(this, "Your request has been rejected, please join again.", Toast.LENGTH_SHORT).show();
+        } else
+            navigateTo(AdminBooksActivity.class);
     }
 
     public void ToApplicant_Barber(View view) {

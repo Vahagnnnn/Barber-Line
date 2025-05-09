@@ -303,9 +303,10 @@
             </FrameLayout>
 
             <FrameLayout
-                android:id="@+id/MyWorkplace_container"
+                android:id="@+id/BarbershopAbout"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
+                android:onClick="ToBarbershopAbout"
                 android:foreground="@drawable/ripple_dark"
                 android:paddingStart="10dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -344,7 +345,7 @@
                 android:onClick="RemoveBarbershop"
                 android:paddingStart="10dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/MyWorkplace_container">
+                app:layout_constraintTop_toBottomOf="@+id/BarbershopAbout">
 
                 <ImageView
                     android:id="@+id/image_remove_user"
