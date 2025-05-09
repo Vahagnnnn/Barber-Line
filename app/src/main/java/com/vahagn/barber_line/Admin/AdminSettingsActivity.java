@@ -288,6 +288,7 @@ public class AdminSettingsActivity extends AppCompatActivity {
             navigateTo(AdminBooksActivity.class);
     }
 
+
     public void ToApplicant_Barber(View view) {
         if (AdminActivity.myBarbershopName != null) {
             DatabaseReference applicant_barbersShopsRef = FirebaseDatabase.getInstance().getReference("applicant_barbers");
