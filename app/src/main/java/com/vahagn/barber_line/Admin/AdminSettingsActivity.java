@@ -5,6 +5,7 @@ import static android.view.View.VISIBLE;
 
 import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -60,7 +61,7 @@ public class AdminSettingsActivity extends AppCompatActivity {
     public static List<Barbers> ListSpecialist = new ArrayList<>();
     public static List<Reviews> ListReviews = new ArrayList<>();
     public static Map<String, TimeRange> openingTimes = new HashMap<>();
-    public static String workPlace;
+//    public static String workPlace;
 
     //
 //    String ownerEmail;
@@ -370,6 +371,57 @@ public class AdminSettingsActivity extends AppCompatActivity {
 //    }
 
 
+    public void RemoveBarbershop(View view) {
+
+        new AlertDialog.Builder(this)
+                .setTitle("Confirm Deletion")
+                .setMessage("Are you sure you want to remove your barbershop?")
+                .setPositiveButton("Yes", (dialog, which) -> {
+                    FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+                    if (currentUser == null) {
+                        return;
+                    }
+
+                    String uid = currentUser.getUid();
+
+                    DatabaseReference userRef = FirebaseDatabase.getInstance()
+                            .getReference("Users")
+                            .child(uid);
+
+                    Map<String, Object> updates = new HashMap<>();
+
+
+
+                    updates.put("myBarbershopName", null);//Vahagn Confirm
+                    updates.put("myBarbershopId", null);//2
+                    updates.put("status", null);
+
+                    userRef.updateChildren(updates)
+                            .addOnSuccessListener(aVoid -> Log.d("RemoveBarberAccount", "User fields cleared"))
+                            .addOnFailureListener(e -> Log.e("RemoveBarberAccount", "Failed to update user fields", e));
+
+                    String barberShopsId = String.valueOf(AdminActivity.myBarbershopId);
+
+                    DatabaseReference barberShopsRef = FirebaseDatabase.getInstance()
+                            .getReference("barberShops")
+                            .child(barberShopsId);
+
+                    Map<String, Object> update_status = new HashMap<>();
+                    update_status.put("status", "deleted");
+
+                    barberShopsRef.updateChildren(update_status)
+                            .addOnSuccessListener(aVoid -> {
+                                Log.d("RemoveBarberAccount", "Specialist status set to deleted");
+                                navigateTo(AdminActivity.class);
+                            })
+                            .addOnFailureListener(e -> Log.e("RemoveBarberAccount", "Failed to update specialist status", e));
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
+
+    }
+
     private void navigateTo(Class<?> targetActivity) {
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
                 this,
@@ -392,7 +444,7 @@ public class AdminSettingsActivity extends AppCompatActivity {
     }
 
     public void ToApplicant_Barber(View view) {
-        if (workPlace != null) {
+        if (AdminActivity.myBarbershopName != null) {
             DatabaseReference applicant_barbersShopsRef = FirebaseDatabase.getInstance().getReference("applicant_barbers");
             applicant_barber.clear();
             applicant_barbersShopsRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -402,12 +454,12 @@ public class AdminSettingsActivity extends AppCompatActivity {
                     boolean found = false;
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         Barbers barber = snapshot.getValue(Barbers.class);
-                        if (barber != null && Objects.equals(barber.getWorkPlace(), workPlace)) {
+                        if (barber != null && Objects.equals(barber.getWorkPlace(), AdminActivity.myBarbershopName)) {
                             Log.i("ddd", String.valueOf(barber.getBarberId()));
                             Log.i("ddd", String.valueOf(barber.getBarberShopsId()));
                             applicant_barber.add(barber);
                             found = true;
-                            Log.i("workPlace", "IF " + workPlace);
+                            Log.i("workPlace", "IF " + AdminActivity.myBarbershopName);
                         }
                     }
 
@@ -427,9 +479,5 @@ public class AdminSettingsActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "You don't have your own BarberShop", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    public void ToBarberProfile(View view) {
-        navigateTo(BarberProfileActivity.class);
     }
 }

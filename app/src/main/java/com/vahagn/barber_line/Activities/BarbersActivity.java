@@ -96,8 +96,10 @@ public class BarbersActivity extends AppCompatActivity {
                     BarberShops shop = snapshot.getValue(BarberShops.class);
                     assert shop != null;
 
-                    addBarbershop(secondActivityContainer, shop.getBarberShopsId(), shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getOwnerEmail(), shop.getCoordinates(), shop.getSpecialists(), shop.getReviews(), shop.getOpeningTimes());
-                    ListBarberShops.add(new BarberShops(shop.getOwnerEmail(), shop.getName(), shop.getAddress(), shop.getCoordinates(), shop.getImage(), shop.getLogo(), shop.getRating(), shop.getReviews(), shop.getServices(), shop.getSpecialists(), shop.getOpeningTimes()));
+                    if (shop.getStatus() == null || !shop.getStatus().equalsIgnoreCase("deleted")) {
+                        addBarbershop(secondActivityContainer, shop.getBarberShopsId(), shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getOwnerEmail(), shop.getCoordinates(), shop.getSpecialists(), shop.getReviews(), shop.getOpeningTimes());
+                        ListBarberShops.add(new BarberShops(shop.getOwnerEmail(), shop.getName(), shop.getAddress(), shop.getCoordinates(), shop.getImage(), shop.getLogo(), shop.getRating(), shop.getReviews(), shop.getServices(), shop.getSpecialists(), shop.getOpeningTimes()));
+                    }
                 }
             }
 

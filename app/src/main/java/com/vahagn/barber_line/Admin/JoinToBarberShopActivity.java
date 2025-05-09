@@ -90,22 +90,25 @@ public class JoinToBarberShopActivity extends AppCompatActivity {
                     if (shop != null) {
                         shop.setSpecialists(specialistsWithKeys);
 
-                        addBarbershop(barbers_list_Layout, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getOwnerEmail(), shop.getCoordinates(), specialistsWithKeys, shop.getReviews(), shop.getOpeningTimes(), barbershopKey);
 
-                        ListBarberShops.add(new BarberShops(
-                                barbershopKey,
-                                shop.getOwnerEmail(),
-                                shop.getName(),
-                                shop.getAddress(),
-                                shop.getCoordinates(),
-                                shop.getImage(),
-                                shop.getLogo(),
-                                shop.getRating(),
-                                shop.getReviews(),
-                                shop.getServices(),
-                                specialistsWithKeys,
-                                shop.getOpeningTimes()
-                        ));
+                        if (shop.getStatus() == null || !shop.getStatus().equalsIgnoreCase("deleted")) {
+                            addBarbershop(barbers_list_Layout, shop.getLogo(), shop.getImage(), shop.getName(), shop.getRating(), shop.getAddress(), shop.getOwnerEmail(), shop.getCoordinates(), specialistsWithKeys, shop.getReviews(), shop.getOpeningTimes(), barbershopKey);
+                            ListBarberShops.add(new BarberShops(
+                                    barbershopKey,
+                                    shop.getOwnerEmail(),
+                                    shop.getName(),
+                                    shop.getAddress(),
+                                    shop.getCoordinates(),
+                                    shop.getImage(),
+                                    shop.getLogo(),
+                                    shop.getRating(),
+                                    shop.getReviews(),
+                                    shop.getServices(),
+                                    specialistsWithKeys,
+                                    shop.getOpeningTimes()
+                            ));
+                        }
+
                     }
                 }
             }

@@ -170,7 +170,7 @@ public class BarberProfileActivity extends AppCompatActivity {
                         Integer myIdAsBarber = dataSnapshot.child("myIdAsBarber").getValue(Integer.class);
 
                         if (myWorkplaceId != null && myIdAsBarber != null) {
-                            setInfo(myIdAsBarber, myWorkplaceId);
+                            setInfo(myWorkplaceId,myIdAsBarber);
 
                             aboutLayout.setVisibility(VISIBLE);
                             settingLayout.setVisibility(VISIBLE);
@@ -195,33 +195,72 @@ public class BarberProfileActivity extends AppCompatActivity {
         }
     }
 
+//    private void setInfo(Integer barberShopsId, Integer barberId) {
+//        DatabaseReference barberShopsRef = FirebaseDatabase.getInstance().getReference("barberShops").child(String.valueOf(barberShopsId)).child("specialists");
+//        Log.i("myWorkplaceId", "barberShopsId = " + barberShopsId);
+//
+//        barberShopsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                Log.i("myWorkplaceId", String.valueOf(barberId));
+//
+//                for (DataSnapshot child : snapshot.getChildren()) {
+//                    Barbers barber = child.getValue(Barbers.class);
+//                    assert barber != null;
+//                    Log.i("myWorkplaceId", barber.getName());
+//                    Log.i("myWorkplaceId", String.valueOf(barber.getBarberId()));
+//                    if (barber != null && barberId == barber.getBarberId()) {
+//                        nameText.setText(barber.getName());
+//                        String phone = barber.getPhoneNumber().substring(0, 5) + " " +
+//                                barber.getPhoneNumber().substring(5, 7) + " " +
+//                                barber.getPhoneNumber().substring(7, 9) + " " +
+//                                barber.getPhoneNumber().substring(9);
+//                        phoneNumberText.setText(phone);
+//                        ratingText.setText(barber.getRating() + "★");
+//
+//
+//
+//                        String image = barber.getImage();
+//                        if (image != null && !image.isEmpty()) {
+//                            Glide.with(BarberProfileActivity.this).load(image).apply(RequestOptions.bitmapTransform(new RoundedCorners(100))).into(profileImageView);
+//                        }
+//
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                Log.w("Firebase", "Failed to read value.", error.toException());
+//            }
+//        });
+//    }
+
     private void setInfo(Integer barberShopsId, Integer barberId) {
-        DatabaseReference barberShopsRef = FirebaseDatabase.getInstance().getReference("barberShops").child(String.valueOf(barberShopsId)).child("specialists");
+        DatabaseReference barberRef = FirebaseDatabase.getInstance().getReference("barberShops").child(String.valueOf(barberShopsId)).child("specialists").child(String.valueOf(barberId));
         Log.i("myWorkplaceId", "barberShopsId = " + barberShopsId);
 
-        barberShopsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        barberRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.i("myWorkplaceId", String.valueOf(barberId));
+                Barbers barber = snapshot.getValue(Barbers.class);
+                assert barber != null;
+                nameText.setText(barber.getName());
+                String phone = barber.getPhoneNumber().substring(0, 5) + " " +
+                        barber.getPhoneNumber().substring(5, 7) + " " +
+                        barber.getPhoneNumber().substring(7, 9) + " " +
+                        barber.getPhoneNumber().substring(9);
+                phoneNumberText.setText(phone);
+                ratingText.setText(barber.getRating() + "★");
 
-                for (DataSnapshot child : snapshot.getChildren()) {
-                    Barbers barber = child.getValue(Barbers.class);
-                    if (barber != null && barberId == barber.getBarberId()) {
-                        nameText.setText(barber.getName());
-                        String phone = barber.getPhoneNumber().substring(0, 5) + " " +
-                                barber.getPhoneNumber().substring(5, 7) + " " +
-                                barber.getPhoneNumber().substring(7, 9) + " " +
-                                barber.getPhoneNumber().substring(9);
-                        phoneNumberText.setText(phone);
-                        ratingText.setText(barber.getRating() + "★");
 
-                        String image = barber.getImage();
-                        if (image != null && !image.isEmpty()) {
-                            Glide.with(BarberProfileActivity.this).load(image).apply(RequestOptions.bitmapTransform(new RoundedCorners(100))).into(profileImageView);
-                        }
-                    }
+                String image = barber.getImage();
+                if (image != null && !image.isEmpty()) {
+                    Glide.with(BarberProfileActivity.this).load(image).apply(RequestOptions.bitmapTransform(new RoundedCorners(100))).into(profileImageView);
                 }
+
             }
 
             @Override

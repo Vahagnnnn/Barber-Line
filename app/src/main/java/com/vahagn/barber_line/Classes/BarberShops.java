@@ -213,4 +213,12 @@ public class BarberShops {
     public void setOwnerId(String ownerId) {
         this.ownerId = ownerId;
     }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

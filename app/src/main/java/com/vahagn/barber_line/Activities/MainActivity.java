@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
                             Log.w("UserInfo", "HashMap");
                             HashMap<String, Boolean> map = (HashMap<String, Boolean>) favShops;
                             for (String key : map.keySet()) {
-                                if (map.get(key) == true) {
+                                if (Boolean.TRUE.equals(map.get(key))) {
                                     try {
                                         int shopId = Integer.parseInt(key);
                                         Favourite_Barbershops.add(shopId);
@@ -210,16 +210,17 @@ public class MainActivity extends AppCompatActivity {
                 originalTopBarberShopsList.clear();
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    int KeyId = Integer.parseInt(Objects.requireNonNull(snapshot.getKey()));
                     BarberShops shop = snapshot.getValue(BarberShops.class);
                     assert shop != null;
 
-                    BarberShops newShop = new BarberShops(shop.getBarberShopsId(), shop.getOwnerEmail(), shop.getName(), shop.getAddress(),
-                            shop.getCoordinates(), shop.getImage(), shop.getLogo(), shop.getRating(), shop.getReviews(),
-                            shop.getServices(), shop.getSpecialists(), shop.getOpeningTimes());
+                    if (shop.getStatus() == null || !shop.getStatus().equalsIgnoreCase("deleted")) {
+                        BarberShops newShop = new BarberShops(shop.getBarberShopsId(), shop.getOwnerEmail(), shop.getName(), shop.getAddress(),
+                                shop.getCoordinates(), shop.getImage(), shop.getLogo(), shop.getRating(), shop.getReviews(),
+                                shop.getServices(), shop.getSpecialists(), shop.getOpeningTimes());
+                        TopBarberShopsList.add(newShop);
+                        originalTopBarberShopsList.add(newShop);
+                    }
 
-                    TopBarberShopsList.add(newShop);
-                    originalTopBarberShopsList.add(newShop);
                 }
                 setTopBarberShopsRecycler(TopBarberShopsList);
             }

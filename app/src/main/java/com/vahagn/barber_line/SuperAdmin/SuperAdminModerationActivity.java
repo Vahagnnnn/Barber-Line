@@ -230,7 +230,6 @@ public class SuperAdminModerationActivity extends AppCompatActivity {
                                             });
                                 });
                         updateUserStatusWithReason(shop.getOwnerId(), "rejected", reason);
-
                     });
                 }
             }

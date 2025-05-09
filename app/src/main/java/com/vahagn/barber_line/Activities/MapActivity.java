@@ -247,9 +247,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
                     LatLng location = new LatLng(latitude, longitude);
 
-                    Log.i("img", barberShop.getLogo());
-                    barberShopsNames.add(barberShop.getName());
-                    addCustomMarker(location, barberShop.getName(), barberShop.getLogo());
+                    if (barberShop.getStatus() == null || !barberShop.getStatus().equalsIgnoreCase("deleted")) {
+                        barberShopsNames.add(barberShop.getName());
+                        addCustomMarker(location, barberShop.getName(), barberShop.getLogo());
+                    }
                 } catch (NumberFormatException e) {
                     Log.i("coords", "Error parsing coordinates: " + e.getMessage());
                 }

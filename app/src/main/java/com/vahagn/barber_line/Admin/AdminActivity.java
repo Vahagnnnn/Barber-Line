@@ -30,7 +30,7 @@ public class AdminActivity extends AppCompatActivity {
 
     public static boolean AdminActivity;
     public static  String myBarbershopName, myWorkplaceName,status;
-    public static Integer barberId,barberShopsId;
+    public static Integer myBarbershopId, barberId,barberShopsId;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -42,7 +42,7 @@ public class AdminActivity extends AppCompatActivity {
         FrameLayout createBarberShop = findViewById(R.id.createBarberShop);
         FrameLayout joinToBarberShop = findViewById(R.id.joinToBarberShop);
 
-        ReadMyBarbershopName_MyWorkplaceName_status_barberId_barberShopsId();
+        ReadMyBarbershopName_myBarbershopId_MyWorkplaceName_status_barberId_barberShopsId();
 //        ReadMyBarbershopName();
 //        ReadMyWorkplaceName();
 
@@ -69,7 +69,7 @@ public class AdminActivity extends AppCompatActivity {
     }
 
 
-    private void ReadMyBarbershopName_MyWorkplaceName_status_barberId_barberShopsId() {
+    private void ReadMyBarbershopName_myBarbershopId_MyWorkplaceName_status_barberId_barberShopsId() {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference userRef = FirebaseDatabase.getInstance()
                 .getReference("Users")
@@ -80,6 +80,7 @@ public class AdminActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     myBarbershopName = dataSnapshot.child("myBarbershopName").getValue(String.class);
+                    myBarbershopId = dataSnapshot.child("myBarbershopId").getValue(Integer.class);
                     myWorkplaceName = dataSnapshot.child("myWorkplaceName").getValue(String.class);
                     status = dataSnapshot.child("status").getValue(String.class);
                     barberId = dataSnapshot.child("myIdAsBarber").getValue(Integer.class);

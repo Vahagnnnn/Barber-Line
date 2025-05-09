@@ -120,7 +120,7 @@ public class SpecialistActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot barbershopSnapshot : snapshot.getChildren()) {
                     String name = barbershopSnapshot.child("name").getValue(String.class);
-                    if (name != null && name.equals(AdminSettingsActivity.workPlace)) {
+                    if (name != null && name.equals(AdminActivity. myBarbershopName)) {
                         String joinType = SpecialistsFragment.joinType;
 
                         if (joinType != null && !joinType.equals("Send Request")) {
@@ -269,7 +269,7 @@ public class SpecialistActivity extends AppCompatActivity {
                         Log.e("specialists", SpecialistsFragment.joinType);
                         if (joinType != null && !joinType.equals("Send Request")) {
                             Log.e("specialists", SpecialistsFragment.joinType);
-                            DatabaseReference rejectedBarberRef = rejectedRef.child(AdminSettingsActivity.workPlace).push();
+                            DatabaseReference rejectedBarberRef = rejectedRef.child(AdminActivity. myBarbershopName).push();
                             rejectedBarberRef.child("name").setValue(SpecialistsFragment.name);
                             rejectedBarberRef.child("imageUrl").setValue(SpecialistsFragment.imageUrl);
                             rejectedBarberRef.child("rating").setValue(SpecialistsFragment.rating);

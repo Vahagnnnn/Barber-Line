@@ -42,6 +42,7 @@
         android:paddingTop="8dp"
         android:paddingRight="140dp"
         android:paddingBottom="7dp"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_profile">
 
@@ -125,6 +126,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="50dp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/aboutLayout">
@@ -317,8 +319,8 @@
                 android:layout_height="35dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:onClick="RemoveBarberAccount"
                 android:foreground="@drawable/ripple_dark"
+                android:onClick="RemoveBarberAccount"
                 android:paddingStart="10dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/MyWorkplace_container">
@@ -352,12 +354,9 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
-
     <LinearLayout
         android:id="@+id/wait_for_confirmation"
         android:layout_width="wrap_content"
-        android:visibility="gone"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="vertical"
