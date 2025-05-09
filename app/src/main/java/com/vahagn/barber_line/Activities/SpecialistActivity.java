@@ -57,8 +57,8 @@ public class SpecialistActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_specialist);
-
-        SpecialistActivity = true;
+        SpecialistActivity = getIntent().getBooleanExtra("SpecialistActivity",true);;
+        SpecialistsFragment.CanBook = false;
 
         BarberNameTop = findViewById(R.id.BarberNameTop);
         BarberName = findViewById(R.id.BarberName);
@@ -68,18 +68,6 @@ public class SpecialistActivity extends AppCompatActivity {
         BarberNameTop.setText(SpecialistsFragment.name);
         BarberName.setText(SpecialistsFragment.name);
         BarberRating.setText(String.valueOf( SpecialistsFragment.rating));
-
-//        if (SpecialistsFragment.imageUrl != null) {
-//            BarberImage.setImageResource();
-//            setImageFromBase64(SpecialistsFragment.imageUrl, BarberImage);
-//        }
-
-//        if (SpecialistsFragment.imageUrl != null && !SpecialistsFragment.imageUrl.isEmpty()) {
-//            Glide.with(SpecialistActivity.this)
-//                    .load(SpecialistsFragment.imageUrl)
-//                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(100)))
-//                    .into(BarberImage);
-//        }
 
         if (SpecialistsFragment.imageUrl != null && !SpecialistsFragment.imageUrl.isEmpty()) {
             Glide.with(SpecialistActivity.this)

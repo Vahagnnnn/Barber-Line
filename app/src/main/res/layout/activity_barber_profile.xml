@@ -126,7 +126,6 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="50dp"
-        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/aboutLayout">
@@ -210,7 +209,7 @@
                     android:includeFontPadding="false"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:text="Barber schedule"
+                    android:text="Schedule"
                     android:textColor="#FF000000"
                     android:textSize="16sp" />
             </FrameLayout>
@@ -221,6 +220,7 @@
                 android:layout_height="35dp"
                 android:background="@drawable/gray_frame_10dp"
                 android:clickable="true"
+                android:onClick="ToServices"
                 android:focusable="true"
                 android:foreground="@drawable/ripple_dark"
                 android:paddingStart="10dp"

@@ -85,7 +85,6 @@ public class ServicesFragment extends Fragment {
                 price = services.getPrice();
                 duration = services.getDuration();
                 barberShopsId = serviceDuration.getId();
-//                Toast.makeText(getContext(), services.getName(), Toast.LENGTH_SHORT).show();
             });
         } else if (SpecialistsFragment.CanBook){
             servicesView.setOnClickListener(v -> {
