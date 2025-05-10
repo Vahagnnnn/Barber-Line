@@ -5,6 +5,8 @@ import java.io.Serializable;
 public class Appointment implements Serializable {
     public String userEmail;
     public String userName;
+    public String userPhoneNumber;
+    public String userImageUrl;
     public String barbershopImageUrl;
     public String barbershopName;
     public String barbershopAddress;
@@ -27,12 +29,14 @@ public class Appointment implements Serializable {
     public Appointment() {
     }
 
-    public Appointment(String userEmail,String userName, String barbershopImageUrl, String barbershopName,
+    public Appointment(String userEmail,String userName,String userPhoneNumber,String userImageUrl, String barbershopImageUrl, String barbershopName,
                        String barbershopAddress,String barbershopCoordinates , String barbershopRating,String barbershopOwnerEmail,String weekDay_monthName_dayOfMonth,
                        String time, String barberImageUrl, String barberName, String barberRating,String serviceName,
                        String servicePrice,String serviceDuration,String status,String message_or_requests,String uniqueID,int barberId, int barberShopsId) {
         this.userEmail = userEmail;
         this.userName = userName;
+        this.userPhoneNumber = userPhoneNumber;
+        this.userImageUrl = userImageUrl;
         this.barbershopImageUrl = barbershopImageUrl;
         this.barbershopName = barbershopName;
         this.barbershopAddress = barbershopAddress;
@@ -54,6 +58,14 @@ public class Appointment implements Serializable {
         this.barberShopsId = barberShopsId;
     }
 
+    public String getUserPhoneNumber() {
+        return userPhoneNumber;
+    }
+
+    public void setUserPhoneNumber(String userPhoneNumber) {
+        this.userPhoneNumber = userPhoneNumber;
+    }
+
     public String getUserEmail() {
         return userEmail;
     }
@@ -68,6 +80,14 @@ public class Appointment implements Serializable {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getUserImageUrl() {
+        return userImageUrl;
+    }
+
+    public void setUserImageUrl(String userImageUrl) {
+        this.userImageUrl = userImageUrl;
     }
 
     public String getBarbershopImageUrl() {

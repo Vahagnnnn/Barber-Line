@@ -35,15 +35,16 @@ public class ConfirmActivity extends AppCompatActivity {
     ImageView BarberShopImage, BarberImage;
     TextView BarberShopName, BarberShopAddress, weekDay_monthName_dayOfMonth, Time, BarberName, BarberRating, ServiceName, ServiceDuration, ServicePrice;
 
-    String BarberShopImageUrl_str, BarberShopName_str, BarberShopAddress_str,BarbershopCoordinates_str, BarberShopRating_str,BarberShopOwnerEmail_str, weekDay_monthName_dayOfMonth_str, Time_str,
+    String BarberShopImageUrl_str, BarberShopName_str, BarberShopAddress_str, BarbershopCoordinates_str, BarberShopRating_str, BarberShopOwnerEmail_str, weekDay_monthName_dayOfMonth_str, Time_str,
             BarberImageUrl_str, BarberName_str, BarberRating_str, ServiceName_str, ServicePrice_str, ServiceDuration_str;
 
     Button confirm_button;
 
     private DatabaseReference appointmentsRef;
 
-     int BarberId;
-     int BarberShopsId;
+    int BarberId;
+    int BarberShopsId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +69,7 @@ public class ConfirmActivity extends AppCompatActivity {
         ServiceDuration_str = ServicesFragment.duration;
 
         BarberId = BarbersActivity.barberId;
-        BarberShopsId= BarbersActivity.barberShopsId;
+        BarberShopsId = BarbersActivity.barberShopsId;
 
         message_or_requests = findViewById(R.id.message_or_requests);
         BarberShopImage = findViewById(R.id.BarberShopImage);
@@ -110,11 +111,13 @@ public class ConfirmActivity extends AppCompatActivity {
 
     public void ConfirmAppointment_InsertDatabase() {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        String UserEmail = "", UserName = "";
+        String UserEmail = "", UserName = "", UserPhoneNumber = "", UserImageUrl = "";
 
         if (currentUser != null) {
-            UserEmail = currentUser.getEmail();
-            UserName = currentUser.getDisplayName();
+            UserEmail = MainActivity.userClass.getEmail();
+            UserName = MainActivity.userClass.getFirst_name();
+            UserPhoneNumber = MainActivity.userClass.getPhoneNumber();
+            UserImageUrl = MainActivity.userClass.getPhotoUrl();
             Log.d("FirebaseAuth", "Current user name: " + UserName);
         } else {
             Log.e("FirebaseAuth", "No user is signed in");
@@ -137,9 +140,9 @@ public class ConfirmActivity extends AppCompatActivity {
 //        else
 //            Log.i("BarberShopOwnerEmail_str","Null");
 
-        Appointment Appointment = new Appointment(UserEmail, UserName, BarberShopImageUrl_str, BarberShopName_str,
-                BarberShopAddress_str,BarbershopCoordinates_str, BarberShopRating_str,BarberShopOwnerEmail_str, weekDay_monthName_dayOfMonth_str, Time_str, BarberImageUrl_str,
-                BarberName_str, BarberRating_str, ServiceName_str, ServicePrice_str, ServiceDuration_str, "Active", message_or_requests_str, uniqueID,BarberId,BarberShopsId);
+        Appointment Appointment = new Appointment(UserEmail, UserName, UserPhoneNumber, UserImageUrl, BarberShopImageUrl_str, BarberShopName_str,
+                BarberShopAddress_str, BarbershopCoordinates_str, BarberShopRating_str, BarberShopOwnerEmail_str, weekDay_monthName_dayOfMonth_str, Time_str, BarberImageUrl_str,
+                BarberName_str, BarberRating_str, ServiceName_str, ServicePrice_str, ServiceDuration_str, "Active", message_or_requests_str, uniqueID, BarberId, BarberShopsId);
 
         appointmentsRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {

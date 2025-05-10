@@ -33,6 +33,7 @@ import com.vahagn.barber_line.Activities.BooksActivity;
 import com.vahagn.barber_line.Classes.Appointment;
 import com.vahagn.barber_line.R;
 import com.vahagn.barber_line.adapter.AppointmentAdapter;
+import com.vahagn.barber_line.adapter.AppointmentAdapterAdmin;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +43,7 @@ public class HistoryActivity extends AppCompatActivity {
     private TextView tabActive, tabPast, tabCanceled;
 
     List<Appointment> AppointmentsList = new ArrayList<>();
-    AppointmentAdapter appointmentAdapter;
+    AppointmentAdapterAdmin appointmentAdapterAdmin;
     RecyclerView appointmentsRecyclerView;
 
 
@@ -64,8 +65,8 @@ public class HistoryActivity extends AppCompatActivity {
         appointmentsRecyclerView = findViewById(R.id.appointments_recycler_view);
         appointmentsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
-        appointmentAdapter = new AppointmentAdapter(AppointmentsList);
-        appointmentsRecyclerView.setAdapter(appointmentAdapter);
+        appointmentAdapterAdmin = new AppointmentAdapterAdmin(AppointmentsList);
+        appointmentsRecyclerView.setAdapter(appointmentAdapterAdmin);
 
         setActiveTab();
 
@@ -88,7 +89,7 @@ public class HistoryActivity extends AppCompatActivity {
         noHistory.setVisibility(GONE);
         loadingProgressBar.setVisibility(View.VISIBLE);
         AppointmentsList.clear();
-        appointmentAdapter.notifyDataSetChanged();
+        appointmentAdapterAdmin.notifyDataSetChanged();
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser == null) return;
@@ -114,7 +115,7 @@ public class HistoryActivity extends AppCompatActivity {
                 }
 
                 noHistory.setVisibility(hasAppointments ? GONE : VISIBLE);
-                appointmentAdapter.notifyDataSetChanged();
+                appointmentAdapterAdmin.notifyDataSetChanged();
                 loadingProgressBar.setVisibility(View.GONE);
             }
 
@@ -156,7 +157,7 @@ public class HistoryActivity extends AppCompatActivity {
 //        noHistory.setVisibility(GONE);
 //        loadingProgressBar.setVisibility(View.VISIBLE);
 //        AppointmentsList.clear();
-//        appointmentAdapter.notifyDataSetChanged();
+//        appointmentAdapterAdmin.notifyDataSetChanged();
 //
 //        DatabaseReference activeAppointmentsRef = FirebaseDatabase.getInstance().getReference("Appointments");
 //        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -184,7 +185,7 @@ public class HistoryActivity extends AppCompatActivity {
 //                }
 //
 //                noHistory.setVisibility(hasAppointments ? GONE : VISIBLE);
-//                appointmentAdapter.notifyDataSetChanged();
+//                appointmentAdapterAdmin.notifyDataSetChanged();
 //                loadingProgressBar.setVisibility(View.GONE);
 //            }
 //
@@ -211,7 +212,7 @@ public class HistoryActivity extends AppCompatActivity {
 //        noHistory.setVisibility(GONE);
 //        loadingProgressBar.setVisibility(View.VISIBLE);
 //        AppointmentsList.clear();
-//        appointmentAdapter.notifyDataSetChanged();
+//        appointmentAdapterAdmin.notifyDataSetChanged();
 //
 //
 //        DatabaseReference pastAppointmentsRef = FirebaseDatabase.getInstance().getReference("Past_Appointments");
@@ -242,7 +243,7 @@ public class HistoryActivity extends AppCompatActivity {
 //                }
 //
 //                noHistory.setVisibility(hasAppointments ? GONE : VISIBLE);
-//                appointmentAdapter.notifyDataSetChanged();
+//                appointmentAdapterAdmin.notifyDataSetChanged();
 //                loadingProgressBar.setVisibility(View.GONE);
 //            }
 //
@@ -269,7 +270,7 @@ public class HistoryActivity extends AppCompatActivity {
 //        noHistory.setVisibility(GONE);
 //        loadingProgressBar.setVisibility(View.VISIBLE);
 //        AppointmentsList.clear();
-//        appointmentAdapter.notifyDataSetChanged();
+//        appointmentAdapterAdmin.notifyDataSetChanged();
 //
 //        DatabaseReference canceled_appointmentsRef = FirebaseDatabase.getInstance().getReference("Canceled_Appointments");
 //        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -296,7 +297,7 @@ public class HistoryActivity extends AppCompatActivity {
 //                    }
 //
 //                    noHistory.setVisibility(hasAppointments ? GONE : VISIBLE);
-//                    appointmentAdapter.notifyDataSetChanged();
+//                    appointmentAdapterAdmin.notifyDataSetChanged();
 //                    loadingProgressBar.setVisibility(View.GONE);
 //                }
 //            }

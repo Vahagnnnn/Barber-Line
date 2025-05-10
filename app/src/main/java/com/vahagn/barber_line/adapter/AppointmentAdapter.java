@@ -11,8 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.vahagn.barber_line.Activities.AppointmentsAboutActivity;
-import com.vahagn.barber_line.Activities.BarberShopsAboutActivity;
-import com.vahagn.barber_line.Activities.BarbersActivity;
 import com.vahagn.barber_line.Activities.BooksActivity;
 import com.vahagn.barber_line.Classes.Appointment;
 import com.vahagn.barber_line.R;
@@ -53,25 +51,22 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         holder.Time.setText(appointment.getTime());
 
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(holder.itemView.getContext(), AppointmentsAboutActivity.class);
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(holder.itemView.getContext(), AppointmentsAboutActivity.class);
 
-                BarbershopImageUrl = appointment.getBarbershopImageUrl();
-                intent.putExtra("BarberShopName", appointment.getBarbershopName());
-                intent.putExtra("weekDay_monthName_dayOfMonth", appointment.getWeekDay_monthName_dayOfMonth());
-                intent.putExtra("Time", appointment.getTime());
-                intent.putExtra("ServiceDuration", appointment.getServiceDuration());
-                intent.putExtra("BarberShopAddress", appointment.getBarbershopAddress());
-                intent.putExtra("BarbershopCoordinates", appointment.getBarbershopCoordinates());
-                intent.putExtra("ServiceName", appointment.getServiceName());
+            BarbershopImageUrl = appointment.getBarbershopImageUrl();
+            intent.putExtra("BarberShopName", appointment.getBarbershopName());
+            intent.putExtra("weekDay_monthName_dayOfMonth", appointment.getWeekDay_monthName_dayOfMonth());
+            intent.putExtra("Time", appointment.getTime());
+            intent.putExtra("ServiceDuration", appointment.getServiceDuration());
+            intent.putExtra("BarberShopAddress", appointment.getBarbershopAddress());
+            intent.putExtra("BarbershopCoordinates", appointment.getBarbershopCoordinates());
+            intent.putExtra("ServiceName", appointment.getServiceName());
 
-                intent.putExtra("BarbershopRating", appointment.getBarbershopRating());
-                BooksActivity.uniqueID = appointment.getUniqueID();
-                holder.itemView.getContext().startActivity(intent);
+            intent.putExtra("BarbershopRating", appointment.getBarbershopRating());
+            BooksActivity.uniqueID = appointment.getUniqueID();
+            holder.itemView.getContext().startActivity(intent);
 
-            }
         });
 
     }
