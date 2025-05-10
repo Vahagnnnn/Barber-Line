@@ -4,8 +4,10 @@ import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.ActivityOptions;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -41,6 +43,7 @@ import com.vahagn.barber_line.Activities.MainActivity;
 import com.vahagn.barber_line.Activities.ServicesActivity;
 import com.vahagn.barber_line.Activities.SettingsActivity;
 import com.vahagn.barber_line.Activities.SpecialistActivity;
+import com.vahagn.barber_line.Classes.BarberShops;
 import com.vahagn.barber_line.Classes.Barbers;
 import com.vahagn.barber_line.Classes.Services;
 import com.vahagn.barber_line.Fragments.ServicesFragment;
@@ -194,6 +197,55 @@ public class BarberProfileActivity extends AppCompatActivity {
         navigateTo(HistoryActivity.class);
     }
 
+    public void ToMyWorkplace(View view) {
+        Context context = view.getContext();
+
+        DatabaseReference barberShopsRef = FirebaseDatabase.getInstance()
+                .getReference("barberShops")
+                .child(String.valueOf(AdminActivity.workplaceId));
+
+        Log.i("ListSpecialist", String.valueOf(AdminActivity.workplaceId));
+
+        barberShopsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                BarberShops barberShops = snapshot.getValue(BarberShops.class);
+                if (barberShops != null) {
+                    AdminSettingsActivity.barberShopsId = barberShops.getBarberShopsId();
+                    AdminSettingsActivity.imageUrl = barberShops.getImage();
+                    AdminSettingsActivity.logo = barberShops.getLogo();
+                    AdminSettingsActivity.name = barberShops.getName();
+                    AdminSettingsActivity.rating = String.valueOf(barberShops.getRating());
+                    AdminSettingsActivity.address = barberShops.getAddress();
+                    AdminSettingsActivity.OwnerEmail = barberShops.getOwnerEmail();
+                    AdminSettingsActivity.coordinates = barberShops.getCoordinates();
+                    AdminSettingsActivity.ListSpecialist = barberShops.getSpecialists();
+                    AdminSettingsActivity.ListReviews = barberShops.getReviews();
+                    AdminSettingsActivity.openingTimes = barberShops.getOpeningTimes();
+
+                    Log.i("ListSpecialist", AdminSettingsActivity.name);
+                    Log.i("ListSpecialist", AdminSettingsActivity.address);
+
+                    Intent intent = new Intent(context, AdminBarberShopsAboutActivity.class);
+                    intent.putExtra("from_where", "BarberProfileActivity");
+
+                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
+                            (Activity) context,
+                            ((Activity) context).findViewById(R.id.bottom_navigation),
+                            "sharedImageTransition");
+
+                    context.startActivity(intent, options.toBundle());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w("Firebase", "Failed to read value.", error.toException());
+            }
+        });
+    }
+
+
     public void ToServices(View view) {
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
                 this, findViewById(R.id.main),
@@ -231,7 +283,7 @@ public class BarberProfileActivity extends AppCompatActivity {
                             .addOnSuccessListener(aVoid -> Log.d("RemoveBarberAccount", "User fields cleared"))
                             .addOnFailureListener(e -> Log.e("RemoveBarberAccount", "Failed to update user fields", e));
 
-                    String barberShopsId = String.valueOf(AdminActivity.barberShopsId);
+                    String barberShopsId = String.valueOf(AdminActivity.workplaceId);
                     String barberId = String.valueOf(AdminActivity.barberId);
 
                     DatabaseReference barberShopsRef = FirebaseDatabase.getInstance()

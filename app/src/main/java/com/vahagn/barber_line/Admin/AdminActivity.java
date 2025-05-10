@@ -30,7 +30,7 @@ public class AdminActivity extends AppCompatActivity {
 
     public static boolean AdminActivity;
     public static  String myBarbershopName, myWorkplaceName,status;
-    public static Integer myBarbershopId, barberId,barberShopsId;
+    public static Integer myBarbershopId, barberId,workplaceId;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -84,7 +84,7 @@ public class AdminActivity extends AppCompatActivity {
                     myWorkplaceName = dataSnapshot.child("myWorkplaceName").getValue(String.class);
                     status = dataSnapshot.child("status").getValue(String.class);
                     barberId = dataSnapshot.child("myIdAsBarber").getValue(Integer.class);
-                    barberShopsId = dataSnapshot.child("myWorkplaceId").getValue(Integer.class);
+                    workplaceId = dataSnapshot.child("myWorkplaceId").getValue(Integer.class);
                 } else {
                     myBarbershopName = null;
                     myWorkplaceName = null;

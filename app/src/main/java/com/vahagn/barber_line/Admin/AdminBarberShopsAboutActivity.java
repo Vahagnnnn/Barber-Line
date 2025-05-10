@@ -64,11 +64,6 @@ public class AdminBarberShopsAboutActivity extends AppCompatActivity {
 //        String ratingText = getIntent().getStringExtra("rating");
 //        String addressText = getIntent().getStringExtra("address");
 
-        if (AdminSettingsActivity.imageUrl != null) {
-            Log.i("imagee", AdminSettingsActivity.imageUrl);
-        } else {
-            Log.i("imagee", "someVariable is null");
-        }
 
         Glide.with(this)
                 .load(AdminSettingsActivity.imageUrl)
@@ -133,7 +128,12 @@ public class AdminBarberShopsAboutActivity extends AppCompatActivity {
 
 
     public void ToSetting(View view) {
-        navigateTo(AdminSettingsActivity.class);
+        navigateTo(
+                "BarberProfileActivity".equals(getIntent().getStringExtra("from_where"))
+                        ? BarberProfileActivity.class
+                        : AdminSettingsActivity.class
+        );
+
     }
     public void ToCreateBarberShop(View view) {
         navigateTo(CreateBarberShopActivity.class);

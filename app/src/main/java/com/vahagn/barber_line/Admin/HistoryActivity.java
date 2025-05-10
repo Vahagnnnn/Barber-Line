@@ -107,7 +107,7 @@ public class HistoryActivity extends AppCompatActivity {
                         AppointmentsList.add(appointment);
                         hasAppointments = true;
                     } else if (AdminActivity.myWorkplaceName != null &&
-                            appointment.getBarberShopsId() == AdminActivity.barberShopsId &&
+                            appointment.getBarberShopsId() == AdminActivity.workplaceId &&
                             appointment.getBarberId() == AdminActivity.barberId) {
                         AppointmentsList.add(appointment);
                         hasAppointments = true;

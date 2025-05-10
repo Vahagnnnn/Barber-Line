@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -75,7 +76,7 @@ public class AdminBooksActivity extends AppCompatActivity {
         appointmentsRef.addValueEventListener(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 AppointmentsList.clear();
                 boolean hasAppointments = false;
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -86,7 +87,7 @@ public class AdminBooksActivity extends AppCompatActivity {
                             hasAppointments = true;
                         }
                     } else if (appointment != null && AdminActivity.myWorkplaceName != null) {
-                        if (appointment.getBarberShopsId() == AdminActivity.barberShopsId && appointment.getBarberId() == AdminActivity.barberId) {
+                        if (appointment.getBarberShopsId() == AdminActivity.workplaceId && appointment.getBarberId() == AdminActivity.barberId) {
                             AppointmentsList.add(appointment);
                             hasAppointments = true;
                         }
