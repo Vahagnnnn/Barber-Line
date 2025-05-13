@@ -9,21 +9,16 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
@@ -100,16 +95,14 @@ public class AdminSettingsActivity extends AppCompatActivity {
         rejected = findViewById(R.id.rejected);
         reject_reason_Text = findViewById(R.id.reject_reason_Text);
 
-
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         if (currentUser != null) {
 
-//            String uid = currentUser.getUid();
             DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid());
 
-
             usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @SuppressLint("SetTextI18n")
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (Objects.equals(dataSnapshot.child("status").getValue(String.class), "pending")) {
@@ -157,7 +150,6 @@ public class AdminSettingsActivity extends AppCompatActivity {
                     addressText.setText(barberShops.getAddress());
                     ratingText.setText(barberShops.getRating() + "★");
 
-
                     barberShopsId = barberShops.getBarberShopsId();
                     imageUrl = barberShops.getImage();
                     logo = barberShops.getLogo();
@@ -169,10 +161,6 @@ public class AdminSettingsActivity extends AppCompatActivity {
                     ListSpecialist = barberShops.getSpecialists();
                     ListReviews = barberShops.getReviews();
                     openingTimes = barberShops.getOpeningTimes();
-
-//                    ToBarbershopAbout(null, id, image, logo, name, rating, address, ownerEmail, coordinates, specialists, reviews, openingTimes);
-//                    ToBarbershopAbout(null, barberShops.getBarberShopsId(), barberShops.getImage(), barberShops.getLogo(),  barberShops.getName(), barberShops.getRating(), barberShops.getAddress(), barberShops.getOwnerEmail(), barberShops.getCoordinates(), barberShops.getSpecialists(), barberShops.getReviews(), barberShops.getOpeningTimes());
-
 
                     String image = barberShops.getLogo();
                     if (image != null && !image.isEmpty()) {
@@ -188,22 +176,9 @@ public class AdminSettingsActivity extends AppCompatActivity {
         });
     }
 
-    //    public void ToBarbershopAbout(View view, int barberShopsId, String imageUrl, String logo,  String name, double rating, String address, String OwnerEmail, String coordinates, List<Barbers> ListSpecialist, List<Reviews> ListReviews, Map<String, TimeRange> openingTimes) {
     public void ToBarbershopAbout(View view) {
         Intent intent = new Intent(this, AdminBarberShopsAboutActivity.class);
         intent.putExtra("from_where", "AdminSettingsActivity");
-
-//        AdminSettingsActivity.barberShopsId = barberShopsId;
-//        AdminSettingsActivity.imageUrl = imageUrl;
-//        AdminSettingsActivity.logo = logo;
-//        AdminSettingsActivity.name = name;
-//        AdminSettingsActivity.rating = rating;
-//        AdminSettingsActivity.address = address;
-//        AdminSettingsActivity.OwnerEmail = OwnerEmail;
-//        AdminSettingsActivity.coordinates = coordinates;
-//        AdminSettingsActivity.ListSpecialist = ListSpecialist;
-//        AdminSettingsActivity.ListReviews = ListReviews;
-//        AdminSettingsActivity.openingTimes = openingTimes;
 
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
                 this,
@@ -278,9 +253,11 @@ public class AdminSettingsActivity extends AppCompatActivity {
     public void ToAdmin(View view) {
         navigateTo(AdminActivity.class);
     }
+
     public void ToHistory(View view) {
         navigateTo(HistoryActivity.class);
     }
+
     public void ToBooks(View view) {
         if (Objects.equals(AdminActivity.status, "pending")) {
             Toast.makeText(this, "Wait for confirmation", Toast.LENGTH_SHORT).show();
