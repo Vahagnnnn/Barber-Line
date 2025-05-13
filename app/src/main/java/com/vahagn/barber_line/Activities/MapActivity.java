@@ -231,6 +231,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
+        Log.d("MapActivity", "Map is ready");
         gMap = googleMap;
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
