@@ -4,6 +4,7 @@ import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
 import android.annotation.SuppressLint;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -37,6 +38,7 @@ import com.vahagn.barber_line.Activities.BarbersActivity;
 import com.vahagn.barber_line.Activities.BooksActivity;
 import com.vahagn.barber_line.Activities.ConfirmActivity;
 import com.vahagn.barber_line.Activities.DateTimeActivity;
+import com.vahagn.barber_line.Activities.LoginActivity;
 import com.vahagn.barber_line.Activities.MainActivity;
 import com.vahagn.barber_line.Activities.ServicesActivity;
 import com.vahagn.barber_line.Activities.SpecialistActivity;
@@ -52,7 +54,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class ReviewsFragment extends Fragment {
-    private LinearLayout infoContainer,review_section_container;
+    private LinearLayout infoContainer, review_section_container;
     private List<Reviews> ListReviews;
     private Boolean isAdmin;
 
@@ -61,7 +63,7 @@ public class ReviewsFragment extends Fragment {
     private EditText review_edittext;
     private FrameLayout submitButton;
 
-    public ReviewsFragment(List<Reviews> ListReviews,Boolean isAdmin) {
+    public ReviewsFragment(List<Reviews> ListReviews, Boolean isAdmin) {
         this.ListReviews = ListReviews;
         this.isAdmin = isAdmin;
     }
@@ -100,62 +102,64 @@ public class ReviewsFragment extends Fragment {
         return view;
     }
 
-    private void sentReview(){
-        float rating = ratingBar.getRating();
-        Log.i("submitButton", String.valueOf(rating));
-        Log.i("submitButton", String.valueOf(review_edittext.getText()));
-        if (rating == 0)
-            Toast.makeText(getContext(), "Please select a Rating", Toast.LENGTH_SHORT).show();
-        else if (String.valueOf(review_edittext.getText()).isEmpty())
-            Toast.makeText(getContext(), "The review is empty", Toast.LENGTH_SHORT).show();
-        else {
-            Reviews review = new Reviews(MainActivity.userClass.getPhotoUrl(), MainActivity.userClass.getFirst_name() + " " + MainActivity.userClass.getLast_name(), String.valueOf(review_edittext.getText()), rating);
-            DatabaseReference barberShopsRef = FirebaseDatabase.getInstance().getReference("barberShops");
+    private void sentReview() {
+        if (MainActivity.isLogin) {
+            float rating = ratingBar.getRating();
 
-            barberShopsRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        BarberShops shop = snapshot.getValue(BarberShops.class);
-                        if (shop != null && Objects.equals(shop.getName(), BarbersActivity.name)) {
-                            String shopId = snapshot.getKey();
-                            assert shopId != null;
-                            Log.i("shopId", shopId);
+            if (rating == 0)
+                Toast.makeText(getContext(), "Please select a Rating", Toast.LENGTH_SHORT).show();
+            else if (String.valueOf(review_edittext.getText()).isEmpty())
+                Toast.makeText(getContext(), "The review is empty", Toast.LENGTH_SHORT).show();
+            else {
+                Reviews review = new Reviews(MainActivity.userClass.getPhotoUrl(), MainActivity.userClass.getFirst_name() + " " + MainActivity.userClass.getLast_name(), String.valueOf(review_edittext.getText()), rating);
+                DatabaseReference barberShopsRef = FirebaseDatabase.getInstance().getReference("barberShops");
 
-                            DatabaseReference reviewsRef = barberShopsRef.child(shopId).child("reviews");
+                barberShopsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            BarberShops shop = snapshot.getValue(BarberShops.class);
+                            if (shop != null && Objects.equals(shop.getName(), BarbersActivity.name)) {
+                                String shopId = snapshot.getKey();
+                                assert shopId != null;
+                                Log.i("shopId", shopId);
 
-                            reviewsRef.get().addOnCompleteListener(task -> {
-                                if (task.isSuccessful()) {
-                                    long newId = task.getResult().getChildrenCount();
-                                    reviewsRef.child(String.valueOf(newId)).setValue(review)
-                                            .addOnSuccessListener(aVoid -> {
-                                                ratingBar.setRating(0);
-                                                review_edittext.setText("");
-                                                addReviews(review);
-                                                Toast.makeText(getContext(), "Review sent successfully", Toast.LENGTH_SHORT).show();
-                                            })
-                                            .addOnFailureListener(e -> {
-                                                Toast.makeText(getContext(), "Failed to send review", Toast.LENGTH_SHORT).show();
-                                            });
-                                } else {
-                                    Toast.makeText(getContext(), "Failed to retrieve data", Toast.LENGTH_SHORT).show();
-                                }
-                            });
+                                DatabaseReference reviewsRef = barberShopsRef.child(shopId).child("reviews");
 
-                            break;
+                                reviewsRef.get().addOnCompleteListener(task -> {
+                                    if (task.isSuccessful()) {
+                                        long newId = task.getResult().getChildrenCount();
+                                        reviewsRef.child(String.valueOf(newId)).setValue(review)
+                                                .addOnSuccessListener(aVoid -> {
+                                                    ratingBar.setRating(0);
+                                                    review_edittext.setText("");
+                                                    addReviews(review);
+                                                    Toast.makeText(getContext(), "Review sent successfully", Toast.LENGTH_SHORT).show();
+                                                })
+                                                .addOnFailureListener(e -> {
+                                                    Toast.makeText(getContext(), "Failed to send review", Toast.LENGTH_SHORT).show();
+                                                });
+                                    } else {
+                                        Toast.makeText(getContext(), "Failed to retrieve data", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
+                                break;
+                            }
                         }
                     }
-                }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Log.w("Firebase", "Failed to read value.", databaseError.toException());
-                }
-            });
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Log.w("Firebase", "Failed to read value.", databaseError.toException());
+                    }
+                });
 
-
-        }
+            }
+        } else
+            ToLogin();
     }
+
     private void addReviews(Reviews review) {
         View reviewView = LayoutInflater.from(getContext()).inflate(R.layout.reviews_item, infoContainer, false);
         ImageView CustomerImage = reviewView.findViewById(R.id.image);
@@ -177,4 +181,18 @@ public class ReviewsFragment extends Fragment {
 
         infoContainer.addView(reviewView);
     }
+
+    public void ToLogin() {
+        navigateTo(LoginActivity.class);
+    }
+
+    private void navigateTo(Class<?> targetActivity) {
+        View sharedView = getActivity().findViewById(R.id.bottom_navigation);
+        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
+                getActivity(), sharedView, "sharedImageTransition");
+
+        Intent intent = new Intent(getActivity(), targetActivity);
+        startActivity(intent, options.toBundle());
+    }
+
 }
