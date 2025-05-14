@@ -1,15 +1,18 @@
 package com.vahagn.barber_line.Admin;
 
 import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 
 import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -31,6 +34,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.vahagn.barber_line.Classes.Appointment;
 import com.vahagn.barber_line.R;
 import com.vahagn.barber_line.adapter.AppointmentAdapter;
+import com.vahagn.barber_line.adapter.AppointmentAdapterAdmin;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +43,8 @@ public class AdminBooksActivity extends AppCompatActivity {
 
     RecyclerView appointmentsRecyclerView;
     List<Appointment> AppointmentsList = new ArrayList<>();
-    AppointmentAdapter appointmentAdapter;
+    //    AppointmentAdapter appointmentAdapter;
+    AppointmentAdapterAdmin appointmentAdapterAdmin;
 
     public static LinearLayout noAppointments;
     private ProgressBar loadingProgressBar;
@@ -56,12 +61,67 @@ public class AdminBooksActivity extends AppCompatActivity {
         appointmentsRecyclerView = findViewById(R.id.appointments_recycler_view);
         appointmentsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
-        appointmentAdapter = new AppointmentAdapter(AppointmentsList);
-        appointmentsRecyclerView.setAdapter(appointmentAdapter);
+//        appointmentAdapter = new AppointmentAdapter(AppointmentsList);
+//        appointmentsRecyclerView.setAdapter(appointmentAdapter);
+
+        appointmentAdapterAdmin = new AppointmentAdapterAdmin(AppointmentsList);
+        appointmentsRecyclerView.setAdapter(appointmentAdapterAdmin);
 
         loadAppointments();
 
     }
+
+
+//    @SuppressLint("NotifyDataSetChanged")
+//    private void setTab(DatabaseReference dbRef, TextView selectedTab, TextView... otherTabs) {
+//        animateTabChange(selectedTab, Color.WHITE);
+//        animateTextBold(selectedTab, true);
+//
+//        for (TextView tab : otherTabs) {
+//            animateTabChange(tab, Color.parseColor("#8E8E93"));
+//            animateTextBold(tab, false);
+//        }
+//
+//        noHistory.setVisibility(GONE);
+//        loadingProgressBar.setVisibility(View.VISIBLE);
+//        AppointmentsList.clear();
+//        appointmentAdapterAdmin.notifyDataSetChanged();
+//
+//        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+//        if (currentUser == null) return;
+//
+//        dbRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                boolean hasAppointments = false;
+//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                    Appointment appointment = snapshot.getValue(Appointment.class);
+//                    if (appointment == null) continue;
+//
+//                    if (AdminActivity.myBarbershopName != null &&
+//                            appointment.getBarbershopOwnerEmail().equals(currentUser.getEmail())) {
+//                        AppointmentsList.add(appointment);
+//                        hasAppointments = true;
+//                    } else if (AdminActivity.myWorkplaceName != null &&
+//                            appointment.getBarberShopsId() == AdminActivity.workplaceId &&
+//                            appointment.getBarberId() == AdminActivity.barberId) {
+//                        AppointmentsList.add(appointment);
+//                        hasAppointments = true;
+//                    }
+//                }
+//
+//                noHistory.setVisibility(hasAppointments ? GONE : VISIBLE);
+//                appointmentAdapterAdmin.notifyDataSetChanged();
+//                loadingProgressBar.setVisibility(View.GONE);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                Log.e("Firebase", "Error reading appointments", error.toException());
+//                loadingProgressBar.setVisibility(View.GONE);
+//            }
+//        });
+//    }
 
     private void loadAppointments() {
         DatabaseReference appointmentsRef = FirebaseDatabase.getInstance().getReference("Appointments");
@@ -100,7 +160,8 @@ public class AdminBooksActivity extends AppCompatActivity {
                     noAppointments.setVisibility(View.VISIBLE);
                 }
                 loadingProgressBar.setVisibility(View.GONE);
-                appointmentAdapter.notifyDataSetChanged();
+//                appointmentAdapter.notifyDataSetChanged();
+                appointmentAdapterAdmin.notifyDataSetChanged();
             }
 
             @Override
