@@ -89,11 +89,12 @@ public class MainActivity extends AppCompatActivity {
         SetTopBarberShops();
         SetTopBarbers();
         SetTopHaircuts();
-        ReadUserInfo();
+//        ReadUserInfo();
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
+            ReadUserInfo();
             MainActivity.isLogin = true;
         }
 
@@ -158,7 +159,6 @@ public class MainActivity extends AppCompatActivity {
     private void ReadUserInfo() {
         DatabaseReference UsersRef = FirebaseDatabase.getInstance().getReference("Users");
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
 
         if (user != null) {
             String userId = user.getUid();
