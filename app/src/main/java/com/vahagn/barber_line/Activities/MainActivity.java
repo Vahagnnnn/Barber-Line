@@ -347,7 +347,6 @@ public class MainActivity extends AppCompatActivity {
 //            Log.i("userClass", userClass.getLast_name());
 //            Log.i("userClass", userClass.getEmail());
 //            Log.i("userClass", userClass.getPassword());
-
             if (userClass == null) {
                 Toast.makeText(this, "Wait a second and try again", Toast.LENGTH_SHORT).show();
             } else

@@ -10,13 +10,19 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.vahagn.barber_line.Admin.AdminActivity;
+import com.vahagn.barber_line.Admin.CreateBarberShopActivity;
 import com.vahagn.barber_line.Admin.JoinToBarberShopActivity;
 import com.vahagn.barber_line.Classes.Problem;
 import com.vahagn.barber_line.R;
@@ -78,17 +84,28 @@ public class ReportActivity extends AppCompatActivity {
         DatabaseReference problemsRef = FirebaseDatabase.getInstance().getReference("problems");
         Problem problem = new Problem(name_str, email_str, problem_str);
 
-        problemsRef.setValue(problem)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
+        problemsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                long count = snapshot.getChildrenCount();
+
+                problemsRef.child(String.valueOf(count)).setValue(problem)
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
                         Toast.makeText(ReportActivity.this, "Problem sent", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(ReportActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
-                    } else {
+                                Intent intent = new Intent(ReportActivity.this, MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
                         Toast.makeText(ReportActivity.this, "Failed to send problem", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                            }
+                        });
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(ReportActivity.this, "Database access error", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void navigateTo(Class<?> targetActivity) {

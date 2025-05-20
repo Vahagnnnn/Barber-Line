@@ -145,6 +145,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="RtlSymmetry">
 
+            <!--            android:foreground="@drawable/ripple_dark"-->
             <FrameLayout
                 android:id="@+id/edit_profile"
                 android:layout_width="match_parent"
@@ -152,7 +153,6 @@
                 android:background="@drawable/gray_frame_10dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:foreground="@drawable/ripple_dark"
                 android:paddingStart="10dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -176,11 +176,12 @@
                     android:includeFontPadding="false"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:text="@string/edit_profile"
+                    android:text="Edit profile -"
                     android:textColor="#FF000000"
                     android:textSize="16sp" />
             </FrameLayout>
 
+            <!--            android:foreground="@drawable/ripple_dark"-->
             <FrameLayout
                 android:id="@+id/barber_schedule"
                 android:layout_width="match_parent"
@@ -188,7 +189,6 @@
                 android:background="@drawable/gray_frame_10dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:foreground="@drawable/ripple_dark"
                 android:paddingStart="10dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edit_profile">
@@ -210,7 +210,7 @@
                     android:includeFontPadding="false"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:text="Schedule"
+                    android:text="Schedule -"
                     android:textColor="#FF000000"
                     android:textSize="16sp" />
             </FrameLayout>
@@ -221,9 +221,9 @@
                 android:layout_height="35dp"
                 android:background="@drawable/gray_frame_10dp"
                 android:clickable="true"
-                android:onClick="ToServices"
                 android:focusable="true"
                 android:foreground="@drawable/ripple_dark"
+                android:onClick="ToServices"
                 android:paddingStart="10dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/barber_schedule">
@@ -287,8 +287,8 @@
                 android:id="@+id/MyWorkplace_container"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
-                android:onClick="ToMyWorkplace"
                 android:foreground="@drawable/ripple_dark"
+                android:onClick="ToMyWorkplace"
                 android:paddingStart="10dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/history_container">
