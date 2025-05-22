@@ -61,6 +61,7 @@ public class DateTimeActivity extends AppCompatActivity {
         Time = findViewById(R.id.Time);
 
         calendarView = findViewById(R.id.calendarView);
+        calendarView.setMinDate(System.currentTimeMillis() - 1000);
         BarberName = findViewById(R.id.BarberName);
         BarberName.setText(SpecialistsFragment.name);
         ServiceName = findViewById(R.id.ServiceName);
@@ -72,11 +73,20 @@ public class DateTimeActivity extends AppCompatActivity {
         LinearLayout timeContainer = findViewById(R.id.timeContainer);
         continue_button = findViewById(R.id.continue_button);
 
-        List<String> times = Arrays.asList("13:45", "14:00", "14:15", "14:30", "14:45",
-                "15:00", "15:15", "15:30", "15:45", "16:00",
-                "16:15", "16:30", "16:45", "15:45", "16:00",
-                "16:15", "16:30", "16:45", "15:45", "16:00",
-                "16:15", "16:30", "16:45");
+        List<String> times = Arrays.asList(
+                "10:00", "10:30",
+                "11:00", "11:30",
+                "12:00", "12:30",
+                "13:00", "13:30",
+                "14:00", "14:30",
+                "15:00", "15:30",
+                "16:00", "16:30",
+                "17:00", "17:30",
+                "18:00", "18:30",
+                "19:00", "19:30",
+                "20:00", "20:30",
+                "21:00"
+        );
 
         int columns = 4;
         LinearLayout rowLayout = null;
@@ -117,12 +127,8 @@ public class DateTimeActivity extends AppCompatActivity {
         }
 
 
-        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-                updateDateVariables(year, month, dayOfMonth);
-//                Toast.makeText(getApplicationContext(), "Выбрано: " + weekDay + ", " + dayOfMonth + " " + monthName, Toast.LENGTH_SHORT).show();
-            }
+        calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
+            updateDateVariables(year, month, dayOfMonth);
         });
 
 

@@ -243,6 +243,9 @@ public class SettingsActivity extends AppCompatActivity {
     public void ToHome(View view) {
         navigateTo(MainActivity.class);
     }
+    public void Back(View view) {
+        onBackPressed();
+    }
     public void ToBooks(View view) {
         if (isLogin)
             navigateTo(BooksActivity.class);

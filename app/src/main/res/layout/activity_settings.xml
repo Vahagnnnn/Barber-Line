@@ -28,7 +28,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:contentDescription="@string/app_name"
-            android:onClick="ToHome"
+            android:onClick="Back"
             android:scaleType="centerInside"
             android:src="@drawable/img_arrow_left" />
 
@@ -49,9 +49,6 @@
 
 
     <!-- Profile Section -->
-
-
-
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"

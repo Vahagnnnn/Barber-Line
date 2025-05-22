@@ -2,6 +2,8 @@ package com.vahagn.barber_line.adapter;
 
 import static androidx.core.content.ContextCompat.startActivity;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -62,6 +64,17 @@ public class TopBarberShopsAdapter extends RecyclerView.Adapter<TopBarberShopsAd
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+//                Intent intent = new Intent(context, BarberShopsAboutActivity.class);
+//                intent.putExtra("from_where", "MainActivity");
+//
+//                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
+//                        (Activity) context,
+//                        holder.imageView,
+//                        "sharedImageTransition"
+//                );
+//                context.startActivity(intent, options.toBundle());
+
                 Intent intent = new Intent(context, BarberShopsAboutActivity.class);
                 intent.putExtra("from_where", "MainActivity");
 
