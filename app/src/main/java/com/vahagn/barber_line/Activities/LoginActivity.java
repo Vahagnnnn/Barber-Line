@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
     private DatabaseReference usersRef;
 
     EditText email;
-    FrameLayout continue_button;
+    FrameLayout continue_button,testUser_button;
     SignInButton googleSignInButton;
 
     @SuppressLint("ClickableViewAccessibility")
@@ -79,11 +79,13 @@ public class LoginActivity extends AppCompatActivity {
 
         email = findViewById(R.id.email);
         continue_button = findViewById(R.id.continue_button);
+        testUser_button = findViewById(R.id.testUser_button);
         googleSignInButton = findViewById(R.id.sign_in_button);
 
         usersRef = FirebaseDatabase.getInstance().getReference("Users");
 
         continue_button.setOnClickListener(v -> signInUser());
+        testUser_button.setOnClickListener(v -> signInTestUser());
         googleSignInButton.setOnClickListener(v -> signIn());
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -131,6 +133,34 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+    private void signInTestUser() {
+        String testEmail = "individualproject2025@gmail.com";
+        String testPassword = "Samsung2025";
+
+        mAuth.signInWithEmailAndPassword(testEmail, testPassword)
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        if (user != null) {
+                            Toast.makeText(LoginActivity.this, "Test user login successful", Toast.LENGTH_SHORT).show();
+                            MainActivity.isLogin = true;
+
+                            SharedPreferences sharedPreferences = getSharedPreferences("UserInformation", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString("email", testEmail);
+                            editor.putString("password", testPassword);
+                            editor.apply();
+
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Test user login failed: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        Log.e("FirebaseAuth", "Test login failed", task.getException());
+                    }
+                });
     }
 
 
@@ -214,30 +244,6 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-//    private void sendInfoToPhoneNumberActivity(FirebaseUser user, String password) {
-//        String fullName = user.getDisplayName();
-//        String[] first_name_last_name = fullName.split(" ");
-//        String email = user.getEmail();
-//        String photoUrl = String.valueOf(user.getPhotoUrl());
-//
-//        SharedPreferences sharedPreferences = getSharedPreferences("UserInformation", MODE_PRIVATE);
-//        SharedPreferences.Editor editor = sharedPreferences.edit();
-//        editor.putString("first_name", first_name_last_name[0]);
-//        editor.putString("last_name", first_name_last_name[1]);
-//        Log.i("fullName",fullName);
-//        Log.i("fullName",first_name_last_name[0]);
-//        Log.i("fullName",first_name_last_name[1]);
-//
-//        editor.putString("email", email);
-//        editor.putString("password", password);
-//        editor.putString("photoUrl", photoUrl);
-//        editor.apply();
-//
-//        Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-//        Intent intent = new Intent(LoginActivity.this, PhoneNumberActivity.class);
-//        startActivity(intent);
-//        finish();
-//    }
 
     private void signIn() {
         mGoogleSignInClient.signOut().addOnCompleteListener(this, task -> {

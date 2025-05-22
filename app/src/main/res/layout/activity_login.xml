@@ -132,6 +132,36 @@
                     android:textSize="16sp" />
             </FrameLayout>
 
+
+
+            <FrameLayout
+                android:id="@+id/testUser_button"
+                android:foreground="@drawable/ripple_dark"
+                android:layout_width="327dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:textSize="12sp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/img_login_button"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="centerCrop" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="Test User"
+                    android:textColor="#FFFFFFFF"
+                    android:textSize="16sp" />
+            </FrameLayout>
+
             <com.google.android.gms.common.SignInButton
                 android:id="@+id/sign_in_button"
                 android:layout_width="wrap_content"
