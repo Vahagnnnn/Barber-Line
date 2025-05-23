@@ -1,7 +1,7 @@
 A barbershop booking app for finding and reserving services 
 via a map, ratings, discounts, and bonuses.
 
-APK - https://drive.google.com/file/d/1HTWRPXXbVXrhwSxs7zKIC4CsxHwZItV4/view
+APK - https://drive.google.com/file/d/1SQSnEhZ4taymmZo4XSwkFYu663AS28Nz/view?usp=sharing
 Presentation - https://www.canva.com/design/DAGnU5TKT6A/mvSVD8YdNW_jdv9J8rmkgQ/edit?utm_content=DAGnU5TKT6A&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
 
 ![Main](https://github.com/user-attachments/assets/8d242dbb-b89f-4ef3-be04-1053e58a0318)
